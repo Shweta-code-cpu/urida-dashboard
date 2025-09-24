@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Varanasi</title>
+
+    <link href="/libs/bootstrap-5.1.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/libs/v6.13.0-dist/ol.css">
+    <link rel="stylesheet" href="/libs/ol-layerswitcher-master/dist/ol-layerswitcher.css" />
+    <link rel="sylesheet" href="/libs/ol-geocoder/ol-geocoder.css" />
+    <!-- <link rel="stylesheet" href="/libs/ol-popup/ol-popup.css"/> -->
+    <link rel="stylesheet" href="/libs/jquery-ui-1.12.1/jquery-ui.css">
+
+    <script src="/libs/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/libs/jquery.js"></script>
+    <script src="/libs/v6.13.0-dist/ol.js"></script>
+    <script src="/libs/ol-layerswitcher-master/dist/ol-layerswitcher.js"></script>
+    <script src="/libs/ol-geocoder/ol-geocoder.js"></script>
+    <script src="/libs/ol-popup/ol-popup.js"></script>
+    <script src="/libs/jquery-ui-1.12.1/external/jquery/jquery.js"></script>
+    <script src="/libs/jquery-ui-1.12.1/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <link rel="shortcut icon" type="image/x-icon" class="fabicon" href="../assets/icons/logo_tree.png" />
+
+    <link rel="stylesheet" href="../style/gorakhpur.css">
+    <link rel="stylesheet" href="../style/responsive.css">
+</head>
+
+<body>
+    <!---------------------- header section start -------------------------->
+    <div class="header">
+        <i class="fas fa-bars hamburger"></i>
+        <div class="center-content">
+            <img src="../assets/logo/varanasi1_logo.jpg" class="logo" alt="" />
+            <h2 class="title">Varanasi Nagar Nigam</h2>
+            <img src="../assets/logo/rsac (1).png" class="logo" alt="dp" />
+        </div>
+        <!-- <div class="search-container" id="search-bar">  --->
+            <!-- <i class="search-icon">&#128269;</i>         Unicode for search icon -->
+          <!--  <select id="roadNamesDropdown"></select>
+        </div>
+        <div id="popup-search" class="ol-popup-search">
+            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+            <div id="popup-content-search"></div>
+        </div> -->
+
+    </div>
+    <!---------------------- header section end -------------------------->
+
+    <!---------------------- sidebar section start -------------------------->
+    <!-- <div class="sidebar">
+        <span><i class="fas fa-times cancel-icon"></i></span>
+
+       
+        <ul class="nav nav-tabs" id="sidebarTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="amenities-tab" data-bs-toggle="tab" data-bs-target="#amenities"
+                    type="button" role="tab" aria-controls="amenities" aria-selected="true">Network </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" type="button"
+                    role="tab" aria-controls="data" aria-selected="false"> Network </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="utilities-tab" data-bs-toggle="tab" data-bs-target="#utilities"
+                    type="button" role="tab" aria-controls="utilities" aria-selected="false">
+                    Others
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="assets-tab" data-bs-toggle="tab" data-bs-target="#assets" type="button"
+                    role="tab" aria-controls="assets" aria-selected="false"> Road Analysis</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="sidebarTabsContent">
+          
+             <div class="tab-pane fade show active" id="amenities" role="tabpanel" aria-labelledby="amenities-tab">
+                <h2></h2>
+                <form>
+                    <label>
+                        <i class="icon fa fa-road"></i>
+                        <input type="checkbox" id="ShowRoads" class="main-option" name="option3" />   <- Bank--->  
+                                             <!-- <span class="text">Roads</span> -->
+                    <!-- </label>
+                    <label>
+                        <i class="icon fa-solid fa-worm"></i>
+                        <input type="checkbox" id="showDrain" class="main-option" name="option13" />
+                        <span class="text">Drainage</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-hospital"></i>
+                        <input type="checkbox" id="showHospital" class="main-option" name="option4" />
+                        <span class="text">Hospitals - 195</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-tree"></i>
+                        <input type="checkbox" id="showParks" class="main-option" name="option8" />
+                        <span class="text">Parks - 36</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-bus"></i>
+                        <input type="checkbox" id="showBus" class="main-option" name="option11" />
+                        <span class="text">Bus Stops - 90</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-gas-pump"></i>
+                        <input type="checkbox" id="showCar" class="main-option" name="option5" />
+                        <span class="text">Car charging Station - 50</span>
+                    </label>
+
+                    <label>
+                        <i class="icon fas fa-gas-pump"></i>
+                        <input type="checkbox" id="showPetrol" class="main-option" name="option5" />
+                        <span class="text">Petrol Pump - 111</span>
+                    </label>
+
+                    <label>
+                        <i class="icon fas fa-charging-station"></i>
+                        <input type="checkbox" id="showStadium" class="main-option" name="option9" />
+                        <span class="text">Stadium - 26</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-school"></i>
+                        <input type="checkbox" id="showEducation" class="main-option" name="option2" />
+                        <span class="text">Educational Institutes - 1087</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-cross"></i>
+                        <input type="checkbox" id="showGraveyard" class="main-option" name="option14" />
+                        <span class="text">Graveyard - 60</span>
+                    </label>
+                    <br><br>
+                </form>
+            </div>  --> 
+
+            <!-- Network Tab Content -->
+            <!-- <div class="tab-pane fade" id="data" role="tabpanel" aria-labelledby="data-tab">
+             
+                <form>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="ShowRoads" onclick=Lucknow_All_Roads() class="main-option"
+                            name="option1" />
+                        <span class="text">Roads</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-school"></i>
+                        <input type="checkbox" id="ShowDrainage" class="main-option" name="option2" />
+                        <span class="text">Drainage</span>
+                    </label>
+                </form>
+            </div> -->
+
+            <!-- Others Tab Content -->
+            <!-- <div class="tab-pane fade" id="utilities" role="tabpanel" aria-labelledby="utilities-tab">
+                <form>
+                    <label>
+                        <i class="icon fas fa-cross"></i>
+                        <input type="checkbox" id="showReligious" class="main-option" name="option10" />
+                        <span class="text">Religious Places - 40</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-envelope"></i>
+                        <input type="checkbox" id="showPostOffice" class="main-option" name="option12" />
+                        <span class="text">Post Offices - 12 </span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="showStateGov" class="main-option" name="option1" />
+                        <span class="text">State Government Offices - 26</span>
+
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="showCentralGov" class="main-option" name="option1" />
+                        <span class="text">Central Government Offices - 15</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="showLandmark" class="main-option" name="option1" />
+                        <span class="text">Landmark </span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-charging-station"></i>
+                        <input type="checkbox" id="showElectric_Substation" class="main-option" name="utility2" />
+                        <span class="text">Electricity Substation</span>
+                    </label>
+                </form>
+            </div> -->
+
+            <!-- Assets Tab Content -->
+            <!--<div class="tab-pane fade" id="assets" role="tabpanel" aria-labelledby="assets-tab"> -->
+                    <!-- <h2>Assets</h2> -->
+                    <!-- <form> -->
+                        <!-- <label>
+                            <i class="icon fas fa-building"></i>
+                            <input type="checkbox" id="Slum_Boundary" class="main-option" name="option1" />
+                            <span class="text">Slum Boundary - 41</span>
+
+                        </label>-->
+                    
+                        <!-- <label>
+                            <i class="icon fas fa-building"></i>
+                            <input type="checkbox" id="Education_Road" class="main-option" name="option1" />
+                            <span class="text">Education's Roads - 1564</span>
+                        </label>
+                        <label>
+                            <i class="icon fas fa-building"></i>
+                            <input type="checkbox" id="Bank_Road" class="main-option" name="option1" />
+                            <span class="text">Bank's Roads - 981</span>
+
+                        </label>
+                        <label>
+                            <i class="icon fas fa-building"></i>
+                            <input type="checkbox" id="Hospital_Road" class="main-option" name="option1" />
+                            <span class="text">Hospital's Roads - 135</span>
+
+                        </label>
+                        <label>
+                            <i class="icon fas fa-building"></i>
+                            <input type="checkbox" id="Metro_Road" class="main-option" name="option1" />
+                            <span class="text">Metro's Roads - 29</span>
+
+                        </label>
+                        <label>
+                            <i class="icon fas fa-building"></i>
+                            <input type="checkbox" id="Landmark_Road" class="main-option" name="option1" />
+                            <span class="text">Landmark's Roads - 200</span>
+
+                        </label>
+                        <label>
+                            <i class="icon fas fa-building"></i>
+                            <input type="checkbox" id="Park_Road" class="main-option" name="option1" />
+                            <span class="text">Park's Road - 5333</span>
+
+                        </label> 
+                        <label>
+                            <i class="icon fas fa-building"></i>
+                            <input type="checkbox" id="Drain_Road" class="main-option" name="option1" />
+                            <span class="text">Drain's Roads - 32771</span>
+
+                        </label> -->
+                    
+                    <!-- </form> -->
+            <!-- </div> -->
+
+        <!-- </div>
+    </div> -->
+    <!---------------------- sidebar section end -------------------------->
+
+    <!---------------------- main-container section start -------------------------->
+    <div class="main-container">
+
+        <!---------------------- map section start ------------------>
+        <div id="map">
+            <div class="map-icons-left">
+                <!-- <button class="map-icon" id="View_point" title="Street View" onclick="street_view()"><i
+                        class="fas fa-street-view"></i></button><h6 class="h6">Street View</h6> -->
+              
+                <button class="map-icon" title="Data Analysis" onclick="Varanasi_Road()">
+                    <i class="fas fa-road"></i></a></button><h6 class="h6">Road</h6>
+                    <button class="map-icon" id="clear-icon" title="Clear" ><i
+                        class="fa fa-trash"></i></button><h6 class="h6">Clear</h6>
+                <!-- <button class="map-icon" title="Zone wise Road" onclick="road_filter()"><i -->
+                        <!-- class="fas fa-road"></i></button><h6 class="h6">Road Filter</h6> -->
+                
+
+                <!-- <button class="map-icon" title="Get Info"><i class="fas fa-circle-info"></i></button> -->
+                <!-- <button class="map-icon" title="Drain" onclick="drain_filter()"><i class="fa-solid fa-worm"></i></button><h6 class="h6">Drain Filter</h6> -->
+            </div>
+
+            <div class="map-icons">
+                <!-- <button class="map-icon" id="search-icon" title="Search"><i class="fas fa-search"></i></button>
+                <h6 class="h6"> Search </h6> -->
+                <!-- <button class="map-icon" id="measure-icon" onclick="measure_tab()" title="Measure Tool"><i class="fas fa-ruler"></i></button> -->
+                <!-- <button class="map-icon" id="basemap-icon" title="Toggle Basemap"><i class="fas fa-map"></i></button> -->
+
+                <!-- <button class="map-icon" id="query_btn" onclick="query_panel1()" title="Query Panel"><i
+                        class="fas fa-window-maximize"></i></button><h6 class="h6"> Query </h6> -->
+
+                <!-- <button class="map-icon" id="table_icon" title="Summary Data" onclick="summary_table()"><i
+                        class="fas fa-table "></i></button><h6 class="h6"> Summary </h6> -->
+
+                <!-- <button class="map-icon" id="clear-icon" title="Clear" onclick="delete_layers()"><i
+                        class="fa fa-trash"></i></button><h6 class="h6">Clear</h6> -->
+            </div>
+        </div>
+        <!-------------------- map section end -------------------->
+
+        <!---------------------- query panel section start -------------------------->
+        <!-- <div id="query_tab" class="query-tab">
+            <span class="tab-cancel-icon"><i class="fas fa-times cancel-icon"></i></span>
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist" style="font-size:11px;">
+                    <button class="nav-link " id="nav-attributes-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-attributes" type="button" role="tab" aria-controls="nav-attributes"
+                        aria-selected="true" style="font-size:12px;color:white">Select by Attributes</button>
+                    <button class="nav-link" id="nav-draw-tab" data-bs-toggle="tab" data-bs-target="#nav-draw"
+                        type="button" role="tab" aria-controls="nav-draw" aria-selected="false"
+                        style="font-size:12px;color:white">Select by Draw</button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-attributes" role="tabpanel"
+                    aria-labelledby="nav-attributes-tab">
+                    
+                    <select id="layer" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Select Layer</option>
+                    </select>
+                    <br>
+               
+                    <select id="attributes" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Select Attribute</option>
+                    </select>
+                    <br>
+                
+                    <select id="operator" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Select Operator</option>
+                    </select>
+                    <br>
+               
+                    <input type="text" class="form-control form-select-sm" id="value" placeholder="Enter Value"
+                        name="value">
+                    <br>
+                    <button id="load-layer" onclick="query()" type="button" style="margin-left:10px;"
+                        class="btn btn-danger btn-sm">Load Layer</button>
+                    <br><br>
+                </div>
+
+                <div class="tab-pane fade" id="nav-draw" role="tabpanel" aria-labelledby="nav-draw-tab">
+                  
+                    <select id="layer1" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Select Layer</option>
+                    </select>
+                    <br>
+                  
+                    <select id="draw_type" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option value="select">Select Shape</option>
+                        <option value="Square">Square</option>
+                        <option value="Box">Box</option>
+                        <option value="Polygon">Polygon</option>
+                        <option value="Star">Star</option>
+                        <option value="clear">Clear</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div id="table_data" style="font-size:15px;"></div> -->
+        <!------------------ query panel section end--------------------->
+
+        <!------------------ measure-options section start ----------------->
+        <!-- <div class="measure-options" id="measure-tab">
+            <span class="tab-cancel-icon"><i class="fas fa-times cancel-icon"></i></span>
+            <label for="layer" style="margin-left:15px;">Measure Options</label>
+            <button onclick="startLineString()"><b>Line String</b></button>
+            <button onclick="startPolygon()"><b>Polygon</b></button>
+            <button onclick="clearMeasurement()"><b>Clear Measurement</b></button>
+        </div> -->
+        <!------------------- measure-options section end ----------------->
+
+        <!-------------------- zone wise road filter start -------------------------->
+        <!-- <div id="road-filter" class="road-filter">
+            <ul>
+                <label style="margin-left:20px;"><b>Select Zones</b></label>
+                <li><a class="dropdown">Ghaziabad All Roads &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" id="Priority_Data">Priority Based Road &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="P1"><a class="dropdown-item">First Priority</a></li>
+                                <li id="P2"><a class="dropdown-item">Second Priority</a></li>
+                                <li id="Not_Eligible"><a class="dropdown-item">Not Eligible</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Type">Road Type &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Major"><a class="dropdown-item">Major</a></li>
+                                <li id="Minor"><a class="dropdown-item">Minor</a></li>
+                                <li><a class="dropdown-item" onclick="service">Service Road</a></li>
+                                <li id="Proposed"><a class="dropdown-item">Proposed</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Condition"> Road Conditions &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Good"><a class="dropdown-item">Good</a></li>
+                                <li id="Moderate"><a class="dropdown-item">Moderate</a></li>
+                                <li id="Poor"><a class="dropdown-item">Poor</a></li>
+                                <li id="Proposed"><a class="dropdown-item">Proposed</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Material">Road Material &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Bitumen"><a class="dropdown-item">Bitumen</a></li>
+                                <li id="CC"><a class="dropdown-item">CC</a></li>
+                                <li id="Interlocking"><a class="dropdown-item">Interlocking</a></li>
+                                <li id="Kachcha"><a class="dropdown-item">Kaccha</a></li>
+                                <li id="Underconstruction"><a class="dropdown-item">Underconstruction</a></li>
+                                <li id="Underconstruction"><a class="dropdown-item">Proposed</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Ownership">Road Ownership &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="GNN"><a class="dropdown-item">GNN</a></li>
+                                <li id="NHAI"><a class="dropdown-item">NHAI</a></li>
+                                <li id="PWD"><a class="dropdown-item">PWD</a></li>
+                                <li id="NDRF"><a class="dropdown-item">NDRF</a></li>
+                                <li id="GDA"><a class="dropdown-item">GDA</a></li>
+                                <li id="Proposed"><a class="dropdown-item">Proposed</a></li>
+                                <li id="Expressway"><a class="dropdown-item">Expressway Authority</a></li>
+                                <li id="Anaaj"><a class="dropdown-item">Anaaj Mandi</a></li>
+                                <li id="Reserve"><a class="dropdown-item">Reserve Police Line</a></li>
+                                <li id="Private"><a class="dropdown-item">Private Colony Road</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a id="Kavinagar" class="dropdown">Kavinagar Zone &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" id="Ward">Wards &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Ward16"><a class="dropdown-item">Morta 16</a></li>
+                                <li id="Ward46"><a class="dropdown-item">Guldhar Duhai 46</a></li>
+                                <li id="Ward53"><a class="dropdown-item">Raiespur 53</a></li>
+                                <li id="Ward84"><a class="dropdown-item">Raj Nagar 84</a></li>
+                                <li id="Ward71"><a class="dropdown-item">Sanjay Nagar2 71</a></li>
+                                <li id="Ward91"><a class="dropdown-item">Kavi Nagar 91</a></li>
+                                <li id="Ward"><a class="dropdown-item">Sadarpur </a></li>
+                                <li id="Ward69"><a class="dropdown-item">Govindpuram 69</a></li>
+                                <li id="Ward67"><a class="dropdown-item">Kamla Nehru Sanjay 67</a></li>
+                                <li id="Ward47"><a class="dropdown-item">Shastri Nagar 47</a></li>
+                                <li id="Ward24"><a class="dropdown-item">Mehroli 24</a></li>
+                                <li id="Ward56"><a class="dropdown-item">Chiranjeev Vihari 56</a></li>
+                                <li id="Ward42"><a class="dropdown-item">Shahpur Bamheta 42</a></li>
+                                <li id="Ward65"><a class="dropdown-item">Vivekanand 65</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Type">Road Type &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Major"><a class="dropdown-item">Major</a></li>
+                                <li id="Minor"><a class="dropdown-item">Minor</a></li>
+                                <li><a class="dropdown-item" onclick="service">Service Road</a></li>
+                                <li id="Proposed"><a class="dropdown-item">Proposed</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Condition"> Road Conditions &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Good"><a class="dropdown-item">Good</a></li>
+                                <li id="Moderate"><a class="dropdown-item">Moderate</a></li>
+                                <li id="Poor"><a class="dropdown-item">Poor</a></li>
+                                <li id="Proposed"><a class="dropdown-item">Proposed</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Material">Road Material &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Bitumen"><a class="dropdown-item">Bitumen</a></li>
+                                <li id="CC"><a class="dropdown-item">CC</a></li>
+                                <li id="Interlocking"><a class="dropdown-item">Interlocking</a></li>
+                                <li id="Kachcha"><a class="dropdown-item">Kaccha</a></li>
+                                <li id="Underconstruction"><a class="dropdown-item">Underconstruction</a></li>
+                                <li id="Underconstruction"><a class="dropdown-item">Proposed</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Ownership">Road Ownership &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="GNN"><a class="dropdown-item">GNN</a></li>
+                                <li id="NHAI"><a class="dropdown-item">NHAI</a></li>
+                                <li id="PWD"><a class="dropdown-item">PWD</a></li>
+                                <li id="NDRF"><a class="dropdown-item">NDRF</a></li>
+                                <li id="GDA"><a class="dropdown-item">GDA</a></li>
+                                <li id="Proposed"><a class="dropdown-item">Proposed</a></li>
+                                <li id="Expressway"><a class="dropdown-item">Expressway Authority</a></li>
+                                <li id="Anaaj"><a class="dropdown-item">Anaaj Mandi</a></li>
+                                <li id="Reserve"><a class="dropdown-item">Reserve Police Line</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a id="City" class="dropdown">City Zone &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" onclick="">Wards &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Ward33">SarayNajar Ali 33</a></li>
+                                <li><a class="dropdown-item" id="Ward92">Kaila Islam Nagar 92</a></li>
+                                <li><a class="dropdown-item" id="Ward59">Saddik Noor Nagar 59</a></li>
+                                <li><a class="dropdown-item" id="Ward48">Nand Gram, Mariyam Nagar 48</a></li>
+                                <li><a class="dropdown-item" id="Ward31">Nandgram Sihani 31</a></li>
+                                <li><a class="dropdown-item" id="Ward32">Krishana Nagar 32</a></li>
+                                <li><a class="dropdown-item" id="Ward">Nandgram</a></li>
+                                <li><a class="dropdown-item" id="Ward6">DeenDayalpuri 6</a></li>
+                                <li><a class="dropdown-item" id="Ward17">Sewa Nagar 17</a></li>
+                                <li><a class="dropdown-item" id="Ward13">Ghukna 13</a></li>
+                                <li><a class="dropdown-item" id="Ward">Nehru Nagar Second</a></li>
+                                <li><a class="dropdown-item" id="Ward9">Shibanpura, Patel Nagar 9</a></li>
+                                <li><a class="dropdown-item" id="Ward19">Mukund Nagar 19</a></li>
+                                <li><a class="dropdown-item" id="Ward93">Kaila Bhatta 93</a></li>
+                                <li><a class="dropdown-item" id="Ward59">Charanpuri 59</a></li>
+                                <li><a class="dropdown-item" id="Ward96">Nehru Nagar Third 96</a></li>
+                                <li><a class="dropdown-item" id="Ward39">Nasirpur 39</a></li>
+                                <li><a class="dropdown-item" id="Ward22">Daulatpura 22</a></li>
+                                <li><a class="dropdown-item" id="Ward">Gandhi Nagar </a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a id="City_Road_Type" class="dropdown">Road Type &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="City_Road_major"><a class="dropdown-item">Major</a></li>
+                                <li id="City_Road_minor"><a class="dropdown-item">Minor</a></li>
+                                <li id="City_Road_service"><a class="dropdown-item">Service Road</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="City_Road_condition"> Road Conditions &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="City_Road_condition_good"><a class="dropdown-item">Good</a></li>
+                                <li id="City_Road_condition_moderate"><a class="dropdown-item">Moderate</a></li>
+                                <li id="City_Road_condition_poor"><a class="dropdown-item">Poor</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="City_Road_material">Road Material &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="City_Road_material_bitumen"><a class="dropdown-item">Bitumen</a></li>
+                                <li id="City_Road_material_CC"><a class="dropdown-item">CC</a></li>
+                                <li id="City_Road_material_interlocking"><a class="dropdown-item">Interlocking</a></li>
+                                <li id="City_Road_material_kachcha"><a class="dropdown-item">Kaccha</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="City_Road_ownership">Road Ownership &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="City_Road_ownership_NHAI"><a class="dropdown-item">GNN </a></li>
+                                <li id="City_Road_ownership_NNA"><a class="dropdown-item">NHAI</a></li>
+                                <li id="City_Road_ownership_PVT"><a class="dropdown-item">PWD</a></li>
+                                <li id="City_Road_ownership_PWD"><a class="dropdown-item">GDA</a></li>
+                                <li id="City_Road_ownership_UPSBC"><a class="dropdown-item">Railway</a></li>
+                                <li id="City_Road_ownership_UPSBC"><a class="dropdown-item">Private Colony Road</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a id="Vijay_nagar" class="dropdown">Vijay Nagar Zone &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" onclick="">Wards &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Ward15">Charansingh Colony 15</a></li>
+                                <li><a class="dropdown-item" id="Ward11">Pratap Vihar Sector 11</a></li>
+                                <li><a class="dropdown-item" id="Ward55">Vijay Nagar Sector-11 55</a></li>
+                                <li><a class="dropdown-item" id="Ward48">Mirzapur Pratap Vihar 48</a></li>
+                                <li><a class="dropdown-item" id="Ward4">Mata Colony 4</a></li>
+                                <li><a class="dropdown-item" id="Ward35">Akbarpur 35</a></li>
+                                <li><a class="dropdown-item" id="Ward1">Bhagu Bhim 1</a></li>
+                                <li><a class="dropdown-item" id="Ward58">Shivpuri 58</a></li>
+                                <li><a class="dropdown-item" id="Ward9">Rahul Vihar Siddharth 9</a></li>
+                                <li><a class="dropdown-item" id="Ward7">Biharipuira 7</a></li>
+                                <li><a class="dropdown-item" id="Ward27">Dhundhera 27</a></li>
+                                <li><a class="dropdown-item" id="Ward3">Purana Vijay Nagar 3</a></li>
+                                <li><a class="dropdown-item" id="Ward14">New Vijay Nagar 14</a></li>
+                                <li><a class="dropdown-item" id="Ward25">Ambedkar Nagar Mahendra Enclave 25</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Type">Road Type &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Major"><a class="dropdown-item">Major</a></li>
+                                <li id="Minor"><a class="dropdown-item">Minor</a></li>
+                                <li id="Service"><a class="dropdown-item">Service Road</a></li>
+                            
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Condition"> Road Conditions &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Good"><a class="dropdown-item">Good</a></li>
+                                <li id="Moderate"><a class="dropdown-item">Moderate</a></li>
+                                <li id="Poor"><a class="dropdown-item">Poor</a></li>
+                          
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Material">Road Material &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Bitumen"><a class="dropdown-item">Bitumen</a></li>
+                                <li id="CC"><a class="dropdown-item">CC</a></li>
+                                <li id="Interlocking"><a class="dropdown-item">Interlocking</a></li>
+                                <li id="Kachcha"><a class="dropdown-item">Kaccha</a></li>
+                             
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Ownership">Road Ownership &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="GNN"><a class="dropdown-item">GNN</a></li>
+                                <li id="NHAI"><a class="dropdown-item">Housing Board</a></li>
+                                <li id="PWD"><a class="dropdown-item">Under Railways</a></li>
+                                <li id="NDRF"><a class="dropdown-item">Private Colony Road</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a id="Mohan_nagar" class="dropdown">Mohan Nagar Zone &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" onclick="">Wards &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Ward5">Ganga Vihar 5</a></li>
+                                <li><a class="dropdown-item" id="Ward29">Kuti 29</a></li>
+                                <li><a class="dropdown-item" id="Ward64">Garima Garden 64</a></li>
+                                <li><a class="dropdown-item" id="Ward63">Pasonda 63</a></li>
+                                <li><a class="dropdown-item" id="Ward66">Mausam Vihar 66</a></li>
+                                <li><a class="dropdown-item" id="Ward82">Jawahar Park 82</a></li>
+                                <li><a class="dropdown-item" id="Ward37">Shalimar Garden  Main 37</a></li>
+                                <li><a class="dropdown-item" id="Ward44">Kadkad Model 44</a></li>
+                                <li><a class="dropdown-item" id="Ward34">Shaheed Nagar-1 34</a></li>
+                                <li><a class="dropdown-item" id="Ward78">Shalimar Extention-I 78</a></li>
+                                <li><a class="dropdown-item" id="Ward70">Jankipuram 70</a></li>
+                                <li><a class="dropdown-item" id="Ward86">Rajendra Nagar Sector-5 86</a></li>
+                                <li><a class="dropdown-item" id="Ward80">Rajendra Nagar Sector-9 80</a></li>
+                                <li><a class="dropdown-item" id="Ward83">Shyam Park Extention 83</a></li>
+                                <li><a class="dropdown-item" id="Ward28">Rajeev Colony 28</a></li>
+                                <li><a class="dropdown-item" id="Ward85">Lajpat Nagar-II 85</a></li>
+                                <li><a class="dropdown-item" id="Ward75">Lajpat Nagar-I 75</a></li>
+                                <li><a class="dropdown-item" id="Ward38">Arthala 38</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Type">Road Type &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Major"><a class="dropdown-item">Major</a></li>
+                                <li id="Minor"><a class="dropdown-item">Minor</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Condition"> Road Conditions &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Good"><a class="dropdown-item">Good</a></li>
+                                <li id="Moderate"><a class="dropdown-item">Moderate</a></li>
+                                <li id="Poor"><a class="dropdown-item">Poor</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Material">Road Material &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Bitumen"><a class="dropdown-item">Bitumen</a></li>
+                                <li id="CC"><a class="dropdown-item">CC</a></li>
+                                <li id="Interlocking"><a class="dropdown-item">Interlocking</a></li>
+                                <li id="Kachcha"><a class="dropdown-item">Kaccha</a></li>
+                              
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Ownership">Road Ownership &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="GNN"><a class="dropdown-item">GNN</a></li>
+                                <li id="NHAI"><a class="dropdown-item">NHAI</a></li>
+                                <li id="PWD"><a class="dropdown-item">PWD</a></li>
+                                <li id="GDA"><a class="dropdown-item">GDA</a></li>
+                                <li id="Railway"><a class="dropdown-item">Railway</a></li>
+                                <li id="Private"><a class="dropdown-item">Private Colony Road</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a id="Vasundhara" class="dropdown">Vasundhara Zone &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" onclick="">Wards &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Ward2">Sahibabad 40</a></li>
+                                <li><a class="dropdown-item" id="Ward8">Gyan Khand Indrapuram 87</a></li>
+                                <li><a class="dropdown-item" id="Ward9">Vaibhav Khand-1 99</a></li>
+                                <li><a class="dropdown-item" id="Ward10">Shipra Suncity(Indrapuram) 100</a></li>
+                                <li><a class="dropdown-item" id="Ward11">Bhouvapur 21</a></li>
+                                <li><a class="dropdown-item" id="Ward15">Vaishali-1 76</a></li>
+                                <li><a class="dropdown-item" id="Ward16">Vaishali-2 77</a></li>
+                                <li><a class="dropdown-item" id="Ward20">Kaushambi 72</a></li>
+                                <li><a class="dropdown-item" id="Ward22">Vasundhara-1 54</a></li>
+                                <li><a class="dropdown-item" id="Ward24">Vasundhara-2 61</a></li>
+                                <li><a class="dropdown-item" id="Ward25">Abhay Khand 79</a></li>
+                                <li><a class="dropdown-item" id="Ward29">Shakti Khand 81</a></li>
+                                <li><a class="dropdown-item" id="Ward34">Vasundhara-3 74</a></li>
+                                <li><a class="dropdown-item" id="Ward35">Maharajpur 41</a></li>
+                                <li><a class="dropdown-item" id="Ward42">Ram Prashta 97</a></li>
+                                <li><a class="dropdown-item" id="Ward43">Kad Kad Model 43</a></li>
+                                <li><a class="dropdown-item" id="Ward44">Surya Nagar 94</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Type">Road Type &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Major"><a class="dropdown-item">Major</a></li>
+                                <li id="Minor"><a class="dropdown-item">Minor</a></li>
+                                <li id="Service"><a class="dropdown-item">Service Road</a></li>
+                                <li id="Proposed"><a class="dropdown-item">Private Colony Road</a></li>
+                                <li id="Bharat"><a class="dropdown-item">Bharat Electronic Limited</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Condition"> Road Conditions &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Good"><a class="dropdown-item">Good</a></li>
+                                <li id="Moderate"><a class="dropdown-item">Moderate</a></li>
+                                <li id="Poor"><a class="dropdown-item">Poor</a></li>
+                                <li id="Proposed"><a class="dropdown-item">Proposed</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Material">Road Material &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Bitumen"><a class="dropdown-item">Bitumen</a></li>
+                                <li id="CC"><a class="dropdown-item">CC</a></li>
+                                <li id="Interlocking"><a class="dropdown-item">Interlocking</a></li>
+                                <li id="Kachcha"><a class="dropdown-item">Kaccha</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Ownership">Road Ownership &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="GNN"><a class="dropdown-item">GNN</a></li>
+                                <li id="NHAI"><a class="dropdown-item">NHAI</a></li>
+                                <li id="PWD"><a class="dropdown-item">PWD</a></li>
+                                <li id="GDA"><a class="dropdown-item">GDA</a></li>
+                                <li id="Private"><a class="dropdown-item">Private Colony Road</a></li>
+                                <li id="Bharat"><a class="dropdown-item">Bharat Electronic Limited</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div> -->
+        <!-------------------- zone wise road filter end -------------------------->
+
+        <!------------------- drain filter start ----------------->
+        <!-- <div id="drain-filter" class="drain-filter">
+            <ul>
+                <label style="margin-left:20px;"><b>Select Drain</b></label>
+                <li ><a class="dropdown">Ghaziabad All Drain &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
+                            <ul class="dropdown-menu ">
+                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
+                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
+                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
+                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
+                            <ul class="dropdown-menu ">
+                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
+                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
+                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
+                            <ul class="dropdown-menu ">
+                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
+                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
+                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
+                            <ul class="dropdown-menu ">
+                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
+                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
+                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a class="dropdown">Kavinagar Zone &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" onclick="">Wards &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Ward16"><a class="dropdown-item">Morta 16</a></li>
+                                <li id="Ward46"><a class="dropdown-item">Guldhar Duhai 46</a></li>
+                                <li id="Ward53"><a class="dropdown-item">Raiespur 53</a></li>
+                                <li id="Ward84"><a class="dropdown-item">Raj Nagar 84</a></li>
+                                <li id="Ward71"><a class="dropdown-item">Sanjay Nagar2 71</a></li>
+                                <li id="Ward91"><a class="dropdown-item">Kavi Nagar 91</a></li>
+                                <li id="Ward"><a class="dropdown-item">Sadarpur </a></li>
+                                <li id="Ward69"><a class="dropdown-item">Govindpuram 69</a></li>
+                                <li id="Ward67"><a class="dropdown-item">Kamla Nehru Sanjay 67</a></li>
+                                <li id="Ward47"><a class="dropdown-item">Shastri Nagar 47</a></li>
+                                <li id="Ward24"><a class="dropdown-item">Mehroli 24</a></li>
+                                <li id="Ward56"><a class="dropdown-item">Chiranjeev Vihari 56</a></li>
+                                <li id="Ward42"><a class="dropdown-item">Shahpur Bamheta 42</a></li>
+                                <li id="Ward65"><a class="dropdown-item">Vivekanand 65</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
+                            <ul class="dropdown-menu ">
+                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
+                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
+                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
+                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
+                            <ul class="dropdown-menu ">
+                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
+                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
+                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
+                            <ul class="dropdown-menu ">
+                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
+                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
+                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
+                            <ul class="dropdown-menu ">
+                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
+                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
+                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a class="dropdown">City Zone &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" onclick="">Wards &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Ward33">SarayNajar Ali 33</a></li>
+                                <li><a class="dropdown-item" id="Ward92">Kaila Islam Nagar 92</a></li>
+                                <li><a class="dropdown-item" id="Ward59">Saddik Noor Nagar 59</a></li>
+                                <li><a class="dropdown-item" id="Ward48">Nand Gram, Mariyam Nagar 48</a></li>
+                                <li><a class="dropdown-item" id="Ward31">Nandgram Sihani 31</a></li>
+                                <li><a class="dropdown-item" id="Ward32">Krishana Nagar 32</a></li>
+                                <li><a class="dropdown-item" id="Ward">Nandgram</a></li>
+                                <li><a class="dropdown-item" id="Ward6">DeenDayalpuri 6</a></li>
+                                <li><a class="dropdown-item" id="Ward17">Sewa Nagar 17</a></li>
+                                <li><a class="dropdown-item" id="Ward13">Ghukna 13</a></li>
+                                <li><a class="dropdown-item" id="Ward">Nehru Nagar Second</a></li>
+                                <li><a class="dropdown-item" id="Ward9">Shibanpura, Patel Nagar 9</a></li>
+                                <li><a class="dropdown-item" id="Ward19">Mukund Nagar 19</a></li>
+                                <li><a class="dropdown-item" id="Ward93">Kaila Bhatta 93</a></li>
+                                <li><a class="dropdown-item" id="Ward59">Charanpuri 59</a></li>
+                                <li><a class="dropdown-item" id="Ward96">Nehru Nagar Third 96</a></li>
+                                <li><a class="dropdown-item" id="Ward39">Nasirpur 39</a></li>
+                                <li><a class="dropdown-item" id="Ward22">Daulatpura 22</a></li>
+                                <li><a class="dropdown-item" id="Ward">Gandhi Nagar </a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
+                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
+                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
+                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
+                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
+                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
+                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
+                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
+                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
+                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a class="dropdown">Vijay Nagar Zone  &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" onclick="">Wards &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Ward15">Charansingh Colony 15</a></li>
+                                <li><a class="dropdown-item" id="Ward11">Pratap Vihar Sector 11</a></li>
+                                <li><a class="dropdown-item" id="Ward55">Vijay Nagar Sector-11 55</a></li>
+                                <li><a class="dropdown-item" id="Ward48">Mirzapur Pratap Vihar 48</a></li>
+                                <li><a class="dropdown-item" id="Ward4">Mata Colony 4</a></li>
+                                <li><a class="dropdown-item" id="Ward35">Akbarpur 35</a></li>
+                                <li><a class="dropdown-item" id="Ward1">Bhagu Bhim 1</a></li>
+                                <li><a class="dropdown-item" id="Ward58">Shivpuri 58</a></li>
+                                <li><a class="dropdown-item" id="Ward9">Rahul Vihar Siddharth 9</a></li>
+                                <li><a class="dropdown-item" id="Ward7">Biharipuira 7</a></li>
+                                <li><a class="dropdown-item" id="Ward27">Dhundhera 27</a></li>
+                                <li><a class="dropdown-item" id="Ward3">Purana Vijay Nagar 3</a></li>
+                                <li><a class="dropdown-item" id="Ward14">New Vijay Nagar 14</a></li>
+                                <li><a class="dropdown-item" id="Ward25">Ambedkar Nagar Mahendra Enclave 25</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
+                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
+                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
+                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
+                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
+                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
+                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
+                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
+                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
+                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a class="dropdown">Mohan Nagar Zone  &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" onclick="">Wards &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Ward5">Ganga Vihar 5</a></li>
+                                <li><a class="dropdown-item" id="Ward29">Kuti 29</a></li>
+                                <li><a class="dropdown-item" id="Ward64">Garima Garden 64</a></li>
+                                <li><a class="dropdown-item" id="Ward63">Pasonda 63</a></li>
+                                <li><a class="dropdown-item" id="Ward66">Mausam Vihar 66</a></li>
+                                <li><a class="dropdown-item" id="Ward82">Jawahar Park 82</a></li>
+                                <li><a class="dropdown-item" id="Ward37">Shalimar Garden  Main 37</a></li>
+                                <li><a class="dropdown-item" id="Ward44">Kadkad Model 44</a></li>
+                                <li><a class="dropdown-item" id="Ward34">Shaheed Nagar-1 34</a></li>
+                                <li><a class="dropdown-item" id="Ward78">Shalimar Extention-I 78</a></li>
+                                <li><a class="dropdown-item" id="Ward70">Jankipuram 70</a></li>
+                                <li><a class="dropdown-item" id="Ward86">Rajendra Nagar Sector-5 86</a></li>
+                                <li><a class="dropdown-item" id="Ward80">Rajendra Nagar Sector-9 80</a></li>
+                                <li><a class="dropdown-item" id="Ward83">Shyam Park Extention 83</a></li>
+                                <li><a class="dropdown-item" id="Ward28">Rajeev Colony 28</a></li>
+                                <li><a class="dropdown-item" id="Ward85">Lajpat Nagar-II 85</a></li>
+                                <li><a class="dropdown-item" id="Ward75">Lajpat Nagar-I 75</a></li>
+                                <li><a class="dropdown-item" id="Ward38">Arthala 38</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
+                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
+                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
+                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
+                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
+                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
+                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
+                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
+                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
+                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a class="dropdown">Vasundhara Zone &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" onclick="">Wards &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Ward2">Sahibabad 40</a></li>
+                                <li><a class="dropdown-item" id="Ward8">Gyan Khand Indrapuram 87</a></li>
+                                <li><a class="dropdown-item" id="Ward9">Vaibhav Khand-1 99</a></li>
+                                <li><a class="dropdown-item" id="Ward10">Shipra Suncity(Indrapuram) 100</a></li>
+                                <li><a class="dropdown-item" id="Ward11">Bhouvapur 21</a></li>
+                                <li><a class="dropdown-item" id="Ward15">Vaishali-1 76</a></li>
+                                <li><a class="dropdown-item" id="Ward16">Vaishali-2 77</a></li>
+                                <li><a class="dropdown-item" id="Ward20">Kaushambi 72</a></li>
+                                <li><a class="dropdown-item" id="Ward22">Vasundhara-1 54</a></li>
+                                <li><a class="dropdown-item" id="Ward24">Vasundhara-2 61</a></li>
+                                <li><a class="dropdown-item" id="Ward25">Abhay Khand 79</a></li>
+                                <li><a class="dropdown-item" id="Ward29">Shakti Khand 81</a></li>
+                                <li><a class="dropdown-item" id="Ward34">Vasundhara-3 74</a></li>
+                                <li><a class="dropdown-item" id="Ward35">Maharajpur 41</a></li>
+                                <li><a class="dropdown-item" id="Ward42">Ram Prashta 97</a></li>
+                                <li><a class="dropdown-item" id="Ward43">Kad Kad Model 43</a></li>
+                                <li><a class="dropdown-item" id="Ward44">Surya Nagar 94</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
+                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
+                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
+                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
+                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
+                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
+                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
+                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
+                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
+                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div> -->
+        <!--------------------- drain filter end ---------------->
+
+        <!--------------------- street view tab start ------------->
+        <!-- <div class="street-view" id="street-tab">
+    <span class="tab-cancel-icon" ><i class="fas fa-times cancel-icon"></i></span>
+    <label for="layer" style="margin-left:15px;">Available Layers</label>
+    <select id="layer">
+         Options will be dynamically populated here -->
+        <!-- </select>
+    <div class="button-group">
+        <button onclick="add_layer()"><b>Add Layer to Map</b></button>
+        <button onclick="clear_layer()"><b>Clear Layer</b></button>
+    </div>      
+    </div> -->
+        <!------------------------ street view tab end --------------->
+
+        <!----------------- Legend btn code start-------------->
+        <div class="legend-tab">
+            <button id="legendBtn">Show Legend</button>
+            <div id="live_legend" style="display: none;">
+                <h6>Legend</h6>
+                <ul>
+
+                </ul>
+            </div>
+
+            <div id="Road_Age_legend"
+                style="display:none; position:absolute; z-index: 600; top: 45% ;  width: 14%; height: 21%;  overflow: scroll; 
+    background-color: white; border: 2px solid black;  padding: 2px 4px;  box-shadow: 0 0 10px rgba(118, 18, 18, 0.1); font-size: 12px; ">
+                <h6>Legend</h6>
+                <ul>
+                    <li><span
+                            style="background-color: #bd480e; width: 20px; height: 2px; display: inline-block;"></span>
+                        Less Than 3y</li>
+                    <li><span
+                            style="background-color: #FFC300; width: 20px; height: 2px; display: inline-block;"></span>
+                        Greater Than 3y
+                    <li>
+                     
+                </ul>
+            </div>
+            <div id="Priority_legend" style="display: none;">
+                <h6>Legend</h6>
+                <ul>
+                    <li><span style="background-color: #EB5406; width: 20px; height: 2px; display:inline-block;"></span>
+                        High Priority</li>
+                    <li><span
+                            style="background-color: #00FF00; width: 20px; height: 2px; display: inline-block;"></span>
+                        Low Priority</li>
+                    <li><span
+                            style="background-color: #FFC300; width: 20px; height: 2px; display: inline-block;"></span>
+                        Not Eligible
+                    <li>
+                      
+                </ul>
+            </div>
+            <div id="type_legend"
+                style="display:none; position:absolute; z-index: 600; top: 45% ;  width: 14%; height: 21%;  overflow: scroll; 
+    background-color: white; border: 2px solid black;  padding: 2px 4px;  box-shadow: 0 0 10px rgba(118, 18, 18, 0.1); font-size: 12px; ">
+                <h6>Legend By Type</h6>
+                <ul>
+                    <li><span style="background-color: purple; width: 20px; height: 2px; display: inline-block;"></span>
+                        Urban Express Way</li>
+                    <li><span
+                            style="background-color: #0000ff; width: 20px; height: 2px; display: inline-block;"></span>
+                        Arterial</li>
+                    <li><span
+                            style="background-color: #32e1e3; width: 20px; height: 2px; display: inline-block;"></span>
+                        Sub Arterial</li>
+                    <li><span style="background-color: yellow; width: 20px; height: 2px; display: inline-block;"></span>
+                        Local Street</li>
+                    <li><span
+                            style="background-color: lightgreen; width: 20px; height: 2px; display: inline-block;"></span>
+                        Collector</li>
+
+                    <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+            <div id="type_legend_major"
+                style="display:none; position:absolute; z-index: 600; top: 45% ;  width: 14%; height: 21%;  overflow: scroll; 
+background-color: white; border: 2px solid black;  padding: 2px 4px;  box-shadow: 0 0 10px rgba(118, 18, 18, 0.1); font-size: 12px; ">
+                <h6>Legend By Type</h6>
+                <ul>
+                    <li><span
+                            style="background-color: #0000ff; width: 20px; height: 2px; display: inline-block;"></span>
+                        Major</li>
+                    <li><span
+                            style="background-color: #e2e832; width: 20px; height: 2px; display: inline-block;"></span>
+                        Minor</li>
+                   
+                </ul>
+            </div>
+        </div>
+        <!----------------- Legend btn code end --------------->
+
+        <!--------spping boot live Road Table data getting----->
+
+         <div id="tableContainer">
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th> Gis Id </th>
+                        <th> zone No </th>
+                        <th> zone Name </th>
+                        <th> Ward No </th>
+                        <th> Ward Name </th>
+                        <th> Ownership </th>
+                        <th> Type </th>
+                        <th> Road Name </th>
+                        <th> Row meter </th>
+                        <th> Row as per </th>
+                        <th> Carriage Width </th>
+                        <th> Material </th>
+                        <th> Length (km) </th>
+                        <th> Conditon </th>
+                        <th> Year Of Construction </th>
+                        <th> CUS &nbsp;&nbsp; <span class="table-cancel-btn">
+                                <i id="cancelbtn1" class="fas fa-times cancel-btn"></i>
+                            </span></th>
+                    </tr>
+                </thead>
+                <tbody id="dataBody">
+                   
+                </tbody>
+            </table>
+        </div> 
+
+        <!----------------------Road Age Table----------------->
+
+        <!-- <div id="tableContainer_Road_Age">
+            <table id="dataTable_Road_Age">
+                <thead>
+                    <tr>
+                        <th> Gis Id </th>
+                        <th> zone No </th>
+                        <th> zone Name </th>
+                        <th> Ward No </th>
+                        <th> Ward Name </th>
+                        <th> Ownership </th>
+                        <th> Type </th>
+                        <th> Road Name </th>
+                        <th> Row meter </th>
+                        <th> Row as per </th>
+                        <th> Carriage Width </th>
+                        <th> Material </th>
+                        <th> Length (km) </th>
+                        <th> Conditon </th>
+                        <th> Year Of Construction </th>
+                        <th> Construction Under Scheme </th>
+                        <th> Year &nbsp;&nbsp; <span class="table-cancel-btn">
+                                <i id="cancelbtn1" class="fas fa-times cancel-btn"></i>
+                            </span></th>
+                      
+                    </tr>
+                </thead>
+                <tbody id="dataBody_Road_Age">
+                  
+                </tbody>
+            </table>
+        </div> -->
+
+        <!-- <div id="Scoreing_tableContainer">
+            <table id="Scoreing_dataTable">
+                <thead>
+                    <tr>
+                        <th style="width:180px;"> GIS Id </th>
+                        <th style="width:180px;"> Zone No. </th>
+                      
+                        <th style="width:180px;"> Ward No </th>
+                       
+                        <th style="width:180px;"> Road Name </th>
+                        <th style="width:180px;"> ROW Meter </th>
+                      
+                        <th style="width:180px;"> Length (km) </th>
+                        <th style="width:180px;"> Conditon </th>
+                       
+                        <th> Total Score </th>
+                      
+                        <th> Priority &nbsp;&nbsp; <span class="table-cancel-btn">
+                                <i id="cancelbtn1" class="fas fa-times cancel-btn"></i>
+                            </span> </th>
+                    </tr>
+                </thead>
+                <tbody id="dataBody_Scoring">
+
+                </tbody>
+            </table>
+        </div> -->
+
+        <!--------spping boot live Drain data getting----->
+        <!-- <div id="tableContainer_Drain">
+            <table id="dataTable_Drain">
+                <thead>
+                    <tr>
+                        <th style="width:130px"> Zone No </th>
+                        <th style="width:130px"> Zone Name </th>
+                        <th style="width:130px"> Gis Id </th>
+                        <th style="width:130px"> Ward No </th>
+                        <th style="width:130px"> Ward Name </th>
+                        <th style="width:130px"> Ownership </th>
+                        <th style="width:130px"> Type </th>
+                        <th style="width:130px"> Status </th>
+                        <th style="width:130px"> Material </th>
+                        <th style="width:130px"> Length (meter) </th>
+                        <th style="width:130px"> Condition </th>
+                        <th style="width:130px"> Year of Construction </th>
+                        <th style="width:130px"> Width </th>
+                        <th style="width:130px"> Depth &nbsp;&nbsp; <span class="table-cancel-btn">
+                                <i id="cancelbtn1" class="fas fa-times cancel-btn"></i>
+                            </span> </th>
+
+                    </tr>
+                </thead>
+                <tbody id="dataBody_Drain">
+                  
+                </tbody>
+            </table>
+        </div> -->
+
+
+        <!--------------------------show table on click table summary data---------->
+        <!--------spping boot live Road Table data getting----->
+        <!-- <div id="tableContainer_summary">
+            <table id="dataTable_summary">
+                <thead>
+                    <tr>
+                        <th> Gis Id </th>
+                        <th> Zone No </th>
+                        <th> Zone Name </th>
+                        <th> Ward No </th>
+                        <th> Ward Name </th>
+                        <th> Ownership </th>
+                        <th> Type </th>
+                        <th> Road Name </th>
+                        <th> Row (meter) </th>
+                        <th> Row as per </th>
+                        <th> carriage Width </th>
+                        <th> Material </th>
+                        <th> Length (km) </th>
+                        <th> conditon </th>
+                        <th> Year Of Construction </th>
+                        <th> CUS &nbsp;&nbsp; <span class="table-cancel-btn1">
+                                <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                            </span></th>
+                      
+                    </tr>
+                </thead>
+                <tbody id="dataBody_summary">
+
+                </tbody>
+            </table>
+        </div> -->
+        <!------------------------ live table end --------------------->
+
+
+        <!-- Your HTML content -->
+        <!-- <div id="popup" class="ol-popup"> 
+         </div> -->
+
+
+        <!-- popup for park polygon  -->
+        <div id="popup_1" class="popup_1"></div>
+
+      
+
+        <!-- <div id="custom-popup" class="ol-popup" style="display: none;">
+            <a href="#" id="popup-closer" class="ol-popup-closer">×</a>
+            <div id="popup-content"></div>
+        </div> -->
+
+
+
+        <!------------------------- summary table start ------------------->
+        <!-- <div class="table_summary" id="summary-table">
+            <div class="topnav" id="topnav">
+                <div class="nav-links">
+                    <a href="#Summary" id="summary_id" onclick="navigateTo('Summary')">Summary</a>
+
+                    
+                   <div class="dropdown">
+                        <a href="#Zones" class="dropbtn">Zones</a>
+                        <div class="dropdown-content" id="zonesDropdown">
+                         
+                        </div> -->
+                    <!-- </div> --> 
+
+      
+                    <!-- <div class="dropdown">
+                        <a href="#Wards" class="dropbtn">Wards</a>
+                        <div class="dropdown-content" id="zonesDropdownwards">
+                         
+                        </div>
+                    </div>
+                    <a href="#Amenities" class="tab" data-tab="Amenities"
+                        onclick="navigateTo('Amenities')">Amenities</a>
+
+                  
+                </div>
+                <div class="icons">
+                    <i class="fas fa-window-minimize" onclick="minimize()"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize()"></i>
+                    <i class="fas fa-window-close" onclick="closeNav()"></i>
+                </div>
+            </div>
+            <div class="content-wrapper" id="content-wrapper">
+                <div id="content" class="card-container">
+                  
+
+                </div>
+            </div>
+        </div>  -->
+
+        <!------------------------ summary table end --------------------->
+
+    </div>
+    <!--------- main-container section end -------------->
+
+    <!----------- footer section start ---------->
+    <div class="footer">
+        &copy; 2024 UP Remote Sensing Application Centre. All rights reserved.
+    </div>
+    <!--------- footer section end ----------->
+
+    <script src="../javascript/varanasi.js"></script>
+
+</body>
+
+</html>

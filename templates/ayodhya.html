@@ -1,0 +1,1918 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayodhya</title>
+
+    <link href="../libs/bootstrap-5.1.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/libs/v6.13.0-dist/ol.css">
+    <link rel="stylesheet" href="/libs/ol-layerswitcher-master/dist/ol-layerswitcher.css" />
+    <link rel="stylesheet" href="/libs/ol-geocoder/ol-geocoder.css" />
+    <!-- <link rel="stylesheet" href="/libs/ol-popup/ol-popup.css"/> -->
+    <link rel="stylesheet" href="/libs/jquery-ui-1.12.1/jquery-ui.css">
+
+    <script src="../libs/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../libs/jquery.js"></script>
+    <script src="../libs/v6.13.0-dist/ol.js"></script>
+    <script src="../libs/ol-layerswitcher-master/dist/ol-layerswitcher.js"></script>
+    <script src="../libs/ol-geocoder/ol-geocoder.js"></script>
+    <script src="../libs/ol-popup/ol-popup.js"></script>
+    <script src="../libs/jquery-ui-1.12.1/external/jquery/jquery.js"></script>
+    <script src="../libs/jquery-ui-1.12.1/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <link rel="shortcut icon" type="image/x-icon" class="fabicon" href="../assets/icons/logo_tree.png" />
+
+    <link rel="stylesheet" href="../style/ayodhya.css">
+    <link rel="stylesheet" href="../style/responsive.css">
+
+</head>
+
+<body>
+    <!---------------------- header section start -------------------------->
+    <div class="header">
+        <i class="fas fa-bars hamburger"></i>
+        <div class="center-content">
+            <img src="../assets/logo/ayodhya.jpeg" class="logo" alt="" />
+            <h2 class="title">Ayodhya Nagar Nigam</h2>
+            <img src="../assets/logo/images.jpg" class="logo" alt="dp" />
+        </div>
+        <i class="fa-solid fa-print"></i>
+
+        <div class="search-container" id="search-bar">
+            <select id="roadNamesDropdown"></select>
+        </div>
+        <!-- <div id="popup-search" class="ol-popup-search">
+            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+            <div id="popup-content-search"></div>
+        </div> -->
+    </div>
+    <!---------------------- header section end -------------------------->
+
+    <!---------------------- sidebar section start -------------------------->
+    <div class="sidebar">
+        <span><i class="fas fa-times cancel-icon"></i></span>
+
+        <!-- Bootstrap Tabs -->
+        <ul class="nav nav-tabs" id="sidebarTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="amenities-tab" data-bs-toggle="tab" data-bs-target="#amenities"
+                    type="button" role="tab" aria-controls="amenities" aria-selected="true"> Amenities </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" type="button"
+                    role="tab" aria-controls="data" aria-selected="false"> Network </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="utilities-tab" data-bs-toggle="tab" data-bs-target="#utilities"
+                    type="button" role="tab" aria-controls="utilities" aria-selected="false">
+                    Others
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="assets-tab" data-bs-toggle="tab" data-bs-target="#assets" type="button"
+                    role="tab" aria-controls="assets" aria-selected="false">
+                    Road Analysis
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="sidebarTabsContent">
+            <!-- Amenities Tab Content -->
+            <div class="tab-pane fade show active" id="amenities" role="tabpanel" aria-labelledby="amenities-tab">
+                <h2></h2>
+                <form>
+                    <label>
+                        <i class="icon fas fa-university" style="margin-right: 14px;"></i>
+                        <input type="checkbox" id="showBanks" class="main-option" name="option3" />
+                        <span class="text">Banks - 240</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-hotel" style="margin-right: 13.8px;"></i>
+                        <input type="checkbox" id="showHotel" class="main-option" name="option13" />
+                        <span class="text">Hotels - 261</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-hospital"></i>
+                        <input type="checkbox" id="showHospital" class="main-option" name="option4" />
+                        <span class="text">Hospitals - 25</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-tree" style="margin-right: 15.5px;"></i>
+                        <input type="checkbox" id="showParks" class="main-option" name="option8" />
+                        <span class="text">Parks - 36</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-bus" style="margin-right: 12px;"></i>
+                        <input type="checkbox" id="showBus" class="main-option" name="option11" />
+                        <span class="text">Bus Stops - 6</span>
+                    </label>
+
+
+                    <label>
+                        <i class="icon fas fa-charging-station" style="margin-right: 12px;"></i>
+                        <input type="checkbox" id="showCar" class="main-option" name="option5" />
+                        <span class="text">Car charging Station - 6</span>
+                    </label>
+
+                    <label>
+                        <i class="icon fas fa-gas-pump" style="margin-right: 12px;"></i>
+                        <input type="checkbox" id="showPetrol" class="main-option" name="option5" />
+                        <span class="text">Petrol Pump - 41</span>
+                    </label>
+
+                    <label>
+                        <i class="icon fas fa-hockey-puck" style="margin-right: 11px;"></i>
+                        <input type="checkbox" id="showStadium" class="main-option" name="option9" />
+                        <span class="text">Stadium - 10</span>
+                    </label>
+
+                    <label>
+                        <i class="icon fas fa-cross" style="margin-right: 14.5px;"></i>
+                        <input type="checkbox" id="showGraveyard" class="main-option" name="option14" />
+                        <span class="text">Graveyard - 9</span>
+                    </label>
+
+
+                </form>
+            </div>
+
+            <!-- Network Tab Content -->
+            <div class="tab-pane fade" id="data" role="tabpanel" aria-labelledby="data-tab">
+                <!-- <h2>Network</h2> -->
+                <form>
+                    <label>
+                        <i class="icon fas fa-route"></i>
+                        <input type="checkbox" id="ShowRoads" class="main-option" name="option1" />
+                        <!-- <a onclick="updateNavBarWithFunctionName('All Roads');"></a> -->
+                            <span class="text">Roads</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-bacon"></i>
+                        <input type="checkbox" id="ShowDrainage" class="main-option" name="option2" />
+                        <a onclick="updateNavBarWithFunctionName('Drain');"></a>
+                        <span class="text">Drainage</span>
+                    </label>
+                </form>
+            </div>
+
+            <!-- Others Tab Content -->
+            <div class="tab-pane fade" id="utilities" role="tabpanel" aria-labelledby="utilities-tab">
+                <!-- <h2>others</h2> -->
+                <form>
+                    <label>
+                        <i class="icon fas fa-book-open"></i> <!-- <i class="icon fas fa-school"></i> -->
+                        <input type="checkbox" id="showEducation" class="main-option" name="option2" />
+                        <span class="text">Educational Institutes - 129</span>
+                    </label>
+                    <label>
+                        <i class="fa-sharp fa-solid fa-gopuram" style="color: #050505; margin-right: 16px;"></i>
+                        <input type="checkbox" id="showReligious" class="main-option" name="option10" />
+                        <span class="text">Religious Places - 40</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-envelope" style="margin-right: 14px;"></i>
+                        <input type="checkbox" id="showPostOffice" class="main-option" name="option12" />
+                        <span class="text">Post Offices - 12 </span>
+                    </label>
+
+                    <label>
+                        <i class="icon fas fa-building" style="margin-right: 16px;"></i>
+                        <input type="checkbox" id="showStateGov" class="main-option" name="option1" />
+                        <span class="text">State Government Offices - 26</span>
+
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building" style="margin-right: 15px;"></i>
+                        <input type="checkbox" id="showCentralGov" class="main-option" name="option1" />
+                        <span class="text">Central Government Offices - 15</span>
+
+                    </label>
+                </form>
+            </div>
+
+            <!-- Assets Tab Content -->
+            <div class="tab-pane fade" id="assets" role="tabpanel" aria-labelledby="assets-tab">
+                <!-- <h2>Assets</h2> -->
+                <form>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Slum_Boundary" class="main-option" name="option1" />
+                        <span class="text" >Slum Boundary - 41</span>
+
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Slum_Road" class="main-option" name="option1" />
+                        <!-- <a onclick="updateNavBarWithFunctionName('Slum Roads');"></a> -->
+                        <span class="text">Slum Road - 716</span>
+
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Education_Road" class="main-option" name="option1" />
+                        <!-- <a onclick="updateNavBarWithFunctionName('Education Institutes with Roads');"></a> -->
+                            <span class="text">Education's Road</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Bank_Road" class="main-option" name="option1" />
+                        <span class="text">Bank's Road</span>
+
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Hospital_Road" class="main-option" name="option1" />
+                        <span class="text">Hospital's Road</span>
+                            <!-- <a onclick="updateNavBarWithFunctionName('Hospital with Roads');"></a> -->
+                         
+
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Park_Road" class="main-option" name="option1" />
+                        <span class="text">Park's Road</span>
+
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Hotel_Road" class="main-option" name="option1" />
+                        <span class="text">Hotel's Road</span>
+
+                    </label>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!---------------------- sidebar section end -------------------------->
+    <div id="scale_bar"></div>
+    <!---------------------- main-container section start -------------------------->
+    <div class="main-container">
+
+        <!---------------------- map section start ------------------>
+        <div id="map">
+            <div class="map-icons-left">
+                <button class="map-icon" id="View_point" title="Street View" onclick="street_view()"><i
+                        class="fas fa-street-view"></i></button>
+                <h6 class="h6">Street View</h6>
+                <button class="map-icon" title="Data Analysis"><a id="data_graph"
+                        href="https://lookerstudio.google.com/reporting/531f12de-f859-4f04-aa2c-8c36dbe35d8c"
+                        target="_blank"><i class="fas fa-chart-simple"></i></a></button>
+                <h6 class="h6">Data Analysis</h6>
+
+                
+                <button class="map-icon" id="road_btn" title="Zone wise Road" onclick="road_filter()"><i
+                        class="fas fa-road"></i></button>
+                <h6 class="h6">Road Filter</h6>
+
+                <!-- <button class="map-icon" title="Get Info"><i class="fas fa-circle-info"></i></button> -->
+                <button class="map-icon"id="drain_btn" title="Drain" onclick="drain_filter()"><i
+                        class="fa-solid fa-worm"></i></button>
+                <h6 class="h6">Drain Filter</h6>
+            </div>
+
+            <div class="map-icons">
+                <button class="map-icon" id="search-icon" title="Search"><i class="fas fa-search"></i></button>
+                <h6 class="h6"> Search </h6>
+                <!-- <button class="map-icon" id="measure-icon" onclick="measure_tab()" title="Measure Tool"><i
+                        class="fas fa-ruler"></i></button> -->
+                <!-- <button class="map-icon" id="basemap-icon" title="Toggle Basemap"><i class="fas fa-map"></i></button> -->
+                <!-- <button class="map-icon" id="layer-list-icon" title="Layer List"><i class="fas fa-layer-group"></i></button> -->
+                <!-- <button class="map-icon" id="query_btn" onclick="query_panel1()" title="Query Panel"><i
+                        class="fas fa-window-maximize"></i></button>
+                <h6 class="h6"> Query </h6> -->
+
+                <button class="map-icon" id="table_icon" title="Summary Data" onclick="summary_table()"><i
+                        class="fas fa-table "></i></button>
+                <h6 class="h6"> Summary </h6>
+
+                <button class="map-icon" id="clear-icon" title="Clear"><i class="fa fa-trash"></i></button>
+                <h6 class="h6">Clear</h6>
+
+            </div>
+
+        </div>
+        <!-------------------- map section end -------------------->
+
+        <!---------------------- query panel section start -------------------------->
+        <div id="query_tab" class="query-tab">
+            <span class="tab-cancel-icon"><i class="fas fa-times cancel-icon"></i></span>
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist" style="font-size:11px;">
+                    <button class="nav-link " id="nav-attributes-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-attributes" type="button" role="tab" aria-controls="nav-attributes"
+                        aria-selected="true" style="font-size:12px;color:white">Select by Attributes</button>
+                    <button class="nav-link" id="nav-draw-tab" data-bs-toggle="tab" data-bs-target="#nav-draw"
+                        type="button" role="tab" aria-controls="nav-draw" aria-selected="false"
+                        style="font-size:12px;color:white">Select by Draw</button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-attributes" role="tabpanel"
+                    aria-labelledby="nav-attributes-tab">
+                    <!-- <label for="layer"><b>Select Layer</b></label> -->
+                    <select id="layer" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Select Layer</option>
+                    </select>
+                    <br>
+                    <!-- <label for="attributes"><b>Select Attribute</b></label> -->
+                    <select id="attributes" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Select Attribute</option>
+                    </select>
+                    <br>
+                    <!-- <label for="operator"><b>Select Attribute</b></label> -->
+                    <select id="operator" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Select Operator</option>
+                    </select>
+                    <br>
+                    <!-- <label for="value">Enter Value</label> -->
+                    <input type="text" class="form-control form-select-sm" id="value" placeholder="Enter Value"
+                        name="value">
+                    <br>
+                    <button id="load-layer" onclick="query()" type="button" style="margin-left:10px;"
+                        class="btn btn-danger btn-sm">Load Layer</button>
+                    <br><br>
+                </div>
+                <div class="tab-pane fade" id="nav-draw" role="tabpanel" aria-labelledby="nav-draw-tab">
+                    <!-- <label for="layer1"><b>Select Layer</b></label> -->
+                    <select id="layer1" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Select Layer</option>
+                    </select>
+                    <br>
+                    <!-- <label for="draw_type"><b>Select Geometry Type</b></label> -->
+                    <select id="draw_type" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option value="select">Select Shape</option>
+                        <option value="Square">Square</option>
+                        <option value="Box">Box</option>
+                        <option value="Polygon">Polygon</option>
+                        <option value="Star">Star</option>
+                        <option value="clear">Clear</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div id="table_data" style="font-size:15px;"></div>
+
+        <!------------------ query panel section end--------------------->
+
+        <!-- ---------------- measure-options section start ---------------
+        <div class="measure-options" id="measure-tab">
+            <span class="tab-cancel-icon"><i class="fas fa-times cancel-icon"></i></span>
+            <label for="layer" style="margin-left:15px;">Measure Options</label>
+            <button onclick="startLineString()"><b>Line String</b></button>
+            <button onclick="startPolygon()"><b>Polygon</b></button>
+            <button onclick="clearMeasurement()"><b>Clear Measurement</b></button>
+        </div> -->
+        <!------------------- measure-options section end ----------------->
+
+        <!-------------------- zone wise road filter start -------------------------->
+        <div id="road-filter" class="road-filter">
+            <ul>
+                <label style="margin-left:20px;"><b>Select Roads</b></label>
+                <li><a class="dropdown"> Ayodhya All Roads &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" id="Priority_Data">Priority Based Road &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="P1"><a class="dropdown-item">First Priority</a></li>
+                                <li id="P2"><a class="dropdown-item">Second Priority</a></li>
+                                <li id="Not_Eligible"><a class="dropdown-item">Not Eligible</a></li>
+                                <!-- <li><a class="dropdown-item" onclick="service">Service Road</a></li>
+                    <li><a class="dropdown-item" onclick="not_applicable()">NA</a></li> -->
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a class="dropdown" id="Type"
+                                onclick="updateAyodhyaRoadLayer('type'); updateNavBarWithFunctionName('Ayodhya Road Type');">Road
+                                Type &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Major"><a class="dropdown-item"
+                                        onclick="Ayodhya_Type_cat('type','Major'); updateNavBarWithFunctionName('Ayodhya Road Type Major');">Major</a>
+                                </li>
+                                <li id="Minor"><a class="dropdown-item"
+                                        onclick="Ayodhya_Type_cat('type','Minor'); updateNavBarWithFunctionName('Ayodhya Road Type Minor');">Minor</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Condition"
+                                onclick="updateAyodhyaRoadLayer('condition'); updateNavBarWithFunctionName('Ayodhya Road Condition');">
+                                Road Conditions &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Good"><a class="dropdown-item"
+                                        onclick="Ayodhya_Condition_cat('condition','Green'); updateNavBarWithFunctionName('Ayodhya Road Condition Good');">Good</a>
+                                </li>
+                                <li id="Moderate"><a class="dropdown-item"
+                                        onclick="Ayodhya_Condition_cat('condition','Yellow'); updateNavBarWithFunctionName('Ayodhya Road Condition Moderate');">Moderate</a>
+                                </li>
+                                <li id="Poor"><a class="dropdown-item"
+                                        onclick="Ayodhya_Condition_cat('condition','Red'); updateNavBarWithFunctionName('Ayodhya Road Condition Poor');">Poor</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Material"
+                                onclick="updateAyodhyaRoadLayer('material'); updateNavBarWithFunctionName('Ayodhya Road Material');">Road
+                                Material &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Bitumen"><a class="dropdown-item"
+                                        onclick="Ayodhya_Material_cat('carriage_m','Bitumen'); updateNavBarWithFunctionName('Ayodhya Road Material Bitumen');">Bitumen</a>
+                                </li>
+                                <li id="BOE"><a class="dropdown-item"
+                                        onclick="Ayodhya_Material_cat('carriage_m','BOE'); updateNavBarWithFunctionName('Ayodhya Road Material BOE');">BOE</a>
+                                </li>
+                                <li id="CC"><a class="dropdown-item"
+                                        onclick="Ayodhya_Material_cat('carriage_m','CC'); updateNavBarWithFunctionName('Ayodhya Road Material CC');">CC</a>
+                                </li>
+                                <li id="Interlocking"><a class="dropdown-item"
+                                        onclick="Ayodhya_Material_cat('carriage_m','Interlocking'); updateNavBarWithFunctionName('Ayodhya Road Material Interlocking');">Interlocking</a>
+                                </li>
+                                <li id="Kachcha"><a class="dropdown-item"
+                                        onclick="Ayodhya_Material_cat('carriage_m','Kachcha'); updateNavBarWithFunctionName('Ayodhya Road Material Kachcha');">Kaccha</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Ownership"
+                                onclick="updateAyodhyaRoadLayer('ownership'); updateNavBarWithFunctionName('Ayodhya Road Ownership');">Road
+                                Ownership &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="NHAI"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ownership_cat('ownership','NHAI'); updateNavBarWithFunctionName('Ayodhya Road Ownership NHAI');">NHAI
+                                    </a></li>
+                                <li id="NNA"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ownership_cat('ownership','ANN'); updateNavBarWithFunctionName('Ayodhya Road Ownership ANN');">ANN
+                                    </a></li>
+                                <li id="PVT"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ownership_cat('ownership','PVT'); updateNavBarWithFunctionName('Ayodhya Road Ownership PVT');">PVT</a>
+                                </li>
+                                <li id="PWD"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ownership_cat('ownership','PWD'); updateNavBarWithFunctionName('Ayodhya Road Ownership PWD');">PWD
+                                    </a></li>
+                                <li id="Railway"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ownership_cat('ownership','Railway'); updateNavBarWithFunctionName('Ayodhya Road Ownership Railway');">
+                                        Railway </a></li>
+                                <li id="UPSBC"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ownership_cat('ownership','UPSBC Ltd.'); updateNavBarWithFunctionName('Ayodhya Road Ownership UPSBC Ltd.');">
+                                        UPSBC Ltd </a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+                <li><a class="dropdown" id="AyodhayaDham"
+                        onclick="Ayodhya_Zone_no('zone_no','1'); updateNavBarWithFunctionName('Ayodhya Dham Zone Road ');">
+                        Ayodhya Dham Zone &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" id="Ward">Wards &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Ward1"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ward_no('ward_no','1'); updateNavBarWithFunctionName('Ward 1 Road ');">Ward
+                                        1</a></li>
+                                <li id="Ward4"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ward_no('ward_no','4'); updateNavBarWithFunctionName('Ward 4 Road ');">Ward
+                                        4</a></li>
+                                <li id="Ward12"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ward_no('ward_no','2'); updateNavBarWithFunctionName('Ward 12 Road ');">Ward
+                                        12</a></li>
+                                <li id="Ward18"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ward_no('ward_no','18'); updateNavBarWithFunctionName('Ward 18 Road ');">Ward
+                                        18</a></li>
+                                <li id="Ward19"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ward_no('ward_no','19'); updateNavBarWithFunctionName('Ward 19 Road ');">Ward
+                                        19</a></li>
+                                <li id="Ward21"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ward_no('ward_no','21'); updateNavBarWithFunctionName('Ward 21 Road ');">Ward
+                                        21</a></li>
+                                <li id="Ward30"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ward_no('ward_no','30'); updateNavBarWithFunctionName('Ward 30 Road ');">Ward
+                                        30</a></li>
+                                <li id="Ward31"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ward_no('ward_no','31'); updateNavBarWithFunctionName('Ward 31 Road ');">Ward
+                                        31</a></li>
+                                <li id="Ward45"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ward_no('ward_no','45'); updateNavBarWithFunctionName('Ward 45 Road ');">Ward
+                                        45</a></li>
+                                <li id="Ward51"><a class="dropdown-item"
+                                        onclick="Ayodhya_Ward_no('ward_no','51'); updateNavBarWithFunctionName('Ward 51 Road ');">Ward
+                                        51 </a></li>
+                                <li><a class="dropdown-item" id="Ward52"
+                                        onclick="Ayodhya_Ward_no('ward_no','52'); updateNavBarWithFunctionName('Ward 52 Road ');">Ward
+                                        52</a></li>
+                                <li><a class="dropdown-item" id="Ward55"
+                                        onclick="Ayodhya_Ward_no('ward_no','55'); updateNavBarWithFunctionName('Ward 55 Road ');">Ward
+                                        55</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="AyodhayaDham_type"
+                                onclick="Ayodhya_Type_cat('zone_no','1'); updateNavBarWithFunctionName('Ayodhya Dham Type wise Road ');">Road
+                                Type &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+
+                                <li id="AyodhayaDham_type_major"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Type('1','type','Major'); updateNavBarWithFunctionName('Ayodhya Dham Road Type Major');">Major</a>
+                                </li>
+                                <li id="AyodhayaDham_type_minor"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Type('1','type','Minor'); updateNavBarWithFunctionName('Ayodhya Dham Road Type Minor');">Minor</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="AyodhayaDham_condition"
+                                onclick="Ayodhya_Condition_cat('zone_no','1'); updateNavBarWithFunctionName('Ayodhya Dham Condition wise Road ');">
+                                Road Conditions &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="AyodhayaDham_condition_good"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Condition('1','condition','Green'); updateNavBarWithFunctionName('Ayodhya Dham Road Condition Good');">Good</a>
+                                </li>
+                                <li id="AyodhayaDham_condition_moderate"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Condition('1','condition','Yellow'); updateNavBarWithFunctionName('Ayodhya Dham Road Condition Poor');">Moderate</a>
+                                </li>
+                                <li id="AyodhayaDham_condition_poor"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Condition('1','condition','Red'); updateNavBarWithFunctionName('Ayodhya Dham Road Condition Moderate');">Poor</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="AyodhayaDham_material"
+                                onclick="Ayodhya_Material_cat('zone_no','1'); updateNavBarWithFunctionName('Ayodhya Dham Material wise Road ');">Road
+                                Material &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="AyodhayaDham_material_bitumen"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Material('1','carriage_m','Bitumen'); updateNavBarWithFunctionName('Ayodhya Dham Road Material Bitumen');">Bitumen</a>
+                                </li>
+                                <li id="AyodhayaDham_material_BOE"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Material('1','carriage_m','BOE'); updateNavBarWithFunctionName('Ayodhya Dham Road Material BOE');">BOE</a>
+                                </li>
+                                <li id="AyodhayaDham_material_CC"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Material('1','carriage_m','CC'); updateNavBarWithFunctionName('Ayodhya Dham Road Material CC');">CC</a>
+                                </li>
+                                <li id="AyodhayaDham_material_interlocking"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Material('1','carriage_m','Interlocking'); updateNavBarWithFunctionName('Ayodhya Dham Road Material Interlocking');">Interlocking</a>
+                                </li>
+                                <li id="AyodhayaDham_material_kachcha"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Material('1','carriage_m','Kachcha'); updateNavBarWithFunctionName('Ayodhya Dham Road Material Kachcha');">Kachcha</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="AyodhayaDham_ownership"
+                                onclick="Ayodhya_Ownership_cat('zone_no','1'); updateNavBarWithFunctionName('Ayodhya Dham Ownership wise Road ');">Road
+                                Ownership &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="AyodhayaDham_ownership_NHAI"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Ownership('1','ownership','NHAI'); updateNavBarWithFunctionName('Ayodhya Dham Road Ownership NHAI');">NHAI
+                                    </a></li>
+                                <li id="AyodhayaDham_ownership_NNA"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Ownership('1','ownership','ANN'); updateNavBarWithFunctionName('Ayodhya Dham Road Ownership ANN');">ANN
+                                    </a></li>
+                                <li id="AyodhayaDham_ownership_PVT"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Ownership('1','ownership','PVT'); updateNavBarWithFunctionName('Ayodhya Dham Road Ownership PVT');">PVT</a>
+                                </li>
+                                <li id="AyodhayaDham_ownership_PWD"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Ownership('1','ownership','PWD'); updateNavBarWithFunctionName('Ayodhya Dham Road Ownership PWD');">PWD
+                                    </a></li>
+                                <li id="AyodhayaDham_ownership_UPSBC"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Ownership('1','ownership','UPSBC Ltd.'); updateNavBarWithFunctionName('Ayodhya Dham Road Ownership UPSBC Ltd.');">UPSBC
+                                        Ltd </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a id="Avadhpuri" class="dropdown"
+                        onclick="Ayodhya_Zone_no('zone_no','2'); updateNavBarWithFunctionName('Avadhpuri Zone Road ');">
+                        Avadhpuri Zone &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" onclick="">Wards &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Ward3"
+                                        onclick="Ayodhya_Ward_no('ward_no','3'); updateNavBarWithFunctionName('Ward 3 Road ');">Ward
+                                        3</a></li>
+                                <li><a class="dropdown-item" id="Ward5"
+                                        onclick="Ayodhya_Ward_no('ward_no','5'); updateNavBarWithFunctionName('Ward 5 Road ');">Ward
+                                        5</a></li>
+                                <li><a class="dropdown-item" id="Ward6"
+                                        onclick="Ayodhya_Ward_no('ward_no','6'); updateNavBarWithFunctionName('Ward 6 Road ');">Ward
+                                        6</a></li>
+                                <li><a class="dropdown-item" id="Ward7"
+                                        onclick="Ayodhya_Ward_no('ward_no','7'); updateNavBarWithFunctionName('Ward 7 Road ');">Ward
+                                        7</a></li>
+                                <li><a class="dropdown-item" id="Ward13"
+                                        onclick="Ayodhya_Ward_no('ward_no','13'); updateNavBarWithFunctionName('Ward 13 Road ');">Ward
+                                        13</a></li>
+                                <li><a class="dropdown-item" id="Ward14"
+                                        onclick="Ayodhya_Ward_no('ward_no','14'); updateNavBarWithFunctionName('Ward 14 Road ');">Ward
+                                        14</a></li>
+                                <li><a class="dropdown-item" id="Ward17"
+                                        onclick="Ayodhya_Ward_no('ward_no','17'); updateNavBarWithFunctionName('Ward 17 Road ');">Ward
+                                        17</a></li>
+                                <li><a class="dropdown-item" id="Ward23"
+                                        onclick="Ayodhya_Ward_no('ward_no','23'); updateNavBarWithFunctionName('Ward 23 Road ');">Ward
+                                        23</a></li>
+                                <li><a class="dropdown-item" id="Ward26"
+                                        onclick="Ayodhya_Ward_no('ward_no','26'); updateNavBarWithFunctionName('Ward 26 Road ');">Ward
+                                        26</a></li>
+                                <li><a class="dropdown-item" id="Ward27"
+                                        onclick="Ayodhya_Ward_no('ward_no','27'); updateNavBarWithFunctionName('Ward 27 Road ');">Ward
+                                        27</a></li>
+                                <li><a class="dropdown-item" id="Ward28"
+                                        onclick="Ayodhya_Ward_no('ward_no','28'); updateNavBarWithFunctionName('Ward 28 Road ');">Ward
+                                        28</a></li>
+                                <li><a class="dropdown-item" id="Ward32"
+                                        onclick="Ayodhya_Ward_no('ward_no','32'); updateNavBarWithFunctionName('Ward 32 Road ');">Ward
+                                        32</a></li>
+                                <li><a class="dropdown-item" id="Ward33"
+                                        onclick="Ayodhya_Ward_no('ward_no','33'); updateNavBarWithFunctionName('Ward 33 Road ');">Ward
+                                        33</a></li>
+                                <li><a class="dropdown-item" id="Ward36"
+                                        onclick="Ayodhya_Ward_no('ward_no','36'); updateNavBarWithFunctionName('Ward 36 Road ');">Ward
+                                        36</a></li>
+                                <li><a class="dropdown-item" id="Ward37"
+                                        onclick="Ayodhya_Ward_no('ward_no','37'); updateNavBarWithFunctionName('Ward 37 Road ');">Ward
+                                        37</a></li>
+                                <li><a class="dropdown-item" id="Ward38"
+                                        onclick="Ayodhya_Ward_no('ward_no','38'); updateNavBarWithFunctionName('Ward 38 Road ');">Ward
+                                        38</a></li>
+                                <li><a class="dropdown-item" id="Ward39"
+                                        onclick="Ayodhya_Ward_no('ward_no','39'); updateNavBarWithFunctionName('Ward 39 Road ');">Ward
+                                        39</a></li>
+                                <li><a class="dropdown-item" id="Ward40"
+                                        onclick="Ayodhya_Ward_no('ward_no','40'); updateNavBarWithFunctionName('Ward 40 Road ');">Ward
+                                        40</a></li>
+                                <li><a class="dropdown-item" id="Ward41"
+                                        onclick="Ayodhya_Ward_no('ward_no','41'); updateNavBarWithFunctionName('Ward 41 Road ');">Ward
+                                        41</a></li>
+                                <li><a class="dropdown-item" id="Ward48"
+                                        onclick="Ayodhya_Ward_no('ward_no','48'); updateNavBarWithFunctionName('Ward 48 Road ');">Ward
+                                        48</a></li>
+                                <li><a class="dropdown-item" id="Ward54"
+                                        onclick="Ayodhya_Ward_no('ward_no','54'); updateNavBarWithFunctionName('Ward 54 Road ');">Ward
+                                        54</a></li>
+                                <li><a class="dropdown-item" id="Ward57"
+                                        onclick="Ayodhya_Ward_no('ward_no','57'); updateNavBarWithFunctionName('Ward 57 Road ');">Ward
+                                        57</a></li>
+                                <li><a class="dropdown-item" id="Ward58"
+                                        onclick="Ayodhya_Ward_no('ward_no','58'); updateNavBarWithFunctionName('Ward 58 Road ');">Ward
+                                        58</a></li>
+                                <li><a class="dropdown-item" id="Ward59"
+                                        onclick="Ayodhya_Ward_no('ward_no','59'); updateNavBarWithFunctionName('Ward 59 Road ');">Ward
+                                        59</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a id="Avadhpuri_type" class="dropdown"
+                                onclick="Ayodhya_Type_cat('zone_no','2'); updateNavBarWithFunctionName('Avadhpuri Type wise Road ');">Road
+                                Type &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Avadhpuri_type_major"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Type('2','type','Major'); updateNavBarWithFunctionName('Avadhpuri Road Type Major');">Major</a>
+                                </li>
+                                <li id="Avadhpuri_type_minor"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Type('2','type','Minor'); updateNavBarWithFunctionName('Avadhpuri Road Type Minor');">Minor</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Avadhpuri_condition"
+                                onclick="Ayodhya_Condition_cat('zone_no','2'); updateNavBarWithFunctionName('Avadhpuri Condition wise Road ');">
+                                Road Conditions &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Avadhpuri_condition_good"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Condition('2','condition','Green'); updateNavBarWithFunctionName('Avadhpuri Road Condition Good');">Good</a>
+                                </li>
+                                <li id="Avadhpuri_condition_moderate"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Condition('2','condition','Yellow'); updateNavBarWithFunctionName('Avadhpuri Road Condition Moderate');">Moderate</a>
+                                </li>
+                                <li id="Avadhpuri_condition_poor"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Condition('2','condition','Red'); updateNavBarWithFunctionName('Avadhpuri Road Condition Poor');">Poor</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Avadhpuri_material"
+                                onclick="Ayodhya_Material_cat('zone_no','2'); updateNavBarWithFunctionName('Avadhpuri Material wise Road ');">Road
+                                Material &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Avadhpuri_material_bitumen"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Material('2','carriage_m','Bitumen'); updateNavBarWithFunctionName('Avadhpuri Road Material Bitumen');">Bitumen</a>
+                                </li>
+                                <li id="Avadhpuri_material_BOE"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Material('2','carriage_m','BOE'); updateNavBarWithFunctionName('Avadhpuri Road Material BOE');">BOE</a>
+                                </li>
+                                <li id="Avadhpuri_material_CC"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Material('2','carriage_m','CC'); updateNavBarWithFunctionName('Avadhpuri Road Material CC');">CC</a>
+                                </li>
+                                <li id="Avadhpuri_material_interlocking"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Material('2','carriage_m','Interlocking'); updateNavBarWithFunctionName('Avadhpuri Road Material Interlocking');">Interlocking</a>
+                                </li>
+                                <li id="Avadhpuri_material_kachcha"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Material('2','carriage_m','Kachcha'); updateNavBarWithFunctionName('Avadhpuri Road Material Kachcha');">Kachcha</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Avadhpuri_ownership"
+                                onclick="Ayodhya_Ownership_cat('zone_no','2'); updateNavBarWithFunctionName('Avadhpuri Ownership wise Road ');">Road
+                                Ownership &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Avadhpuri_ownership_NHAI"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Ownership('2','ownership','NHAI'); updateNavBarWithFunctionName('Avadhpuri Road Ownership NHAI');">NHAI
+                                    </a></li>
+                                <li id="Avadhpuri_ownership_NNA"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Ownership('2','ownership','ANN'); updateNavBarWithFunctionName('Avadhpuri Road Ownership ANNI');">ANN
+                                    </a></li>
+                                <li id="Avadhpuri_ownership_PWD"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Ownership('2','ownership','PWD'); updateNavBarWithFunctionName('Avadhpuri Road Ownership PWD');">PWD
+                                    </a></li>
+                                <li id="Avadhpuri_ownership_UPSBC"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Ownership('2','ownership','UPSBC Ltd.'); updateNavBarWithFunctionName('Avadhpuri Road Ownership UPSBC Ltd.');">UPSBC
+                                        Ltd </a></li>
+                            </ul>
+
+
+
+                        </li>
+                    </ul>
+                </li>
+                <li><a id="Kaushalpuri" class="dropdown"
+                        onclick="Ayodhya_Zone_no('zone_no','3'); updateNavBarWithFunctionName('Kaushalpuri Zone Road ');">
+                        Kaushalpuri Zone &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" onclick="">Wards &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Ward2"
+                                        onclick="Ayodhya_Ward_no('ward_no','2'); updateNavBarWithFunctionName('Ward 2 Road ');">Ward
+                                        2</a></li>
+                                <li><a class="dropdown-item" id="Ward8"
+                                        onclick="Ayodhya_Ward_no('ward_no','8'); updateNavBarWithFunctionName('Ward 8 Road ');">Ward
+                                        8</a></li>
+                                <li><a class="dropdown-item" id="Ward9"
+                                        onclick="Ayodhya_Ward_no('ward_no','9'); updateNavBarWithFunctionName('Ward 9 Road ');">Ward
+                                        9</a></li>
+                                <li><a class="dropdown-item" id="Ward10"
+                                        onclick="Ayodhya_Ward_no('ward_no','10'); updateNavBarWithFunctionName('Ward 10 Road ');">Ward
+                                        10</a></li>
+                                <li><a class="dropdown-item" id="Ward11"
+                                        onclick="Ayodhya_Ward_no('ward_no','11'); updateNavBarWithFunctionName('Ward 11 Road ');">Ward
+                                        11</a></li>
+                                <li><a class="dropdown-item" id="Ward15"
+                                        onclick="Ayodhya_Ward_no('ward_no','15'); updateNavBarWithFunctionName('Ward 15 Road ');">Ward
+                                        15</a></li>
+                                <li><a class="dropdown-item" id="Ward16"
+                                        onclick="Ayodhya_Ward_no('ward_no','16'); updateNavBarWithFunctionName('Ward 16 Road ');">Ward
+                                        16</a></li>
+                                <li><a class="dropdown-item" id="Ward20"
+                                        onclick="Ayodhya_Ward_no('ward_no','20'); updateNavBarWithFunctionName('Ward 20 Road ');">Ward
+                                        20</a></li>
+                                <li><a class="dropdown-item" id="Ward22"
+                                        onclick="Ayodhya_Ward_no('ward_no','22'); updateNavBarWithFunctionName('Ward 22 Road ');">Ward
+                                        22</a></li>
+                                <li><a class="dropdown-item" id="Ward24"
+                                        onclick="Ayodhya_Ward_no('ward_no','24'); updateNavBarWithFunctionName('Ward 24 Road ');">Ward
+                                        24</a></li>
+                                <li><a class="dropdown-item" id="Ward25"
+                                        onclick="Ayodhya_Ward_no('ward_no','25'); updateNavBarWithFunctionName('Ward 25 Road ');">Ward
+                                        25</a></li>
+                                <li><a class="dropdown-item" id="Ward29"
+                                        onclick="Ayodhya_Ward_no('ward_no','29'); updateNavBarWithFunctionName('Ward 29 Road ');">Ward
+                                        29</a></li>
+                                <li><a class="dropdown-item" id="Ward34"
+                                        onclick="Ayodhya_Ward_no('ward_no','34'); updateNavBarWithFunctionName('Ward 34 Road ');">Ward
+                                        34</a></li>
+                                <li><a class="dropdown-item" id="Ward35"
+                                        onclick="Ayodhya_Ward_no('ward_no','35'); updateNavBarWithFunctionName('Ward 35 Road ');">Ward
+                                        35</a></li>
+                                <li><a class="dropdown-item" id="Ward42"
+                                        onclick="Ayodhya_Ward_no('ward_no','42'); updateNavBarWithFunctionName('Ward 42 Road ');">Ward
+                                        42</a></li>
+                                <li><a class="dropdown-item" id="Ward43"
+                                        onclick="Ayodhya_Ward_no('ward_no','43'); updateNavBarWithFunctionName('Ward 43 Road ');">Ward
+                                        43</a></li>
+                                <li><a class="dropdown-item" id="Ward44"
+                                        onclick="Ayodhya_Ward_no('ward_no','44'); updateNavBarWithFunctionName('Ward 44 Road ');">Ward
+                                        44</a></li>
+                                <li><a class="dropdown-item" id="Ward46"
+                                        onclick="Ayodhya_Ward_no('ward_no','46'); updateNavBarWithFunctionName('Ward 46 Road ');">Ward
+                                        46</a></li>
+                                <li><a class="dropdown-item" id="Ward47"
+                                        onclick="Ayodhya_Ward_no('ward_no','47'); updateNavBarWithFunctionName('Ward 47 Road ');">Ward
+                                        47</a></li>
+                                <li><a class="dropdown-item" id="Ward49"
+                                        onclick="Ayodhya_Ward_no('ward_no','49'); updateNavBarWithFunctionName('Ward 49 Road ');">Ward
+                                        49</a></li>
+                                <li><a class="dropdown-item" id="Ward50"
+                                        onclick="Ayodhya_Ward_no('ward_no','50'); updateNavBarWithFunctionName('Ward 50 Road ');">Ward
+                                        50</a></li>
+                                <li><a class="dropdown-item" id="Ward53"
+                                        onclick="Ayodhya_Ward_no('ward_no','53'); updateNavBarWithFunctionName('Ward 53 Road ');">Ward
+                                        53</a></li>
+                                <li><a class="dropdown-item" id="Ward56"
+                                        onclick="Ayodhya_Ward_no('ward_no','56'); updateNavBarWithFunctionName('Ward 56 Road ');">Ward
+                                        56</a></li>
+                                <li><a class="dropdown-item" id="Ward60"
+                                        onclick="Ayodhya_Ward_no('ward_no','60'); updateNavBarWithFunctionName('Ward 60 Road ');">Ward
+                                        60</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Kaushalpuri_type"
+                                onclick="Ayodhya_Type_cat('zone_no','3'); updateNavBarWithFunctionName('Kaushalpuri Type wise Road ');">Road
+                                Type &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Kaushalpuri_type_major"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Type('3','type','Major'); updateNavBarWithFunctionName('Kaushalpuri Road Type Major');">Major</a>
+                                </li>
+                                <li id="Kaushalpuri_type_minor"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Type('3','type','Minor'); updateNavBarWithFunctionName('Kaushalpuri Road Type Minor');">Minor</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Kaushalpuri_condition"
+                                onclick="Ayodhya_Condition_cat('zone_no','3'); updateNavBarWithFunctionName('Kaushalpuri Condition wise Road ');">
+                                Road Conditions &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Kaushalpuri_condition_good"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Condition('3','condition','Green'); updateNavBarWithFunctionName('Kaushalpuri Road Condition Good');">Good</a>
+                                </li>
+                                <li id="Kaushalpuri_condition_moderate"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Condition('3','condition','Yellow'); updateNavBarWithFunctionName('Kaushalpuri Road Condition Moderate');">Moderate</a>
+                                </li>
+                                <li id="Kaushalpuri_condition_poor"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Condition('3','condition','Red'); updateNavBarWithFunctionName('Kaushalpuri Road Condition Poor');">Poor</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Kaushalpuri_material"
+                                onclick="Ayodhya_Material_cat('zone_no','3'); updateNavBarWithFunctionName('Kaushalpuri Material wise Road ');">Road
+                                Material &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Kaushalpuri_material_bitumen"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Material('3','carriage_m','Bitumen'); updateNavBarWithFunctionName('Kaushalpuri Road Material Bitumen');">Bitumen</a>
+                                </li>
+                                <li id="Kaushalpuri_material_BOE"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Material('3','carriage_m','BOE'); updateNavBarWithFunctionName('Kaushalpuri Road Material BOE');">BOE</a>
+                                </li>
+                                <li id="Kaushalpuri_material_CC"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Material('3','carriage_m','CC'); updateNavBarWithFunctionName('Kaushalpuri Road Material CC');">CC</a>
+                                </li>
+                                <li id="Kaushalpuri_material_interlocking"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Material('3','carriage_m','Interlocking'); updateNavBarWithFunctionName('Kaushalpuri Road Material Interlocking');">Interlocking</a>
+                                </li>
+                                <li id="Kaushalpuri_material_kachcha"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Material('3','carriage_m','Kachcha')">Kachcha</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Kaushalpuri_ownership"
+                                onclick="Ayodhya_Ownership_cat('zone_no','3'); updateNavBarWithFunctionName('Kaushalpuri Ownership wise Road ');">Road
+                                Ownership &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li id="Kaushalpuri_ownership_NHAI"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Ownership('3','ownership','NHAI'); updateNavBarWithFunctionName('Kaushalpuri Road Ownership NHAI');">NHAI
+                                    </a></li>
+                                <li id="Kaushalpuri_ownership_NNA"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Ownership('3','ownership','ANN'); updateNavBarWithFunctionName('Kaushalpuri Road Ownership ANN');">ANN
+                                    </a></li>
+                                <li id="Kaushalpuri_ownership_PWD"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Ownership('3','ownership','PWD'); updateNavBarWithFunctionName('Kaushalpuri Road Ownership PWD');">PWD
+                                    </a></li>
+                                <li id="Kaushalpuri_ownership_Railway"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Ownership('3','ownership','Railway'); updateNavBarWithFunctionName('Kaushalpuri Road Ownership Railway');">
+                                        Railway </a></li>
+                                <li id="Kaushalpuri_ownership_UPSBC"><a class="dropdown-item"
+                                        onclick="Ayodhya_Zone_Ownership('3','ownership','UPSBC Ltd.'); updateNavBarWithFunctionName('Kaushalpuri Road Ownership UPSBC Ltd.');">
+                                        UPSBC Ltd </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-------------------- zone wise road filter end -------------------------->
+
+        <!------------------- drain filter start ----------------->
+        <div id="drain-filter" class="drain-filter">
+            <ul>
+                <label style="margin-left:20px;"><b>Select Drain</b></label>
+                <li><a class="dropdown"> Ayodhya All Drain &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" id="DrainType">Drain Type &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Primary_Drain"
+                                        onclick="Ayodhya_Type_Drain('type','Primary'); updateNavBarWithFunctionName('Ayodhya Drain Type-Primary Drain');">Primary
+                                        Drain</a></li>
+                                <li><a class="dropdown-item" id="Secondary_Drain"
+                                        onclick="Ayodhya_Type_Drain('type','Secondary'); updateNavBarWithFunctionName('Ayodhya Drain Type-Secondary Drain');">Secondary
+                                        Drain</a></li>
+                                <li><a class="dropdown-item" id="Tertiary_Drain"
+                                        onclick="Ayodhya_Type_Drain('type','Tertiary'); updateNavBarWithFunctionName('Ayodhya Drain Type-Tertiary Drain');">Tertiary
+                                        Drain</a></li>
+                                <!--<li><a class="dropdown-item" onclick="not_applicable()">NA</a></li>-->
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="DrainCondition"> Drain Conditions &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Chocked_Drain"
+                                        onclick="Ayodhya_Condition_Drain('condition','Chocked'); updateNavBarWithFunctionName('Ayodhya Drain Condition-Chocked Drain');">Chocked
+                                        Drain</a></li>
+                                <li><a class="dropdown-item" id="Running_Drain"
+                                        onclick="Ayodhya_Condition_Drain('condition','Running'); updateNavBarWithFunctionName('Ayodhya Drain Condition-Runing Drain');">Running
+                                        Drain</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="DrainMaterial">Drain Material &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Bricked_Drain"
+                                        onclick="Ayodhya_Material_Drain('material','Bricked'); updateNavBarWithFunctionName('Ayodhya Drain Material-Bricked Drain');">Bricked
+                                    </a></li>
+                                <li><a class="dropdown-item" id="RCC_Drain"
+                                        onclick="Ayodhya_Material_Drain('material','RCC'); updateNavBarWithFunctionName('Ayodhya Drain Material-RCC Drain');">RCC</a>
+                                </li>
+                                <li><a class="dropdown-item" id="Kachcha_Drain"
+                                        onclick="Ayodhya_Material_Drain('material','Kachcha'); updateNavBarWithFunctionName('Ayodhya Drain Material-Kachcha Drain');">Kachcha</a>
+                                </li>
+                                <!-- <li><a class="dropdown-item" onclick="notApplicable_material()">NA</a></li> -->
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a class="dropdown" id="DrainStatus"> Drain Status &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Open_Drain"
+                                        onclick="Ayodhya_Status_Drain('status','Open'); updateNavBarWithFunctionName('Ayodhya Drain Status-Open Drain');">Open</a>
+                                </li>
+                                <li><a class="dropdown-item" id="Covered_Drain"
+                                        onclick="Ayodhya_Status_Drain('status','Covered'); updateNavBarWithFunctionName('Ayodhya Drain Status-Covered Drain');">Covered</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a class="dropdown"
+                        onclick="Ayodhya_Zone_no_Drain('zone_no','1'); updateNavBarWithFunctionName('Ayodhaya Dham Drain');">
+                        Ayodhya Dham Zone &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <!-- <li>
+                    <a class="dropdown" onclick="">Wards &raquo;</a>
+                    <ul class="dropdown-menu dropdown-submenu">
+                        <li><a class="dropdown-item" id="ward1">Ward 1</a></li>
+                        <li><a class="dropdown-item" id="ward4">Ward 4</a></li>
+                        <li><a class="dropdown-item" id="ward12">Ward 12</a></li>
+                        <li><a class="dropdown-item" id="ward18">Ward 18</a></li>
+                        <li><a class="dropdown-item" id="ward19">Ward 19</a></li>
+                        <li><a class="dropdown-item" id="ward21">Ward 21</a></li>
+                        <li><a class="dropdown-item" id="ward30">Ward 30</a></li>
+                        <li><a class="dropdown-item" id="ward31">Ward 31</a></li>
+                        <li><a class="dropdown-item" id="ward45">Ward 45</a></li>
+                        <li><a class="dropdown-item" id="ward51">Ward 51 </a></li>
+                    </ul>
+                </li> -->
+                        <li>
+                            <a class="dropdown" id="AyodhyaDham_Type_Drain"
+                                onclick="Ayodhya_Type_Drain('zone_no','1'); updateNavBarWithFunctionName('Ayodhya Dham Drain-Type');">Drain
+                                Type &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="AyodhyaDham_Primary_Drain"
+                                        onclick="Ayodhya_Zone_Type_Drain('1','type','Primary'); updateNavBarWithFunctionName('Ayodhya Dham Drain-Type Primary');">Primary</a>
+                                </li>
+                                <li><a class="dropdown-item" id="AyodhyaDham_Secondary_Drain"
+                                        onclick="Ayodhya_Zone_Type_Drain('1','type','Secondary'); updateNavBarWithFunctionName('Ayodhya Dham Drain-Type Secondary');">Secondary</a>
+                                </li>
+                                <li><a class="dropdown-item" id="AyodhyaDham_Tertiary_Drain"
+                                        onclick="Ayodhya_Zone_Type_Drain('1','type','Tertiary'); updateNavBarWithFunctionName('Ayodhya Dham Drain-Type Tertiary');">Tertiary</a>
+                                </li>
+                                <!--<li><a class="dropdown-item" onclick="not_applicable()">NA</a></li>-->
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="AyodhyaDham_Condition_Drain"
+                                onclick="Ayodhya_Condition_Drain('zone_no','1'); updateNavBarWithFunctionName('Ayodhya Dham Drain Condition');">
+                                Drain Conditions &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="AyodhyaDham_Chocked_Drain"
+                                        onclick="Ayodhya_Zone_Condition_Drain('1','condition','Chocked'); updateNavBarWithFunctionName('Ayodhya Dham Drain-Condition Chocked');">Chocked
+                                    </a></li>
+                                <li><a class="dropdown-item" id="AyodhyaDham_Running_Drain"
+                                        onclick="Ayodhya_Zone_Condition_Drain('1','condition','Running'); updateNavBarWithFunctionName('Ayodhya Dham Drain-Condition Running');">Running
+                                    </a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="AyodhyaDham_Material_Drain"
+                                onclick="Ayodhya_Material_Drain('zone_no','1'); updateNavBarWithFunctionName('Ayodhya Dham Drain Material');">Drain
+                                Material &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="AyodhyaDham_Bricked_Drain"
+                                        onclick="Ayodhya_Zone_Material_Drain('1','material','Bricked'); updateNavBarWithFunctionName('Ayodhya Dham Drain-Material Bricked');">Bricked</a>
+                                </li>
+                                <li><a class="dropdown-item" id="AyodhyaDham_RCC_Drain"
+                                        onclick="Ayodhya_Zone_Material_Drain('1','material','RCC'); updateNavBarWithFunctionName('Ayodhya Dham Drain-Material RCC');">RCC</a>
+                                </li>
+                                <li><a class="dropdown-item" id="AyodhyaDham_Kachcha_Drain"
+                                        onclick="Ayodhya_Zone_Material_Drain('1','material','Kachcha'); updateNavBarWithFunctionName('Ayodhya Dham Drain-Material Kachcha');">Kachcha</a>
+                                </li>
+                                <!-- <li><a class="dropdown-item" onclick="notApplicable_material()">NA</a></li> -->
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="AyodhyaDham_Status_Drain"
+                                onclick="Ayodhya_Status_Drain('zone_no','1'); updateNavBarWithFunctionName('Ayodhya Dham Drain Status');">
+                                Drain Status &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="AyodhyaDham_Open_Drain"
+                                        onclick="Ayodhya_Zone_Status_Drain('1','status','Open'); updateNavBarWithFunctionName('Ayodhya Dham Drain-Status Open');">Open</a>
+                                </li>
+                                <li><a class="dropdown-item" id="AyodhyaDham_Covered_Drain"
+                                        onclick="Ayodhya_Zone_Status_Drain('1','status','Covered'); updateNavBarWithFunctionName('Ayodhya Dham Drain-Status Covered');">Covered</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a class="dropdown"
+                        onclick="Ayodhya_Zone_no_Drain('zone_no','2'); updateNavBarWithFunctionName('Avadhpuri Drain');">
+                        Avadhpuri Zone &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <!-- <li>
+                    <a class="dropdown" onclick="">Wards &raquo;</a>
+                    <ul class="dropdown-menu dropdown-submenu">
+                        <li><a class="dropdown-item" onclick="Ward_three()">Ward 3</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_five()">Ward 5</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_six()">Ward 6</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_seven()">Ward 7</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_thirteen()">Ward 13</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_fourteen()">Ward 14</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_seventeen()">Ward 17</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_twentythree()">Ward 23</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_twentysix()">Ward 26</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_twentyseven()">Ward 27</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_twentyeight()">Ward 28</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_thirtytwo()">Ward 32</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_thirtythree()">Ward 33</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_thirtysix()">Ward 36</a></li>
+                    </ul>
+                </li> -->
+                        <li>
+                            <a class="dropdown" id="Avadhpuri_Type_Drain"
+                                onclick="Ayodhya_Type_Drain('zone_no','2'); updateNavBarWithFunctionName('Avadhpuri Drain type');">Drain
+                                Type &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Avadhpuri_Primary_Drain"
+                                        onclick="Ayodhya_Zone_Type_Drain('2','type','Primary'); updateNavBarWithFunctionName('Avadhpuri Drain-Type Primary');">Primary</a>
+                                </li>
+                                <li><a class="dropdown-item" id="Avadhpuri_Secondary_Drain"
+                                        onclick="Ayodhya_Zone_Type_Drain('2','type','Secondary'); updateNavBarWithFunctionName('Avadhpuri Drain-Type Secondary');">Secondary</a>
+                                </li>
+                                <li><a class="dropdown-item" id="Avadhpuri_Tertiary_Drain"
+                                        onclick="Ayodhya_Zone_Type_Drain('2','type','Tertiary'); updateNavBarWithFunctionName('Avadhpuri Drain-Type Tertiary');">Tertiary</a>
+                                </li>
+                                <!--<li><a class="dropdown-item" onclick="not_applicable()">NA</a></li>-->
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Avadhpuri_Condition_Drain"
+                                onclick="Ayodhya_Condition_Drain('zone_no','2'); updateNavBarWithFunctionName('Avadhpuri Drain Condition');">
+                                Drain Conditions &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Avadhpuri_Chocked_Drain"
+                                        onclick="Ayodhya_Zone_Condition_Drain('2','condition','Chocked'); updateNavBarWithFunctionName('Avadhpuri Drain-Condition Chocked');">Chocked
+                                    </a></li>
+                                <li><a class="dropdown-item" id="Avadhpuri_Running_Drain"
+                                        onclick="Ayodhya_Zone_Condition_Drain('2','condition','Running'); updateNavBarWithFunctionName('Avadhpuri Drain-Condition Running');">Running
+                                    </a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Avadhpuri_Material_Drain"
+                                onclick="Ayodhya_Material_Drain('zone_no','2'); updateNavBarWithFunctionName('Avadhpuri Drain Material');">Drain
+                                Material &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Avadhpuri_Bricked_Drain"
+                                        onclick="Ayodhya_Zone_Material_Drain('2','material','Bricked'); updateNavBarWithFunctionName('Avadhpuri Drain-Material Bricked');">Bricked</a>
+                                </li>
+                                <li><a class="dropdown-item" id="Avadhpuri_RCC_Drain"
+                                        onclick="Ayodhya_Zone_Material_Drain('2','material','RCC'); updateNavBarWithFunctionName('Avadhpuri Drain-Material RCC');">RCC</a>
+                                </li>
+                                <li><a class="dropdown-item" id="Avadhpuri_Kachcha_Drain"
+                                        onclick="Ayodhya_Zone_Material_Drain('2','material','Kachcha'); updateNavBarWithFunctionName('Avadhpuri Drain-Material Kachcha');">Kachcha</a>
+                                </li>
+                                <!-- <li><a class="dropdown-item" onclick="notApplicable_material()">NA</a></li> -->
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Avadhpuri_Status_Drain"
+                                onclick="Ayodhya_Status_Drain('zone_no','2'); updateNavBarWithFunctionName('Avadhpuri Drain Status');">
+                                Drain Status &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Avadhpuri_Open_Drain"
+                                        onclick="Ayodhya_Zone_Status_Drain('2','status','Open'); updateNavBarWithFunctionName('Ayodhya Dham Drain-Status Open');">Open</a>
+                                </li>
+                                <li><a class="dropdown-item" id="Avadhpuri_Covered_Drain"
+                                        onclick="Ayodhya_Zone_Status_Drain('2','status','Covered'); updateNavBarWithFunctionName('Ayodhya Dham Drain-Status Covered');">Covered</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a class="dropdown"
+                        onclick="Ayodhya_Zone_no_Drain('zone_no','3'); updateNavBarWithFunctionName('Kaushalpuri Drain');">
+                        Kaushalpuri Zone &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <!-- <li>
+                    <a class="dropdown" onclick="">Wards &raquo;</a>
+                    <ul class="dropdown-menu dropdown-submenu">
+                        <li><a class="dropdown-item" onclick="Ward_two()">Ward 2</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_eight()">Ward 8</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_nine()">Ward 9</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_ten()">Ward 10</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_eleven()">Ward 11</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_fifteen()">Ward 15</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_sixteen()">Ward 16</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_twenty()">Ward 20</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_twentytwo()">Ward 22</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_twentyfour()">Ward 24</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_twentyfive()">Ward 25</a></li>
+                        <li><a class="dropdown-item" onclick="Ward_twentysix()">Ward 26</a></li>
+                    </ul>
+                </li> -->
+                        <li>
+                            <a class="dropdown" id="Kaushalpuri_Type_Drain"
+                                onclick="Ayodhya_Type_Drain('zone_no','3'); updateNavBarWithFunctionName('Kaushalpuri Drain Type');">Drain
+                                Type &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Kaushalpuri_Primary_Drain"
+                                        onclick="Ayodhya_Zone_Type_Drain('3','type','Primary'); updateNavBarWithFunctionName('Kaushalpuri Drain-Type Primary');">Primary</a>
+                                </li>
+                                <li><a class="dropdown-item" id="Kaushalpuri_Secondary_Drain"
+                                        onclick="Ayodhya_Zone_Type_Drain('3','type','Secondary'); updateNavBarWithFunctionName('Kaushalpuri Drain-Type Secondary');">Secondary</a>
+                                </li>
+                                <li><a class="dropdown-item" id="Kaushalpuri_Tertiary_Drain"
+                                        onclick="Ayodhya_Zone_Type_Drain('3','type','Tertiary'); updateNavBarWithFunctionName('Kaushalpuri Drain-Type Tertiary');">Tertiary</a>
+                                </li>
+                                <!--<li><a class="dropdown-item" onclick="not_applicable()">NA</a></li>-->
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Kaushalpuri_Condition_Drain"
+                                onclick="Ayodhya_Condition_Drain('zone_no','3'); updateNavBarWithFunctionName('Kaushalpuri Drain Condition');">
+                                Drain Conditions &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Kaushalpuri_Chocked_Drain"
+                                        onclick="Ayodhya_Zone_Condition_Drain('3','condition','Chocked'); updateNavBarWithFunctionName('Kaushalpuri Drain-Condition Chocked');">Chocked
+                                    </a></li>
+                                <li><a class="dropdown-item" id="Kaushalpuri_Running_Drain"
+                                        onclick="Ayodhya_Zone_Condition_Drain('3','condition','Running'); updateNavBarWithFunctionName('Kaushalpuri Drain-Condition Running');">Running
+                                    </a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Kaushalpuri_Material_Drain"
+                                onclick="Ayodhya_Material_Drain('zone_no','3'); updateNavBarWithFunctionName('Kaushalpuri Drain Material');">Drain
+                                Material &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Kaushalpuri_Bricked_Drain"
+                                        onclick="Ayodhya_Zone_Material_Drain('3','material','Bricked'); updateNavBarWithFunctionName('Kaushalpuri Drain-Material Bricked');">Bricked</a>
+                                </li>
+                                <li><a class="dropdown-item" id="Kaushalpuri_RCC_Drain"
+                                        onclick="Ayodhya_Zone_Material_Drain('3','material','RCC'); updateNavBarWithFunctionName('Kaushalpuri Drain-Material RCC');">RCC</a>
+                                </li>
+                                <li><a class="dropdown-item" id="Kaushalpuri_Kachcha_Drain"
+                                        onclick="Ayodhya_Zone_Material_Drain('3','material','Kachcha'); updateNavBarWithFunctionName('Kaushalpuri Drain-Material Kachcha');">Kachcha</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" id="Kaushalpuri_Status_Drain"
+                                onclick="Ayodhya_Status_Drain('zone_no','3'); updateNavBarWithFunctionName('Kaushalpuri Drain Status');">
+                                Drain Status &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" id="Kaushalpuri_Open_Drain"
+                                        onclick="Ayodhya_Zone_Status_Drain('3','status','Open'); updateNavBarWithFunctionName('Kaushalpuri Drain-Status Open');">Open</a>
+                                </li>
+                                <li><a class="dropdown-item" id="Kaushalpuri_Covered_Drain"
+                                        onclick="Ayodhya_Zone_Status_Drain('3','status','Covered'); updateNavBarWithFunctionName('Kaushalpuri Drain-Status Covered');">Covered</a>
+                                </li>
+
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+        <!--------------------- drain filter end ---------------->
+
+        <!-----------------Legend btn code--------------->
+        <div class="legend-tab">
+            <button id="legendBtn">Show Legend</button>
+            <div id="live_legend" style="display: none;">
+                <h6>Legend</h6>
+            </div>
+
+            <div class="Legend_panel" id="Drain_Type_Legend">
+                <h6>Legend</h6>
+                <ul>
+                    <li><span style="background-color: blue; width: 20px; height: 2px; display: inline-block;"></span>
+                        Primary Drain</li>
+                    <li><span style="background-color: yellow; width: 20px; height: 2px; display: inline-block;"></span>
+                        Secondary Drain</li>
+                    <li><span style="background-color: orange; width: 20px; height: 2px; display: inline-block;"></span>
+                        Tertiary Drain
+                    </li>
+                    <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+            <div class="Legend_panel" id="Drain_Condition_Legend">
+                <h6>Legend</h6>
+                <ul>
+                    <li><span style="background-color: green; width: 20px; height: 2px; display: inline-block;"></span>
+                        Running Drain</li>
+                    <li><span
+                            style="background-color: darkred; width: 20px; height: 2px; display: inline-block;"></span>
+                        Chocked Drain</li>
+
+                    <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+            <div class="Legend_panel" id="Drain_Material_Legend">
+                <h6>Legend</h6>
+                <ul>
+                    <li><span
+                            style="background-color: darkred; width: 20px; height: 2px; display: inline-block;"></span>
+                        Bricked Drain</li>
+                    <li><span
+                            style="background-color: #098f9b; width: 20px; height: 2px; display: inline-block;"></span>
+                        RCC Drain</li>
+                    <li><span style="background-color: yellow; width: 20px; height: 2px; display: inline-block;"></span>
+                        Kachcha Drain
+                    </li>
+                    <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+            <div class="Legend_panel" id="Drain_Status_Legend">
+                <h6>Legend</h6>
+                <ul>
+                    <li><span
+                            style="background-color: lightgreen; width: 20px; height: 2px; display: inline-block;"></span>
+                        Open Drain</li>
+                    <li><span style="background-color: purple; width: 20px; height: 2px; display: inline-block;"></span>
+                        Covered Drain</li>
+
+                    <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+
+
+
+            <div id="Priority_legend" Class="Legend_panel">
+                <h6>Legend</h6>
+                <ul>
+                    <li><span
+                            style="background-color: #EB5406; width: 20px; height: 2px; display: inline-block;"></span>
+                        First Priority</li>
+                    <li><span
+                            style="background-color: #00FF00; width: 20px; height: 2px; display: inline-block;"></span>
+                        Second Priority</li>
+                    <li><span
+                            style="background-color: #FFC300; width: 20px; height: 2px; display: inline-block;"></span>
+                        Not Eligible
+                    <li>
+                        <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+            <div id="type_legend" Class="Legend_panel">
+                <h6>Legend By Type</h6>
+                <ul>
+                    <li><span
+                            style="background-color: #0000ff; width: 20px; height: 2px; display: inline-block;"></span>
+                        Major</li>
+                    <li><span
+                            style="background-color: #e2e832; width: 20px; height: 2px; display: inline-block;"></span>
+                        Minor</li>
+                    <!-- <li><span style="background-color: #32e1e3; width: 20px; height: 2px; display: inline-block;"></span>
+                Service Road</li>
+            
+                <li><span style="background-color: #ff00ff; width: 20px; height: 2px; display: inline-block;"></span>
+                    NA</li> -->
+
+                    <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+            <div id="Condition_legend" Class="Legend_panel">
+                <h6>Legend By Condition</h6>
+                <ul>
+                    <li><span
+                            style="background-color: #139d2c; width: 20px; height: 2px; display: inline-block;"></span>
+                        Good Road</li>
+                    <li><span
+                            style="background-color: #e2e832; width: 20px; height: 2px; display: inline-block;"></span>
+                        Moderate Road</li>
+                    <li><span
+                            style="background-color: #e33232; width: 20px; height: 2px; display: inline-block;"></span>
+                        Poor Road</li>
+
+                    <!-- <li><span style="background-color: #4815df; width: 20px; height: 2px; display: inline-block;"></span>
+                    NA</li>
+                <li> -->
+                    <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+            <div id="Material_legend" Class="Legend_panel">
+                <h6>Legend By Material</h6>
+                <ul>
+                    <li><span
+                            style="background-color: darkred; width: 20px; height: 2px; display: inline-block;"></span>
+                        Bitumen Road</li>
+                    <li><span
+                            style="background-color: #1ad7b0; width: 20px; height: 2px; display: inline-block;"></span>
+                        CC Road</li>
+                    <li><span
+                            style="background-color: #2392ed; width: 20px; height: 2px; display: inline-block;"></span>
+                        Interlocking Road</li>
+
+                    <li><span
+                            style="background-color: #6036d0; width: 20px; height: 2px; display: inline-block;"></span>
+                        Kachcha Road</li>
+                    <li><span
+                            style="background-color: #da6076; width: 20px; height: 2px; display: inline-block;"></span>
+                        BOE Road</li>
+                    <!-- <li><span style="background-color: #2336d0; width: 20px; height: 2px; display: inline-block;"></span>
+                            NA</li> -->
+                    <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+            <div id="Ownership_legend" Class="Legend_panel">
+                <h6>Legend By Ownership</h6>
+                <ul>
+                    <li><span
+                            style="background-color: rgb(33, 14, 139); width: 20px; height: 2px; display: inline-block;"></span>
+                        NHAI</li>
+                    <li><span
+                            style="background-color: #0f6050; width: 20px; height: 2px; display: inline-block;"></span>
+                        PWD</li>
+                    <li><span
+                            style="background-color: #ed2323; width: 20px; height: 2px; display: inline-block;"></span>
+                        PVT</li>
+
+                    <li><span
+                            style="background-color: #c3c922; width: 20px; height: 2px; display: inline-block;"></span>
+                        Railway </li>
+                    <li><span
+                            style="background-color: #1dd2e2; width: 20px; height: 2px; display: inline-block;"></span>
+                        ANN</li>
+                    <li><span
+                            style="background-color: #821880; width: 20px; height: 2px; display: inline-block;"></span>
+                        UPSBC Ltd</li>
+                    <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+        </div>
+
+        <!--------spping boot live Road Table data getting----->
+        <div id="tableContainer" >
+          <!-- Navigation Bar -->
+          <nav class="feature_nav">
+            <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 15px;">Feature Name - </a>
+            <a id="featureName" class="feature_name1"
+                style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+            <div style="display: flex; align-items: center; margin-left: auto;">
+                <i class="fas fa-window-minimize" onclick="minimize1()"
+                    style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                <i class="fas fa-window-maximize" onclick="maximize1()"
+                    style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                    <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                </span>
+            </div>
+        </nav>
+            <table id="dataTable" class="Table_Container">
+                <thead>
+                    <tr>
+                        <th> gis_id </th>
+                        <th> zone No </th>
+                        <th> zone Name </th>
+                        <th> Ward No </th>
+                        <th> Ward Name </th>
+                        <th> ownership </th>
+                        <th> Type </th>
+                        <th> Road Name </th>
+                        <th> Row meter </th>
+                        <th> Row as per </th>
+                        <th> carriage Width </th>
+                        <th> Material </th>
+                        <th> length (km) </th>
+                        <th> conditon </th>
+                        <th> Year Of Construction </th>
+                        <th> cus &nbsp;&nbsp;
+                            <!-- <span class="table-cancel-btn1">
+                                <i id="cancelbtn1" class="fas fa-times cancel-btn"></i>
+                            </span> -->
+                        </th>
+
+
+                    </tr>
+                </thead>
+                <tbody id="dataBody" class="Table_Container">
+                    <!-- Table body will be populated dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="Scoreing_tableContainer" >
+            <nav class="feature_nav">
+                <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 15px;">Feature Name - </a>
+                <a id="featureName" class="feature_name1"
+                    style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+                <div style="display: flex; align-items: center; margin-left: auto;">
+                    <i class="fas fa-window-minimize" onclick="minimize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+
+                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                    </span>
+                </div>
+            </nav>
+            <table id="Scoring_dataTable" class="Table_Container">
+                <thead>
+                    <tr>
+                        <th> GIS Id </th>
+                        <th> Zone No. </th>
+                        <th> Zone Name </th>
+                        <th> Ward No </th>
+                        <th> Ward Name </th>
+                        <th> Ownership </th>
+                        <th> Type </th>
+                        <th> Road Name </th>
+                        <th> ROW Meter </th>
+                        <th> ROW as per </th>
+                        <th> Carriage Width </th>
+                        <th> Material </th>
+                        <th> Length (km) </th>
+                        <th> Condition </th>
+                        <th> Year of Construction </th>
+                        <th> Construction Under Scheem </th>
+                        <th> Average ROW </th>
+                        <th> Total Length (m) </th>
+                        <th> Network Score </th>
+                        <th> ROW Score </th>
+                        <th> Bus Stop Score </th>
+                        <th> Education Score </th>
+                        <th> Landmark Score </th>
+                        <th> Hospital Score </th>
+                        <th>Park Score</th>
+                        <th> Total Score </th>
+                        <th> Score Percentage</th>
+                        <th> Priority
+                            &nbsp;&nbsp;
+                            <!-- <span class="table-cancel-btn1">
+                                <i id="cancelbtn1" class="fas fa-times cancel-btn"></i>
+                            </span> -->
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="dataBody_Scoring" class="Table_Container">
+
+                </tbody>
+            </table>
+        </div>
+
+        <!--------------------------show table on click table summary data---------->
+        <!--------spping boot live Road Table data getting----->
+
+        <div id="tableContainer_summary" >
+            <!-- Navigation Bar -->
+            <nav class="feature_nav">
+                <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 15px;">Feature Name - </a>
+                <a id="featureName" class="feature_name1"
+                    style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+                <div style="display: flex; align-items: center; margin-left: auto;">
+                    <i class="fas fa-window-minimize" onclick="minimize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                    </span>
+                </div>
+            </nav>
+            <table id="dataTable_summary" class="Table_Container">
+                <thead>
+                    <tr>
+                        <th> Gis Id </th>
+                        <th> Zone No </th>
+                        <th> Zone Name </th>
+                        <th> Ward No </th>
+                        <th> Ward Name </th>
+                        <th> Ownership </th>
+                        <th> Type </th>
+                        <th> Road Name </th>
+                        <th> Row (meter) </th>
+                        <th> Row as per </th>
+                        <th> carriage Width </th>
+                        <th> Material </th>
+                        <th> Length (km) </th>
+                        <th> conditon </th>
+                        <th> Year Of Construction </th>
+                        <th> CUS &nbsp;&nbsp;
+                            <!-- <span class="table-cancel-btn1">
+                                <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                            </span> -->
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody id="dataBody_summary">
+
+                </tbody>
+            </table>
+        </div>
+
+        
+
+        <!--------wms & wfs Road Table data getting layer----->
+        <div id="tableContainer_summaryfilter" >
+            <nav class="feature_nav">
+                <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 15px;">Filter Data According to zone and Column </a>
+                <a id="featureName" style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+                <div style="display: flex; align-items: center; margin-left: auto;">
+                    <i class="fas fa-window-minimize" onclick="minimize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                    </span>
+                </div>
+            </nav>
+            <table id="dataTable_summaryfilter" class="Table_Container">
+                <thead>
+                    <tr>
+                        <th> Gis Id </th>
+                        <th> Zone No
+                            <select class="zone-dropdown" style="overflow-y:scroll" id="zoneSelect"></select>
+                        </th>
+                        <th> Zone Name </th>
+                        <th> Ward No
+                            <select class="ward-dropdown" style="overflow-y:scroll" id="wardSelect"></select>
+                            </select>
+                        </th>
+                        <th> Ward Name </th>
+                        <th> Ownership
+                            <select class="ownership-dropdown">
+                                <option value="">Ownership</option>
+                                <option value="ANN">ANN</option>
+                                <option value="PVT">PVT</option>
+                                <option value="NHAI">NHAI</option>
+                                <option value="PWD">PWD</option>
+                                <option value="Railway">Railway</option>
+                                <option value="UPSBC Ltd.">UPSBC</option>
+                                <!-- Add more ownership options here -->
+                            </select>
+                        </th>
+                        <th> Type
+                            <select class="type-dropdown">
+                                <option value="">Type</option>
+                                <option value="Minor">Minor</option>
+                                <option value="Major">Major</option>
+
+                            </select>
+                        </th>
+                        <th> Road Name </th>
+                        <th> Row (meter) </th>
+                        <th> Row as per </th>
+                        <th> carriage Width </th>
+                        <th> Material
+                            <select class="material-dropdown">
+                                <option value="">Material</option>
+                                <option value="Kachcha">Kachcha</option>
+                                <option value="Bitumen">Bitumen</option>
+                                <option value="CC">CC (Concrete)</option>
+                                <option value="Interlocking">Interlocking</option>
+                                <option value="BOE">BOE</option>
+                            </select>
+                        </th>
+                        <th> Length (km) </th>
+                        <th> conditon
+                            <!-- <select class="condition-dropdown">
+                                <option value="">Condition</option>
+                                <option value="Green">Good</option>
+                                <option value="Red">Poor</option>
+                                <option value="Yellow">Moderate</option>
+                               
+                            </select>     -->
+                        </th>
+                        <th> Year Of Construction </th>
+                        <th> CUS &nbsp;&nbsp;
+                            <!-- <span class="table-cancel-btn1">
+                                <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                            </span> -->
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="dataBody_summaryfilter">
+                </tbody>
+            </table>
+        </div>
+
+        <!--------wms & wfs Road Table data getting layer----->
+        <div id="tableContainer_summaryfiltermat" >
+            <nav class="feature_nav">
+                <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 15px;">Filter Data According to zone and Column </a>
+                <a id="featureName" style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+                <div style="display: flex; align-items: center; margin-left: auto;">
+                    <i class="fas fa-window-minimize" onclick="minimize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                    </span>
+                </div>
+            </nav>
+            <table id="dataTable_summaryfiltermat" class="Table_Container">
+                <thead>
+                    <tr>
+                        <th> Gis Id </th>
+                        <th> Zone No
+                            <select class="zone-dropdownmat" style="overflow-y:scroll" id="zoneSelectmat"></select>
+                        </th>
+                        <th> Zone Name </th>
+                        <th> Ward No
+                            <select class="ward-dropdownmat" style="overflow-y:scroll" id="wardSelectmat"></select>
+                            </select>
+                        </th>
+                        <th> Ward Name </th>
+                        <th> Ownership
+                            <select class="ownership-dropdownmat">
+                                <option value="">Ownership</option>
+                                <option value="ANN">ANN</option>
+                                <option value="PVT">PVT</option>
+                                <option value="NHAI">NHAI</option>
+                                <option value="PWD">PWD</option>
+                                <option value="Railway">Railway</option>
+                                <option value="UPSBC Ltd.">UPSBC</option>
+                                <!-- Add more ownership options here -->
+                            </select>
+                        </th>
+                        <th> Type
+                            <select class="type-dropdownmat">
+                                <option value="">Type</option>
+                                <option value="Minor">Minor</option>
+                                <option value="Major">Major</option>
+
+                            </select>
+                        </th>
+                        <th> Road Name </th>
+                        <th> Row (meter) </th>
+                        <th> Row as per </th>
+                        <th> carriage Width </th>
+                        <th> Material
+                            <select class="material-dropdownmat">
+                                <option value="">Material</option>
+                                <option value="Kachcha">Kachcha</option>
+                                <option value="Bitumen">Bitumen</option>
+                                <option value="CC">CC (Concrete)</option>
+                                <option value="Interlocking">Interlocking</option>
+                                <option value="BOE">BOE</option>
+                            </select>
+                        </th>
+                        <th> Length (km) </th>
+                        <th> conditon
+                            <!-- <select class="condition-dropdownmat">
+                        <option value="">Condition</option>
+                        <option value="Green">Good</option>
+                        <option value="Red">Poor</option>
+                        <option value="Yellow">Moderate</option>
+                       
+                    </select>     -->
+                        </th>
+                        <th> Year Of Construction </th>
+                        <th> CUS &nbsp;&nbsp;
+                            <!-- <span class="table-cancel-btn1">
+                                <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                            </span> -->
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="dataBody_summaryfiltermat">
+                </tbody>
+            </table>
+        </div>
+
+        <div id="tableContainer_summaryfilterOwn" >
+            <nav class="feature_nav">
+                <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 15px;">Filter Data According to zone and Column </a>
+                <a id="featureName" style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+                <div style="display: flex; align-items: center; margin-left: auto;">
+                    <i class="fas fa-window-minimize" onclick="minimize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                    </span>
+                </div>
+            </nav>
+            <table id="dataTable_summaryfilterOwn" class="Table_Container">
+                <thead>
+                    <tr>
+                        <th> Gis Id </th>
+                        <th> Zone No
+                            <select class="zone-dropdownOwn" style="overflow-y:scroll" id="zoneSelectOwn"></select>
+                        </th>
+                        <th> Zone Name </th>
+                        <th> Ward No
+                            <select class="ward-dropdownOwn" style="overflow-y:scroll" id="wardSelectOwn"></select>
+                            </select>
+                        </th>
+                        <th> Ward Name </th>
+                        <th> Ownership
+                            <select class="ownership-dropdownOwn">
+                                <option value="">Ownership</option>
+                                <option value="ANN">ANN</option>
+                                <option value="PVT">PVT</option>
+                                <option value="NHAI">NHAI</option>
+                                <option value="PWD">PWD</option>
+                                <option value="Railway">Railway</option>
+                                <option value="UPSBC Ltd.">UPSBC</option>
+                                <!-- Add more ownership options here -->
+                            </select>
+                        </th>
+                        <th> Type
+                            <select class="type-dropdownOwn">
+                                <option value="">Type</option>
+                                <option value="Minor">Minor</option>
+                                <option value="Major">Major</option>
+
+                            </select>
+                        </th>
+                        <th> Road Name </th>
+                        <th> Row (meter) </th>
+                        <th> Row as per </th>
+                        <th> carriage Width </th>
+                        <th> Material
+                            <select class="material-dropdownOwn">
+                                <option value="">Material</option>
+                                <option value="Kachcha">Kachcha</option>
+                                <option value="Bitumen">Bitumen</option>
+                                <option value="CC">CC (Concrete)</option>
+                                <option value="Interlocking">Interlocking</option>
+                                <option value="BOE">BOE</option>
+                            </select>
+                        </th>
+                        <th> Length (km) </th>
+                        <th> conditon
+                            <!-- <select class="condition-dropdownOwn">
+                        <option value="">Condition</option>
+                        <option value="Green">Good</option>
+                        <option value="Red">Poor</option>
+                        <option value="Yellow">Moderate</option>
+                       
+                    </select>     -->
+                        </th>
+                        <th> Year Of Construction </th>
+                        <th> CUS &nbsp;&nbsp;
+                            <!-- <span class="table-cancel-btn1">
+                                <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                            </span> -->
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody id="dataBody_summaryfilterOwn">
+                </tbody>
+            </table>
+        </div>
+
+        <!--------spping boot live Drain data getting----->
+        <div id="tableContainer_Drain" >
+            <nav class="feature_nav">
+                <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 15px;">Feature Name - </a>
+                <a id="featureName" class="feature_name1"
+                    style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;">Drain</a>
+                <div style="display: flex; align-items: center; margin-left: auto;">
+                    <i class="fas fa-window-minimize" onclick="minimize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+
+                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                    </span>
+                </div>
+            </nav>
+            <table id="dataTable_Drain" class="Table_Container">
+                <thead>
+                    <tr>
+                        <!-- <th style="width:130px"> Gis Id </th> -->
+                        <th style="width:130px"> Zone No </th>
+                        <th style="width:130px"> Zone Name </th>
+                        <th style="width:130px"> Ward No </th>
+                        <th style="width:130px"> Ward Name </th>
+                        <th style="width:130px"> Ownership </th>
+                        <th style="width:130px"> Type </th>
+                        <th style="width:130px"> Status </th>
+                        <th style="width:130px"> Material </th>
+                        <th style="width:130px"> Length (meter) </th>
+                        <th style="width:130px"> Condition </th>
+                        <th style="width:130px"> Year of Construction </th>
+                        <th style="width:130px"> width </th>
+                        <th style="width:130px"> Depth &nbsp;&nbsp;
+                            <!-- <span class="table-cancel-btn1">
+                                <i id="cancelbtn_Drain" class="fas fa-times cancel-btn"></i>
+                            </span> -->
+                        </th>
+
+
+
+                    </tr>
+                </thead>
+                <tbody id="dataBody_Drain">
+                    <!-- Table body will be populated dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+        <!------------------------ live table end --------------------->
+        <div id="popup" class="ol-popup"></div>
+
+        <!-- popup for park polygon  -->
+        <div id="popup_1" class="popup_1"></div>
+
+        <!------------------------- summary table start ------------------->
+
+        <div class="table_summary" id="summary-table">
+            <div class="topnav" id="topnav">
+                <div class="nav-links">
+                    <a href="#Summary" id="summary_id" onclick="navigateTo('Summary')">Summary</a>
+
+                    <!-- Zones Dropdown -->
+                    <div class="dropdown">
+                        <a href="#Zones" class="dropbtn">Zones</a>
+                        <div class="dropdown-content" id="zonesDropdown">
+                            <!-- Dropdown content will be dynamically inserted here -->
+
+                        </div>
+                    </div>
+
+                    <!-- <a href="#Wards" onclick="navigateTo('Wards')">Wards</a> -->
+                    <div class="dropdown">
+                        <a href="#Wards" class="dropbtn">Wards</a>
+                        <div class="dropdown-content" id="zonesDropdownwards">
+                            <!-- Dropdown content will be dynamically inserted here -->
+
+                        </div>
+                    </div>
+                    <!-- <a href="#Amenities" class="tab" data-tab="Amenities"
+                        onclick="navigateTo('Amenities')">Amenities</a> -->
+                </div>
+                <div class="icons">
+                    <i class="fas fa-window-minimize" onclick="minimize()"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize()"></i>
+                    <i class="fas fa-window-close" onclick="closeNav()"></i>
+                </div>
+            </div>
+            <div class="content-wrapper" id="content-wrapper">
+                <div id="content" class="card-container">
+                    <!-- Cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+        <!------------------------ summary table end --------------------->
+        <!--------- main-container section end -------------->
+
+        <!----------- footer section start ---------->
+        <div class="footer">
+            &copy; 2024 UP Remote Sensing Application Centre. All rights reserved.
+        </div>
+        <!--------- footer section end ----------->
+
+        <script src="/config.js"></script>
+        <!-- <script src="../javascript/ayodhya_oldcode.js"></script> -->
+        <script src="/javascript/ayodhya_demo_test.js"></script>
+        <!-- <script src="demo.js"></script> -->
+
+</body>
+</html>

@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucknow</title>
+
+    <link href="/libs/bootstrap-5.1.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/libs/v6.13.0-dist/ol.css">
+    <link rel="stylesheet" href="/libs/ol-layerswitcher-master/dist/ol-layerswitcher.css" />
+    <link rel="stylesheet" href="/libs/ol-geocoder/ol-geocoder.css" />
+    <!-- <link rel="stylesheet" href="/libs/ol-popup/ol-popup.css"/> -->
+    <link rel="stylesheet" href="/libs/jquery-ui-1.12.1/jquery-ui.css">
+
+    <script src="/libs/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/libs/jquery.js"></script>
+    <script src="/libs/v6.13.0-dist/ol.js"></script>
+    <script src="/libs/ol-layerswitcher-master/dist/ol-layerswitcher.js"></script>
+    <script src="/libs/ol-geocoder/ol-geocoder.js"></script>
+    <script src="/libs/ol-popup/ol-popup.js"></script>
+    <script src="/libs/jquery-ui-1.12.1/external/jquery/jquery.js"></script>
+    <script src="/libs/jquery-ui-1.12.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <link rel="shortcut icon" type="image/x-icon" class="fabicon" href="../assets/icons/logo_tree.png" />
+
+
+    <link rel="stylesheet" href="../style/lko.css">
+    <link rel="stylesheet" href="../style/responsive.css">
+</head>
+
+<body>
+    <!---------------------- header section start -------------------------->
+    <div class="header">
+        <i class="fas fa-bars hamburger"></i>
+        <div class="center-content">
+            <img src="../assets/logo/lko.png" class="logo" alt="" />
+            <h2 class="title">Lucknow Nagar Nigam</h2>
+            <img src="../assets/logo/images.jpg" class="logo" alt="dp" />
+        </div>
+        <i class="fa-solid fa-print"></i>
+
+        <div class="search-container" id="search-bar">
+            <!-- <i class="search-icon">&#128269;</i>         Unicode for search icon -->
+            <select id="roadNamesDropdown"></select>
+        </div>
+        <div id="popup-search" class="ol-popup-search">
+            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+            <div id="popup-content-search"></div>
+        </div>
+
+        <!-- <div class="search-bar" id="search-bar">
+      <input type="text" placeholder="Search...">
+      <button id="search"><i class="fa fa-search"></i></button>
+  </div> -->
+    </div>
+    <!---------------------- header section end -------------------------->
+
+    <!---------------------- sidebar section start -------------------------->
+    <div class="sidebar">
+        <span><i class="fas fa-times cancel-icon"></i></span>
+
+        <!-- Bootstrap Tabs -->
+        <ul class="nav nav-tabs" id="sidebarTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="amenities-tab" data-bs-toggle="tab" data-bs-target="#amenities"
+                    type="button" role="tab" aria-controls="amenities" aria-selected="true"> Amenities </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" type="button"
+                    role="tab" aria-controls="data" aria-selected="false"> Network </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="utilities-tab" data-bs-toggle="tab" data-bs-target="#utilities"
+                    type="button" role="tab" aria-controls="utilities" aria-selected="false">
+                    Others
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="assets-tab" data-bs-toggle="tab" data-bs-target="#assets" type="button"
+                    role="tab" aria-controls="assets" aria-selected="false"> Road Analysis</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="sidebarTabsContent">
+            <!-- Amenities Tab Content -->
+            <div class="tab-pane fade show active" id="amenities" role="tabpanel" aria-labelledby="amenities-tab">
+                <h2></h2>
+                <form>
+                    <label>
+                        <i class="icon fas fa-university"></i>
+                        <input type="checkbox" id="showBanks" class="main-option" name="option3" />
+                        <span class="text">Banks & ATM - 1625</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-hotel"></i>
+                        <input type="checkbox" id="showHotel" class="main-option" name="option13" />
+                        <span class="text">Hotels - 195</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-hospital"></i>
+                        <input type="checkbox" id="showHospital" class="main-option" name="option4" />
+                        <span class="text">Hospitals - 195</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-tree"></i>
+                        <input type="checkbox" id="showParks" class="main-option" name="option8" />
+                        <span class="text">Parks - 1538</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-bus"></i>
+                        <input type="checkbox" id="showBus" class="main-option" name="option11" />
+                        <span class="text">Bus Stops - 90</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-charging-station"></i>
+                        <input type="checkbox" id="showCar" class="main-option" name="option5" />
+                        <span class="text">Car charging Station - 50</span>
+                    </label>
+
+                    <label>
+                        <i class="icon fas fa-gas-pump"></i>
+                        <input type="checkbox" id="showPetrol" class="main-option" name="option5" />
+                        <span class="text">Petrol Pump - 111</span>
+                    </label>
+
+                    <label>
+                        <i class="icon fas fas fa-hockey-puck"></i>
+                        <input type="checkbox" id="showStadium" class="main-option" name="option9" />
+                        <span class="text">Stadium - 26</span>
+                    </label>
+
+
+
+                    <!-- <label>
+        <i class="icon fas fa-gas-pump"></i>
+        <input type="checkbox" id="showGasSupply" class="main-option" name="utility3" />
+        <span class="text">Gas Supply</span>
+      </label> -->
+                    <label>
+                        <i class="icon fas fa-cross"></i>
+                        <input type="checkbox" id="showGraveyard" class="main-option" name="option14" />
+                        <span class="text">Graveyard - 60</span>
+                    </label>
+                    <br><br>
+
+                </form>
+            </div>
+
+            <!-- Network Tab Content -->
+            <div class="tab-pane fade" id="data" role="tabpanel" aria-labelledby="data-tab">
+                <!-- <h2>Network</h2> -->
+                <form>
+                    <label>
+                        <i class="icon fas fa-route"></i>
+                        <input type="checkbox" id="ShowRoads" onclick=Lucknow_All_Roads() class="main-option"
+                            name="option1" />
+                        <span class="text">Roads</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-bacon"></i>
+                        <input type="checkbox" id="ShowDrainage" class="main-option" name="option2" />
+                        <span class="text">Drainage</span>
+                    </label>
+                </form>
+            </div>
+
+            <!-- Others Tab Content -->
+            <div class="tab-pane fade" id="utilities" role="tabpanel" aria-labelledby="utilities-tab">
+                <!-- <h2>others</h2> -->
+                <form>
+                    <label>
+                        <i class="icon fas fa-book-open"></i>
+                        <input type="checkbox" id="showEducation" class="main-option" name="option2" />
+                        <span class="text">Educational Institutes - 1087</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-cross"></i>
+                        <input type="checkbox" id="showReligious" class="main-option" name="option10" />
+                        <span class="text">Religious Places - 40</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-envelope"></i>
+                        <input type="checkbox" id="showPostOffice" class="main-option" name="option12" />
+                        <span class="text">Post Offices - 12 </span>
+                    </label>
+                    <!-- <label>
+      <i class="icon fas fa-shield-alt"></i>
+      <input type="checkbox" id="showPolice" class="main-option" name="option6" />
+      <span class="text">Police Stations</span>
+    </label> -->
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="showStateGov" class="main-option" name="option1" />
+                        <span class="text">State Government Offices - 26</span>
+
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="showCentralGov" class="main-option" name="option1" />
+                        <span class="text">Central Government Offices - 15</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="showLandmark" class="main-option" name="option1" />
+                        <span class="text">Landmark </span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-charging-station"></i>
+                        <input type="checkbox" id="showElectric_Substation" class="main-option" name="utility2" />
+                        <span class="text">Electricity Substation</span>
+                    </label>
+                </form>
+            </div>
+
+            <!-- Assets Tab Content -->
+            <div class="tab-pane fade" id="assets" role="tabpanel" aria-labelledby="assets-tab">
+                <!-- <h2>Assets</h2> -->
+                <form>
+                    <!-- <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Slum_Boundary" class="main-option" name="option1" />
+                        <span class="text">Slum Boundary - 41</span>
+
+                    </label>-->
+
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Education_Road" class="main-option" name="option1" />
+                        <span class="text">Education's Roads - 1564</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Bank_Road" class="main-option" name="option1" />
+                        <span class="text">Bank's Roads - 981</span>
+
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Hospital_Road" class="main-option" name="option1" />
+                        <span class="text">Hospital's Roads - 135</span>
+
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Metro_Road" class="main-option" name="option1" />
+                        <span class="text">Metro's Roads - 29</span>
+
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Landmark_Road" class="main-option" name="option1" />
+                        <span class="text">Landmark's Roads - 200</span>
+
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Park_Road" class="main-option" name="option1" />
+                        <span class="text">Park's Road - 5333</span>
+
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Drain_Road" class="main-option" name="option1" />
+                        <span class="text">Drain's Roads - 32771</span>
+
+                    </label>
+                    <!-- <label>
+      <i class="icon fas fa-building"></i>
+      <input type="checkbox" class="main-option" name="asset1" />
+      <span class="text">Public Buildings</span>
+    </label>
+    <label>
+      <i class="icon fas fa-warehouse"></i>
+      <input type="checkbox" class="main-option" name="asset2" />
+      <span class="text">Storage Facilities</span>
+    </label> -->
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!---------------------- sidebar section end -------------------------->
+
+    <!---------------------- main-container section start -------------------------->
+    <div class="main-container">
+
+        <!---------------------- map section start ------------------>
+        <div id="map">
+            <div class="map-icons-left">
+                <button class="map-icon" id="View_point" title="Street View" onclick="street_view()"><i
+                        class="fas fa-street-view"></i></button>
+                <h6 class="h6">Street View</h6>
+
+                <button class="map-icon" title="Zone wise Road" onclick="road_filter()"><i
+                        class="fas fa-road"></i></button>
+                <h6 class="h6">Road Network</h6>
+
+                <button class="map-icon" title="Data Analysis" onclick="data_analysis()">
+                    <i class="fas fa-chart-simple"></i></a></button>
+                <h6 class="h6">Data Analysis</h6>
+
+                <!-- <button class="map-icon" title="Get Info"><i class="fas fa-circle-info"></i></button> -->
+                <!-- <button class="map-icon" title="Drain" onclick="drain_filter()"><i class="fa-solid fa-worm"></i></button><h6 class="h6">Drain Filter</h6> -->
+                <button class="map-icon" title="Decision Support System " onclick="re_direct()"><i
+                        class="fa-solid fa-chart-area"></i></i></button>
+                <h6 class="h6">DSS Road</h6>
+
+            </div>
+
+            <div class="map-icons">
+                <button class="map-icon" id="search-icon" title="Search"><i class="fas fa-search"></i></button>
+                <h6 class="h6"> Search </h6>
+                <!-- <button class="map-icon" id="measure-icon" onclick="measure_tab()" title="Measure Tool"><i class="fas fa-ruler"></i></button> -->
+                <!-- <button class="map-icon" id="basemap-icon" title="Toggle Basemap"><i class="fas fa-map"></i></button> -->
+                <button class="map-icon" id="query_btn" onclick="query_panel1()" title="Query Panel"><i
+                        class="fas fa-window-maximize"></i></button>
+                <h6 class="h6"> Query </h6>
+
+                <button class="map-icon" id="table_icon" title="Summary Data" onclick="summary_table()"><i
+                        class="fas fa-table "></i></button>
+                <h6 class="h6"> Summary </h6>
+
+                <button class="map-icon" id="clear-icon" title="Clear" onclick="delete_layers()"><i
+                        class="fa fa-trash"></i></button>
+                <h6 class="h6">Clear</h6>
+            </div>
+        </div>
+        <!-------------------- map section end -------------------->
+
+        <!---------------------- query panel section start -------------------------->
+        <div id="query_tab" class="query-tab">
+            <span class="tab-cancel-icon"><i class="fas fa-times cancel-icon"></i></span>
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist" style="font-size:11px;">
+                    <button class="nav-link " id="nav-attributes-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-attributes" type="button" role="tab" aria-controls="nav-attributes"
+                        aria-selected="true" style="font-size:12px;color:white">Select by Attributes</button>
+                    <button class="nav-link" id="nav-draw-tab" data-bs-toggle="tab" data-bs-target="#nav-draw"
+                        type="button" role="tab" aria-controls="nav-draw" aria-selected="false"
+                        style="font-size:12px;color:white">Select by Draw</button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-attributes" role="tabpanel"
+                    aria-labelledby="nav-attributes-tab">
+                    <!-- <label for="layer"><b>Select Layer</b></label> -->
+                    <select id="layer" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Select Layer</option>
+                    </select>
+                    <br>
+                    <!-- <label for="attributes"><b>Select Attribute</b></label> -->
+                    <select id="attributes" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Select Attribute</option>
+                    </select>
+                    <br>
+                    <!-- <label for="operator"><b>Select Attribute</b></label> -->
+                    <select id="operator" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Select Operator</option>
+                    </select>
+                    <br>
+                    <!-- <label for="value">Enter Value</label> -->
+                    <input type="text" class="form-control form-select-sm" id="value" placeholder="Enter Value"
+                        name="value">
+                    <br>
+                    <button id="load-layer" onclick="query()" type="button" style="margin-left:10px;"
+                        class="btn btn-danger btn-sm">Load Layer</button>
+                    <br><br>
+                </div>
+
+                <div class="tab-pane fade" id="nav-draw" role="tabpanel" aria-labelledby="nav-draw-tab">
+                    <!-- <label for="layer1"><b>Select Layer</b></label> -->
+                    <select id="layer1" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option selected>Select Layer</option>
+                    </select>
+                    <br>
+                    <!-- <label for="draw_type"><b>Select Geometry Type</b></label> -->
+                    <select id="draw_type" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <option value="select">Select Shape</option>
+                        <option value="Square">Square</option>
+                        <option value="Box">Box</option>
+                        <option value="Polygon">Polygon</option>
+                        <option value="Star">Star</option>
+                        <option value="clear">Clear</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div id="table_data" style="font-size:15px;"></div>
+
+        <!------------------ query panel section end--------------------->
+
+        <!------------------ measure-options section start ----------------->
+        <div class="measure-options" id="measure-tab">
+            <span class="tab-cancel-icon"><i class="fas fa-times cancel-icon"></i></span>
+            <label for="layer" style="margin-left:15px;">Measure Options</label>
+            <button onclick="startLineString()"><b>Line String</b></button>
+            <button onclick="startPolygon()"><b>Polygon</b></button>
+            <button onclick="clearMeasurement()"><b>Clear Measurement</b></button>
+        </div>
+        <!------------------- measure-options section end ----------------->
+
+        <!-------------------- zone wise road filter start -------------------------->
+        <div id="road-filter" class="road-filter">
+            <ul>
+                <label style="margin-left:20px;"><b>Select Zone</b></label>
+                <li>
+                    <a class="dropdown">Priority Based Roads &raquo;</a>
+                    <ul class="dropdown-menu dropdown-submenu">
+                        <li id="P1"><a class="dropdown-item">First Priority</a></li>
+                        <li id="P2"><a class="dropdown-item">Second Priority</a></li>
+                        <li id="Not_Eligible"><a class="dropdown-item">Not Eligible</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <!-- </li> -->
+            <li><a id="Zone1" class="dropdown">Zone 1 &raquo;</a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown">Wards &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li><a class="dropdown-item" id="Ward17">Ward 17</a></li>
+                            <li><a class="dropdown-item" id="Ward28">Ward 28</a></li>
+                            <li><a class="dropdown-item" id="Ward33">Ward 33</a></li>
+                            <li><a class="dropdown-item" id="Ward34">Ward 34</a></li>
+                            <li><a class="dropdown-item" id="Ward55">Ward 55</a></li>
+                            <li><a class="dropdown-item" id="Ward57">Ward 57</a></li>
+                            <li><a class="dropdown-item" id="Ward69">Ward 69</a></li>
+                            <li><a class="dropdown-item" id="Ward87">Ward 87</a></li>
+                            <li><a class="dropdown-item" id="Ward88">Ward 88</a></li>
+                            <li><a class="dropdown-item" id="Ward95">Ward 95</a></li>
+                            <li><a class="dropdown-item" id="Ward98">Ward 98</a></li>
+                            <li><a class="dropdown-item" id="Ward103">Ward 103</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown">Roads Age &raquo;</a>
+                        <ul class="dropdown-menu">
+                            <li id="Less_than3_Zone1"><a class="dropdown-item">Less than 3y</a></li>
+                            <!-- <li><a class="dropdown-item" onclick="between_3to5()">Between 3y to 5y</a></li> -->
+                            <li id="Greater_than3_Zone1"><a class="dropdown-item">Greater than 3y</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a id="Zone1_condition" class="dropdown" onclick=" ">Conditions Based Roads &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li id="Zone1_condition_good"><a class="dropdown-item">Good</a></li>
+                            <li id="Zone1_condition_moderate"><a class="dropdown-item">Moderate</a></li>
+                            <li id="Zone1_condition_poor"><a class="dropdown-item">Poor</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a id="Zone1_type" class="dropdown" onclick=" ">Road Type &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li id="Zone1_type_major"><a class="dropdown-item">Major</a></li>
+                            <li id="Zone1_type_minor"><a class="dropdown-item">Minor</a></li>
+                            <!-- <li id="Zone1_type_Sub_Arterial"><a class="dropdown-item" >Sub Arterial</a></li>
+                      <li id="Zone1_type_Collector"><a class="dropdown-item" >Collector</a></li> -->
+                        </ul>
+                    </li>
+                    <li>
+                        <a id="Zone1_material" class="dropdown" onclick=" ">Road Material &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li id="Zone1_material_bitumen"><a class="dropdown-item">Bitumen</a></li>
+                            <!-- <li id="Zone1_material_BOE"><a class="dropdown-item">BOE</a></li> -->
+                            <li id="Zone1_material_CC"><a class="dropdown-item">CC</a></li>
+                            <li id="Zone1_material_interlocking"><a class="dropdown-item">Interlocking</a>
+                            </li>
+                            <li id="Zone1_material_kachcha"><a class="dropdown-item">Kachcha</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a id="Zone1_ownership" class="dropdown" onclick=" ">Road Ownership &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <!-- <li id="Zone1_ownership_NHAI"><a class="dropdown-item" >NHAI </a></li> -->
+                            <li id="Zone1_ownership_LNN"><a class="dropdown-item">LNN </a></li>
+                            <li id="Zone1_ownership_Private_Road"><a class="dropdown-item">Private Road</a></li>
+                            <li id="Zone1_ownership_PWD"><a class="dropdown-item">PWD </a></li>
+                            <li id="Zone1_ownership_LDA"><a class="dropdown-item">LDA </a></li>
+                            <li id="Zone1_ownership_Others"><a class="dropdown-item">Others </a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a id="Zone1_under_scheme" class="dropdown" onclick=" ">Road Under Scheme &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <!-- <li id="Zone1_under_scheme_13th"><a class="dropdown-item" >13th Finance </a></li> -->
+                            <li id="Zone1_under_scheme_14th"><a class="dropdown-item">14th Finance </a></li>
+                            <li id="Zone1_under_scheme_15th"><a class="dropdown-item">15th Finance</a></li>
+                            <li id="Zone1_under_scheme_NNN"><a class="dropdown-item">Nagar Nigam Nidhi </a></li>
+                            <li id="Zone1_under_scheme_Others"><a class="dropdown-item">Others </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a class="dropdown">Zone 2 &raquo;</a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown" onclick="">Wards &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li><a class="dropdown-item" onclick="ward_twelve()">Ward 46</a></li>
+                            <li><a class="dropdown-item" onclick="ward_fourteen()">Ward 79</a></li>
+                            <li><a class="dropdown-item" onclick="ward_thirty_seven()">Ward 26</a></li>
+                            <li><a class="dropdown-item" onclick="ward_fifty()">Ward 58</a></li>
+                            <li><a class="dropdown-item" onclick="ward_fifty_nine()">Ward 8</a></li>
+                            <li><a class="dropdown-item" onclick="ward_sixty_two()">Ward 78</a></li>
+                            <li><a class="dropdown-item" onclick="ward_sixty_six()">Ward 90</a></li>
+                            <li><a class="dropdown-item" onclick="ward_seventy()">Ward 104</a></li>
+                            <li><a class="dropdown-item" onclick="ward_seventy_six()">Ward 21</a></li>
+                            <li><a class="dropdown-item" onclick="ward_hundred()">Ward 107</a></li>
+                            <li><a class="dropdown-item" onclick="ward_hundred()">Ward 61</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown">Roads Age &raquo;</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" onclick="less_than()">Less than 3y</a></li>
+                            <!-- <li><a class="dropdown-item" onclick="between_3to5()">Between 3y to 5y</a></li> -->
+                            <li><a class="dropdown-item" onclick="greater_than()">Greater than 3y</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="dropdown" onclick=" ">Conditions Based Roads &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li><a class="dropdown-item" onclick="good_condition()">Good</a></li>
+                            <li><a class="dropdown-item" onclick="medium_condition()">Moderate</a></li>
+                            <li><a class="dropdown-item" onclick="bad_condition()">Poor</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown" onclick=" ">Road Type &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li><a class="dropdown-item" onclick="Arterial_road()">Arterial</a></li>
+                            <li><a class="dropdown-item" onclick="minor_road()">Local Street</a></li>
+                            <li><a class="dropdown-item" onclick="service_road()">Sub Arterial</a></li>
+                            <li><a class="dropdown-item" onclick="not_applicable()">NA</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown" onclick=" ">Road Material &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li><a class="dropdown-item" onclick="bitumen()">Bitumen</a></li>
+                            <li><a class="dropdown-item" onclick="brick()">Brick</a></li>
+                            <li><a class="dropdown-item" onclick="cc()">CC</a></li>
+                            <li><a class="dropdown-item" onclick="interlocking()">Interlocking</a></li>
+                            <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
+                            <li><a class="dropdown-item" onclick="notApplicable_material()">NA</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown" onclick=" ">Road Ownership &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li><a class="dropdown-item" onclick="lnn()">LNN</a></li>
+                            <li><a class="dropdown-item" onclick="pwd()">PWD</a></li>
+                            <li><a class="dropdown-item" onclick="pvt()">PVT</a></li>
+                            <li><a class="dropdown-item" onclick="nhai()">NHAI</a></li>
+                            <li><a class="dropdown-item" onclick="lda()">LDA</a></li>
+                            <li><a class="dropdown-item" onclick="others()">OTHERS</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown" onclick=" ">Road Under Scheme &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li><a class="dropdown-item" onclick="fourteen_finance()">14th Finance </a></li>
+                            <li><a class="dropdown-item" onclick="fifteen_finance()">15th Finance </a></li>
+                            <li><a class="dropdown-item" onclick="g20_scheme()">G20 </a></li>
+                            <li><a class="dropdown-item" onclick="gram_panchayat()">Gram Panchayat </a></li>
+                            <li><a class="dropdown-item" onclick="duda_scheme()">Made by Duda in 2020 </a></li>
+                            <li><a class="dropdown-item" onclick="mayorKota_scheme()">Mayor Kota </a></li>
+                            <li><a class="dropdown-item" onclick="MukhyaMantri_scheme()">MukhyaMantri Srijan </a>
+                            </li>
+                            <li><a class="dropdown-item" onclick="NagarNigam_scheme()">Nagar Nigam Nidhi </a></li>
+                            <li><a class="dropdown-item" onclick="parshadKota_scheme()">Parshad Kota </a></li>
+                            <li><a class="dropdown-item" onclick="samagraYojna_scheme()">Samagra Yojna </a></li>
+                            <li><a class="dropdown-item" onclick="notApplicable_scheme()">NA </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a class="dropdown">Zone 3 &raquo;</a></li>
+            <li id="Zone4"><a class="dropdown">Zone 4 &raquo;</a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown" id="Ward">Wards &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li id="Ward12"><a class="dropdown-item">Ward 12</a></li>
+                            <li id="Ward14"><a class="dropdown-item">Ward 14</a></li>
+                            <li id="Ward37"><a class="dropdown-item">Ward 37</a></li>
+                            <li id="Ward50"><a class="dropdown-item">Ward 50</a></li>
+                            <li id="Ward59"><a class="dropdown-item">Ward 59</a></li>
+                            <li id="Ward62"><a class="dropdown-item">Ward 62</a></li>
+                            <li id="Ward66"><a class="dropdown-item">Ward 66</a></li>
+                            <li id="Ward70"><a class="dropdown-item">Ward 70</a></li>
+                            <li id="Ward76"><a class="dropdown-item">Ward 76</a></li>
+                            <li id="Ward100"><a class="dropdown-item">Ward 100</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown">Roads Age &raquo;</a>
+                        <ul class="dropdown-menu">
+                            <li id="Less_than3_Zone4"><a class="dropdown-item">Less than 3y</a></li>
+                            <!-- <li><a class="dropdown-item" onclick="between_3to5()">Between 3y to 5y</a></li> -->
+                            <li id="Greater_than3_Zone4"><a class="dropdown-item">Greater than 3y</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown" id="Zone4_condition">Conditions Based Roads &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li id="Zone4_condition_good"><a class="dropdown-item">Good</a></li>
+                            <li id="Zone4_condition_moderate"><a class="dropdown-item">Moderate</a></li>
+                            <li id="Zone4_condition_poor"><a class="dropdown-item">Poor</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown" id="Zone4_type">Road Type &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li id="Zone4_type_Urban"><a class="dropdown-item">Urban Express Way</a></li>
+                            <li id="Zone4_type_Arterial"><a class="dropdown-item">Arterial</a></li>
+                            <li id="Zone4_type_Sub_Arterial"><a class="dropdown-item">Sub Arterial</a></li>
+                            <li id="Zone4_type_Collector"><a class="dropdown-item">Collector</a></li>
+                            <li id="Zone4_type_Local_Street"><a class="dropdown-item">Local Street</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown" id="Zone4_material">Road Material &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li id="Zone4_material_bitumen"><a class="dropdown-item">Bitumen</a></li>
+                            <li id="Zone4_material_BOE"><a class="dropdown-item">BOE</a></li>
+                            <li id="Zone4_material_CC"><a class="dropdown-item">CC</a></li>
+                            <li id="Zone4_material_interlocking"><a class="dropdown-item">Interlocking</a></li>
+                            <li id="Zone4_material_kachcha"><a class="dropdown-item">Kachcha</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown" id="Zone4_ownership">Road Ownership &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li id="Zone4_ownership_NHAI"><a class="dropdown-item">NHAI</a></li>
+                            <li id="Zone4_ownership_LNN"><a class="dropdown-item">LNN</a></li>
+                            <li id="Zone4_ownership_Private_Road"><a class="dropdown-item">Private Road</a></li>
+                            <li id="Zone4_ownership_PWD"><a class="dropdown-item">PWD</a></li>
+                            <li id="Zone4_ownership_LDA"><a class="dropdown-item">LDA</a></li>
+                            <li id="Zone4_ownership_Others"><a class="dropdown-item">Others</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown" id="Zone4_under_scheme">Road Under Scheme &raquo;</a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li id="Zone4_under_scheme_13th"><a class="dropdown-item">13th Finance</a></li>
+                            <li id="Zone4_under_scheme_14th"><a class="dropdown-item">14th Finance</a></li>
+                            <li id="Zone4_under_scheme_15th"><a class="dropdown-item">15th Finance</a></li>
+                            <li id="Zone4_under_scheme_NNN"><a class="dropdown-item">Nagar Nigam Nidhi</a></li>
+                            <li id="Zone4_under_scheme_Others"><a class="dropdown-item">Others</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+            <li><a class="dropdown">Zone 5 &raquo;</a></li>
+            <li><a class="dropdown">Zone 6 &raquo;</a></li>
+            <li><a class="dropdown">Zone 7 &raquo;</a></li>
+            <li><a class="dropdown">Zone 8 &raquo;</a></li>
+
+            </ul>
+        </div>
+        <!-------------------- zone wise road filter end -------------------------->
+
+        <!------------------- drain filter start ----------------->
+        <div id="drain-filter" class="drain-filter">
+            <ul>
+                <label style="margin-left:20px;"><b>Select Zone</b></label>
+                <li><a class="dropdown">Zone 1 &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" onclick="">Wards &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" onclick="ward_seventeen()">Ward 17</a></li>
+                                <li><a class="dropdown-item" onclick="ward_ninty_five()">Ward 95</a></li>
+                                <li><a class="dropdown-item" onclick="ward_sixty_nine()">Ward 69</a></li>
+                                <li><a class="dropdown-item" onclick="ward_thirty()">Ward 33</a></li>
+                                <li><a class="dropdown-item" onclick="ward_twenty_eight()">Ward 28</a></li>
+                                <li><a class="dropdown-item" onclick="ward_onehundred_three()">Ward 103</a></li>
+                                <li><a class="dropdown-item" onclick="ward_eighty_eight()">Ward 88</a></li>
+                                <li><a class="dropdown-item" onclick="ward_fifty_five()">Ward 55</a></li>
+                                <li><a class="dropdown-item" onclick="ward_thirty_four()">Ward 34</a></li>
+                                <li><a class="dropdown-item" onclick="ward_fifty_seven()">Ward 57</a></li>
+                                <li><a class="dropdown-item" onclick="ward_ninty_eight()">Ward 98</a></li>
+                                <li><a class="dropdown-item" onclick="ward_eighty_seven()">Ward 87</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Conditions Based Drain &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="good_condition()">Good</a></li>
+                                <li><a class="dropdown-item" onclick="medium_condition()">Moderate</a></li>
+                                <li><a class="dropdown-item" onclick="bad_condition()">Poor</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="Arterial_road()">Arterial</a></li>
+                                <li><a class="dropdown-item" onclick="minor_road()">Local Street</a></li>
+                                <li><a class="dropdown-item" onclick="service_road()">Sub Arterial</a></li>
+                                <li><a class="dropdown-item" onclick="not_applicable()">NA</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a class="dropdown">Zone 2 &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" onclick="">Wards &raquo;</a>
+                            <ul class="dropdown-menu dropdown-submenu">
+                                <li><a class="dropdown-item" onclick="ward_twelve()">Ward 46</a></li>
+                                <li><a class="dropdown-item" onclick="ward_fourteen()">Ward 79</a></li>
+                                <li><a class="dropdown-item" onclick="ward_thirty_seven()">Ward 26</a></li>
+                                <li><a class="dropdown-item" onclick="ward_fifty()">Ward 58</a></li>
+                                <li><a class="dropdown-item" onclick="ward_fifty_nine()">Ward 8</a></li>
+                                <li><a class="dropdown-item" onclick="ward_sixty_two()">Ward 78</a></li>
+                                <li><a class="dropdown-item" onclick="ward_sixty_six()">Ward 90</a></li>
+                                <li><a class="dropdown-item" onclick="ward_seventy()">Ward 104</a></li>
+                                <li><a class="dropdown-item" onclick="ward_seventy_six()">Ward 21</a></li>
+                                <li><a class="dropdown-item" onclick="ward_hundred()">Ward 107</a></li>
+                                <li><a class="dropdown-item" onclick="ward_hundred()">Ward 61</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown">Drain Construction &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="less_than()">Less than 3y</a></li>
+                                <li><a class="dropdown-item" onclick="between_3to5()">Between 3y to 5y</a></li>
+                                <li><a class="dropdown-item" onclick="greater_than()">Greater than 5y</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Conditions Based Drain &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="good_condition()">Good</a></li>
+                                <li><a class="dropdown-item" onclick="medium_condition()">Moderate</a></li>
+                                <li><a class="dropdown-item" onclick="bad_condition()">Poor</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="Arterial_road()">Arterial</a></li>
+                                <li><a class="dropdown-item" onclick="minor_road()">Local Street</a></li>
+                                <li><a class="dropdown-item" onclick="service_road()">Sub Arterial</a></li>
+                                <li><a class="dropdown-item" onclick="not_applicable()">NA</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a class="dropdown">Zone 3 &raquo;</a></li>
+                <li><a class="dropdown">Zone 4 &raquo;</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown" onclick="">Wards &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="ward_twelve()">Ward 12</a></li>
+                                <li><a class="dropdown-item" onclick="ward_fourteen()">Ward 14</a></li>
+                                <li><a class="dropdown-item" onclick="ward_thirty_seven()">Ward 37</a></li>
+                                <li><a class="dropdown-item" onclick="ward_fifty()">Ward 50</a></li>
+                                <li><a class="dropdown-item" onclick="ward_fifty_nine()">Ward 59</a></li>
+                                <li><a class="dropdown-item" onclick="ward_sixty_two()">Ward 62 </a></li>
+                                <li><a class="dropdown-item" onclick="ward_sixty_six()">Ward 66 </a></li>
+                                <li><a class="dropdown-item" onclick="ward_seventy()">Ward 70</a></li>
+                                <li><a class="dropdown-item" onclick="ward_seventy_six()">Ward 76 </a></li>
+                                <li><a class="dropdown-item" onclick="ward_hundred()">Ward 100 </a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown">Drain Construction &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="less_than()">Less than 3y</a></li>
+                                <li><a class="dropdown-item" onclick="between_3to5()">Between 3y to 5y</a></li>
+                                <li><a class="dropdown-item" onclick="greater_than()">Greater than 5y</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Conditions Based Drain &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="good_condition()">Good</a></li>
+                                <li><a class="dropdown-item" onclick="medium_condition()">Moderate</a></li>
+                                <li><a class="dropdown-item" onclick="bad_condition()">Poor</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onclick="Arterial_road()">Arterial</a></li>
+                                <li><a class="dropdown-item" onclick="service_road()">Sub Arterial</a></li>
+                                <li><a class="dropdown-item" onclick="minor_road()">Local Street</a></li>
+
+                                <li><a class="dropdown-item" onclick="not_applicable()">NA</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a class="dropdown">Zone 5 &raquo;</a></li>
+                <li><a class="dropdown">Zone 6 &raquo;</a></li>
+                <li><a class="dropdown">Zone 7 &raquo;</a></li>
+                <li><a class="dropdown">Zone 8 &raquo;</a></li>
+            </ul>
+        </div>
+        <!--------------------- drain filter end ---------------->
+
+        <!---------------------street view tab start ------------->
+        <!-- <div class="street-view" id="street-tab">
+    <span class="tab-cancel-icon" ><i class="fas fa-times cancel-icon"></i></span>
+    <label for="layer" style="margin-left:15px;">Available Layers</label>
+    <select id="layer">
+         Options will be dynamically populated here -->
+        <!-- </select>
+    <div class="button-group">
+        <button onclick="add_layer()"><b>Add Layer to Map</b></button>
+        <button onclick="clear_layer()"><b>Clear Layer</b></button>
+    </div>      
+    </div> -->
+        <!------------------------ street view tab end --------------->
+        <!-----------------Legend btn code--------------->
+        <div class="legend-tab">
+            <button id="legendBtn">Show Legend</button>
+            <div id="live_legend" style="display: none;">
+                <h6>Legend</h6>
+                <ul>
+
+                </ul>
+            </div>
+
+            <div id="Road_Age_legend"
+                style="display:none; position:absolute; z-index: 600; top: 45% ;  width: 14%; height: 21%;  overflow: scroll; 
+    background-color: white; border: 2px solid black;  padding: 2px 4px;  box-shadow: 0 0 10px rgba(118, 18, 18, 0.1); font-size: 12px; ">
+                <h6>Legend</h6>
+                <ul>
+                    <li><span
+                            style="background-color: #bd480e; width: 20px; height: 2px; display: inline-block;"></span>
+                        Less Than 3y</li>
+                    <!-- <li><span style="background-color: #00FF00; width: 20px; height: 2px; display: inline-block;"></span>
+                Low Priority</li> -->
+                    <li><span
+                            style="background-color: #FFC300; width: 20px; height: 2px; display: inline-block;"></span>
+                        Greater Than 3y
+                    <li>
+                        <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+            <div id="Priority_legend" style="display: none;">
+                <h6>Legend</h6>
+                <ul>
+                    <li><span style="background-color: #EB5406; width: 20px; height: 2px; display:inline-block;"></span>
+                        High Priority</li>
+                    <li><span
+                            style="background-color: #00FF00; width: 20px; height: 2px; display: inline-block;"></span>
+                        Low Priority</li>
+                    <li><span
+                            style="background-color: #FFC300; width: 20px; height: 2px; display: inline-block;"></span>
+                        Not Eligible
+                    <li>
+                        <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+            <div id="type_legend"
+                style="display:none; position:absolute; z-index: 600; top: 45% ;  width: 14%; height: 21%;  overflow: scroll; 
+    background-color: white; border: 2px solid black;  padding: 2px 4px;  box-shadow: 0 0 10px rgba(118, 18, 18, 0.1); font-size: 12px; ">
+                <h6>Legend By Type</h6>
+                <ul>
+                    <li><span style="background-color: purple; width: 20px; height: 2px; display: inline-block;"></span>
+                        Urban Express Way</li>
+                    <li><span
+                            style="background-color: #0000ff; width: 20px; height: 2px; display: inline-block;"></span>
+                        Arterial</li>
+                    <li><span
+                            style="background-color: #32e1e3; width: 20px; height: 2px; display: inline-block;"></span>
+                        Sub Arterial</li>
+                    <li><span style="background-color: yellow; width: 20px; height: 2px; display: inline-block;"></span>
+                        Local Street</li>
+                    <li><span
+                            style="background-color: lightgreen; width: 20px; height: 2px; display: inline-block;"></span>
+                        Collector</li>
+
+                    <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+            <div id="type_legend_major"
+                style="display:none; position:absolute; z-index: 600; top: 45% ;  width: 14%; height: 21%;  overflow: scroll; 
+background-color: white; border: 2px solid black;  padding: 2px 4px;  box-shadow: 0 0 10px rgba(118, 18, 18, 0.1); font-size: 12px; ">
+                <h6>Legend By Type</h6>
+                <ul>
+                    <li><span
+                            style="background-color: #0000ff; width: 20px; height: 2px; display: inline-block;"></span>
+                        Major</li>
+                    <li><span
+                            style="background-color: #e2e832; width: 20px; height: 2px; display: inline-block;"></span>
+                        Minor</li>
+                    <!-- <li><span style="background-color: #32e1e3; width: 20px; height: 2px; display: inline-block;"></span>
+      Service Road</li>
+  
+      <li><span style="background-color: #ff00ff; width: 20px; height: 2px; display: inline-block;"></span>
+          NA</li> -->
+
+                    <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+            <div id="Condition_legend"
+                style="display:none; position:absolute; z-index: 600; top: 45% ;  width: 14%; height: 21%;  overflow: scroll; 
+    background-color: white; border: 2px solid black;  padding: 2px 4px;  box-shadow: 0 0 10px rgba(118, 18, 18, 0.1); font-size: 12px; ">
+                <h6>Legend By Condition</h6>
+                <ul>
+                    <li><span
+                            style="background-color: #139d2c; width: 20px; height: 2px; display: inline-block;"></span>
+                        Good Road</li>
+                    <li><span
+                            style="background-color: #e2e832; width: 20px; height: 2px; display: inline-block;"></span>
+                        Moderate Road</li>
+                    <li><span
+                            style="background-color: #e33232; width: 20px; height: 2px; display: inline-block;"></span>
+                        Poor Road</li>
+
+                    <!-- <li><span style="background-color: #4815df; width: 20px; height: 2px; display: inline-block;"></span>
+              NA</li>
+          <li> -->
+                    <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+            <div id="Material_legend"
+                style="display:none; position:absolute; z-index: 600; top: 45% ;  width: 14%; height: 21%;  overflow: scroll; 
+    background-color: white; border: 2px solid black;  padding: 2px 4px;  box-shadow: 0 0 10px rgba(118, 18, 18, 0.1); font-size: 12px; ">
+                <h6>Legend By Material</h6>
+                <ul>
+                    <li><span
+                            style="background-color: darkred; width: 20px; height: 2px; display: inline-block;"></span>
+                        Bitumen Road</li>
+                    <li><span
+                            style="background-color: #1ad7b0; width: 20px; height: 2px; display: inline-block;"></span>
+                        CC Road</li>
+                    <li><span
+                            style="background-color: #2392ed; width: 20px; height: 2px; display: inline-block;"></span>
+                        Interlocking Road</li>
+
+                    <li><span
+                            style="background-color: #6036d0; width: 20px; height: 2px; display: inline-block;"></span>
+                        Kachcha Road</li>
+                    <li><span
+                            style="background-color: #da6076; width: 20px; height: 2px; display: inline-block;"></span>
+                        BOE Road</li>
+                    <!-- <li><span style="background-color: #2336d0; width: 20px; height: 2px; display: inline-block;"></span>
+                      NA</li> -->
+                    <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+            <div id="Ownership_legend"
+                style="display:none; position:absolute; z-index: 600; top: 45% ;  width: 14%; height: 21%;  overflow: scroll; 
+    background-color: white; border: 2px solid black;  padding: 2px 4px;  box-shadow: 0 0 10px rgba(118, 18, 18, 0.1); font-size: 12px; ">
+                <h6>Legend By Ownership</h6>
+                <ul>
+                    <li><span
+                            style="background-color: #210e8b; width: 20px; height: 2px; display: inline-block;"></span>
+                        NHAI</li>
+                    <li><span style="background-color: olive; width: 20px; height: 2px; display: inline-block;"></span>
+                        PWD</li>
+                    <li><span
+                            style="background-color: #ed2323; width: 20px; height: 2px; display: inline-block;"></span>
+                        PRIVATE ROAD</li>
+
+                    <li><span style="background-color: orange; width: 20px; height: 2px; display: inline-block;"></span>
+                        LDA </li>
+                    <li><span
+                            style="background-color: #1dd2e2; width: 20px; height: 2px; display: inline-block;"></span>
+                        LNN</li>
+                    <li><span
+                            style="background-color: #831042; width: 20px; height: 2px; display: inline-block;"></span>
+                        Other</li>
+                    <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+            <div id="Under_Scheme_legend"
+                style="display:none; position:absolute; z-index: 600; top: 45% ;  width: 14%; height: 21%;  overflow: scroll; 
+background-color: white; border: 2px solid black;  padding: 2px 4px;  box-shadow: 0 0 10px rgba(118, 18, 18, 0.1); font-size: 12px; ">
+                <h6>Legend By Under Scheme</h6>
+                <ul>
+                    <li><span
+                            style="background-color: #5b46d2; width: 20px; height: 2px; display: inline-block;"></span>
+                        13th Finance</li>
+                    <li><span
+                            style="background-color: #ba6209; width: 20px; height: 2px; display: inline-block;"></span>
+                        14th Finance</li>
+                    <li><span
+                            style="background-color: #8a1515; width: 20px; height: 2px; display: inline-block;"></span>
+                        15th Finance</li>
+
+                    <li><span
+                            style="background-color: #c3ec47; width: 20px; height: 2px; display: inline-block;"></span>
+                        Nagar Nigam Nidhi </li>
+                    <!-- <li><span style="background-color: #7c1de2; width: 20px; height: 2px; display: inline-block;"></span>
+              NNA</li> -->
+                    <li><span
+                            style="background-color: #ce37d3; width: 20px; height: 2px; display: inline-block;"></span>
+                        Others</li>
+                    <!-- Add more legend items as needed -->
+                </ul>
+            </div>
+        </div>
+
+        <!--------spping boot live Road Table data getting----->
+        <div id="tableContainer">
+            <nav class="feature_nav" >
+                <a style="color: rgb(244, 239, 239); margin-right: 20px;">Feature Name - </a>
+                <a id="featureName" class="feature_name1" style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+                <div style="display: flex; align-items: center; margin-left: auto;">
+                    <i class="fas fa-window-minimize" onclick="minimize1()" style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize1()" style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                    </span>
+                </div>
+            </nav>
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th> Gis Id </th>
+                        <th> zone No </th>
+                        <th> zone Name </th>
+                        <th> Ward No </th>
+                        <th> Ward Name </th>
+                        <th> Ownership </th>
+                        <th> Road Type </th>
+                        <th> Road Name </th>
+                        <th> Row meter </th>
+                        <th> ROW (Records) </th>
+                        <th> Carriage Way (meters) </th>
+                        <th> Material </th>
+                        <th> Length (km) </th>
+                        <th> Conditon </th>
+                        <th> Year Of Construction </th>
+                        <th> Scheme </th>
+
+
+                    </tr>
+                </thead>
+                <tbody id="dataBody">
+                    <!-- Table body will be populated dynamically -->
+                </tbody>
+            </table>
+        </div>
+        <!----------------------Road Age Table----------------->
+        <div id="tableContainer_Road_Age">
+            <nav class="feature_nav">
+                <a style="color: rgb(244, 239, 239); margin-right: 20px;">Feature Name - </a>
+                <a id="featureName" class="feature_name1"
+                    style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+                <div style="display: flex; align-items: center; margin-left: auto;">
+                    <!-- <i class="fas fa-window-minimize" onclick="minimize1()" style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize1()" style="margin-right: 10px;color: rgb(243, 236, 236);"></i> -->
+                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                    </span>
+                </div>
+            </nav>
+            <table id="dataTable_Road_Age">
+                <thead>
+                    <tr>
+                        <th> Gis Id </th>
+                        <th> zone No </th>
+                        <th> zone Name </th>
+                        <th> Ward No </th>
+                        <th> Ward Name </th>
+                        <th> Ownership </th>
+                        <th> Road Type </th>
+                        <th> Road Name </th>
+                        <th> Row meter </th>
+                        <th> ROW (Records) </th>
+                        <th> Carriage Way (meters) </th>
+                        <th> Material </th>
+                        <th> Length (km) </th>
+                        <th> Condition </th>
+                        <th> Year Of Construction </th>
+                        <th> Construction Under Scheme </th>
+                        <th> Year</th>
+
+                    </tr>
+                </thead>
+                <tbody id="dataBody_Road_Age">
+                    <!-- Table body will be populated dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+       
+
+        <div id="Scoreing_tableContainer">
+            <nav class="feature_nav">
+                <a style="color: rgb(244, 239, 239); margin-right: 20px;">Feature Name - </a>
+                <a id="featureName" class="feature_name1"
+                    style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+                <div style="display: flex; align-items: center; margin-left: auto;">
+                    <!-- <i class="fas fa-window-minimize" onclick="minimize1()" style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize1()" style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                   -->
+                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                    </span>
+                </div>
+            </nav>
+            <table id="Scoreing_dataTable">
+                <thead>
+                    <tr>
+                        <th style="width:180px;"> GIS Id </th>
+                        <th style="width:180px;"> Zone No. </th>
+                        <!-- <th> Zone Name </th> -->
+                        <th style="width:180px;"> Ward No </th>
+
+                        <th style="width:180px;"> Road Name </th>
+                        <th style="width:180px;"> ROW Meter </th>
+                        <th style="width:180px;"> Length (km) </th>
+                        <th style="width:180px;"> Conditon </th>
+                        <th> Total Score </th>
+                        <!-- <th> Score Percentage</th> -->
+                        <th> Priority </th>
+                    </tr>
+                </thead>
+                <tbody id="dataBody_Scoring">
+
+                </tbody>
+            </table>
+        </div>
+
+
+        <!--------wms & wfs Road Table data getting layer----->
+        <div id="tableContainer_summaryfilter">
+            <nav class="feature_nav">
+                <a style="color: rgb(244, 239, 239); margin-right: 20px;">Filter Data According to zone and Column </a>
+                <a id="featureName" style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+                <div style="display: flex; align-items: center; margin-left: auto;">
+                    <i class="fas fa-window-minimize" onclick="minimize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                    </span>
+                </div>
+            </nav>
+            <table id="dataTable_summaryfilter">
+                <thead>
+                    <tr>
+                        <th> Gis Id </th>
+                        <th> Zone No
+                            <select class="zone-dropdown" style="overflow-y:scroll" id="zoneSelect"></select>
+                        </th>
+                        <th> Zone Name </th>
+                        <th> Ward No
+                            <select class="ward-dropdown" style="overflow-y:scroll" id="wardSelect"></select>
+                            </select>
+                        </th>
+                        <th> Ward Name </th>
+                        <th> Ownership
+                            <select class="ownership-dropdown">
+                                <option value="">Ownership</option>
+                                <option value="LNN">LNN</option>
+                                <option value="Private Road">Private Road</option>
+                                <option value="NHAI">NHAI</option>
+                                <option value="PWD">PWD</option>
+                                <option value="LDA">LDA</option>
+                                <!-- <option value="UPSBC Ltd.">UPSBC</option> -->
+                                <!-- Add more ownership options here -->
+                            </select>
+                        </th>
+                        <th> Type
+                            <select class="type-dropdown">
+                                <option value="">Type</option>
+                                <option value="Minor">Minor</option>
+                                <option value="Major">Major</option>
+
+                            </select>
+                        </th>
+                        <th> Road Name </th>
+                        <th> Row (meter) </th>
+                        <th> Row as per </th>
+                        <th> carriage Width </th>
+                        <th> Material
+                            <select class="material-dropdown">
+                                <option value="">Material</option>
+                                <option value="Kachcha">Kachcha</option>
+                                <option value="Bitumen">Bitumen</option>
+                                <option value="CC">CC (Concrete)</option>
+                                <option value="Interlocking">Interlocking</option>
+                                <option value="BOE">BOE</option>
+                            </select>
+                        </th>
+                        <th> Length (km) </th>
+                        <th> conditon
+                            <!-- <select class="condition-dropdown">
+                                <option value="">Condition</option>
+                                <option value="Green">Good</option>
+                                <option value="Red">Poor</option>
+                                <option value="Yellow">Moderate</option>
+                               
+                            </select>     -->
+                        </th>
+                        <th> Year Of Construction </th>
+                        <th> CUS &nbsp;&nbsp;
+                            <!-- <span class="table-cancel-btn1">
+                                <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                            </span> -->
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="dataBody_summaryfilter">
+                </tbody>
+            </table>
+        </div>
+
+        <!--------wms & wfs Road Table data getting layer----->
+        <div id="tableContainer_summaryfiltermat">
+            <nav class="feature_nav">
+                <a style="color: rgb(244, 239, 239); margin-right: 20px;">Filter Data According to zone and Column </a>
+                <a id="featureName" style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+                <div style="display: flex; align-items: center; margin-left: auto;">
+                    <i class="fas fa-window-minimize" onclick="minimize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                    </span>
+                </div>
+            </nav>
+            <table id="dataTable_summaryfiltermat">
+                <thead>
+                    <tr>
+                        <th> Gis Id </th>
+                        <th> Zone No
+                            <select class="zone-dropdownmat" style="overflow-y:scroll" id="zoneSelectmat"></select>
+                        </th>
+                        <th> Zone Name </th>
+                        <th> Ward No
+                            <select class="ward-dropdownmat" style="overflow-y:scroll" id="wardSelectmat"></select>
+                            </select>
+                        </th>
+                        <th> Ward Name </th>
+                        <th> Ownership
+                            <select class="ownership-dropdownmat">
+                                <option value="">Ownership</option>
+                                <option value="LNN">LNN</option>
+                                <option value="PRIVATE ROAD">Private Road</option>
+                                <option value="NHAI">NHAI</option>
+                                <option value="PWD">PWD</option>
+                                <option value="LDA">LDA</option>
+                                <!-- <option value="UPSBC Ltd.">UPSBC</option> -->
+                                <!-- Add more ownership options here -->
+                            </select>
+                        </th>
+                        <th> Type
+                            <select class="type-dropdownmat">
+                                <option value="">Type</option>
+                                <option value="Minor">Minor</option>
+                                <option value="Major">Major</option>
+
+                            </select>
+                        </th>
+                        <th> Road Name </th>
+                        <th> Row (meter) </th>
+                        <th> Row as per </th>
+                        <th> carriage Width </th>
+                        <th> Material
+                            <select class="material-dropdownmat">
+                                <option value="">Material</option>
+                                <option value="Kachcha">Kachcha</option>
+                                <option value="Bitumen">Bitumen</option>
+                                <option value="CC">CC (Concrete)</option>
+                                <option value="Interlocking">Interlocking</option>
+                                <option value="BOE">BOE</option>
+                            </select>
+                        </th>
+                        <th> Length (km) </th>
+                        <th> conditon
+                            <!-- <select class="condition-dropdownmat">
+                        <option value="">Condition</option>
+                        <option value="Green">Good</option>
+                        <option value="Red">Poor</option>
+                        <option value="Yellow">Moderate</option>
+                       
+                    </select>     -->
+                        </th>
+                        <th> Year Of Construction </th>
+                        <th> CUS &nbsp;&nbsp;
+                            <!-- <span class="table-cancel-btn1">
+                                <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                            </span> -->
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="dataBody_summaryfiltermat">
+                </tbody>
+            </table>
+        </div>
+
+        <div id="tableContainer_summaryfilterOwn">
+            <nav class="feature_nav">
+                <a style="color: rgb(244, 239, 239); margin-right: 20px;">Filter Data According to zone and Column </a>
+                <a id="featureName" style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+                <div style="display: flex; align-items: center; margin-left: auto;">
+                    <i class="fas fa-window-minimize" onclick="minimize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                    </span>
+                </div>
+            </nav>
+            <table id="dataTable_summaryfilterOwn">
+                <thead>
+                    <tr>
+                        <th> Gis Id </th>
+                        <th> Zone No
+                            <select class="zone-dropdownOwn" style="overflow-y:scroll" id="zoneSelectOwn"></select>
+                        </th>
+                        <th> Zone Name </th>
+                        <th> Ward No
+                            <select class="ward-dropdownOwn" style="overflow-y:scroll" id="wardSelectOwn"></select>
+                            </select>
+                        </th>
+                        <th> Ward Name </th>
+                        <th> Ownership
+                            <select class="ownership-dropdownOwn">
+                                <option value="">Ownership</option>
+                                <option value="LNN">LNN</option>
+                                <option value="PRIVATE ROAD">Private Road</option>
+                                <option value="NHAI">NHAI</option>
+                                <option value="PWD">PWD</option>
+                                <option value="LDA">LDA</option>
+                                <!-- <option value="UPSBC Ltd.">UPSBC</option> -->
+                                <!-- Add more ownership options here -->
+                            </select>
+                        </th>
+                        <th> Type
+                            <select class="type-dropdownOwn">
+                                <option value="">Type</option>
+                                <option value="Minor">Minor</option>
+                                <option value="Major">Major</option>
+
+                            </select>
+                        </th>
+                        <th> Road Name </th>
+                        <th> Row (meter) </th>
+                        <th> Row as per </th>
+                        <th> carriage Width </th>
+                        <th> Material
+                            <select class="material-dropdownOwn">
+                                <option value="">Material</option>
+                                <option value="Kachcha">Kachcha</option>
+                                <option value="Bitumen">Bitumen</option>
+                                <option value="CC">CC (Concrete)</option>
+                                <option value="Interlocking">Interlocking</option>
+                                <option value="BOE">BOE</option>
+                            </select>
+                        </th>
+                        <th> Length (km) </th>
+                        <th> conditon
+                            <!-- <select class="condition-dropdownOwn">
+                        <option value="">Condition</option>
+                        <option value="Green">Good</option>
+                        <option value="Red">Poor</option>
+                        <option value="Yellow">Moderate</option>
+                       
+                    </select>     -->
+                        </th>
+                        <th> Year Of Construction </th>
+                        <th> CUS &nbsp;&nbsp;
+                            <!-- <span class="table-cancel-btn1">
+                                <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                            </span> -->
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="dataBody_summaryfilterOwn">
+                </tbody>
+            </table>
+        </div>
+        <!-- -------------------------------End filter code---------------- -->
+
+
+
+        <!--------spping boot live Drain data getting----->
+        <div id="tableContainer_Drain">
+            <nav class="feature_nav">
+                <a style="color: rgb(244, 239, 239); margin-right: 20px;">Feature Name - </a>
+                <a id="featureName" style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;">Drain</a>
+                <div style="display: flex; align-items: center; margin-left: auto;">
+                    <!-- <i class="fas fa-window-minimize" onclick="minimize1()" style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize1()" style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                   -->
+                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                    </span>
+                </div>
+            </nav>
+            <table id="dataTable_Drain">
+                <thead>
+                    <tr>
+                        <th style="width:130px"> Zone No </th>
+                        <th style="width:130px"> Zone Name </th>
+                        <th style="width:130px"> Gis Id </th>
+                        <th style="width:130px"> Ward No </th>
+                        <th style="width:130px"> Ward Name </th>
+                        <th style="width:130px"> Ownership </th>
+                        <th style="width:130px"> Drain Type </th>
+                        <th style="width:130px"> Status </th>
+                        <th style="width:130px"> Material </th>
+                        <th style="width:130px"> Length (meter) </th>
+                        <th style="width:130px"> Condition </th>
+                        <th style="width:130px"> Year of Construction </th>
+                        <th style="width:130px"> Width </th>
+                        <th style="width:130px"> Depth &nbsp;&nbsp; <span class="table-cancel-btn">
+                                <!-- <i id="cancelbtn1" class="fas fa-times cancel-btn"></i> -->
+                            </span> </th>
+                    </tr>
+                </thead>
+                <tbody id="dataBody_Drain">
+                    <!-- Table body will be populated dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+        <!--------------------------show table on click table summary data---------->
+
+        <div id="tableContainer_summary">
+            <!-- Navigation Bar -->
+            <nav class="feature_nav">
+                <a style="color: rgb(244, 239, 239); margin-right: 20px;">Feature Name - </a>
+                <a id="featureName" class="feature_name1"
+                    style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+                <div style="display: flex; align-items: center; margin-left: auto;">
+                    <i class="fas fa-window-minimize" onclick="minimize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize1()"
+                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                    </span>
+                </div>
+            </nav>
+            <table id="dataTable_summary">
+                <thead>
+                    <tr>
+                        <th> Gis Id </th>
+                        <th> Zone No </th>
+                        <th> Zone Name </th>
+                        <th> Ward No </th>
+                        <th> Ward Name </th>
+                        <th> Ownership </th>
+                        <th> Road Type
+                        <th> Road Name </th>
+                        <th> Row (meter) </th>
+                        <th> Row (Records) </th>
+                        <th> Carriage Way (meters) </th>
+                        <th> Material </th>
+                        <th> Length (km) </th>
+                        <th> conditon </th>
+                        <th> Year Of Construction </th>
+                        <th> Scheme &nbsp;&nbsp; <span class="table-cancel-btn1">
+                                <!-- <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i> -->
+                            </span></th>
+
+                    </tr>
+                </thead>
+                <tbody id="dataBody_summary">
+
+                </tbody>
+            </table>
+        </div>
+
+        <!--------wms & wfs Road Table data getting layer----->
+        <div id="tableContainer_summaryfiltermat">
+            <table id="dataTable_summaryfiltermat">
+                <thead>
+                    <tr>
+                        <th> Gis Id </th>
+                        <th> Zone No
+                            <select class="zone-dropdownmat" style="overflow-y:scroll" id="zoneSelectmat"></select>
+                        </th>
+                        <th> Zone Name </th>
+                        <th> Ward No
+                            <select class="ward-dropdownmat" style="overflow-y:scroll" id="wardSelectmat"></select>
+                            </select>
+                        </th>
+                        <th> Ward Name </th>
+                        <th> Ownership
+                            <select class="ownership-dropdownmat">
+                                <option value="">Ownership</option>
+                                <option value="LNN">LNN</option>
+                                <option value="PRIVATE ROAD">Private Road</option>
+                                <option value="LDA">LDA</option>
+                                <option value="PWD">PWD</option>
+                                <option value="NHAI">NHAI</option>
+                                <!-- <option value="UPSBC Ltd.">UPSBC</option> -->
+                                <!-- Add more ownership options here -->
+                            </select>
+                        </th>
+                        <th> Type
+                            <select class="type-dropdownmat">
+                                <option value="">Type</option>
+                                <option value="Minor">Minor</option>
+                                <option value="Major">Major</option>
+
+                            </select>
+                        </th>
+                        <th> Road Name </th>
+                        <th> Row (meter) </th>
+                        <th> Row as per </th>
+                        <th> carriage Width </th>
+                        <th> Material
+                            <select class="material-dropdownmat">
+                                <option value="">Material</option>
+                                <option value="Kachcha">Kachcha</option>
+                                <option value="Bitumen">Bitumen</option>
+                                <option value="CC">CC (Concrete)</option>
+                                <option value="Interlocking">Interlocking</option>
+                                <option value="BOE">BOE</option>
+                            </select>
+                        </th>
+                        <th> Length (km) </th>
+                        <th> conditon
+                            <!-- <select class="condition-dropdownmat">
+                        <option value="">Condition</option>
+                        <option value="Green">Good</option>
+                        <option value="Red">Poor</option>
+                        <option value="Yellow">Moderate</option>
+                       
+                    </select>     -->
+                        </th>
+                        <th> Year Of Construction </th>
+                        <th> CUS &nbsp;&nbsp; <span class="table-cancel-btn1">
+                                <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
+                            </span></th>
+                    </tr>
+                </thead>
+                <tbody id="dataBody_summaryfiltermat">
+                </tbody>
+            </table>
+        </div>
+
+
+        <!------------------------ live table end --------------------->
+
+
+        <!-- Your HTML content -->
+        <div id="popup" class="ol-popup">
+            <!-- <div id="popup-content"></div> -->
+        </div>
+
+
+        <!-- popup for park polygon  -->
+        <div id="popup_1" class="popup_1"></div>
+
+
+
+
+
+
+
+        <!------------------------- summary table start ------------------->
+        <div class="table_summary" id="summary-table">
+            <div class="topnav" id="topnav">
+                <div class="nav-links">
+                    <a href="#Summary" id="summary_id" onclick="navigateTo('Summary')">Summary</a>
+
+                    <!-- Zones Dropdown -->
+                    <div class="dropdown">
+                        <a href="#Zones" class="dropbtn">Zones</a>
+                        <div class="dropdown-content" id="zonesDropdown">
+                            <!-- Dropdown content will be dynamically inserted here -->
+
+                        </div>
+                    </div>
+
+                    <!-- <a href="#Wards" onclick="navigateTo('Wards')">Wards</a> -->
+                    <div class="dropdown">
+                        <a href="#Wards" class="dropbtn">Wards</a>
+                        <div class="dropdown-content" id="zonesDropdownwards">
+                            <!-- Dropdown content will be dynamically inserted here -->
+
+                        </div>
+                    </div>
+                    <a href="#Amenities" class="tab" data-tab="Amenities"
+                        onclick="navigateTo('Amenities')">Amenities</a>
+
+                    <!-- <a href="#View" class="tab" data-tab="View" onclick="navigateTo('View')">View</a> -->
+                </div>
+                <div class="icons">
+                    <i class="fas fa-window-minimize" onclick="minimize()"></i>
+                    <i class="fas fa-window-maximize" onclick="maximize()"></i>
+                    <i class="fas fa-window-close" onclick="closeNav()"></i>
+                </div>
+            </div>
+            <div class="content-wrapper" id="content-wrapper">
+                <div id="content" class="card-container">
+                    <!-- Cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+        <!------------------------ summary table end --------------------->
+
+    </div>
+    <!--------- main-container section end -------------->
+
+    <!----------- footer section start ---------->
+    <div class="footer">
+        &copy; 2024 UP Remote Sensing Application Centre. All rights reserved.
+    </div>
+    <!--------- footer section end ----------->
+
+    <!-- <script  src="javascript/lko.js"></script> -->
+    <script src="../config.js"></script>  
+    <script src="../javascript/lko.js"></script>
+    <!-- <script src="javascript/lko_old_code.js"></script> -->
+
+
+
+    <script>
+
+        function re_direct() {
+            window.location.href = "lko_analysis.html";
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>   
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uttar Pradesh</title>
+
+    <link href="/libs/bootstrap-5.1.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/libs/v6.13.0-dist/ol.css">
+    <link rel="stylesheet" href="/libs/ol-layerswitcher-master/dist/ol-layerswitcher.css" />
+    <link rel="stylesheet" href="/libs/ol-geocoder/ol-geocoder.css"/>
+    <link rel="stylesheet" href="/libs/ol-popup/ol-popup.css"/>
+    <link rel="stylesheet" href="/libs/jquery-ui-1.12.1/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v9.2.4/ol.css">
+   
+    <script src="/libs/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/libs/jquery.js"></script>
+    <script src="/libs/v6.13.0-dist/ol.js"></script>
+    <script src="/libs/ol-layerswitcher-master/dist/ol-layerswitcher.js"></script>
+    <script src="/libs/ol-geocoder/ol-geocoder.js"></script>
+    <script src="/libs/ol-popup/ol-popup.js"></script>
+    <script src="/libs/jquery-ui-1.12.1/external/jquery/jquery.js"></script>
+    <script src="/libs/jquery-ui-1.12.1/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="shortcut icon" type="image/x-icon" class="fabicon" href="/logo/logo_tree.png" />
+        
+    <link rel="stylesheet" href="/home/home.css">
+
+</head>
+<body>
+
+    <!-- Logout Button -->
+    <div class="logout-container">
+        <button class="logout-button" id="logoutButton">
+            <i class="fas fa-sign-out-alt"></i>
+        </button>
+    </div>
+    <!-- Logout Button End -->
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-container">
+            <img src="/logo/download.png" alt="Logo" class="logo">
+            <span class="logo-text" style="color: brown;"> URIDA PORTAL </span>
+        </div>
+
+        <div class="sidebar-item">
+            <select class="select-field" id="nagarNigamSelect">
+                <option value="nagarnigam">Nagar Nigam</option>
+                <option value="agra">Agra</option>
+                <option value="aligarh">Aligarh</option>
+                <option value="ayodhya">Ayodhya</option>
+                <option value="bareilly">Bareilly</option>
+                <option value="firozabad">Firozabad</option>
+                <option value="ghaziabad">Ghaziabad</option>
+                <option value="gorakhpur">Gorakhpur</option>
+                <option value="jhansi">Jhansi</option>
+                <option value="kanpur">Kanpur</option>
+                <option value="prayagraj">Prayagraj</option>
+                <option value="lucknow">Lucknow</option>
+                <option value="mathura">Mathura</option>
+                <option value="meerut">Meerut</option>
+                <option value="moradabad">Moradabad</option>
+                <option value="saharanpur">Saharanpur</option>
+                <option value="shahjahapur">Shahjahanpur</option>
+                <option value="varanasi">Varanasi</option>
+            </select>
+        </div>
+
+        <div id="buttonContainer" class="button-container"></div>
+        <div class="separator"></div> <!-- Line separator -->
+        <div class="cards-section">
+            <div class="cards-title">All Statistics</div>
+            <div class="cards-container">
+                <!------- add cards dynamically ------------>
+            </div>
+            <div>
+                <button class="progress" id="progress1">Progress Report</button>
+            </div>
+
+        </div>
+    </div>
+    <!-- Sidebar End -->  
+
+    <iframe id="progress_graph" style="display: none; "
+        src="https://lookerstudio.google.com/embed/reporting/3a0e91e4-d24e-4979-902a-00b449935191/page/XCwDE">
+    </iframe>
+    <div class="main-container">
+        <div id="map">
+            <div id="scale_bar"></div>
+            <!-- <button class="dashboard">Dashboard</button> -->
+            <div id="popup" class="ol-popup">
+                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                <div id="popup-content"></div>
+            </div>
+
+            <div id="gpr-legend" class="legend-box">
+                <h3>GPR Layer Legend</h3>
+                <div class="legend-item">
+                    <span class="color-box" style="background-color:#3357FF;"></span> Water Line
+                </div>
+                <div class="legend-item">
+                    <span class="color-box" style="background-color: #FF3333;"></span> Sewer Line
+                </div>
+                <div class="legend-item">
+                    <span class="color-box" style="background-color: #33FF44;"></span> Gas Line
+                </div>
+                <div class="legend-item">
+                    <span class="color-box" style="background-color: #AA02A5;"></span> OFC Lines
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            &copy; 2024 UP Remote Sensing Application Centre. All rights reserved.
+        </div>
+    </div>
+
+
+
+
+    <script src="/home/home.js"></script>
+
+    <script src="/libs/ol-popup/ol-popup.js"></script>
+    <!-- <script src="/libs/ol-popup/ol-popup.js"></script> -->
+    <script src="/libs/ol-geocoder/ol-geocoder.js"></script>
+    <script src="/libs/ol-layerswitcher-master/dist/ol-layerswitcher.js"></script>
+    <script src="/libs/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/libs/jquery.js"></script>
+    <script src="/libs/v6.13.0-dist/ol.js"></script>
+    <script src="/libs/jquery-ui-1.12.1/external/jquery/jquery.js"></script>
+    <script src="/libs/jquery-ui-1.12.1/jquery-ui.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/ol@v9.2.4/dist/ol.js"></script> -->
+    <script>
+        $(document).ready(function () {
+            // Initially, only the map is visible
+            $("#progress_graph").hide();
+            $("#map").show();
+            // On click of progress report button, toggle between map and iframe
+            $("#progress1").click(function () {
+                $("#map").toggle();
+                $("#progress_graph").toggle();
+            });
+
+             // Logout button functionality
+            $("#logoutButton").click(function () {
+                // Show confirmation dialog
+                if (confirm("Are you sure you want to logout?")) {
+                    // You can customize this based on your authentication system
+                    
+                    // Option 1: Clear session storage/local storage if you're using client-side storage
+                    sessionStorage.clear();
+                    localStorage.clear();
+                    
+                    // Option 2: Redirect to logout endpoint if you have server-side authentication
+                    // window.location.href = '/logout';
+                    
+                    // Option 3: Redirect to login page
+                    window.location.href = 'http://127.0.0.1:5506/Login_Page/URIDA_login_2/URIDA_login_2.html'; // Change this to your actual login page
+                    
+                    // Option 4: If you're using a more complex authentication system,
+                    // you might need to make an AJAX call to your logout endpoint
+                    /*
+                    $.ajax({
+                        url: '/api/logout',
+                        method: 'POST',
+                        success: function() {
+                            window.location.href = 'http://127.0.0.1:5500/URIDA_login_2/URIDA_login_2.html';
+                        },
+                        error: function() {
+                            alert('Logout failed. Please try again.');
+                        }
+                    });
+                    */
+                }
+            });
+
+            // Optional: Add keyboard shortcut for logout (Ctrl+L)
+            $(document).keydown(function(e) {
+                if (e.ctrlKey && e.key === 'l') {
+                    e.preventDefault();
+                    $("#logoutButton").click();
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
