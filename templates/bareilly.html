@@ -22,38 +22,35 @@
     <script src="/libs/jquery-ui-1.12.1/external/jquery/jquery.js"></script>
     <script src="/libs/jquery-ui-1.12.1/jquery-ui.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha384-PPIZEGYM1v8zp5Py7UjFb79S58UeqCL9pYVnVPURKEqvioPROaVAJKKLzvH2rDnI" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-5e2ESR8Ycmos6g3gAKr1Jvwye8sW4U1u/cAKulfVJnkakCcMqhOudbtPnvJ+nbv7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" integrity="sha384-OXVF05DQEe311p6ohU11NwlnX08FzMCsyoXzGOaL+83dKAb3qS17yZJxESl8YrJQ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" integrity="sha384-d3UHjPdzJkZuk5H3qKYMLRyWLAQBJbby2yr2Q58hXXtAGF8RSNO9jpLDlKKPv5v3" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
 
 
     <link rel="shortcut icon" type="image/x-icon" class="fabicon" href="../assets/icons/logo_tree.png" />
 
-    <link rel="stylesheet" href="../style/kanpur.css">
+    <link rel="stylesheet" href="../style/jhansi.css">
     <link rel="stylesheet" href="../style/responsive.css">
 </head>
 
 <body>
     <!---------------------- header section start -------------------------->
-    <div class="header">
+<div class="header">
         <i class="fas fa-bars hamburger"></i>
         <div class="center-content">
             <img src="../assets/logo/bnn-logo.png" class="logo" alt="" />
             <h2 class="title">Bareilly Nagar Nigam</h2>
-            <img src="../assets/logo/rsac (1).png" class="logo" alt="dp" />
+            <img src="../assets/logo/images.jpg" class="logo" alt="dp" />
+            <img src="../assets/logo/download.png" class="logo1"  id="up_logo"alt="dp" />
         </div>
-        <i class="fa-solid fa-print"></i>
-        <div class="search-container" id="search-bar">  
+        
+         <div class="search-container" id="search-bar">  
             <!-- <i class="search-icon">&#128269;</i>         Unicode for search icon -->
            <select id="roadNamesDropdown"></select>
         </div>
-        <!-- <div id="popup-search" class="ol-popup-search">
-            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-            <div id="popup-content-search"></div>
-        </div>  -->
-
+        
     </div>
     <!---------------------- header section end -------------------------->
 
@@ -267,44 +264,51 @@
     <div class="main-container">
 
         <!---------------------- map section start ------------------>
-        <div id="map">
-          <div class="map-icons-left">
-                        <!-- <button class="map-icon" id="View_point" title="Street View" onclick="street_view()"><i
-                                class="fas fa-street-view"></i></button>
-                        <h6 class="h6">Street View</h6> -->
+         <div id="map">
+            <div class="map-icons-left">
+                <button class="map-icon" id="View_point" title="Street View" onclick="street_view()">
+                    <i class="fas fa-street-view"></i></button>
+                        <!-- <h6 class="h6">Street View</h6> -->
                    
-
-                        <button class="map-icon" title="Data Analysis" onclick="data_analysis()">
-                            <i class="fas fa-chart-simple"></i></a></button>
-                        <h6 class="h6">Data Analysis</h6>
-
-                        <button class="map-icon" id="road_btn" title="Zone wise Road" onclick="road_filter()"><i
-                                class="fas fa-road"></i></button>
-                        <h6 class="h6">Road Filter</h6>
-
-                        <button class="map-icon" id="query_btn" onclick="query_panel1()" title="Query Panel"><i
-                            class="fas fa-window-maximize"></i></button><h6 class="h6"> Query </h6>
+                <button class="map-icon" title="Data Analysis" onclick="data_analysis()">
+                    <i class="fas fa-chart-simple"></i></a></button>
+                        
+                <button class="map-icon" id="road_btn" title="Zone wise Road" onclick="road_filter()">
+                    <i class="fas fa-road"></i></button>
+                        
+                <button class="map-icon" title="Decision Support System " onclick="re_direct()">
+                    <i class="fa-solid fa-chart-area"></i></button>
+					
+				<button class="map-icon" id="showBoxBtn" title="Road Selection" onclick="showSelectedRoadsLayer1()"><i
+						class="fa-solid fa-worm"></i></button>
                       
-                        <!-- <button class="map-icon" title="Get Info"><i class="fas fa-circle-info"></i></button> -->
-                        <!-- <button class="map-icon" title="Drain" onclick="drain_filter()"><i class="fa-solid fa-worm"></i></button><h6 class="h6">Drain Filter</h6> -->
-                    </div>
+                <!-- <button class="map-icon" title="Drain" onclick="drain_filter()"><i class="fa-solid fa-worm"></i></button><h6 class="h6">Drain Filter</h6> -->
+            </div>
+            <div class="map-icons">
+                <button class="map-icon" id="search-icon" title="Search"><i class="fas fa-search"></i></button>
+                        
+                <!-- <button class="map-icon" id="measure-icon" onclick="measure_tab()" title="Measure Tool"><i class="fas fa-ruler"></i></button> -->
+                <!-- <button class="map-icon" id="basemap-icon" title="Toggle Basemap"><i class="fas fa-map"></i></button> -->
 
-           <div class="map-icons">
-                        <button class="map-icon" id="search-icon" title="Search"><i class="fas fa-search"></i></button>
-                        <h6 class="h6"> Search </h6>
-                        <!-- <button class="map-icon" id="measure-icon" onclick="measure_tab()" title="Measure Tool"><i class="fas fa-ruler"></i></button> -->
-                        <!-- <button class="map-icon" id="basemap-icon" title="Toggle Basemap"><i class="fas fa-map"></i></button> -->
+                <button class="map-icon" id="table_icon" title="Summary Data" onclick="summary_table()">
+                    <i class="fas fa-table "></i></button>
 
-                        <button class="map-icon" id="table_icon" title="Summary Data" onclick="summary_table()"><i
-                        class="fas fa-table "></i></button><h6 class="h6"> Summary </h6>
-
-                        <button class="map-icon" id="clear-icon" title="Clear" onclick="delete_layers()"><i
-                                class="fa fa-trash"></i></button>
-                        <h6 class="h6">Clear</h6>
-                    </div>
+                <button class="map-icon" id="query_btn" onclick="query_panel1()" title="Query Panel">
+                    <i class="fas fa-window-maximize"></i></button>
+                        
+				<button class="map-icon" id="information-icon" title="Information" onclick="showSelectedRoadsLayer1()"><i
+					    class="fa fa-info"></i></button>
+								
+                <button class="map-icon" id="clear-icon" title="Clear" onclick="delete_layers()"><i
+                        class="fa fa-trash"></i></button>                       
+            </div>
         </div>
         <!-------------------- map section end -------------------->
-
+        <div id="iframe-container" style="display:none;">
+                <button id="close-btn" onclick="closeReport()">Close Report</button>
+              <iframe id="data-iframe" width="100%" height="100%" 
+				src="https://lookerstudio.google.com/reporting/a6be1a2e-7fb8-414d-a2b3-b724766cb501" frameborder="0" style="border:0"></iframe>
+        </div>
        <!---------------------- query panel section start -------------------------->
                 <div id="query_tab" class="query-tab">
                     <span class="tab-cancel-icon"><i class="fas fa-times cancel-icon"></i></span>
@@ -398,19 +402,19 @@
                                         Type &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Major"><a class="dropdown-item"
-                                                onclick="Bareilly_Type_cat('category','Local Street'); updateNavBarWithFunctionName('Bareilly Road Type Local Street');">Local Street</a>
+                                                onclick="Bareilly_Type_cat('category','Local Street'); updateNavBarWithFunctionName('Bareilly Road Type : Local Street');">Local Street</a>
                                         </li>
                                         <li id="Minor"><a class="dropdown-item"
-                                                onclick="Bareilly_Type_cat('category','Collector'); updateNavBarWithFunctionName('Bareilly Road Type Collector');">Collector</a>
+                                                onclick="Bareilly_Type_cat('category','Collector'); updateNavBarWithFunctionName('Bareilly Road Type : Collector');">Collector</a>
                                         </li>
                                          <li id="Arterial"><a class="dropdown-item"
-                                                onclick="Bareilly_Type_cat('category','Arterial'); updateNavBarWithFunctionName('Bareilly Road Type Arterial');">Arterial</a>
+                                                onclick="Bareilly_Type_cat('category','Arterial'); updateNavBarWithFunctionName('Bareilly Road Type : Arterial');">Arterial</a>
                                         </li>
-                                         <li id="Subarterial"><a class="dropdown-item"
-                                                onclick="Bareilly_Type_cat('category','Subarterial'); updateNavBarWithFunctionName('Bareilly Road Type Subarterial');">Subarterial</a>
+                                         <li id="Sub Arterial"><a class="dropdown-item"
+                                                onclick="Bareilly_Type_cat('category','Sub Arterial'); updateNavBarWithFunctionName('Bareilly Road Type : Sub Arterial');">Sub Arterial</a>
                                         </li>
                                          <li id="NA"><a class="dropdown-item"
-                                                onclick="Bareilly_Type_cat('category','NA'); updateNavBarWithFunctionName('Bareilly Road Type not define');">NA</a>
+                                                onclick="Bareilly_Type_cat('category','NA'); updateNavBarWithFunctionName('Bareilly Road Type : Not Define');">NA</a>
                                         </li>
                                     </ul>
                                 </li> 
@@ -427,6 +431,9 @@
                                         </li>
                                         <li id="Poor"><a class="dropdown-item"
                                                 onclick="Bareilly_Condition_cat('condition','Poor'); updateNavBarWithFunctionName('Bareilly Road Condition Poor');">Poor</a>
+                                        </li>
+                                        <li id="NA"><a class="dropdown-item"
+                                                onclick="Bareilly_Condition_cat('condition','NA'); updateNavBarWithFunctionName('Bareilly Road Condition NA');">NA</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -460,9 +467,7 @@
                                         onclick="updateAyodhyaRoadLayer('ownership'); updateNavBarWithFunctionName('Bareilly Road Ownership');">Road
                                         Ownership &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
-                                        <li id="NHAI"><a class="dropdown-item"
-                                                onclick="Bareilly_Ownership_cat('ownership','NHAI'); updateNavBarWithFunctionName('Bareilly Road Ownership National Highways Authority of India');">NHAI
-                                            </a></li>
+                               
                                         <li id="BNN"><a class="dropdown-item"
                                                 onclick="Bareilly_Ownership_cat('ownership','BNN'); updateNavBarWithFunctionName('Bareilly Road Ownership Bareilly Nagar Nigam');">Bareilly Nagar Nigam
                                             </a></li>
@@ -472,70 +477,44 @@
                                         <li id="PWD"><a class="dropdown-item"
                                                 onclick="Bareilly_Ownership_cat('ownership','PWD'); updateNavBarWithFunctionName('Bareilly Road Ownership PWD');">PWD
                                             </a></li>
-                                        <li id="Railway"><a class="dropdown-item"
+                                        <!-- <li id="Railway"><a class="dropdown-item"
                                                 onclick="Bareilly_Ownership_cat('ownership','Railway'); updateNavBarWithFunctionName('Bareilly Road Ownership Railway');">
-                                                Railway </a></li>
+                                                Railway </a></li> -->
                                                 <li id="Development Authority"><a class="dropdown-item"
                                                     onclick="Bareilly_Ownership_cat('ownership','Development Authority'); updateNavBarWithFunctionName('Bareilly Road Ownership Development Authority');"> Development Authority
                                                      </a></li>
-                                                    <!-- <li id="Defence"><a class="dropdown-item"
-                                                        onclick="Bareilly_Ownership_cat('ownership','Defence'); updateNavBarWithFunctionName('Bareilly Road Ownership Defence');">
-                                                        Defence </a></li>
-                                                        <li id="Others"><a class="dropdown-item"
-                                                            onclick="Bareilly_Ownership_cat('ownership','Others'); updateNavBarWithFunctionName('Bareilly Road Ownership Others');">
-                                                            Others </a></li>
-                                                            <li id="Deparmental Road"><a class="dropdown-item"
-                                                                onclick="Bareilly_Ownership_cat('ownership','Deparment Roads'); updateNavBarWithFunctionName('Bareilly Road Ownership Deparment Roads');">
-                                                                Deparment Roads </a></li>
-                                                                <li id="Institutional Road"><a class="dropdown-item"
-                                                                    onclick="Bareilly_Ownership_cat('ownership','Institutional Roads'); updateNavBarWithFunctionName('Bareilly Road Ownership Institutional Roads');">
-                                                                    Institutional Roads </a></li> -->
+                                                   
                                     </ul>
                                 </li>
-                                 <li>
+                                <li>
                                     <a class="dropdown" id="CUS"
                                         onclick="updateAyodhyaRoadLayer('cus'); updateNavBarWithFunctionName('Bareilly Road CUS');">
                                         Road CUS &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="14th_Finance"><a class="dropdown-item"
-                                                onclick="Bareilly_CUS_cat('cus','14th Finance'); updateNavBarWithFunctionName('Bareilly Road CUS 14th Finance');">14th Finance</a>
+                                                onclick="Bareilly_CUS_cat('cus_class','14th Finance'); updateNavBarWithFunctionName('Bareilly Road CUS 14th Finance');">14th Finance</a>
                                         </li>
                                         <li id="15th_Finance"><a class="dropdown-item"
-                                                onclick="Bareilly_CUS_cat('cus','15th Finance'); updateNavBarWithFunctionName('Bareilly Road CUS 15th Finance');">15th Finance</a>
+                                                onclick="Bareilly_CUS_cat('cus_class','15th Finance'); updateNavBarWithFunctionName('Bareilly Road CUS 15th Finance');">15th Finance</a>
                                         </li>
                                         <li id="Nagar_Nigam_Nidhi"><a class="dropdown-item"
-                                                onclick="Bareilly_CUS_cat('cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Bareilly Road CUS Nagar Nigam Nidhi');">Nagar NIgam Nidhi</a>
+                                                onclick="Bareilly_CUS_cat('cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Bareilly Road CUS Nagar Nigam Nidhi');">Nagar NIgam Nidhi</a>
                                         </li>
-                                        <li id="SansadNidhi"><a class="dropdown-item"
-                                            onclick="Bareilly_CUS_cat('cus','Sansad Nidhi'); updateNavBarWithFunctionName('Bareilly Road CUS Sansad Nidhi');">Sansad Nidhi</a>
-                                    </li>
-                                     <li id="VidhayakNidhi"><a class="dropdown-item"
-                                            onclick="Bareilly_CUS_cat('cus','Vidhayak Nidhi'); updateNavBarWithFunctionName('Bareilly Road CUS Vidhayak Nidhi');">Vidhayak Nidhi</a>
-                                    </li>
-                                     <li id="Duda"><a class="dropdown-item"
-                                            onclick="Bareilly_CUS_cat('cus','Duda'); updateNavBarWithFunctionName('Bareilly Road CUS Duda');">Duda</a>
+                                        
+                                        <li id="DUDA"><a class="dropdown-item"
+                                            onclick="Bareilly_CUS_cat('cus_class','DUDA'); updateNavBarWithFunctionName('Bareilly Road CUS DUDA');">DUDA</a>
                                         </li>
-                                             <li id="Panchayat"><a class="dropdown-item"
-                                            onclick="Bareilly_CUS_cat('cus','NAGAR PANCHAYAT NIDHI'); updateNavBarWithFunctionName('Bareilly Road CUS NAGAR PANCHAYAT NIDHI');">NAGAR PANCHAYAT NIDHI</a>
-                                    </li>
-                                 <li id="Panchayat"><a class="dropdown-item"
-                                            onclick="Bareilly_CUS_cat('cus','SFC'); updateNavBarWithFunctionName('Bareilly Road CUS SFC');">SFC</a>
-                                    </li>
-                                     <li id="PWD"><a class="dropdown-item"
-                                            onclick="Bareilly_CUS_cat('cus','PWD'); updateNavBarWithFunctionName('Bareilly Road CUS PWD');">PWD</a>
-                                    </li>
-                                     <li id="GN City"><a class="dropdown-item"
-                                            onclick="Bareilly_CUS_cat('cus','GN City'); updateNavBarWithFunctionName('Bareilly Road CUS GN City');">GN City</a>
-                                    </li>
-                                    <li id="RES"><a class="dropdown-item"
-                                            onclick="Bareilly_CUS_cat('cus','RES'); updateNavBarWithFunctionName('Bareilly Road CUS RES');">RES</a>
-                                    </li>
-                                    <li id="TWARITYOJANA"><a class="dropdown-item"
-                                            onclick="Bareilly_CUS_cat('cus','TWARIT YOJANA'); updateNavBarWithFunctionName('Bareilly Road CUS TWARIT YOJANA');">TWARIT YOJANA</a>
-                                    </li>
-                                    <li id="BareilysmartCity"><a class="dropdown-item"
-                                            onclick="Bareilly_CUS_cat('cus','Bareily smart City'); updateNavBarWithFunctionName('Bareilly Road CUS Bareily smart City');">Bareilly smart City</a>
-                                    </li>
+                     
+                                        <li id="PWD"><a class="dropdown-item"
+                                            onclick="Bareilly_CUS_cat('cus_class','PWD'); updateNavBarWithFunctionName('Bareilly Road CUS PWD');">PWD</a>
+                                        </li>
+                                     
+                                        <li id="NA"><a class="dropdown-item"
+                                            onclick="Bareilly_CUS_cat('cus_class','NA'); updateNavBarWithFunctionName('Bareilly Road CUS NA');">NA</a>
+                                        </li>
+                                        <li id="Others"><a class="dropdown-item"
+                                            onclick="Bareilly_CUS_cat('cus_class','Others'); updateNavBarWithFunctionName('Bareilly Road CUS Others');">Others</a>
+                                        </li>
 
                                     </ul>
                                 </li>
@@ -635,8 +614,8 @@
                                          <li id="Zone1_type_Arterial"><a class="dropdown-item"
                                                 onclick="Bareilly_Zone_TypeSub('1','category','Arterial'); updateNavBarWithFunctionName('Zone1 Road Category Arterial');">Arterial</a>
                                         </li>
-                                         <li id="Zone1_type_Subarterial"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_TypeSub('1','category','Subarterial'); updateNavBarWithFunctionName('Zone1 Road Category Subarterial');">Subarterial</a>
+                                         <li id="Zone1_type_Sub Arterial"><a class="dropdown-item"
+                                                onclick="Bareilly_Zone_TypeSub('1','category','Sub Arterial'); updateNavBarWithFunctionName('Zone1 Road Category Sub Arterial');">Sub Arterial</a>
                                         </li>
                                          <li id="Zone1_type_NA"><a class="dropdown-item"
                                                 onclick="Bareilly_Zone_TypeSub('1','category','NA'); updateNavBarWithFunctionName('Zone1 Road Category NA');">NA</a>
@@ -704,7 +683,7 @@
                                         <li id="Zone1_ownership_PWD"><a class="dropdown-item"
                                                 onclick="Bareilly_Zone_Ownership('1','ownership','PWD'); updateNavBarWithFunctionName('Zone1 Road Ownership PWD');">PWD
                                             </a></li>
-<!--                                          
+                                        <!--                                          
                                         <li id="Zone1_ownership_Railway"><a class="dropdown-item"
                                                 onclick="Bareilly_Zone_Ownership('1','ownership','Railway'); updateNavBarWithFunctionName('Zone1 Road Ownership Railway');">
                                                 Railway </a></li> -->
@@ -731,33 +710,33 @@
                                         Road CUS &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="14th_Finance"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_CUS('1', 'cus','14th Finance'); updateNavBarWithFunctionName('Zone-1 Road CUS 14th Finance');">14th Finance</a>
+                                                onclick="Bareilly_Zone_CUS('1', 'cus_class','14th Finance'); updateNavBarWithFunctionName('Zone-1 Road CUS 14th Finance');">14th Finance</a>
                                         </li>
                                         <li id="15th_Finance"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_CUS('1', 'cus','15th Finance'); updateNavBarWithFunctionName('Zone-1 Road CUS 15th Finance');">15th Finance</a>
+                                                onclick="Bareilly_Zone_CUS('1', 'cus_class','15th Finance'); updateNavBarWithFunctionName('Zone-1 Road CUS 15th Finance');">15th Finance</a>
                                         </li>
                                         <li id="Nagar_Nigam_Nidhi"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_CUS('1', 'cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-1 Road CUS Nagar Nigam Nidhi');">Nagar NIgam Nidhi</a>
+                                                onclick="Bareilly_Zone_CUS('1', 'cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-1 Road CUS Nagar Nigam Nidhi');">Nagar NIgam Nidhi</a>
                                         </li>
-                                        <li id="SansadNidhi"><a class="dropdown-item"
+                                        <!-- <li id="SansadNidhi"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('1', 'cus','Sansad Nidhi'); updateNavBarWithFunctionName('Zone-1 Road CUS Sansad Nidhi');">Sansad Nidhi</a>
                                     </li>
                                      <li id="VidhayakNidhi"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('1', 'cus','Vidhayak Nidhi'); updateNavBarWithFunctionName('Zone-1 Road CUS Vidhayak Nidhi');">Vidhayak Nidhi</a>
-                                    </li>
-                                     <li id="Duda"><a class="dropdown-item"
-                                            onclick="Bareilly_Zone_CUS('1', 'cus','Duda'); updateNavBarWithFunctionName('Zone-1 Road CUS Duda');">Duda</a>
-                                        </li>
+                                    </li> -->
+                                     <li id="DUDA"><a class="dropdown-item"
+                                            onclick="Bareilly_Zone_CUS('1', 'cus_class','DUDA'); updateNavBarWithFunctionName('Zone-1 Road CUS DUDA');">DUDA</a>
+                                        <!-- </li>
                                              <li id="Panchayat"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('1', 'cus','NAGAR PANCHAYAT NIDHI'); updateNavBarWithFunctionName('Zone-1 Road CUS NAGAR PANCHAYAT NIDHI');">NAGAR PANCHAYAT NIDHI</a>
                                     </li>
                                  <li id="Panchayat"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('1', 'cus','SFC'); updateNavBarWithFunctionName('Zone-1 Road CUS SFC');">SFC</a>
-                                    </li>
+                                    </li> -->
                                      <li id="PWD"><a class="dropdown-item"
-                                            onclick="Bareilly_Zone_CUS('1', 'cus','PWD'); updateNavBarWithFunctionName('Zone-1 Road CUS PWD');">PWD</a>
+                                            onclick="Bareilly_Zone_CUS('1', 'cus_class','PWD'); updateNavBarWithFunctionName('Zone-1 Road CUS PWD');">PWD</a>
                                     </li>
-                                     <li id="GN City"><a class="dropdown-item"
+                                     <!-- <li id="GN City"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('1', 'cus','GN City'); updateNavBarWithFunctionName('Zone-1 Road CUS GN City');">GN City</a>
                                     </li>
                                     <li id="RES"><a class="dropdown-item"
@@ -768,6 +747,12 @@
                                     </li>
                                     <li id="BareilysmartCity"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('1', 'cus','Bareily smart City'); updateNavBarWithFunctionName('Zone-1 Road CUS Bareily smart City');">Bareilly smart City</a>
+                                    </li> -->
+                                    <li id="NA"><a class="dropdown-item"
+                                            onclick="Bareilly_Zone_CUS('1', 'cus_class','NA'); updateNavBarWithFunctionName('Zone-1 Road CUS NA');">NA</a>
+                                    </li>
+                                    <li id="Others"><a class="dropdown-item"
+                                            onclick="Bareilly_Zone_CUS('1', 'cus_class','Others'); updateNavBarWithFunctionName('Zone-1 Road CUS Others');">Others</a>
                                     </li>
                                     </ul>
                                 </li>
@@ -835,17 +820,17 @@
                                                 onclick="Bareilly_Ward_no('ward_no','64'); updateNavBarWithFunctionName('Ward 64 Road ');">Ward
                                                 64</a></li>
                                         <li><a class="dropdown-item" id="Ward64"
-                                        onclick="Bareilly_Ward_no('ward_no','64'); updateNavBarWithFunctionName('Ward 64 Road ');">Ward
-                                        64</a></li>
-                                <li><a class="dropdown-item" id="Ward66"
-                                        onclick="Bareilly_Ward_no('ward_no','66'); updateNavBarWithFunctionName('Ward 66 Road ');">Ward
-                                        66</a></li>
-                                <li><a class="dropdown-item" id="Ward72"
-                                        onclick="Bareilly_Ward_no('ward_no','72'); updateNavBarWithFunctionName('Ward 72 Road ');">Ward
-                                        72</a></li>
-                                <li><a class="dropdown-item" id="Ward77"
-                                        onclick="Bareilly_Ward_no('ward_no','77'); updateNavBarWithFunctionName('Ward 77 Road ');">Ward
-                                        77</a></li>
+                                                onclick="Bareilly_Ward_no('ward_no','64'); updateNavBarWithFunctionName('Ward 64 Road ');">Ward
+                                                64</a></li>
+                                        <li><a class="dropdown-item" id="Ward66"
+                                                onclick="Bareilly_Ward_no('ward_no','66'); updateNavBarWithFunctionName('Ward 66 Road ');">Ward
+                                                66</a></li>
+                                        <li><a class="dropdown-item" id="Ward72"
+                                                onclick="Bareilly_Ward_no('ward_no','72'); updateNavBarWithFunctionName('Ward 72 Road ');">Ward
+                                                72</a></li>
+                                        <li><a class="dropdown-item" id="Ward77"
+                                                onclick="Bareilly_Ward_no('ward_no','77'); updateNavBarWithFunctionName('Ward 77 Road ');">Ward
+                                                77</a></li>
                                
                                     </ul>
                                 </li>
@@ -863,8 +848,8 @@
                                          <li id="Zone2_type_Arterial"><a class="dropdown-item"
                                                 onclick="Bareilly_Zone_TypeSub('2','category','Arterial'); updateNavBarWithFunctionName('Zone2 Road Category Arterial');">Arterial</a>
                                         </li>
-                                         <li id="Zone2_type_Subarterial"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_TypeSub('2','category','Subarterial'); updateNavBarWithFunctionName('Zone2 Road Category Subarterial');">Subarterial</a>
+                                         <li id="Zone2_type_Sub Arterial"><a class="dropdown-item"
+                                                onclick="Bareilly_Zone_TypeSub('2','category','Sub Arterial'); updateNavBarWithFunctionName('Zone2 Road Category Sub Arterial');">Sub Arterial</a>
                                         </li>
                                          <li id="Zone2_type_NA"><a class="dropdown-item"
                                                 onclick="Bareilly_Zone_TypeSub('2','category','NA'); updateNavBarWithFunctionName('Zone2 Road Category NA');">NA</a>
@@ -885,9 +870,9 @@
                                         <li id="Zone2_condition_poor"><a class="dropdown-item"
                                                 onclick="Bareilly_Zone_Condition('2','condition','Poor'); updateNavBarWithFunctionName('Zone 2 Condition Poor Road');">Poor</a>
                                         </li>
-                                        <!-- <li id="Zone2_condition_poor"><a class="dropdown-item"
+                                        <li id="Zone2_condition_poor"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_Condition('2','condition','NA'); updateNavBarWithFunctionName('Zone 2 Condition NA');">NA</a>
-                                    </li> -->
+                                        </li> 
                                     </ul>
                                 </li>
                                 <li>
@@ -926,9 +911,6 @@
                                         <li id="Zone2_ownership_BNN"><a class="dropdown-item"
                                                 onclick="Bareilly_Zone_Ownership('2','ownership','BNN'); updateNavBarWithFunctionName('Zone 2 Road Ownership Bareilly Nagar Nigam');">Bareilly Nagar  Nigam
                                             </a></li>
-                                        <!-- <li id="Zone2_ownership_PWD"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_Ownership('2','ownership','PWD'); updateNavBarWithFunctionName('Zone 2 Road Ownership PWD');">PWD
-                                            </a></li> -->
                                             <li id="Zone2_ownership_PrivateRoad"><a class="dropdown-item"
                                                 onclick="Bareilly_Zone_Ownership('2','ownership','Private Roads'); updateNavBarWithFunctionName('Zone 2 Road Ownership Private Road');">Private Road</a>
                                         </li>
@@ -963,33 +945,33 @@
                                         Road CUS &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="14th_Finance"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_CUS('2', 'cus','14th Finance'); updateNavBarWithFunctionName('Zone-2 Road CUS 14th Finance');">14th Finance</a>
+                                                onclick="Bareilly_Zone_CUS('2', 'cus_class','14th Finance'); updateNavBarWithFunctionName('Zone-2 Road CUS 14th Finance');">14th Finance</a>
                                         </li>
                                         <li id="15th_Finance"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_CUS('2', 'cus','15th Finance'); updateNavBarWithFunctionName('Zone-2 Road CUS 15th Finance');">15th Finance</a>
+                                                onclick="Bareilly_Zone_CUS('2', 'cus_class','15th Finance'); updateNavBarWithFunctionName('Zone-2 Road CUS 15th Finance');">15th Finance</a>
                                         </li>
                                         <li id="Nagar_Nigam_Nidhi"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_CUS('2', 'cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-2 Road CUS Nagar Nigam Nidhi');">Nagar NIgam Nidhi</a>
+                                                onclick="Bareilly_Zone_CUS('2', 'cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-2 Road CUS Nagar Nigam Nidhi');">Nagar NIgam Nidhi</a>
                                         </li>
-                                        <li id="SansadNidhi"><a class="dropdown-item"
+                                        <!-- <li id="SansadNidhi"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('2', 'cus','Sansad Nidhi'); updateNavBarWithFunctionName('Zone-2 Road CUS Sansad Nidhi');">Sansad Nidhi</a>
                                     </li>
                                      <li id="VidhayakNidhi"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('2', 'cus','Vidhayak Nidhi'); updateNavBarWithFunctionName('Zone-2 Road CUS Vidhayak Nidhi');">Vidhayak Nidhi</a>
-                                    </li>
-                                     <li id="Duda"><a class="dropdown-item"
-                                            onclick="Bareilly_Zone_CUS('2', 'cus','Duda'); updateNavBarWithFunctionName('Zone-2 Road CUS Duda');">Duda</a>
-                                        </li>
+                                    </li> -->
+                                     <li id="DUDA"><a class="dropdown-item"
+                                            onclick="Bareilly_Zone_CUS('2', 'cus_class','DUDA'); updateNavBarWithFunctionName('Zone-2 Road CUS DUDA');">DUDA</a>
+                                        <!-- </li>
                                              <li id="Panchayat"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('2', 'cus','NAGAR PANCHAYAT NIDHI'); updateNavBarWithFunctionName('Zone-2 Road CUS NAGAR PANCHAYAT NIDHI');">NAGAR PANCHAYAT NIDHI</a>
                                     </li>
                                  <li id="Panchayat"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('2', 'cus','SFC'); updateNavBarWithFunctionName('Zone-2 Road CUS SFC');">SFC</a>
-                                    </li>
+                                    </li> -->
                                      <li id="PWD"><a class="dropdown-item"
-                                            onclick="Bareilly_Zone_CUS('2', 'cus','PWD'); updateNavBarWithFunctionName('Zone-2 Road CUS PWD');">PWD</a>
+                                            onclick="Bareilly_Zone_CUS('2', 'cus_class','PWD'); updateNavBarWithFunctionName('Zone-2 Road CUS PWD');">PWD</a>
                                     </li>
-                                     <li id="GN City"><a class="dropdown-item"
+                                     <!-- <li id="GN City"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('2', 'cus','GN City'); updateNavBarWithFunctionName('Zone-2 Road CUS GN City');">GN City</a>
                                     </li>
                                     <li id="RES"><a class="dropdown-item"
@@ -1000,10 +982,13 @@
                                     </li>
                                     <li id="BareilysmartCity"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('2', 'cus','Bareily smart City'); updateNavBarWithFunctionName('Zone-2 Road CUS Bareily smart City');">Bareilly smart City</a>
+                                    </li> -->
+                                      <li id="NA"><a class="dropdown-item"
+                                            onclick="Bareilly_Zone_CUS('2', 'cus_class','NA'); updateNavBarWithFunctionName('Zone-2 Road CUS NA');">NA</a>
                                     </li>
-
-
-
+                                      <li id="Others"><a class="dropdown-item"
+                                            onclick="Bareilly_Zone_CUS('2', 'cus_class','Others'); updateNavBarWithFunctionName('Zone-2 Road CUS Others');">Others</a>
+                                    </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -1093,8 +1078,8 @@
                                          <li id="Zone3_type_Arterial"><a class="dropdown-item"
                                                 onclick="Bareilly_Zone_TypeSub('3','category','Arterial'); updateNavBarWithFunctionName('Zone3 Road Category Arterial');">Arterial</a>
                                         </li>
-                                         <li id="Zone3_type_Subarterial"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_TypeSub('3','category','Subarterial'); updateNavBarWithFunctionName('Zone3 Road Category Subarterial');">Subarterial</a>
+                                         <li id="Zone3_type_Sub Arterial"><a class="dropdown-item"
+                                                onclick="Bareilly_Zone_TypeSub('3','category','Sub Arterial'); updateNavBarWithFunctionName('Zone3 Road Category Sub Arterial');">Sub Arterial</a>
                                         </li>
                                          <li id="Zone3_type_NA"><a class="dropdown-item"
                                                 onclick="Bareilly_Zone_TypeSub('3','category','NA'); updateNavBarWithFunctionName('Zone3 Road Category NA');">NA</a>
@@ -1195,33 +1180,33 @@
                                         Road CUS &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="14th_Finance"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_CUS('3', 'cus','14th Finance'); updateNavBarWithFunctionName('Zone-3 Road CUS 14th Finance');">14th Finance</a>
+                                                onclick="Bareilly_Zone_CUS('3', 'cus_class','14th Finance'); updateNavBarWithFunctionName('Zone-3 Road CUS 14th Finance');">14th Finance</a>
                                         </li>
                                         <li id="15th_Finance"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_CUS('3', 'cus','15th Finance'); updateNavBarWithFunctionName('Zone-3 Road CUS 15th Finance');">15th Finance</a>
+                                                onclick="Bareilly_Zone_CUS('3', 'cus_class','15th Finance'); updateNavBarWithFunctionName('Zone-3 Road CUS 15th Finance');">15th Finance</a>
                                         </li>
                                         <li id="Nagar_Nigam_Nidhi"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_CUS('3', 'cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-3 Road CUS Nagar Nigam Nidhi');">Nagar NIgam Nidhi</a>
+                                                onclick="Bareilly_Zone_CUS('3', 'cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-3 Road CUS Nagar Nigam Nidhi');">Nagar NIgam Nidhi</a>
                                         </li>
-                                        <li id="SansadNidhi"><a class="dropdown-item"
+                                        <!-- <li id="SansadNidhi"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('3', 'cus','Sansad Nidhi'); updateNavBarWithFunctionName('Zone-3 Road CUS Sansad Nidhi');">Sansad Nidhi</a>
                                     </li>
                                      <li id="VidhayakNidhi"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('3', 'cus','Vidhayak Nidhi'); updateNavBarWithFunctionName('Zone-3 Road CUS Vidhayak Nidhi');">Vidhayak Nidhi</a>
-                                    </li>
-                                     <li id="Duda"><a class="dropdown-item"
-                                            onclick="Bareilly_Zone_CUS('3', 'cus','Duda'); updateNavBarWithFunctionName('Zone-3 Road CUS Duda');">Duda</a>
-                                        </li>
+                                    </li> -->
+                                     <li id="DUDA"><a class="dropdown-item"
+                                            onclick="Bareilly_Zone_CUS('3', 'cus_class','DUDA'); updateNavBarWithFunctionName('Zone-3 Road CUS DUDA');">DUDA</a>
+                                        <!-- </li>
                                              <li id="Panchayat"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('3', 'cus','NAGAR PANCHAYAT NIDHI'); updateNavBarWithFunctionName('Zone-3 Road CUS NAGAR PANCHAYAT NIDHI');">NAGAR PANCHAYAT NIDHI</a>
                                     </li>
                                  <li id="Panchayat"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('3', 'cus','SFC'); updateNavBarWithFunctionName('Zone-3 Road CUS SFC');">SFC</a>
-                                    </li>
+                                    </li> -->
                                      <li id="PWD"><a class="dropdown-item"
-                                            onclick="Bareilly_Zone_CUS('3', 'cus','PWD'); updateNavBarWithFunctionName('Zone-3 Road CUS PWD');">PWD</a>
+                                            onclick="Bareilly_Zone_CUS('3', 'cus_class','PWD'); updateNavBarWithFunctionName('Zone-3 Road CUS PWD');">PWD</a>
                                     </li>
-                                     <li id="GN City"><a class="dropdown-item"
+                                     <!-- <li id="GN City"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('3', 'cus','GN City'); updateNavBarWithFunctionName('Zone-3 Road CUS GN City');">GN City</a>
                                     </li>
                                     <li id="RES"><a class="dropdown-item"
@@ -1232,6 +1217,12 @@
                                     </li>
                                     <li id="BareilysmartCity"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('3', 'cus','Bareily smart City'); updateNavBarWithFunctionName('Zone-3 Road CUS Bareily smart City');">Bareilly smart City</a>
+                                    </li> -->
+                                    <li id="NA"><a class="dropdown-item"
+                                            onclick="Bareilly_Zone_CUS('3', 'cus_class','NA'); updateNavBarWithFunctionName('Zone-3 Road CUS NA');">NA</a>
+                                    </li>
+                                       <li id="Others"><a class="dropdown-item"
+                                            onclick="Bareilly_Zone_CUS('3', 'cus_class','Others'); updateNavBarWithFunctionName('Zone-3 Road CUS Others');">Others</a>
                                     </li>
                                     </ul>
                                 </li>
@@ -1321,8 +1312,8 @@
                                          <li id="Zone4_type_Arterial"><a class="dropdown-item"
                                                 onclick="Bareilly_Zone_TypeSub('4','category','Arterial'); updateNavBarWithFunctionName('Zone4 Road Category Arterial');">Arterial</a>
                                         </li>
-                                         <li id="Zone4_type_Subarterial"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_TypeSub('4','category','Subarterial'); updateNavBarWithFunctionName('Zone4 Road Category Subarterial');">Subarterial</a>
+                                         <li id="Zone4_type_Sub Arterial"><a class="dropdown-item"
+                                                onclick="Bareilly_Zone_TypeSub('4','category','Sub Arterial'); updateNavBarWithFunctionName('Zone4 Road Category Sub Arterial');">Sub Arterial</a>
                                         </li>
                                          <li id="Zone4_type_NA"><a class="dropdown-item"
                                                 onclick="Bareilly_Zone_TypeSub('4','category','NA'); updateNavBarWithFunctionName('Zone4 Road Category NA');">NA</a>
@@ -1417,33 +1408,33 @@
                                         Road CUS &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="14th_Finance"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_CUS('4', 'cus','14th Finance'); updateNavBarWithFunctionName('Zone-4 Road CUS 14th Finance');">14th Finance</a>
+                                                onclick="Bareilly_Zone_CUS('4', 'cus_class','14th Finance'); updateNavBarWithFunctionName('Zone-4 Road CUS 14th Finance');">14th Finance</a>
                                         </li>
                                         <li id="15th_Finance"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_CUS('4', 'cus','15th Finance'); updateNavBarWithFunctionName('Zone-4 Road CUS 15th Finance');">15th Finance</a>
+                                                onclick="Bareilly_Zone_CUS('4', 'cus_class','15th Finance'); updateNavBarWithFunctionName('Zone-4 Road CUS 15th Finance');">15th Finance</a>
                                         </li>
                                         <li id="Nagar_Nigam_Nidhi"><a class="dropdown-item"
-                                                onclick="Bareilly_Zone_CUS('4', 'cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-4 Road CUS Nagar Nigam Nidhi');">Nagar NIgam Nidhi</a>
+                                                onclick="Bareilly_Zone_CUS('4', 'cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-4 Road CUS Nagar Nigam Nidhi');">Nagar NIgam Nidhi</a>
                                         </li>
-                                        <li id="SansadNidhi"><a class="dropdown-item"
+                                        <!-- <li id="SansadNidhi"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('4', 'cus','Sansad Nidhi'); updateNavBarWithFunctionName('Zone-4 Road CUS Sansad Nidhi');">Sansad Nidhi</a>
                                     </li>
                                      <li id="VidhayakNidhi"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('4', 'cus','Vidhayak Nidhi'); updateNavBarWithFunctionName('Zone-4 Road CUS Vidhayak Nidhi');">Vidhayak Nidhi</a>
-                                    </li>
-                                     <li id="Duda"><a class="dropdown-item"
-                                            onclick="Bareilly_Zone_CUS('4', 'cus','Duda'); updateNavBarWithFunctionName('Zone-4 Road CUS Duda');">Duda</a>
+                                    </li> -->
+                                     <li id="DUDA"><a class="dropdown-item"
+                                            onclick="Bareilly_Zone_CUS('4', 'cus_class','DUDA'); updateNavBarWithFunctionName('Zone-4 Road CUS DUDA');">DUDA</a>
                                         </li>
-                                             <li id="Panchayat"><a class="dropdown-item"
+                                             <!-- <li id="Panchayat"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('4', 'cus','NAGAR PANCHAYAT NIDHI'); updateNavBarWithFunctionName('Zone-4 Road CUS NAGAR PANCHAYAT NIDHI');">NAGAR PANCHAYAT NIDHI</a>
                                     </li>
                                  <li id="SFC"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('4', 'cus','SFC'); updateNavBarWithFunctionName('Zone-4 Road CUS SFC');">SFC</a>
-                                    </li>
+                                    </li> -->
                                      <li id="PWD"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('4', 'cus','PWD'); updateNavBarWithFunctionName('Zone-4 Road CUS PWD');">PWD</a>
                                     </li>
-                                     <li id="GN City"><a class="dropdown-item"
+                                     <!-- <li id="GN City"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('4', 'cus','GN City'); updateNavBarWithFunctionName('Zone-4 Road CUS GN City');">GN City</a>
                                     </li>
                                     <li id="RES"><a class="dropdown-item"
@@ -1454,6 +1445,12 @@
                                     </li>
                                     <li id="BareilysmartCity"><a class="dropdown-item"
                                             onclick="Bareilly_Zone_CUS('4', 'cus','Bareily smart City'); updateNavBarWithFunctionName('Zone-4 Road CUS Bareily smart City');">Bareilly smart City</a>
+                                    </li> -->
+                                    <li id="NA"><a class="dropdown-item"
+                                            onclick="Bareilly_Zone_CUS('4', 'cus_class','NA'); updateNavBarWithFunctionName('Zone-4 Road CUS NA');">NA</a>
+                                    </li>
+                                    <li id="Others"><a class="dropdown-item"
+                                            onclick="Bareilly_Zone_CUS('4', 'cus_class','Others'); updateNavBarWithFunctionName('Zone-4 Road CUS Others');">Others</a>
                                     </li>
                                     </ul>
                                 </li>
@@ -1463,342 +1460,7 @@
                     </ul>
                 </div>
                 <!-------------------- zone wise road filter end -------------------------->
-        <!------------------- drain filter start ----------------->
-        <!-- <div id="drain-filter" class="drain-filter">
-            <ul>
-                <label style="margin-left:20px;"><b>Select Drain</b></label>
-                <li ><a class="dropdown">Ghaziabad All Drain &raquo;</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
-                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
-                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
-                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
-                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
-                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
-                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
-                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
-                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
-                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a class="dropdown">Kavinagar Zone &raquo;</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
-                                <li id="Ward16"><a class="dropdown-item">Morta 16</a></li>
-                                <li id="Ward46"><a class="dropdown-item">Guldhar Duhai 46</a></li>
-                                <li id="Ward53"><a class="dropdown-item">Raiespur 53</a></li>
-                                <li id="Ward84"><a class="dropdown-item">Raj Nagar 84</a></li>
-                                <li id="Ward71"><a class="dropdown-item">Sanjay Nagar2 71</a></li>
-                                <li id="Ward91"><a class="dropdown-item">Kavi Nagar 91</a></li>
-                                <li id="Ward"><a class="dropdown-item">Sadarpur </a></li>
-                                <li id="Ward69"><a class="dropdown-item">Govindpuram 69</a></li>
-                                <li id="Ward67"><a class="dropdown-item">Kamla Nehru Sanjay 67</a></li>
-                                <li id="Ward47"><a class="dropdown-item">Shastri Nagar 47</a></li>
-                                <li id="Ward24"><a class="dropdown-item">Mehroli 24</a></li>
-                                <li id="Ward56"><a class="dropdown-item">Chiranjeev Vihari 56</a></li>
-                                <li id="Ward42"><a class="dropdown-item">Shahpur Bamheta 42</a></li>
-                                <li id="Ward65"><a class="dropdown-item">Vivekanand 65</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
-                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
-                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
-                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
-                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
-                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
-                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
-                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
-                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
-                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a class="dropdown">City Zone &raquo;</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
-                                <li><a class="dropdown-item" id="Ward33">SarayNajar Ali 33</a></li>
-                                <li><a class="dropdown-item" id="Ward92">Kaila Islam Nagar 92</a></li>
-                                <li><a class="dropdown-item" id="Ward59">Saddik Noor Nagar 59</a></li>
-                                <li><a class="dropdown-item" id="Ward48">Nand Gram, Mariyam Nagar 48</a></li>
-                                <li><a class="dropdown-item" id="Ward31">Nandgram Sihani 31</a></li>
-                                <li><a class="dropdown-item" id="Ward32">Krishana Nagar 32</a></li>
-                                <li><a class="dropdown-item" id="Ward">Nandgram</a></li>
-                                <li><a class="dropdown-item" id="Ward6">DeenDayalpuri 6</a></li>
-                                <li><a class="dropdown-item" id="Ward17">Sewa Nagar 17</a></li>
-                                <li><a class="dropdown-item" id="Ward13">Ghukna 13</a></li>
-                                <li><a class="dropdown-item" id="Ward">Nehru Nagar Second</a></li>
-                                <li><a class="dropdown-item" id="Ward9">Shibanpura, Patel Nagar 9</a></li>
-                                <li><a class="dropdown-item" id="Ward19">Mukund Nagar 19</a></li>
-                                <li><a class="dropdown-item" id="Ward93">Kaila Bhatta 93</a></li>
-                                <li><a class="dropdown-item" id="Ward59">Charanpuri 59</a></li>
-                                <li><a class="dropdown-item" id="Ward96">Nehru Nagar Third 96</a></li>
-                                <li><a class="dropdown-item" id="Ward39">Nasirpur 39</a></li>
-                                <li><a class="dropdown-item" id="Ward22">Daulatpura 22</a></li>
-                                <li><a class="dropdown-item" id="Ward">Gandhi Nagar </a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
-                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
-                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
-                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
-                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
-                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
-                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
-                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
-                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
-                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a class="dropdown">Vijay Nagar Zone  &raquo;</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
-                                <li><a class="dropdown-item" id="Ward15">Charansingh Colony 15</a></li>
-                                <li><a class="dropdown-item" id="Ward11">Pratap Vihar Sector 11</a></li>
-                                <li><a class="dropdown-item" id="Ward55">Vijay Nagar Sector-11 55</a></li>
-                                <li><a class="dropdown-item" id="Ward48">Mirzapur Pratap Vihar 48</a></li>
-                                <li><a class="dropdown-item" id="Ward4">Mata Colony 4</a></li>
-                                <li><a class="dropdown-item" id="Ward35">Akbarpur 35</a></li>
-                                <li><a class="dropdown-item" id="Ward1">Bhagu Bhim 1</a></li>
-                                <li><a class="dropdown-item" id="Ward58">Shivpuri 58</a></li>
-                                <li><a class="dropdown-item" id="Ward9">Rahul Vihar Siddharth 9</a></li>
-                                <li><a class="dropdown-item" id="Ward7">Biharipuira 7</a></li>
-                                <li><a class="dropdown-item" id="Ward27">Dhundhera 27</a></li>
-                                <li><a class="dropdown-item" id="Ward3">Purana Vijay Nagar 3</a></li>
-                                <li><a class="dropdown-item" id="Ward14">New Vijay Nagar 14</a></li>
-                                <li><a class="dropdown-item" id="Ward25">Ambedkar Nagar Mahendra Enclave 25</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
-                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
-                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
-                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
-                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
-                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
-                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
-                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
-                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
-                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a class="dropdown">Mohan Nagar Zone  &raquo;</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
-                                <li><a class="dropdown-item" id="Ward5">Ganga Vihar 5</a></li>
-                                <li><a class="dropdown-item" id="Ward29">Kuti 29</a></li>
-                                <li><a class="dropdown-item" id="Ward64">Garima Garden 64</a></li>
-                                <li><a class="dropdown-item" id="Ward63">Pasonda 63</a></li>
-                                <li><a class="dropdown-item" id="Ward66">Mausam Vihar 66</a></li>
-                                <li><a class="dropdown-item" id="Ward82">Jawahar Park 82</a></li>
-                                <li><a class="dropdown-item" id="Ward37">Shalimar Garden  Main 37</a></li>
-                                <li><a class="dropdown-item" id="Ward44">Kadkad Model 44</a></li>
-                                <li><a class="dropdown-item" id="Ward34">Shaheed Nagar-1 34</a></li>
-                                <li><a class="dropdown-item" id="Ward78">Shalimar Extention-I 78</a></li>
-                                <li><a class="dropdown-item" id="Ward70">Jankipuram 70</a></li>
-                                <li><a class="dropdown-item" id="Ward86">Rajendra Nagar Sector-5 86</a></li>
-                                <li><a class="dropdown-item" id="Ward80">Rajendra Nagar Sector-9 80</a></li>
-                                <li><a class="dropdown-item" id="Ward83">Shyam Park Extention 83</a></li>
-                                <li><a class="dropdown-item" id="Ward28">Rajeev Colony 28</a></li>
-                                <li><a class="dropdown-item" id="Ward85">Lajpat Nagar-II 85</a></li>
-                                <li><a class="dropdown-item" id="Ward75">Lajpat Nagar-I 75</a></li>
-                                <li><a class="dropdown-item" id="Ward38">Arthala 38</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
-                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
-                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
-                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
-                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
-                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
-                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
-                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
-                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
-                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a class="dropdown">Vasundhara Zone &raquo;</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
-                                <li><a class="dropdown-item" id="Ward2">Sahibabad 40</a></li>
-                                <li><a class="dropdown-item" id="Ward8">Gyan Khand Indrapuram 87</a></li>
-                                <li><a class="dropdown-item" id="Ward9">Vaibhav Khand-1 99</a></li>
-                                <li><a class="dropdown-item" id="Ward10">Shipra Suncity(Indrapuram) 100</a></li>
-                                <li><a class="dropdown-item" id="Ward11">Bhouvapur 21</a></li>
-                                <li><a class="dropdown-item" id="Ward15">Vaishali-1 76</a></li>
-                                <li><a class="dropdown-item" id="Ward16">Vaishali-2 77</a></li>
-                                <li><a class="dropdown-item" id="Ward20">Kaushambi 72</a></li>
-                                <li><a class="dropdown-item" id="Ward22">Vasundhara-1 54</a></li>
-                                <li><a class="dropdown-item" id="Ward24">Vasundhara-2 61</a></li>
-                                <li><a class="dropdown-item" id="Ward25">Abhay Khand 79</a></li>
-                                <li><a class="dropdown-item" id="Ward29">Shakti Khand 81</a></li>
-                                <li><a class="dropdown-item" id="Ward34">Vasundhara-3 74</a></li>
-                                <li><a class="dropdown-item" id="Ward35">Maharajpur 41</a></li>
-                                <li><a class="dropdown-item" id="Ward42">Ram Prashta 97</a></li>
-                                <li><a class="dropdown-item" id="Ward43">Kad Kad Model 43</a></li>
-                                <li><a class="dropdown-item" id="Ward44">Surya Nagar 94</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
-                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
-                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
-                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
-                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
-                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
-                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
-                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
-                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
-                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div> -->
-        <!--------------------- drain filter end ---------------->
+
 
         <!--------------------- street view tab start ------------->
         <!-- <div class="street-view" id="street-tab">
@@ -1818,93 +1480,7 @@
        <div class="legend-tab">
             <!-- <button id="legendBtn">Show Legend</button> -->
             <div id="live_legend" style="display: none;"><h6>Legend</h6></div>
-
-            <div class="Legend_panel" id="Drain_Type_Legend" >
-                <h6>Legend</h6>
-                <ul>
-                    <li><span style="background-color: blue; width: 20px; height: 2px; display: inline-block;"></span>
-                        Primary Drain</li>
-                    <li><span style="background-color: yellow; width: 20px; height: 2px; display: inline-block;"></span>
-                        Secondary Drain</li>
-                    <li><span style="background-color: orange; width: 20px; height: 2px; display: inline-block;"></span>
-                        Tertiary Drain
-                    </li>
-                    <!-- Add more legend items as needed -->
-                </ul>
-            </div>
-            <div class="Legend_panel" id="Drain_Condition_Legend"
-                >
-                <h6>Legend</h6>
-                <ul>
-                    <li><span style="background-color: green; width: 20px; height: 2px; display: inline-block;"></span>
-                        Running Drain</li>
-                    <li><span
-                            style="background-color: darkred; width: 20px; height: 2px; display: inline-block;"></span>
-                        Chocked Drain</li>
-    
-                    <!-- Add more legend items as needed -->
-                </ul>
-            </div>
-            <div class="Legend_panel" id="Drain_Material_Legend"
-                >
-                <h6>Legend</h6>
-                <ul>
-                    <li><span
-                            style="background-color: darkred; width: 20px; height: 2px; display: inline-block;"></span>
-                        Bricked Drain</li>
-                    <li><span
-                            style="background-color: #098f9b; width: 20px; height: 2px; display: inline-block;"></span>
-                        RCC Drain</li>
-                    <li><span style="background-color: yellow; width: 20px; height: 2px; display: inline-block;"></span>
-                        Kachcha Drain
-                    </li>
-                    <!-- Add more legend items as needed -->
-                </ul>
-            </div>
-            <div class="Legend_panel" id="Drain_Status_Legend"  >
-                <h6>Legend</h6>
-                <ul>
-                    <li><span
-                            style="background-color: lightgreen; width: 20px; height: 2px; display: inline-block;"></span>
-                        Open Drain</li>
-                    <li><span style="background-color: purple; width: 20px; height: 2px; display: inline-block;"></span>
-                        Covered Drain</li>
-    
-                    <!-- Add more legend items as needed -->
-                </ul>
-            </div>
-
-
-
-            <div id="Priority_legend" Class="Legend_panel">
-                <h6>Legend</h6>
-                <ul>
-                    <li><span style="background-color: #EB5406; width: 20px; height: 2px; display: inline-block;"></span>
-                        First Priority</li>
-                    <li><span style="background-color: #00FF00; width: 20px; height: 2px; display: inline-block;"></span>
-                        Second Priority</li>
-                    <li><span style="background-color: #FFC300; width: 20px; height: 2px; display: inline-block;"></span>
-                        Not Eligible
-                    <li>
-                        <!-- Add more legend items as needed -->
-                </ul>
-            </div>
-            <div id="type_legend" Class="Legend_panel" >
-                <h6>Legend By Type</h6>
-                <ul>
-                    <li><span style="background-color: #0000ff; width: 20px; height: 2px; display: inline-block;"></span>
-                        Major</li>
-                    <li><span style="background-color: #e2e832; width: 20px; height: 2px; display: inline-block;"></span>
-                        Minor</li>
-                    <!-- <li><span style="background-color: #32e1e3; width: 20px; height: 2px; display: inline-block;"></span>
-                Service Road</li>
-            
-                <li><span style="background-color: #ff00ff; width: 20px; height: 2px; display: inline-block;"></span>
-                    NA</li> -->
-
-                    <!-- Add more legend items as needed -->
-                </ul>
-            </div>
+           
             <div id="Condition_legend" Class="Legend_panel" >
                 <h6>Legend By Condition</h6>
                 <ul>
@@ -1934,7 +1510,7 @@
                     <li><span style="background-color: #173dd6; width: 20px; height: 2px; display: inline-block;"></span>
                     PWD</li>
                     
-                    <li><span style="background-color: #14ea54; width: 20px; height: 2px; display: inline-block;"></span>
+                    <!-- <li><span style="background-color: #14ea54; width: 20px; height: 2px; display: inline-block;"></span>
                     SFC</li>
                     
                     <li><span style="background-color: #6a52e7; width: 20px; height: 2px; display: inline-block;"></span>
@@ -1942,11 +1518,11 @@
                     
                     <li><span style="background-color: #c70ed8; width: 20px; height: 2px; display: inline-block;"></span>
                     Sansad Nidhi</li>
-                    
+                     -->
                     <li><span style="background-color: #b4b85a; width: 20px; height: 2px; display: inline-block;"></span>
                     DUDA</li>
                     
-                    <li><span style="background-color: #e14a22; width: 20px; height: 2px; display: inline-block;"></span>
+                    <!-- <li><span style="background-color: #e14a22; width: 20px; height: 2px; display: inline-block;"></span>
                     GN City</li>
                     
                     <li><span style="background-color: #e6497d; width: 20px; height: 2px; display: inline-block;"></span>
@@ -1962,9 +1538,11 @@
                     
                     <li><span style="background-color: #45d1a4; width: 20px; height: 2px; display: inline-block;"></span>
                     Up Bridge Corporation Ltd</li>
-                    
+                     -->
                     <li><span style="background-color: #8717e2; width: 20px; height: 2px; display: inline-block;"></span>
                     NA</li>
+                    <li><span style="background-color: #8717e2; width: 20px; height: 2px; display: inline-block;"></span>
+                    Others</li>
                 
                     <!-- Add more legend items as needed -->
                 </ul>
@@ -2019,7 +1597,7 @@
                     <li><span style="background-color: #e63dee; width: 20px; height: 2px; display: inline-block;"></span>
                         Collector</li>
                     <li><span style="background-color: #ec1248; width: 20px; height: 2px; display: inline-block;"></span>
-                       Expressway</li>
+                    NA</li>
                     <li><span style="background-color: #83e45c; width: 20px; height: 2px; display: inline-block;"></span>
                        Sub Arterial</li>
                     <li><span style="background-color: #e1ca4c; width: 20px; height: 2px; display: inline-block;"></span>
@@ -2032,144 +1610,60 @@
         <!----------------- Legend btn code end --------------->
 
         <!--------spping boot live Road Table data getting----->
-
-        <!-- <div id="tableContainer">
-                    <nav class="feature_nav">
-                        <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 15px;">Feature Name - </a>
-                        <a id="featureName" class="feature_name1"
-                            style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
-                        <div style="display: flex; align-items: center; margin-left: auto;">
-                                <i class="fa-solid fa-file-arrow-down"></i>
-                            <i class="fas fa-window-minimize" onclick="minimize1()"
-                                style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
-                            <i class="fas fa-window-maximize" onclick="maximize1()"
-                                style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
-                            <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
-                                <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
-                            </span>
-                        </div>
-                    </nav>
-
-                    <table id="dataTable">
-                        <thead>
-                            <tr>
-                                <th> Gis Id </th>
-                                <th> Zone No </th>
-                                <th> Zone Name </th>
-                                <th> Ward No </th>
-                                <th> Ward Name </th>
-                                <th> Ownership </th>
-                                <th> Road Category </th>
-                                <th> Road Name </th>
-                                <th> Row meter </th>
-                                <th> Row as per </th>
-                                <th> Carriage Width </th>
-                                <th> Material </th>
-                                <th> Length (km) </th>
-                                <th> Conditon </th>
-                                <th> Year Of Construction </th>
-                                <th> CUS &nbsp;&nbsp;
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody id="dataBody">
-
-                        </tbody>
-                    </table>
-        </div> -->
-
-        <div id="tableContainer_summary">
+       <div id="tableContainer_summary" class="tablediv">
             <!-- Navigation Bar -->
-             <nav class="feature_nav">
-                <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 15px;">Feature Name - </a>
-                <a id="featureName" class="feature_name1"
-                    style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+            <nav class="feature_nav">
+                <a >Feature Name - </a>
+                <a id="featureName" class="feature_name1"></a>
                 <div style="display: flex; align-items: center; margin-left: auto;">
-                    <i class="fa-solid fa-print" style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fa-solid fa-print" style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
                     <i class="fas fa-window-minimize" onclick="minimize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                        style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
                     <i class="fas fa-window-maximize" onclick="maximize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
-                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
+                    <span class="table-cancel-btn1" style="color: rgb(0, 0, 0);">
                         <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
                     </span>
                 </div>
             </nav>
-           <table id="dataTable_summary" >
-               <thead>
-                   <tr>
-                       <th> Gis Id </th>
-                       <th> Zone No </th>
-                       <th> Zone Name </th>
-                       <th> Ward No </th>
-                       <th> Ward Name </th>
-                       <th> Ownership </th>
-                       <!--<th> Type </th>--->
-                       <th> Road Category </th>
-                       <th> Road Name </th>
-                       <th> Row (meter) </th>
-                       <th> Row as per </th>
-                       <th> Carriage Width </th>
-                       <th> Material </th>
-                       <th> Length (km) </th>
-                       <th> Conditon </th>
-                       <th> Year Of Construction </th>
-                       <th> CUS &nbsp;&nbsp; 
-                           <!-- <span class="table-cancel-btn1">
-                               <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
-                           </span> -->
-                       </th>
-               
-                   </tr>
-               </thead>
-               <tbody id="dataBody_summary">
-
-               </tbody>
-           </table>
-       </div> 
-    
-        <!--------spping boot live Drain data getting----->
-        <!-- <div id="tableContainer_Drain">
-            <table id="dataTable_Drain">
+            <table id="dataTable_summary">
                 <thead>
                     <tr>
-                        <th style="width:130px"> Zone No </th>
-                        <th style="width:130px"> Zone Name </th>
-                        <th style="width:130px"> Gis Id </th>
-                        <th style="width:130px"> Ward No </th>
-                        <th style="width:130px"> Ward Name </th>
-                        <th style="width:130px"> Ownership </th>
-                        <th style="width:130px"> Type </th>
-                        <th style="width:130px"> Status </th>
-                        <th style="width:130px"> Material </th>
-                        <th style="width:130px"> Length (meter) </th>
-                        <th style="width:130px"> Condition </th>
-                        <th style="width:130px"> Year of Construction </th>
-                        <th style="width:130px"> Width </th>
-                        <th style="width:130px"> Depth &nbsp;&nbsp; <span class="table-cancel-btn">
-                                <i id="cancelbtn1" class="fas fa-times cancel-btn"></i>
-                            </span> </th>
-
+                        <th> Gis Id </th>
+                        <th> Road Id </th>
+                        <th> Zone No </th>
+                        <th> Zone Name </th>
+                        <th> Ward No </th>
+                        <th> Ward Name </th>
+                        <th> Ownership </th>
+                        <th> Road Category </th>
+                        <th> Road Name </th>
+                        <th> Row (meter) </th>
+                        <th> Row Class </th>
+                        <th> Carriage Width </th>
+                        <th> Material </th>
+                        <th> Length (km) </th>
+                        <th> Condition </th>
+                        <th> Year Of Construction/Relaying</th>
+                        <th> CUS &nbsp;&nbsp;</th>
                     </tr>
                 </thead>
-                <tbody id="dataBody_Drain">
-                  
-                </tbody>
+                <tbody id="dataBody_summary"></tbody>
             </table>
-        </div> -->
-
+        </div> 
+    
 
       <!--------wms & wfs Road Table data getting layer----->
         <div id="tableContainer_summaryfilter">
             <nav class="feature_nav">
-                <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 15px;">Filter Data According to zone and Column </a>
-                <a id="featureName" style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+                <a >Filter Data According to zone and Column </a>
+                <a id="featureName" ></a>
                 <div style="display: flex; align-items: center; margin-left: auto;">
                     <i class="fas fa-window-minimize" onclick="minimize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                        style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
                     <i class="fas fa-window-maximize" onclick="maximize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
-                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
+                    <span class="table-cancel-btn1" style="color: rgb(0, 0, 0);">
                         <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
                     </span>
                 </div>
@@ -2178,13 +1672,14 @@
                 <thead>
                     <tr>
                         <th> Gis Id </th>
+                       <th> Road Id </th>
                         <th> Zone No
                             <select class="zone-dropdown" style="overflow-y:scroll" id="zoneSelect"></select>
                         </th>
                         <th> Zone Name </th>
                         <th> Ward No
                             <select class="ward-dropdown" style="overflow-y:scroll" id="wardSelect"></select>
-                            </select>
+                    
                         </th>
                         <th> Ward Name </th>
                         <th> Ownership
@@ -2204,30 +1699,19 @@
                                 <!-- Add more ownership options here -->
                             </select>
                         </th>
-                    <!--<th> Type
-                            <select class="type-dropdownOwn">
-                                <option value="">Type</option> 
-                                <option value="Minor City Road">Minor</option>
-                                <option value="Major City Road">Major</option>
-                            
-                            </select>
-                        </th> -->
-                     
                         <th> Road Category 
                             <select class="type-dropdown">
-                        <option value="">Category</option> 
-                        <option value="Local Street">Local Street </option>
-                        <option value="Collector">Collector</option>
-                        <option value="Arterial">Arterial</option>
-                        <option value="Subarterial">Subarterial</option>
-                        <option value="NA">NA</option>
-                    
-                    </select>
-                        </th>
+                                <option value="">Category</option> 
+                                <option value="Local Street">Local Street </option>
+                                <option value="Collector">Collector</option>
+                                <option value="Arterial">Arterial</option>
+                                <option value="Sub Arterial">Sub Arterial</option>
+                                <option value="NA">NA</option>
+                            </select></th>
                         <th> Road Name </th>
                         <th> Row (meter) </th>
                         <th> Row as per </th>
-                        <th> carriage Width </th>
+                        <th> Carriage Width </th>
                         <th> Material
                             <select class="material-dropdown">
                                 <option value="">Material</option>
@@ -2236,8 +1720,8 @@
                                 <option value="CC">CC (Concrete)</option>
                                 <option value="Interlocking">Interlocking</option>
                                 <option value="BOE">BOE</option>
-                            </select>
-                        </th>
+                                <option value="NA">NA</option>
+                            </select></th>
                         <th> Length (km) </th>
                         <th> Conditon
                         <!-- <select class="condition-dropdownOwn">
@@ -2248,12 +1732,8 @@
                         </select>     -->
                           
                         </th>
-                        <th> Year Of Construction </th>
-                        <th> CUS &nbsp;&nbsp; 
-                            <!-- <span class="table-cancel-btn1">
-                                <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
-                            </span> -->
-                        </th>
+                        <th> Year Of Construction/Relaying </th>
+                        <th> CUS &nbsp;&nbsp; </th>
                     </tr>
                 </thead>
                 <tbody id="dataBody_summaryfilter">
@@ -2261,178 +1741,15 @@
             </table>
         </div>
 
-        <!--------wms & wfs Road Table data getting layer----->
-        <!-- <div id="tableContainer_summaryfiltermat">
-            <nav class="feature_nav">
-                <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 15px;">Filter Data According to zone and Column </a>
-                <a id="featureName" style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
-                <div style="display: flex; align-items: center; margin-left: auto;">
-                    <i class="fas fa-window-minimize" onclick="minimize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
-                    <i class="fas fa-window-maximize" onclick="maximize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
-                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
-                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
-                    </span>
-                </div>
-            </nav>
-        <table id="dataTable_summaryfiltermat">
-        <thead>
-            <tr>
-                <th> Gis Id </th>
-                <th> Zone No 
-                    <select class="zone-dropdownmat" style="overflow-y:scroll" id="zoneSelectmat"></select>
-                </th>
-                <th> Zone Name </th>
-                <th> Ward No
-                    <select class="ward-dropdownmat" style="overflow-y:scroll" id="wardSelectmat"></select>
-                    </select>
-                </th>
-                <th> Ward Name </th>
-                <th> Ownership
-                    <select class="ownership-dropdownmat">
-                        <option value="">Ownership</option>
-                        <option value="BNN">BNN</option>
-                        <option value="Private Roads">Private Roads</option>
-                        <option value="PWD">PWD</option>
-                        <option value="Development Authority">Development Authority</option>
-                    </select>
-                </th>
-                <th> Road Category
-                    <select class="type-dropdownmat">
-                        <option value="">Category</option> 
-                        <option value="Local Street">Local Street </option>
-                        <option value="Collector">Collector</option>
-                        <option value="Arterial">Arterial</option>
-                        <option value="Subarterial">Subarterial</option>
-                        <option value="NA">NA</option>
-                    
-                    </select> </th>
-                <th> Road Name </th>
-                <th> Row (meter) </th>
-                <th> Row as per </th>
-                <th> carriage Width </th>
-                <th> Material
-                    <select class="material-dropdownmat">
-                        <option value="">Material</option>
-                        <option value="Kachcha">Kachcha</option>
-                        <option value="Bitumen">Bitumen</option>
-                        <option value="CC">CC (Concrete)</option>
-                        <option value="Interlocking">Interlocking</option>
-                        <option value="BOE">BOE</option>
-                    </select>
-                </th>
-                <th> Length (km) </th>
-                <th> conditon
-                </th>
-                <th> Year Of Construction </th>
-                <th> CUS &nbsp;&nbsp; 
-                </th>
-            </tr>
-        </thead>
-        <tbody id="dataBody_summaryfiltermat">
-        </tbody>
-        </table>
-        </div> -->
-<!-- 
-        <div id="tableContainer_summaryfilterOwn">
-            <nav class="feature_nav">
-                <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 15px;">Filter Data According to zone and Column </a>
-                <a id="featureName" style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
-                <div style="display: flex; align-items: center; margin-left: auto;">
-                    <i class="fas fa-window-minimize" onclick="minimize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
-                    <i class="fas fa-window-maximize" onclick="maximize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
-                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
-                        <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
-                    </span>
-                </div>
-            </nav>
-        <table id="dataTable_summaryfilterOwn">
-        <thead>
-            <tr>
-                <th> Gis Id </th>
-                <th> Zone No 
-                    <select class="zone-dropdownOwn" style="overflow-y:scroll" id="zoneSelectOwn"></select>
-                </th>
-                <th> Zone Name </th>
-                <th> Ward No
-                    <select class="ward-dropdownOwn" style="overflow-y:scroll" id="wardSelectOwn"></select>
-                    </select>
-                </th>
-                <th> Ward Name </th>
-                <th> Ownership
-                    <select class="ownership-dropdownOwn">
-                        <option value="">Ownership</option>
-                        <option value="BNN">BNN</option>
-                        <option value="Private Roads">Private Road</option>
-                              
-                                <option value="PWD">PWD</option>
-                              
-                                <option value="Development Authority">Development Authority</option>
-                             
-                    </select>
-                </th>
-            
-                <th> Road Categoury 
-                    <select class="type-dropdownOwn">
-                        <option value="">Category</option> 
-                        <option value="Local Street">Local Street </option>
-                        <option value="Collector">Collector</option>
-                        <option value="Arterial">Arterial</option>
-                        <option value="Subarterial">Subarterial</option>
-                        <option value="NA">NA</option>
-                    
-                    </select>
-
-                </th>
-                <th> Road Name </th>
-                <th> Row (meter) </th>
-                <th> Row as per </th>
-                <th> carriage Width </th>
-                <th> Material
-                    <select class="material-dropdownOwn">
-                        <option value="">Material</option>
-                        <option value="Kachcha">Kachcha</option>
-                        <option value="Bitumen">Bitumen</option>
-                        <option value="CC">CC (Concrete)</option>
-                        <option value="Interlocking">Interlocking</option>
-                        <option value="BOE">BOE</option>
-                    </select>
-                </th>
-                <th> Length (km) </th>
-                <th> conditon
-                  
-                </th>
-                <th> Year Of Construction </th>
-                <th> CUS &nbsp;&nbsp;
-                  </th>
-            </tr>
-        </thead>
-        <tbody id="dataBody_summaryfilterOwn">
-        </tbody>
-        </table>
-        </div>
-         -->
+       
 
         <!-- Your HTML content -->
-        <!-- <div id="popup" class="ol-popup"> 
-         </div> -->
-
+        <div id="popup" class="ol-popup"> </div>
 
         <!-- popup for park polygon  -->
         <div id="popup_1" class="popup_1"></div>
 
       
-
-        <!-- <div id="custom-popup" class="ol-popup" style="display: none;">
-            <a href="#" id="popup-closer" class="ol-popup-closer">×</a>
-            <div id="popup-content"></div>
-        </div> -->
-
-
-
         <!------------------------- summary table start ------------------->
         <div class="table_summary" id="summary-table">
                     <div class="topnav" id="topnav">

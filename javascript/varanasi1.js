@@ -1,3 +1,6 @@
+// const BASE_URL =`${BASE_URL_All}:8060/Varanasi`;
+// const GEOSERVER_BASE_URL = "http://103.15.81.74:8080/geoserver/VNS_Summary";
+// const BASE_URL_ANALYSIS = `${BASE_URL_All}:8060/road_analysis`;
 
 const BASE_URL =`${BASE_URL_All}:8181/Varanasi`;
 const GEOSERVER_BASE_URL = "http://localhost:8080/geoserver/VNS_Summary";
@@ -437,31 +440,58 @@ function updateNavBarWithFunctionName(functionName) {
 function minimize1() {
     const topnav = document.getElementById('tableContainer_summary');
 
-    const navElements = document.querySelectorAll('.feature_nav');
-    navElements.forEach(nav => {
-        nav.style.bottom = '3%'; // Reduced width when minimized
-        }); 
-    topnav.style.height = '0%'; // Reduced height when minimized
-    
-    const legendIds = [ 'Condition_legend','Material_legend','Ownership_legend'];
-    
-    // Loop through each legend and hide it
-    legendIds.forEach(function(legendId) {
-        const legendBtn = document.getElementById(legendId);
-        if (legendBtn) {  // Check if the element exists before manipulating it
-            legendBtn.style.display = 'none';
+    document.querySelectorAll('.feature_nav').forEach(nav => {
+        nav.style.bottom = '3%';
+    });
+
+    topnav.style.height = '0%';
+
+    const legendIds = [
+        'Condition_legend',
+        'Material_legend',
+        'Ownership_legend',
+        'CUS_legend',
+        'RoadCategory_legend'
+    ];
+
+    legendIds.forEach(id => {
+        const lg = document.getElementById(id);
+        if (lg) {
+            lg.classList.remove('legend-visible');
+            lg.classList.add('legend-hidden');
+            lg.scrollTop = 0;
         }
     });
 }
+
+
+
 function maximize1() {
     const topnav = document.getElementById('tableContainer_summary');
-    const navElements = document.querySelectorAll('.feature_nav');
-    navElements.forEach(nav => {
-        nav.style.bottom = '29%'; // Reduced width when minimized
-    });
-    topnav.style.height = '29%'; // Reduced height when minimized
-}
 
+    document.querySelectorAll('.feature_nav').forEach(nav => {
+        nav.style.bottom = '22%';
+    });
+
+    topnav.style.height = '19%';
+
+    const legendIds = [
+        'Condition_legend',
+        'Material_legend',
+        'Ownership_legend',
+        'CUS_legend',
+        'RoadCategory_legend'
+    ];
+
+    legendIds.forEach(id => {
+        const lg = document.getElementById(id);
+        if (lg) {
+            lg.classList.remove('legend-hidden');
+            lg.classList.add('legend-visible');
+            lg.scrollTop = 0;
+        }
+    });
+}
 //------------------------------------- MULTILINESTRING feature to the map from WKT format
 function addMultilinestringFeatureFromWKT_General(wktString, color = 'black', width = 3) {
     const format = new ol.format.WKT();
@@ -556,25 +586,25 @@ function zoomToRoadFeature(wkt) {
     previouslyHighlightedLayer = vectorLayer;
 }
 
-// function highlightAndScrollToRow(row) {
-//     console.log("Highlighting and scrolling to row: ", row);
+function highlightAndScrollToRow(row) {
+    console.log("Highlighting and scrolling to row: ", row);
 
-//     Array.from(dataTableBody_summary.querySelectorAll('tr')).forEach(tr => {
-//         tr.classList.remove('highlighted');
-//     });
+    Array.from(dataTableBody_summary.querySelectorAll('tr')).forEach(tr => {
+        tr.classList.remove('highlighted');
+    });
 
-//     // Array.from(dataTableBody.querySelectorAll('tr')).forEach(tr => {
-//     //     tr.classList.remove('highlighted');
-//     // });
+    // Array.from(dataTableBody.querySelectorAll('tr')).forEach(tr => {
+    //     tr.classList.remove('highlighted');
+    // });
     
-//     row.classList.add('highlighted');
-//     row.scrollIntoView({
-//         behavior: 'smooth',  
-//         block: 'center',    
-//         inline: 'nearest'   
-//     });
-//     console.log("Row scrolled into view.");
-// }
+    row.classList.add('highlighted');
+    row.scrollIntoView({
+        behavior: 'smooth',  
+        block: 'center',    
+        inline: 'nearest'   
+    });
+    console.log("Row scrolled into view.");
+}
 
 const styleElement = document.createElement('style');
 styleElement.innerHTML = `
@@ -684,7 +714,7 @@ function amenitiesFeatures(type, iconStyle, vectorSource, layer, elementId) {
 const locationTypes = [
     { type: 'bank', icon: '../assets/icons/bank.png', id: 'showBanks' },
     { type: 'bus', icon: '../assets/icons/bus.png', id: 'showBus' },
-  //  { type: 'stadium', icon: '../assets/icons/stadium.png', id: 'showStadium' },
+    { type: 'stadium', icon: '../assets/icons/stadium.png', id: 'showStadium' },
     { type: 'hospital', icon: '../assets/icons/hospital.png', id: 'showHospital' },
     { type: 'education', icon: '../assets/icons/education.png', id: 'showEducation' },
     { type: 'hotel', icon: '../assets/icons/hotel.png', id: 'showHotel' },
@@ -784,388 +814,123 @@ park_amenityFeature(`${BASE_URL}/getPark_newName`, parkVectorSource, parkVectorL
 
 
 //-------------------------------------------All Roads-------------------------//
-let allRoadsWmsLayer = null;
+
 const dataTableBody_summary = document.getElementById('dataBody_summary');
 const dataTableBody_summaryfilter = document.getElementById('dataBody_summaryfilter');
 
-// ShowRoads.addEventListener('click', function () {
-//     updateNavBarWithFunctionName("All Roads");
-//      console.time("AllRoads_Total_Time"); 
-//     map.getLayers().getArray().slice().forEach(layer => {
-//         if (layer instanceof ol.layer.Vector
-//             // && !isLayerInPreservedList(layer)
-//         ) {
-//             map.removeLayer(layer);
-//         }
-//     });
-//     map.getOverlays().clear();
-//     fetch(`${BASE_URL}/getAlltypeName`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             // Add any request body if required
-//         })
-//     })
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(responseData => {
-//              console.time("Table_Render_Time");
-//             console.log('Received data:', responseData);
-//             console.log('getting all data');
-//             // Clear existing table rows
-//             dataTableBody_summary.innerHTML = '';
-//             // Check if 'data' is an array before iterating
-//             if (Array.isArray(responseData.data)) {
-//                 responseData.data.forEach(item => {
-//                     const row = document.createElement('tr');
-//              row.innerHTML = `
-//                                 <td>${item.gis_id}</td>
-//                                 <td>${item.road_id}</td>
-//                                 <td>${item.zone_no}</td>
-//                                 <td>${item.zone_name}</td>
-//                                 <td>${item.ward_no}</td>
-//                                 <td>${item.ward_name}</td>
-//                                 <td>${item.ownership}</td>
-//                                 <td>${item.category}</td>
-//                                 <td>${item.road_name}</td>
-//                                 <td>${item.row_meter}</td>
-//                                 <td>${item.row_apr}</td>
-//                                 <td>${item.carriage_w}</td>
-//                                 <td>${item.material}</td>
-//                                 <td>${item.length_km}</td>
-//                                 <td>${item.condition}</td>
-//                                 <td>${item.yoc}</td>
-//                                 <td>${item.cus}</td>`;
-//                     dataTableBody_summary.appendChild(row);
-//                     // Check if the item has a geom_wkt property
-//                     if (item.geom_wkt) {
-//                         addMultilinestringFeatureFromWKT(item.geom_wkt);
-//                     }
-//                 });
-//                 console.timeEnd("Table_Render_Time");  // ⏱ table rendering time
-
-//             } else {
-//                 console.error('Expected array but received:', responseData.data);
-//                 // Handle non-array data if needed
-//             }
-//                 console.timeEnd("AllRoads_Total_Time");   // ⏱ total time
-
-//         })
-//         .catch(error => {
-//             console.error('Error fetching data:', error);
-//             // Handle error condition if needed
-//         })
-// });
-
 ShowRoads.addEventListener('click', function () {
-
-    console.time("AllRoads_Total_Time");
-
     updateNavBarWithFunctionName("All Roads");
-
-    // Remove only vector layers
     map.getLayers().getArray().slice().forEach(layer => {
-        if (layer instanceof ol.layer.Vector) {
+        if (layer instanceof ol.layer.Vector
+            // && !isLayerInPreservedList(layer)
+        ) {
             map.removeLayer(layer);
         }
     });
-
     map.getOverlays().clear();
-
-    // -----------------------------
-    // 1️⃣  ADD WMS LAYER (MAP)
-    // -----------------------------
-    if (allRoadsWmsLayer) {
-        map.removeLayer(allRoadsWmsLayer);
-    }
-
-    allRoadsWmsLayer = new ol.layer.Tile({
-        source: new ol.source.TileWMS({
-            url: GEOSERVER_BASE_URL + '/wms',
-            params: {
-                'LAYERS': 'VNS_Summary:varanasi_road_net', // change if needed
-                'TILED': true
-            },
-            serverType: 'geoserver',
-            crossOrigin: 'anonymous'
-        })
-    });
-
-    map.addLayer(allRoadsWmsLayer);
-
-    // -----------------------------
-    // 2️⃣ FETCH DATA FOR TABLE
-    // -----------------------------
-    fetch(`${BASE_URL}/getAlltypeName?page=0&size=1000`, {
+    fetch(`${BASE_URL}/getAlltypeName`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({})
+        body: JSON.stringify({
+            // Add any request body if required
+        })
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(responseData => {
+            console.log('Received data:', responseData);
+            console.log('getting all data');
+            // Clear existing table rows
+            dataTableBody_summary.innerHTML = '';
+            // Check if 'data' is an array before iterating
+            if (Array.isArray(responseData.data)) {
+                responseData.data.forEach(item => {
+                    const row = document.createElement('tr');
+             row.innerHTML = `
+                               <td>${item.gis_id}</td>
+                               <td>${item.road_id}</td>
+                               <td>${item.zone_no}</td>
+                               <td>${item.zone_name}</td>
+                               <td>${item.ward_no}</td>
+                               <td>${item.ward_name}</td>
+                               <td>${item.ownership}</td>
+                           
+                             <td>${item.category}</td>
+                            <td>${item.road_name}</td>
+                         <td>${item.row_meter}</td>
+                            <td>${item.row_apr}</td>
+                            <td>${item.carriage_w}</td>
+                            <td>${item.material}</td>
+                            <td>${item.length_km}</td>
+                               <td>${item.condition}</td>
+                            <td>${item.yoc}</td>
+                            <td>${item.cus}</td>`;
+                    dataTableBody_summary.appendChild(row);
+                    // Check if the item has a geom_wkt property
+                    if (item.geom_wkt) {
+                        addMultilinestringFeatureFromWKT(item.geom_wkt);
+                    }
+                });
+            } else {
+                console.error('Expected array but received:', responseData.data);
+                // Handle non-array data if needed
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            // Handle error condition if needed
+        })
+});
+
+
+// //--------------------------------optimise code of sidebar road analysis -----------------------------
+function amenitiesRoadAnalysis(endpoint, layerName, featureFunction, elementId) {
+    removeCurrentLayer();
+    updateNavBarWithFunctionName(layerName);
+
+    // Remove previous vector layers except the park layer
+    map.getLayers().getArray().slice().forEach(layer => {
+        if (layer instanceof ol.layer.Vector && layer !== parkVectorLayer) {
+            map.removeLayer(layer);
+        }
+    });
+    map.getOverlays().clear();
+
+    // --- ✅ Use GET instead of POST ---
+    fetch(`${BASE_URL_ANALYSIS}/varanasi/${endpoint}`, {
+        method: 'GET'
     })
     .then(response => {
-        if (!response.ok) {
-            throw new Error('Network error');
-        }
+        if (!response.ok) throw new Error('Network response was not ok');
         return response.json();
     })
     .then(responseData => {
+       // console.log(`Received data for ${layerName}:`, responseData);
+		//console.log(`Received data for ${layerName}:`);
 
-        console.time("Table_Render_Time");
 
+        // Reset UI
         dataTableBody_summary.innerHTML = '';
+        featureToRowMap.clear();
 
-        if (Array.isArray(responseData.data)) {
+        // Handle new flat response structure
+        if (Array.isArray(responseData)) {
+//const countEntry = responseData[0];
+            const features = responseData.slice(1); // skip count
 
-            // ⚡ Build HTML string first (NO appendChild inside loop)
-        let html = "";
+          //  console.log(`Total features in ${layerName}:`, countEntry.count);
 
-responseData.data.forEach(item => {
-    html += `
-        <tr data-gisid="${item.gis_id}">
-            <td>${item.gis_id}</td>
-            <td>${item.road_id}</td>
-            <td>${item.zone_no}</td>
-            <td>${item.zone_name}</td>
-            <td>${item.ward_no}</td>
-            <td>${item.ward_name}</td>
-            <td>${item.ownership}</td>
-            <td>${item.category}</td>
-            <td>${item.road_name}</td>
-            <td>${item.row_meter}</td>
-            <td>${item.row_apr}</td>
-            <td>${item.carriage_w}</td>
-            <td>${item.material}</td>
-            <td>${item.length_km}</td>
-            <td>${item.condition}</td>
-            <td>${item.yoc}</td>
-            <td>${item.cus}</td>
-        </tr>`;
-});
-
-dataTableBody_summary.innerHTML = html; }
-
-         console.timeEnd("Table_Render_Time");
-        console.timeEnd("AllRoads_Total_Time");
-    })
-    .catch(error => {
-        console.error("Error fetching data:", error);
-    });
-
-});
-dataTableBody_summary.addEventListener("click", function(e) {
-
-    const row = e.target.closest("tr");
-    if (!row) return;
-
-    const gisId = row.dataset.gisid;
-
-    highlightRoadByGisId(gisId);
-    zoomToRoadByGisId(gisId);
-});
-   
-function highlightRoadByGisId(gisId) {
-
-    // Remove old highlight
-    if (highlightLayer) {
-        map.removeLayer(highlightLayer);
-        highlightLayer = null;
-    }
-
-    const wfsUrl =
-        `${GEOSERVER_BASE_URL}/wfs?service=WFS&version=1.1.0` +
-        `&request=GetFeature` +
-        `&typename=VNS_Summary:varanasi_road_net` +
-        `&outputFormat=application/json` +
-        `&CQL_FILTER=gis_id=${gisId}`;
-
-    fetch(wfsUrl)
-        .then(res => res.json())
-        .then(data => {
-
-            if (!data.features || data.features.length === 0) return;
-
-            const geojson = new ol.format.GeoJSON();
-
-            const feature = geojson.readFeature(
-                data.features[0],
-                {
-                    dataProjection: 'EPSG:4326',
-                    featureProjection: map.getView().getProjection()
-                }
-            );
-
-            feature.setStyle(highlightStyle);
-
-            const vectorSource = new ol.source.Vector({
-                features: [feature]
-            });
-
-            highlightLayer = new ol.layer.Vector({
-                source: vectorSource,
-                zIndex: 9999   // always on top
-            });
-
-            map.addLayer(highlightLayer);
-        });
-}
-
-function zoomToRoadByGisId(gisId) {
-
-    const wfsUrl = `${GEOSERVER_BASE_URL}/wfs?service=WFS&version=1.1.0
-        &request=GetFeature
-        &typename=VNS_Summary:varanasi_road_net
-        &outputFormat=application/json
-        &CQL_FILTER=gis_id=${gisId}`;
-
-    fetch(wfsUrl)
-        .then(res => res.json())
-        .then(data => {
-
-            if (data.features.length > 0) {
-
-                const feature = new ol.format.GeoJSON().readFeature(
-                    data.features[0],
-                    {
-                        dataProjection: 'EPSG:4326',
-                        featureProjection: map.getView().getProjection()
-                    }
-                );
-
-                const extent = feature.getGeometry().getExtent();
-
-               // const extent = feature.getGeometry().getExtent();
-
-                map.getView().fit(extent, {
-                duration: 600,
-                padding: [40, 40, 40, 40],
-                maxZoom: 18
-            });
-            }
-        });
-}
-
-let selectedRow = null;
-const styleElement1 = document.createElement('style');
-styleElement1.innerHTML = `
-    tr.highlighted-row {
-        background-color: #ff5722 !important;   /* strong orange */
-        color: #ffffff !important;
-        font-weight: 600;
-        transition: background-color 0.2s ease;
-    }
-
-    tr.highlighted-row td {
-        border-top: 2px solid #000;
-        border-bottom: 2px solid #000;
-    }
-`;
-document.head.appendChild(styleElement1);
-//let selectedRow = null;
-
-function highlightAndScrollToRow(row) {
-
-    if (selectedRow) {
-        selectedRow.classList.remove("highlighted-row");
-    }
-
-    row.classList.add("highlighted-row");
-    selectedRow = row;
-
-    row.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
-}
-// const styleElement = document.createElement('style');
-// styleElement.innerHTML = `
-//     tr.highlighted {
-//         background-color: #ffeb3b !important;
-//         font-weight: bold;
-//     }
-// `;
-// document.head.appendChild(styleElement);
-
-map.on('singleclick', function (evt) {
-
-    const wmsLayer = map.getLayers().getArray().find(layer =>
-        layer instanceof ol.layer.Tile &&
-        layer.getSource() instanceof ol.source.TileWMS
-    );
-    if (!wmsLayer) return;
-
-    const viewResolution = map.getView().getResolution();
-
-    const url = wmsLayer.getSource().getFeatureInfoUrl(
-        evt.coordinate,
-        viewResolution,
-        map.getView().getProjection(),
-        { 'INFO_FORMAT': 'application/json' }
-    );
-    if (!url) return;
-
-    fetch(url)
-        .then(res => res.json())
-        .then(data => {
-            if (!data.features || data.features.length === 0) return;
-
-            // ✅ DEFINE gisId HERE (same scope)
-            const gisId = data.features[0].properties.gis_id;
-
-            // highlight + zoom on map (your existing working functions)
-            highlightRoadByGisId(gisId);
-            zoomToRoadByGisId(gisId);
-
-            // sync table (pagination-aware)
-            gotoRowByGisId(gisId);
-        });
-});
-
-function gotoRowByGisId(gisId) {
-
-  fetch(`${BASE_URL}/getRowPosition?gisId=${gisId}`)
-    .then(res => res.json())
-    .then(info => {
-
-        const page = info.page;
-
-        loadPage(page);   // your existing pagination loader
-
-        setTimeout(() => {
-            const row = dataTableBody_summary.querySelector(
-                `tr[data-gisid="${gisId}"]`
-            );
-
-            if (row) {
-                highlightAndScrollToRow(row);
-            }
-        }, 300);
-    });
-}
-
-function loadPage(page) {
-
-    const size = 1000;
-
-    fetch(`${BASE_URL}/getAlltypeName?page=${page}&size=${size}`, {
-        method: 'POST'
-    })
-    .then(res => res.json())
-    .then(responseData => {
-
-        let html = "";
-
-        responseData.data.forEach(item => {
-            html += `
-                <tr data-gisid="${item.gis_id}">
-                    <td>${item.gis_id}</td>
-                    <td>${item.road_id}</td>
+            features.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.gid}</td>
+					<td>${item.road_id ||'NA'}</td>
                     <td>${item.zone_no}</td>
                     <td>${item.zone_name}</td>
                     <td>${item.ward_no}</td>
@@ -1174,91 +939,28 @@ function loadPage(page) {
                     <td>${item.category}</td>
                     <td>${item.road_name}</td>
                     <td>${item.row_meter}</td>
-                    <td>${item.row_apr}</td>
+                    <td>${item.rowcls}</td>
                     <td>${item.carriage_w}</td>
                     <td>${item.material}</td>
-                    <td>${item.length_km}</td>
+                    <td>${item.length_km ? item.length_km.toFixed(2) : 'N/A'}</td>
                     <td>${item.condition}</td>
                     <td>${item.yoc}</td>
-                    <td>${item.cus}</td>
-                </tr>`;
-        });
+                    <td>${item.cus}</td>`;
 
-        dataTableBody_summary.innerHTML = html;
-    });
-}
-// //--------------------------------optimise code of sidebar road analysis -----------------------------
-function amenitiesRoadAnalysis(endpoint, layerName, featureFunction,elementId) {
-    removeCurrentLayer();
-    updateNavBarWithFunctionName(layerName);
-
-    map.getLayers().getArray().slice().forEach(layer => {
-        if (layer instanceof ol.layer.Vector  )
-            // && layer != parkVectorLayer) 
-            {        
-            map.removeLayer(layer);
-        }
-    });
-    map.getOverlays().clear();
-
-    fetch(`${BASE_URL}/${endpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({})
-    })
-    .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json();
-    })
-    .then(responseData => {
-        console.log(`Received data for ${layerName}:`, responseData);
-    
-        // Reset UI
-        dataTableBody_summary.innerHTML = '';
-        featureToRowMap.clear();
-        // map.getOverlays().clear();
-    
-        // 🔍 Handle new flat response structure
-        if (Array.isArray(responseData)) {
-            const countEntry = responseData[0];
-            const features = responseData.slice(1); // skip first element
-    
-            console.log(`Total features in ${layerName}:`, countEntry.count);
-    
-            features.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                               <td>${item.gid}</td>
-                               <td>${item.road_id}</td>
-                               <td>${item.zone_no}</td>
-                               <td>${item.zone_name}</td>
-                               <td>${item.ward_no}</td>
-                               <td>${item.ward_name}</td>
-                                <td>${item.ownership}</td>
-                                <td>${item.category}</td>
-                                <td>${item.road_name}</td>
-                                <td>${item.row_meter}</td>
-                                <td>${item.row_apr}</td>
-                                <td>${item.carriage_w}</td>
-                                <td>${item.material}</td>
-                                <td>${item.length_km}</td>
-                               <td>${item.condition}</td>
-                                <td>${item.yoc}</td>
-                                <td>${item.cus}</td>`;
-    
                 dataTableBody_summary.appendChild(row);
-    
+
                 row.addEventListener('click', function () {
                     if (item.geom) {
                         zoomToRoadFeature(item.geom);
                         highlightAndScrollToRow(row);
                     }
                 });
-    
+
                 if (item.geom) {
-                    console.log(`WKT String for ${layerName}:`, item.geom);
+                  //  console.log(`WKT String for ${layerName}:`, item.geom);
+					console.log(`WKT String for ${layerName}:`);
+					
                     const feature = featureFunction(item.geom);
-    
                     if (feature) {
                         const featureId = feature.getId();
                         if (featureId) {
@@ -1270,18 +972,21 @@ function amenitiesRoadAnalysis(endpoint, layerName, featureFunction,elementId) {
         } else {
             console.error(`Expected flat array but got:`, responseData);
         }
-
+		//document.getElementById('content-wrapper').style.display='none';
+		//document.getElementById('topnav').style.display='none';
+		document.getElementById('tableContainer_summary').style.display='block';
         document.getElementById(elementId).addEventListener('change', function () {
             layer.setVisible(this.checked);
+			
         });
     })
     .catch(error => console.error(`Error fetching data for ${layerName}:`, error));
-    
 }
+
 
 Bank_Road.addEventListener('click', () => showAmenityWithRoads('roads-with-atms', 'Bank with Roads', addMultilinestringFeatureFromWKT,'bank','../assets/icons/bank.png','showBanks'));
 Park_Road.addEventListener('click', () => showAmenityWithRoads('roads-with-park', 'Park with Roads', addMultilinestringFeatureFromWKT_parkRoad));
-Hospital_Road.addEventListener('click', () => showAmenityWithRoads('roads_with_hospital', 'Hospital with Roads', addMultilinestringFeatureFromWKT_HospitalRoad,'hospital','../assets/icons/hospital.png','showHospital'));
+Hospital_Road.addEventListener('click', () => showAmenityWithRoads('roads-with-hospital', 'Hospital with Roads', addMultilinestringFeatureFromWKT_HospitalRoad,'hospital','../assets/icons/hospital.png','showHospital'));
 Hotel_Road.addEventListener('click', () => showAmenityWithRoads('roads-with-hotel', 'Hotel with Roads', addMultilinestringFeatureFromWKT_HotelRoad,'hotel','../assets/icons/hotel.png','showHotel'));
 Education_Road.addEventListener('click', () => showAmenityWithRoads('roads-with-education', 'Educational Institute with Roads', addMultilinestringFeatureFromWKT_EduRoad,'education','../assets/icons/education.png','showEducation'));
 // Slum_Road.addEventListener('click', () => showAmenityWithRoads('getSlumRoad', 'Slum Roads', addMultilinestringFeatureFromWKT));
@@ -1438,7 +1143,7 @@ var vector1 = new ol.layer.Vector({
 });
 map.addLayer(vector1);
 var draw1;
-
+// layer dropdown query
 $(document).ready(function () {
     $.ajax({
         type: "GET",
@@ -1447,12 +1152,10 @@ $(document).ready(function () {
         success: function (xml) {
             var select = $("#layer");
             const targetLayer = "VNS_Summary:varanasi_road_net"; // your desired layer
-
             $(xml)
                 .find("FeatureType")
                 .each(function () {
                     var name = $(this).find("Name").text().trim();
-
                     if (name === targetLayer) {
                         select.append(
                             `<option class='ddindent' value='${name}'>${name}</option>`
@@ -1465,7 +1168,6 @@ $(document).ready(function () {
         },
     });
 });
-
 // attribute dropdown
 $(function () {
     $("#layer").change(function () {
@@ -1514,220 +1216,259 @@ $(function () {
         });
     });
 });
-
+// // operator combo
 $(function () {
     $("#attributes").change(function () {
         var operator = document.getElementById("operator");
-        operator.options.length = 0; // clear existing
-
-        var value_type = $(this).val().toLowerCase();
-        var operator1 = document.getElementById("operator");
-        operator1.options[0] = new Option("Select operator", "");
-
-        // numeric check
+        var length = operator.options.length;
+        for (i = length - 1; i >= 0; i--) {
+            operator.options[i] = null;
+        }
+        var value_type = $(this).val();
+        // alert(value_type);
+        var value_attribute = $("#attributes option:selected").text();
+        operator.options[0] = new Option("Select operator", "");
         if (
-            value_type.includes("int") ||
-            value_type.includes("double") ||
-            value_type.includes("long") ||
-            value_type.includes("short") ||
-            value_type.includes("float") ||
-            value_type.includes("decimal")
+            value_type == "xsd:short" ||
+            value_type == "xsd:int" ||
+            value_type == "xsd:double" ||
+             value_type == "xsd:string" ||  
+               value_type.includes("float") ||
+            value_type.includes("decimal")||
+            value_type == "xsd:long"
         ) {
+            var operator1 = document.getElementById("operator");
             operator1.options[1] = new Option("Greater than", ">");
             operator1.options[2] = new Option("Less than", "<");
+          //   operator1.options[3] = new Option("Like", "ILike");
             operator1.options[3] = new Option("Equal to", "=");
-            operator1.options[4] = new Option("Like", "ILike");
-
-        } else if (value_type.includes("string") || value_type.includes("varchar")) {
-            operator1.options[1] = new Option("Equal to", "=");
-            operator1.options[2] = new Option("Like", "ILike");
+              operator1.options[4] = new Option('Between', 'BETWEEN');
+        } else if (value_type == "xsd:string") {
+            var operator1 = document.getElementById("operator");
+            operator1.options[1] = new Option("Greater than", ">");
+            operator1.options[2] = new Option("Less than", "<");
+         //   operator1.options[3] = new Option("Like", "ILike");
+             operator1.options[3] = new Option("Equal to", "=");
         }
     });
 });
 
-
-
-
-
-            // // // layer dropdown draw query
-
-            $(document).ready(function () {
-    $.ajax({
-        type: "GET",
-        url: `${GEOSERVER_BASE_URL}/wfs?request=getCapabilities`,
-        dataType: "xml",
-        success: function (xml) {
-            var select = $("#layer1");
-            var targetWorkspace = "VNS_Summary:Varanasi_road_net"; // 👈 workspace prefix
-
-            $(xml)
-                .find("FeatureType")
-                .each(function () {
-                    var name = $(this).find("Name").text();
-                    if (name=== targetWorkspace) {
-                        select.append(
-                            `<option value="${name}">${name}</option>`
-                        );
-                    }
-                });
-        },
-    });
+var highlightStyle = new ol.style.Style({
+    fill: new ol.style.Fill({
+        color: "rgba(255,0,0,0.3)",
+    }),
+    stroke: new ol.style.Stroke({
+        color: "yellow",
+        width: 3,
+    }),
+    image: new ol.style.Circle({
+        radius: 10,
+        fill: new ol.style.Fill({
+            color: "white",
+        }),
+    }),
 });
+// function for finding row in the table when feature selected on map
+function findRowNumber(cn1, v1) {
+    var table = document.querySelector("#table");
+    var rows = table.querySelectorAll("tr");
+    var msg = "No such row exist";
+    for (i = 1; i < rows.length; i++) {
+        var tableData = rows[i].querySelectorAll("td");
+        if (tableData[cn1 - 1].textContent == v1) {
+            msg = i;
+            break;
+        }
+    }
+    return msg;
+}
+// function for loading query
+function query() {
+    $("#table").empty();
+    if (geojson) {
+        map.removeLayer(geojson);
+    }
+    if (selectedFeature) {
+        selectedFeature.setStyle();
+        selectedFeature = undefined;
+    }
+    if (vector1) {
+        vector1.getSource().clear();
+        // $('#table').empty();
+    }
+    //alert('jsbchdb');
+    var layer = document.getElementById("layer");
+    var value_layer = layer.options[layer.selectedIndex].value;
+    //alert(value_layer);
+    var attribute = document.getElementById("attributes");
+    var value_attribute = attribute.options[attribute.selectedIndex].text;
+    var operator = document.getElementById("operator");
+    var value_operator = operator.options[operator.selectedIndex].value;
+    //alert(value_operator);
+    var txt = document.getElementById("value");
+    var value_txt = txt.value;
+    let cqlFilter = "";
 
-            var highlightStyle = new ol.style.Style({
-                fill: new ol.style.Fill({
-                    color: "rgba(255,0,0,0.3)",
-                }),
-                stroke: new ol.style.Stroke({
-                    color: "yellow",
-                    width: 3,
-                }),
-                image: new ol.style.Circle({
-                    radius: 10,
-                    fill: new ol.style.Fill({
-                        color: "white",
-                    }),
-                }),
-            });
-            // function for finding row in the table when feature selected on map
-            function findRowNumber(cn1, v1) {
-                var table = document.querySelector("#table");
-                var rows = table.querySelectorAll("tr");
-                var msg = "No such row exist";
-                for (i = 1; i < rows.length; i++) {
-                    var tableData = rows[i].querySelectorAll("td");
-                    if (tableData[cn1 - 1].textContent == v1) {
-                        msg = i;
-                        break;
-                    }
+if (value_operator === "BETWEEN") {
+
+    const parts = value_txt.split(",");
+
+    if (parts.length !== 2) {
+        alert("For BETWEEN, enter value as: min,max");
+        return;
+    }
+
+    const minVal = parts[0].trim();
+    const maxVal = parts[1].trim();
+
+    cqlFilter = `${value_attribute} BETWEEN ${minVal} AND ${maxVal}`;
+
+} 
+else if (value_operator === "ILike") {
+
+    cqlFilter = `${value_attribute} ILIKE '%${value_txt}%'`;
+
+} 
+else {
+
+    cqlFilter = `${value_attribute} ${value_operator} '${value_txt}'`;
+}
+
+    // if (value_operator == "ILike") {
+    //     value_txt = "'" + value_txt + "%25'";
+    //     //alert(value_txt);
+    //     //value_attribute = 'strToLowerCase('+value_attribute+')';
+    // } else {
+    //     value_txt = value_txt;
+    //     //value_attribute = value_attribute;
+    // }
+    //alert(value_txt);
+    var url =
+       
+        `${GEOSERVER_BASE_URL}/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=${value_layer}&CQL_FILTER=${encodeURIComponent(cqlFilter)}&outputFormat=application/json`;
+    //console.log(url);
+    style = new ol.style.Style({
+        fill: new ol.style.Fill({
+            color: "rgba(255, 255, 255, 0.2)",
+        }),
+        stroke: new ol.style.Stroke({
+            color: "#8ECAED",
+            width: 5,
+        }),
+        image: new ol.style.Circle({
+            radius: 5,
+            fill: new ol.style.Fill({
+                color: "#8ECAED",
+            }),
+        }),
+    });
+    geojson = new ol.layer.Vector({
+        //title:'dfdfd',
+        //title: '<h5>' + value_crop+' '+ value_param +' '+ value_seas+' '+value_level+'</h5>',
+        source: new ol.source.Vector({
+            url: url,
+            format: new ol.format.GeoJSON(),
+        }),
+        style: style,
+    });
+    geojson.getSource().on("addfeature", function () {
+        //alert(geojson.getSource().getExtent());
+        map.getView().fit(geojson.getSource().getExtent(), {
+            duration: 1590,
+            size: map.getSize(),
+        });
+    });
+    //overlays.getLayers().push(geojson);
+    map.addLayer(geojson);
+    $.getJSON(url, function (data) {
+        var col = [];
+        col.push("id");
+        for (var i = 0; i < data.features.length; i++) {
+            for (var key in data.features[i].properties) {
+                if (col.indexOf(key) === -1) {
+                    col.push(key);
                 }
-                return msg;
             }
-            // function for loading query
-            function query() {
-                $("#table").empty();
-                if (geojson) {
-                    map.removeLayer(geojson);
-                }
-                if (selectedFeature) {
-                    selectedFeature.setStyle();
-                    selectedFeature = undefined;
-                }
-                if (vector1) {
-                    vector1.getSource().clear();
-                    // $('#table').empty();
-                }
-                //alert('jsbchdb');
-                var layer = document.getElementById("layer");
-                var value_layer = layer.options[layer.selectedIndex].value;
-                //alert(value_layer);
-                var attribute = document.getElementById("attributes");
-                var value_attribute = attribute.options[attribute.selectedIndex].text;
-                var operator = document.getElementById("operator");
-                var value_operator = operator.options[operator.selectedIndex].value;
-                //alert(value_operator);
-                var txt = document.getElementById("value");
-                var value_txt = txt.value;
-                if (value_operator == "ILike") {
-                    value_txt = "'" + value_txt + "%25'";
+        }
+		var table = document.createElement("table");
+				table.setAttribute("class", "table table-hover table-striped");
+				table.setAttribute("id", "table");
 
-                } else {
-                    value_txt = value_txt;
-                    //value_attribute = value_attribute;
-                }
-                //alert(value_txt);
-                var url =
+				var caption = document.createElement("caption");
+				caption.setAttribute("id", "caption");
+				caption.style.captionSide = "top";
+				caption.style.backgroundColor = "#51929F";
+				caption.style.color = "black";
+				caption.style.padding = "6px";
 
-                    `${GEOSERVER_BASE_URL}/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=${value_layer}&CQL_FILTER=${value_attribute} ${value_operator} '${encodeURIComponent(value_txt)}'&outputFormat=application/json`;
-                //console.log(url);
-                style = new ol.style.Style({
-                    fill: new ol.style.Fill({
-                        color: "rgba(255, 255, 255, 0.2)",
-                    }),
-                    stroke: new ol.style.Stroke({
-                        color: "#8ECAED",
-                        width: 7,
-                    }),
-                    image: new ol.style.Circle({
-                        radius: 7,
-                        fill: new ol.style.Fill({
-                            color: "#8ECAED",
-                        }),
-                    }),
-                });
-                geojson = new ol.layer.Vector({
-                    //title:'dfdfd',
-                    //title: '<h5>' + value_crop+' '+ value_param +' '+ value_seas+' '+value_level+'</h5>',
-                    source: new ol.source.Vector({
-                        url: url,
-                        format: new ol.format.GeoJSON(),
-                    }),
-                    style: style,
-                });
-                geojson.getSource().on("addfeature", function () {
-                    //alert(geojson.getSource().getExtent());
-                    map.getView().fit(geojson.getSource().getExtent(), {
-                        duration: 1590,
-                        size: map.getSize(),
-                    });
-                });
-                //overlays.getLayers().push(geojson);
-                map.addLayer(geojson);
-                $.getJSON(url, function (data) {
-                    var col = [];
-                    col.push("id");
-                    for (var i = 0; i < data.features.length; i++) {
-                        for (var key in data.features[i].properties) {
-                            if (col.indexOf(key) === -1) {
-                                col.push(key);
-                            }
-                        }
-                    }
-                    var table = document.createElement("table");
-                    table.setAttribute("class", "table table-hover table-striped");
-                    table.setAttribute("id", "table");
-                    var caption = document.createElement("caption");
-                    caption.setAttribute("id", "caption");
-                    caption.style.captionSide = "top";
-                    caption.style.backgroundColor = "#51929f";
-                    caption.style.color = "black";
-                    caption.innerHTML =
-                        // value_layer +
-                        "<b> (Number of Features : " + data.features.length + " )</b>";
-                    table.appendChild(caption);
-                    // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
-                    var tr = table.insertRow(-1); // TABLE ROW.
-                    for (var i = 0; i < col.length; i++) {
-                        var th = document.createElement("th"); // TABLE HEADER.
-                        th.innerHTML = col[i];
-                        tr.appendChild(th);
-                    }
-                    // ADD JSON DATA TO THE TABLE AS ROWS.
-                    for (var i = 0; i < data.features.length; i++) {
-                        tr = table.insertRow(-1);
-                        for (var j = 0; j < col.length; j++) {
-                            var tabCell = tr.insertCell(-1);
-                            if (j == 0) {
-                                tabCell.innerHTML = data.features[i]["id"];
-                            } else {
-                                //alert(data.features[i]['id']);
-                                tabCell.innerHTML = data.features[i].properties[col[j]];
-                                //alert(tabCell.innerHTML);
-                            }
-                        }
-                    }
-                    // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
-                    var divContainer = document.getElementById("table_data");
-                    divContainer.innerHTML = "";
-                    divContainer.appendChild(table);
-                    document.getElementById("map").style.height = "71%";
-                    document.getElementById("table_data").style.height = "29%";
-                    map.updateSize();
-                    addRowHandlers();
-                });
-                map.on("singleclick", highlight);
-            }
+				// 🔹 TEXT (Number of Features)
+				var text = document.createElement("b");
+				text.style.fontWeight = "900";
+				text.style.color = "black";
+				text.style.fontSize = "small";
+				text.innerText = "Number of Features : " + data.features.length;
 
+				// 🔹 CANCEL BUTTON
+				var cancelBtn = document.createElement("button");
+				cancelBtn.innerText = "✖";
+				cancelBtn.style.marginLeft = "89%";
+				cancelBtn.style.cursor = "pointer";
+				cancelBtn.style.fontSize = "12px";
+				cancelBtn.style.border = "none";
+				cancelBtn.style.background = "transparent";
+
+				// ❌ click par table remove
+				cancelBtn.onclick = function () {
+				    const tableDiv = document.getElementById("table_data");
+
+				    // table remove
+				    tableDiv.innerHTML = "";
+				    tableDiv.style.height = "0";
+				    tableDiv.style.display = "none";
+
+				    // map full height
+
+				    // OpenLayers ko resize signal
+				    map.updateSize();
+				};
+
+				// caption me add karo
+				caption.appendChild(text);
+				caption.appendChild(cancelBtn);
+				table.appendChild(caption);
+
+				// ---------- TABLE HEADER ----------
+				var tr = table.insertRow(-1);
+				for (var i = 0; i < col.length - 22; i++) {
+				    var th = document.createElement("th");
+				    th.innerHTML = col[i];
+				    tr.appendChild(th);
+				}
+
+				// ---------- TABLE DATA ----------
+				for (var i = 0; i < data.features.length; i++) {
+				    tr = table.insertRow(-1);
+				    for (var j = 0; j < col.length - 22; j++) {
+				        var tabCell = tr.insertCell(-1);
+				        if (j == 0) {
+				            tabCell.innerHTML = data.features[i]["id"];
+				        } else {
+				            tabCell.innerHTML = data.features[i].properties[col[j]];
+				        }
+				    }
+				}
+
+		        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+		          var divContainer = document.getElementById("table_data");
+		        divContainer.innerHTML = "";
+		        divContainer.appendChild(table);
+		        document.getElementById("map").style.height = "100%";
+		        document.getElementById("table_data").style.height = "22%";
+		        map.updateSize();
+		        addRowHandlers();
+		    });
+		    map.on("singleclick", highlight);
+		}
             // highlight the feature on map and table on map click
             function highlight(evt) {
                 if (selectedFeature) {
@@ -1841,7 +1582,6 @@ $(function () {
                     })(rows[i]);
                 }
             }
-
 
 
 
@@ -2402,8 +2142,8 @@ function updateSummary(data) {
 
     const summaryData = {
         'No. of Zones': { value: safeValue('zone_count')},
-        'Total Road Length': { value: `${safeValue('total_length_km')} km`, onclick: "Varanasi_Road_Length_Count(); updateNavBarWithFunctionName('Total Road Length');" },
-        'Total No. of Roads': { value: safeValue('total_length_count'), onclick: "Varanasi_Road_Length_Count(); updateNavBarWithFunctionName('Total Road Count');" },
+        'Total Road Length': { value: `${safeValue('total_length_km').toFixed(2)} km`},
+        'Total No. of Roads': { value: safeValue('total_length_count')},
         'Total Ward No.': { value: safeValue('ayo_ward')},
         'Road Count by Condition': {
             value: `
@@ -2419,8 +2159,8 @@ function updateSummary(data) {
                 Bitumen - <a href="javascript:void(0)" onclick="Varanasi_Material_cat('material','Bitumen'); updateNavBarWithFunctionName('Road Material : Bitumen');" style="color:darkred;">${safeValue('count_bitumen')}</a><br>
                 CC - <a href="javascript:void(0)" onclick="Varanasi_Material_cat('material','CC'); updateNavBarWithFunctionName('Road Material : CC');" style="color:#1ad7b0;">${safeValue('count_cc')}</a><br>
                 Interlocking - <a href="javascript:void(0)" onclick="Varanasi_Material_cat('material','Interlocking'); updateNavBarWithFunctionName('Road Material : Interlocking');" style="color:#2392ed;">${safeValue('count_interlocking')}</a><br>
-               	Chauka Patthar - <a href="javascript:void(0)" onclick="Varanasi_Material_cat('material','Chauka Patthar'); updateNavBarWithFunctionName('Road Material : Chauka Patthar');" style="color:#9400ff;">${safeValue('count_chauka')}</a><br>
-                BOE - <a href="javascript:void(0)" onclick="Varanasi_Material_cat('material','BOE'); updateNavBarWithFunctionName('Road Material : BOE');" style="color:#f228ab;">${safeValue('count_boe')}</a><br>
+				Chauka Patthar - <a href="javascript:void(0)" onclick="Varanasi_Material_cat('material','Chauka Patthar'); updateNavBarWithFunctionName('Road Material : Chauka Patthar');" style="color:#9400ff;">${safeValue('count_chauka')}</a><br>
+				BOE - <a href="javascript:void(0)" onclick="Varanasi_Material_cat('material','BOE'); updateNavBarWithFunctionName('Road Material : BOE');" style="color:#f228ab;">${safeValue('count_boe')}</a><br>
                 Kachcha - <a href="javascript:void(0)" onclick="Varanasi_Material_cat('material','Kachcha'); updateNavBarWithFunctionName('Road Material : Kachcha');" style="color:#6036d0;">${safeValue('count_kachcha')}</a><br>
                 NA - <a href="javascript:void(0)" onclick="Varanasi_Material_cat('material','NA'); updateNavBarWithFunctionName('Road Material : NA');" style="color:#dfc223;">${safeValue('material_count_na')}</a>
                 `,
@@ -2573,8 +2313,8 @@ function updateZones(zoneNo, zoneName, data) {
                     Bitumen <a href="javascript:void(0)" onclick="Varanasi_Zone_Material('${zoneNo}','material','Bitumen'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : Bitumen');" style="color:darkred;">- ${data.count_bitumen}</a> <br>
                     CC <a href="javascript:void(0)" onclick="Varanasi_Zone_Material('${zoneNo}','material','CC'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : CC');" style="color:#1ad7b0;">- ${data.count_cc}</a> <br>
                     Interlocking <a href="javascript:void(0)" onclick="Varanasi_Zone_Material('${zoneNo}','material','Interlocking'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : Interlocking');" style="color:#2392ed;">- ${data.count_interlocking}</a> <br>
-                    Chauka Patthar - <a href="javascript:void(0)" onclick="Varanasi_Zone_Material('${zoneNo}','material','Chauka Patthar'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : Chauka Patthar');" style="color:#9400ff;">${data.count_chauka}</a><br>
-                    BOE <a href="javascript:void(0)" onclick="Varanasi_Zone_Material('${zoneNo}','material','BOE'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : BOE');" style="color:#f228ab;">- ${data.count_boe}</a> <br>
+					Chauka Patthar - <a href="javascript:void(0)" onclick="Varanasi_Zone_Material('${zoneNo}','material','Chauka Patthar'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : Chauka Patthar');" style="color:#9400ff;">${data.count_chauka}</a><br>
+					BOE <a href="javascript:void(0)" onclick="Varanasi_Zone_Material('${zoneNo}','material','BOE'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : BOE');" style="color:#f228ab;">- ${data.count_boe}</a> <br>
                     Kachcha <a href="javascript:void(0)" onclick="Varanasi_Zone_Material('${zoneNo}','material','Kachcha'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : Kachcha');" style="color:#6036d0;">- ${data.count_kachcha}</a><br>
                     NA - <a href="javascript:void(0)" onclick="Varanasi_Zone_Material('${zoneNo}','material','NA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : NA');" style="color:#dfc223;">${data.material_count_na}</a>
                     `
@@ -2584,7 +2324,7 @@ function updateZones(zoneNo, zoneName, data) {
             value: `
                     Nagar Nigam <a href="javascript:void(0)" onclick="Varanasi_Zone_Ownership('${zoneNo}','ownership','Nagar Nigam'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : Varanasi Nagar Nigam');" style="color:#5aeee5;">- ${data.count_nn}</a> <br>
                     PWD <a href="javascript:void(0)" onclick="Varanasi_Zone_Ownership('${zoneNo}','ownership','PWD'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : PWD');" style="color:#69e70f;">- ${data.count_pwd}</a> <br>
-                    Private Roads <a href="javascript:void(0)" onclick="Varanasi_Zone_Ownership('${zoneNo}','ownership','Private Road'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : Private Roads');" style="color:#ed2323;">- ${data.count_private}</a><br>
+                    Private Roads <a href="javascript:void(0)" onclick="Varanasi_Zone_Ownership('${zoneNo}','ownership','Private Road'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : Private Roads');" style="color:#ed2323;">- ${data.count_pvt}</a><br>
                     Development Authority - <a href="javascript:void(0)" onclick="Varanasi_Zone_Ownership('${zoneNo}', 'ownership', 'Development Authority'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : Varanasi Development Authority');" style="color:#f16a16;">${data.count_da}</a><br>
                     Defence - <a href="javascript:void(0)" onclick="Varanasi_Zone_Ownership('${zoneNo}','ownership','Defence'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : Defence');" style="color:#f16a16;">${data.count_defence}</a><br>
                     NHAI - <a href="javascript:void(0)" onclick="Varanasi_Zone_Ownership('${zoneNo}','ownership','NHAI'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : NHAI');" style="color:#ed2323;">${data.count_nhai}</a><br>
@@ -2598,7 +2338,7 @@ function updateZones(zoneNo, zoneName, data) {
                     value: ` 
                         14th Finance - <a href="javascript:void(0)" onclick="Varanasi_Zone_CUS('${zoneNo}','cus_class','14th Finance'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : 14th Finance');" style="color: #e63dee;">${data.count_14th}</a><br>
                         15th Finance - <a href="javascript:void(0)" onclick="Varanasi_Zone_CUS('${zoneNo}','cus_class','15th Finance'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : 15th Finance');" style="color: #e63dee;">${data.count_15th}</a><br>
-                        Nagar Nigam Nidhi - <a href="javascript:void(0)" onclick="Varanasi_Zone_CUS('${zoneNo}','cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : Nagar Nigam Nidhi');" style="color:cyan;">${data.nnn}</a><br>
+                        Nagar Nigam Nidhi - <a href="javascript:void(0)" onclick="Varanasi_Zone_CUS('${zoneNo}','cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : Nagar Nigam Nidhi');" style="color:cyan;">${data.count_nnn}</a><br>
                         PWD - <a href="javascript:void(0)" onclick="Varanasi_Zone_CUS('${zoneNo}','cus_class','PWD'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : PWD');" style="color: #173dd6;">${data.count_cus_pwd}</a><br>
                         VDA- <a href="javascript:void(0)" onclick="Varanasi_Zone_CUS('${zoneNo}','cus_class','VDA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : VDA');" style="color: #6e52e7;">${data.count_cus_vda}</a><br>
                         DUDA - <a href="javascript:void(0)" onclick="Varanasi_Zone_CUS('${zoneNo}','cus_class','Duda'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : DUDA');" style="color: #8717e2;">${data.count_cus_duda}</a><br>
@@ -2609,7 +2349,7 @@ function updateZones(zoneNo, zoneName, data) {
                {
                 title: 'Type Sub Category',
                 value: `
-                    NA - <a href="javascript:void(0)" onclick="Varanasi_Zone_TypeSub('${zoneNo}','category','NA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category : NA');" style="color: #8717e2;">${data.count_na}</a><br>
+                    NA - <a href="javascript:void(0)" onclick="Varanasi_Zone_TypeSub('${zoneNo}','category','NA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category : NA');" style="color: #8717e2;">${data.count_expressway}</a><br>
                     `
                 },
     ];
@@ -2772,7 +2512,7 @@ function loadWardData(zoneNo, wardNo, wardName) {
                 const details = [
                     { 
                         title: 'Total Road Length', 
-                        value: `<a href="javascript:void(0)" onclick="Varanasi_Ward_no('ward_no', '${wardNo}'); updateNavBarWithFunctionName('Ward-${wardNo} Total Road Length');" style="color:black;">${responseData.length_km} km</a>` 
+                        value: `<a href="javascript:void(0)" onclick="Varanasi_Ward_no('ward_no', '${wardNo}'); updateNavBarWithFunctionName('Ward-${wardNo} Total Road Length');" style="color:black;">${responseData.length_km.toFixed(2)} km</a>` 
                     },
                     { 
                         title: 'Total No. of Roads', 
@@ -2793,8 +2533,8 @@ function loadWardData(zoneNo, wardNo, wardName) {
                                 Bitumen - <a href="javascript:void(0)" onclick="Varanasi_Ward_Material('${wardNo}', 'material', 'Bitumen'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : Bitumen');" style="color:darkred;">${responseData.count_bitumen}</a><br> 
                                 CC - <a href="javascript:void(0)" onclick="Varanasi_Ward_Material('${wardNo}', 'material', 'CC'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : CC');" style="color:cyan;">${responseData.count_cc}</a><br> 
                                 Interlocking - <a href="javascript:void(0)" onclick="Varanasi_Ward_Material('${wardNo}', 'material', 'Interlocking'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : Interlocking');" style="color:blue;">${responseData.count_interlocking}</a><br>
-                                Chauka Patthar - <a href="javascript:void(0)" onclick="Varanasi_Ward_Material('${wardNo}','material','Chauka Patthar'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : Chauka Patthar');" style="color:#9400ff;">${responseData.count_chauka}</a><br>
-                                BOE - <a href="javascript:void(0)" onclick="Varanasi_Ward_Material('${wardNo}', 'material', 'BOE'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : BOE');" style="color:pink;">${responseData.count_boe}</a><br> 
+								Chauka Patthar - <a href="javascript:void(0)" onclick="Varanasi_Ward_Material('${wardNo}','material','Chauka Patthar'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : Chauka Patthar');" style="color:#9400ff;">${responseData.count_chauka}</a><br>
+								BOE - <a href="javascript:void(0)" onclick="Varanasi_Ward_Material('${wardNo}', 'material', 'BOE'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : BOE');" style="color:pink;">${responseData.count_boe}</a><br> 
                                 Kachcha - <a href="javascript:void(0)" onclick="Varanasi_Ward_Material('${wardNo}', 'material', 'Kachcha'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : Kachcha');" style="color:purple;">${responseData.count_kachcha}</a><br>
                                 NA - <a href="javascript:void(0)" onclick="Varanasi_Ward_Material('${wardNo}','material','NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : NA');" style="color:#dfc223;">${responseData.material_count_na}</a>
                                 ` 
@@ -2827,7 +2567,7 @@ function loadWardData(zoneNo, wardNo, wardName) {
                     {
                         title: 'Type Sub Category',
                         value: `
-                                NA - <a href="javascript:void(0)" onclick="Varanasi_Ward_TypeSub('${wardNo}','category','NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category : NA');" style="color: #83e45c;">${responseData.count_na}</a><br>
+                                NA - <a href="javascript:void(0)" onclick="Varanasi_Ward_TypeSub('${wardNo}','category','NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category : NA');" style="color: #83e45c;">${responseData.count_expressway}</a><br>
                                 `},
                         ];
                 // Create and append vertical detail
@@ -2972,81 +2712,81 @@ function clearVectorLayers() {
 }
 
 // function for highlighting table row and click on table then highlight layer--------------//
-// map.on('singleclick', function (evt) {
-//     const viewResolution = map.getView().getResolution();
-//     const projection = map.getView().getProjection();
-//     const source = currentLayer?.getSource?.();
+map.on('singleclick', function (evt) {
+    const viewResolution = map.getView().getResolution();
+    const projection = map.getView().getProjection();
+    const source = currentLayer?.getSource?.();
 
-//     // ✅ Case 1: WMS (has getFeatureInfoUrl)
-//     if (source && typeof source.getFeatureInfoUrl === 'function') {
-//         const url = source.getFeatureInfoUrl(
-//             evt.coordinate,
-//             viewResolution,
-//             projection,
-//             { 'INFO_FORMAT': 'application/json' }
-//         );
+    // ✅ Case 1: WMS (has getFeatureInfoUrl)
+    if (source && typeof source.getFeatureInfoUrl === 'function') {
+        const url = source.getFeatureInfoUrl(
+            evt.coordinate,
+            viewResolution,
+            projection,
+            { 'INFO_FORMAT': 'application/json' }
+        );
 
-//         if (url) {
-//             fetch(url)
-//                 .then(response => response.json())
-//                 .then(data => {
-//                     console.log('GeoServer Response:', data);
-//                     if (data.features && data.features.length > 0) {
-//                         let properties = data.features[0].properties;
-//                         console.log("WMS Feature Properties:", properties);
+        if (url) {
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('GeoServer Response:', data);
+                    if (data.features && data.features.length > 0) {
+                        let properties = data.features[0].properties;
+                        console.log("WMS Feature Properties:", properties);
 
-//                         let gisId = properties.gis_id;
+                        let gisId = properties.gis_id;
 
-//                         if (gisId) {
-//                             console.log('Feature ID:', data.features[0].id);
-//                             highlightTableRowByGISID(gisId);
-//                             highlightFeatureOnMap(gisId);
-//                         } else {
-//                             console.warn('No GIS ID in WMS feature.');
-//                         }
-//                     } else {
-//                         console.warn('No features found in WMS click.');
-//                     }
-//                 })
-//                 .catch(error => console.error('Error fetching WMS feature info:', error));
-//         }
-//     }
+                        if (gisId) {
+                            console.log('Feature ID:', data.features[0].id);
+                            highlightTableRowByGISID(gisId);
+                            highlightFeatureOnMap(gisId);
+                        } else {
+                            console.warn('No GIS ID in WMS feature.');
+                        }
+                    } else {
+                        console.warn('No features found in WMS click.');
+                    }
+                })
+                .catch(error => console.error('Error fetching WMS feature info:', error));
+        }
+    }
 
-//     // ✅ Case 2: Vector layer (WFS GeoJSON)
-//     else {
-//         let found = false;
-//         map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
-//             if (layer === currentLayer) {
-//                 let props = feature.getProperties();
-//                 // ✅ INSERT HERE
-//                 console.log("Feature Properties:", props);
-//                 // let gisId = props.gis_id;
-//                 const gisId = props.gis_id || props.gid || props.GIS_ID || null;
+    // ✅ Case 2: Vector layer (WFS GeoJSON)
+    else {
+        let found = false;
+        map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+            if (layer === currentLayer) {
+                let props = feature.getProperties();
+                // ✅ INSERT HERE
+                console.log("Feature Properties:", props);
+                // let gisId = props.gis_id;
+                const gisId = props.gis_id || props.gid || props.GIS_ID || null;
 
-//                 if (!gisId) {
-//                     console.warn("No associated GIS ID found for selected feature.");
-//                 }
-//                 if (gisId) {
-//                     console.log("Selected feature: ", feature);
-//                     console.log("Feature ID: ", feature.getId());
-//                     console.log("Associated row: ", gisId);
+                if (!gisId) {
+                    console.warn("No associated GIS ID found for selected feature.");
+                }
+                if (gisId) {
+                    console.log("Selected feature: ", feature);
+                    console.log("Feature ID: ", feature.getId());
+                    console.log("Associated row: ", gisId);
 
-//                     highlightTableRowByGISID(gisId);
-//                     highlightFeatureOnMap(gisId);
-//                     found = true;
-//                 } else {
-//                     console.warn('Feature has no GIS ID');
-//                 }
-//                 found = true;
-//                 return true;
-//             }
-//         }, { hitTolerance: 5 });
+                    highlightTableRowByGISID(gisId);
+                    highlightFeatureOnMap(gisId);
+                    found = true;
+                } else {
+                    console.warn('Feature has no GIS ID');
+                }
+                found = true;
+                return true;
+            }
+        }, { hitTolerance: 5 });
 
-//         if (!found) {
-//             console.warn("No feature selected.");
-//         }
-//     }
-// });
+        if (!found) {
+            console.warn("No feature selected.");
+        }
+    }
+});
 
 // ----------------- Function to Highlight the Corresponding Table Row ----------------------------------
 function highlightTableRowByGISID(gisId) {
@@ -3202,76 +2942,102 @@ function VNN_Road_popup() {
                 { 'INFO_FORMAT': 'application/json' }
             );
 
-            if (url) {
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.features && data.features.length > 0) {
-                            const feature = data.features[0];
-                            const properties = feature.properties;
-                            selectedRoadProperties = properties;
+           				if (url) {
+								               fetch(url)
+								                   .then(res => res.json())
+								                   .then(data => {
+								                       if (data.features && data.features.length > 0) {
+								                           const properties = data.features[0].properties;
+								                           selectedRoadProperties = properties;
+								                           popup.innerHTML = buildPopupHTML(properties);
+								                           popup.style.display = 'block';
+								                           // Attach close button AFTER HTML loads
+								                           setTimeout(() => {
+								                               const closeBtn = document.getElementById("popupCloseBtn");
+								                               if (closeBtn) {
+								                                   closeBtn.onclick = () => popup.style.display = "none";
+								                               }
+								                           }, 0);
+								                       } else popup.style.display = 'none';
+								                   })
+								                   .catch(() => popup.style.display = 'none');
+								           }
+								           return;
+								       }
+								       // ---------- VECTOR LAYER ----------
+								       let found = false;
+								       map.forEachFeatureAtPixel(event.pixel, function (feature, layer) {
+								           if (layer === currentLayer) {
+								               const properties = feature.getProperties();
+								               selectedRoadProperties = properties;
+								               popup.innerHTML = buildPopupHTML(properties);
+								               popup.style.display = 'block';
+								               // Attach close button AFTER HTML loads
+								               setTimeout(() => {
+								                   const closeBtn = document.getElementById("popupCloseBtn");
+								                   if (closeBtn) {
+								                       closeBtn.onclick = () => popup.style.display = "none";
+								                   }
+								               }, 0);
+								               found = true;
+								               return true;
+								           }
+								       });
+								       if (!found)popup.style.display = 'none';
+								   });
 
-                            // Show the popup with feature info
-                            popup.innerHTML = buildPopupHTML(properties);
-                            popup.style.display = 'block';
-                            const mapSize = map.getSize();
 
-                        } else {
-                            popup.style.display = 'none';
-                        }
-                    })
-                    .catch(() => {
-                        popup.style.display = 'none';
-                    });
-            } else {
-                popup.style.display = 'none';
-            }
-        } else {
-            // Assume Vector Layer (WFS GeoJSON)
-            let found = false;
-            map.forEachFeatureAtPixel(event.pixel, function (feature, layer) {
-                if (layer === currentLayer) {
-                    const properties = feature.getProperties();
-                    selectedRoadProperties = properties;
+			    function buildPopupHTML(properties) {
+			        return `
+					 <div style="
+							position:relative;
+							            background: rgb(255 255 255 / 90%);
+							            color: rgba(0, 0, 0, 1);
+							            padding: 10px 13px;
+							            border-radius: 10px;
+							            border-left: 4px solid #3772a7ff;
+							            box-shadow: 0 2px 10px rgba(240, 235, 235, 0.5);
+							            font-family: 'Segoe UI', Roboto, sans-serif;
+							            font-size: 14px;
+							            line-height: 1.5;
+							            max-width: 330px;
+					">
+					<span id="popupCloseBtn"
+					            style="
+					                position:absolute;
+					                top:6px;
+					                right:0px;
+					                cursor:pointer;
+					                font-size:20px;
+					                color:#ff0000;
+					                font-weight:bold;
+					            ">&times;</span>
+								<h3 style="margin-top:0; margin-bottom:8px; font-size:21px; color:brown;
+								                  font-weight:900; border-bottom:1px solid #2a6194ff; padding-bottom:4px;">
+								           Road Information
+								       </h3>
+					  <div class="row-line"><strong>Road Id :</strong> ${properties.road_id || 'N/A'}</div>
+					  <div class="row-line"><strong>Zone No :</strong> ${properties.zone_no || 'N/A'}</div>
+					  <div class="row-line"><strong>Zone Name :</strong> ${properties.zone_name || 'N/A'}</div>
+					  <div class="row-line"><strong>Ward No :</strong> ${properties.ward_no || 'N/A'}</div>
+					  <div class="row-line"><strong>Ward Name :</strong> ${properties.ward_name || 'N/A'}</div>
+					  <div class="row-line"><strong>Right of Way :</strong> ${properties.row_meter || 'N/A'}</div>
+					  <div class="row-line"><strong>Carriage Width :</strong> ${properties.carriage_w || 'N/A'}</div>
+					  <div class="row-line"><strong>Category :</strong> ${properties.category || 'N/A'}</div>
+					  <div class="row-line"><strong>Condition :</strong> ${properties.condition || 'N/A'}</div>
+					  <div class="row-line"><strong>Material :</strong> ${properties.material || 'N/A'}</div>
+					  <div class="row-line"><strong>Ownership :</strong> ${properties.ownership || 'N/A'}</div>
+					  <div class="row-line"><strong>Length (Km) :</strong> ${
+					      properties.length_km !== null && properties.length_km !== undefined
+					          ? Number(properties.length_km).toFixed(2)
+					          : 'N/A'
+					  }</div>
 
-                    popup.innerHTML = buildPopupHTML(properties);
-                    popup.style.display = 'block';
-                    const mapSize = map.getSize();
-
-                    found = true;
-                    return true;
-                }
-            }, { hitTolerance: 5 });
-
-            if (!found) {
-                popup.style.display = 'none';
-            }
-        }
-    });
-
-    function buildPopupHTML(properties) {
-        return `
-                <div style=" background: rgb(255 255 255 / 90%); color: rgba(4, 4, 99, 1);  padding: 10px 13px;  border-radius: 10px;border-left: 4px solid #3772a7ff;
-                box-shadow: 0 2px 10px rgba(240, 235, 235, 0.5); font-family: 'Segoe UI', Roboto, sans-serif;  font-size: 14px;  line-height: 1.5;  max-width: 320px; ">
-                    <h3 style="margin-top:0; margin-bottom:8px; font-size:21px; color: rgba(4, 4, 99, 1);font-weight:900; border-bottom:1px solid #2a6194ff; padding-bottom:4px;">
-                         Road Information </h3>
-                    <div><strong>Zone No :</strong> ${properties.zone_no || 'N/A'}</div>
-                    <div><strong>Zone Name :</strong> ${properties.zone_name || 'N/A'}</div>
-                    <div><strong>Ward No :</strong> ${properties.ward_no || 'N/A'}</div>
-                    <div><strong>Ward Name :</strong> ${properties.ward_name || 'N/A'}</div>
-                    <div><strong>Right of Way :</strong> ${properties.row_meter || 'N/A'}</div>
-                    <div><strong>Carriage Width :</strong> ${properties.carriage_w || 'N/A'}</div>
-                    <div><strong>Category :</strong> ${properties.category || 'N/A'}</div>
-                    <div><strong>Condition :</strong> ${properties.condition || 'N/A'}</div>
-                    <div><strong>Material :</strong> ${properties.material || 'N/A'}</div>
-                    <div><strong>Ownership :</strong> ${properties.ownership || 'N/A'}</div>
-                    <div><strong>Length (Km) :</strong> ${properties.length_km ? properties.length_km.toFixed(2) : 'N/A'}</div>
-                    <div><strong>Road Name :</strong> ${properties.road_name || 'N/A'}</div>
-                </div>
-        `;
-    }                    
-
-}
+					  <div class="row-line"><strong>Road Name :</strong> ${properties.road_name || 'N/A'}</div>
+					</div>
+					        `;
+			    }
+			}
 
 function Varanasi_Road_Length_Count() {
     removeCurrentLayer();
@@ -3394,131 +3160,139 @@ function Varanasi_Condition(cqlFilter) {
     updateTable(cqlFilter);
 }
 //--------------------Search bar code--------------------------//
-            var currentLayer = null;
-
-            $(document).ready(function () {
-                // Initialize Select2 on the dropdown
-                $('#roadNamesDropdown').select2({
-                    placeholder: "Search by road name",
-                    allowClear: true
-                });
-
-                // Define your WFS parameters
-                var wfsParams = {
-                    service: 'WFS',
-                    version: '1.1.0',
-                    outputFormat: 'application/json',
-                    srsName: 'EPSG:4326', // Coordinate system of your data
-                    typeName: 'VNS_Summary:varanasi_road_net',   // Replace with your WFS layer typename
-                    url: `${GEOSERVER_BASE_URL}/wfs` // Replace with your WFS server URL
-                };
-
-                // Create a vector source and layer
-                var vectorSource = new ol.source.Vector({
-                    format: new ol.format.GeoJSON()
-                });
-
-                var vectorLayer = new ol.layer.Vector({
-                    source: vectorSource,
-                    style: new ol.style.Style({
-                        stroke: new ol.style.Stroke({
-                            color: 'cyan', // Custom line color
-                            width: 5 // Custom line width in pixels
-                        })
-                    })
-                });
-                map.addLayer(vectorLayer);
-
-                // Define the URL for the WFS request
-                const url = `${GEOSERVER_BASE_URL}/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=VNS_Summary:varanasi_road_net&outputFormat=application/json`;
-
-                // Create the XMLHttpRequest
-                let xhr = new XMLHttpRequest();
-                xhr.open('GET', url, true);
-
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
-                            // Parse the JSON response
-                            let response = JSON.parse(xhr.responseText);
-
-                            // Extract road_name properties from the features, filter out nulls
-                            let roadNames = response.features
-                                .map(feature => feature.properties.road_name)
-                                .filter(roadName => roadName !== null && roadName !== '');
-
-                            populateDropdown(roadNames);
-                            // Log the road names
-                            console.log('Road Names:', roadNames);
-                        } else {
-                            console.error('Error:', xhr.responseText);
-                        }
-                    }
-                };
-
-                // Send the request
-                xhr.send();
-
-                function populateDropdown(roadNames) {
-                    let dropdown = $('#roadNamesDropdown');
-
-                    // Clear existing options
-                    dropdown.empty();
-
-                    // Create a default option
-                    let defaultOption = new Option('Search by Road Name', '', true, true);
-                    dropdown.append(defaultOption);
-
-                    // Populate dropdown with road names
-                    roadNames.forEach(roadName => {
-                        let option = new Option(roadName, roadName, false, false);
-                        dropdown.append(option);
-                    });
-
-                    // Refresh Select2
-                    dropdown.trigger('change');
+          var currentLayer = null;
+//$(document).ready(function () {
+    // Initialize Select2 on the dropdown
+   // $('#roadNamesDropdown').select2({
+    //    placeholder: "Search by road name",
+     //   allowClear: true
+  //  });
+  $(document).ready(function () {
+	$('#roadNamesDropdown').select2({
+	    placeholder: "Type road name",
+	    allowClear: true,
+	    width: '100%',
+		});
+	
+			$(document).on('keyup', '.select2-search__field', function () {
+			    const typedText = $(this).val();
+			    const selection = $('.select2-selection__rendered');
+			    if (typedText && typedText.trim() !== '') {
+			        selection
+			            .text(typedText)
+			            .attr('title', typedText)
+			            .css({
+			                'font-weight': '700',   // bold
+			                'color': '#000000'      // black
+			            });
+			    } else {
+			        selection
+			            .text('Type road name or number')
+			            .css({
+			                'font-weight': '400',
+			                'color': '#666666'
+			            });
+			    }
+			});
+    // Define your WFS parameters
+    var wfsParams = {
+        service: 'WFS',
+        version: '1.1.0',
+        outputFormat: 'application/json',
+        srsName: 'EPSG:4326', // Coordinate system of your data
+        typeName: 'VNS_Summary:varanasi_road_net',   // Replace with your WFS layer typename
+        url: `${GEOSERVER_BASE_URL}/wfs` // Replace with your WFS server URL
+    };
+    // Create a vector source and layer
+    var vectorSource = new ol.source.Vector({
+        format: new ol.format.GeoJSON()
+    });
+    var vectorLayer = new ol.layer.Vector({
+        source: vectorSource,
+        style: new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: 'cyan', // Custom line color
+                width: 5 // Custom line width in pixels
+            })
+        })
+    });
+    map.addLayer(vectorLayer);
+    // Define the URL for the WFS request
+    const url = `${GEOSERVER_BASE_URL}/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=VNS_Summary:varanasi_road_net&outputFormat=application/json`;
+    // Create the XMLHttpRequest
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Parse the JSON response
+                let response = JSON.parse(xhr.responseText);
+                // Extract road_name properties from the features, filter out nulls
+				let roadNames = [...new Set(
+				    response.features
+				        .map(f => f.properties.road_name)
+				        .filter(r => r && r.trim() !== '')
+				)];
+                populateDropdown(roadNames);
+                // Log the road names
+               // console.log('Road Names:', roadNames);
+            } else {
+                console.error('Error:', xhr.responseText);
+            }
+        }
+    };
+    // Send the request
+    xhr.send();
+	function populateDropdown(roadNames) {
+	    let dropdown = $('#roadNamesDropdown');
+	    dropdown.empty();
+	    dropdown.append(new Option('', '', false, false));
+	    roadNames.forEach(roadName => {
+	        dropdown.append(new Option(roadName, roadName, false, false));
+	    });
+	    // IMPORTANT: Select2 refresh
+	    dropdown.trigger('change.select2');
+	}
+	$('#roadNamesDropdown').on('select2:open', function () {
+	    document.querySelector('.select2-search__field').focus();
+	});
+    // Add an event listener to the dropdown
+   $('#roadNamesDropdown').on('change', function () {
+      let selectedRoadName = $(this).val();
+      if (selectedRoadName) {
+            fetchRoadData(selectedRoadName);
+       }
+   });
+    function fetchRoadData(roadName) {
+        let fetchUrl = wfsParams.url + '?service=' + wfsParams.service +
+            '&version=' + wfsParams.version +
+            '&request=GetFeature&typename=' + wfsParams.typeName +
+            '&outputFormat=' + wfsParams.outputFormat +
+            '&srsname=' + wfsParams.srsName +
+            '&CQL_FILTER=road_name=\'' + roadName + '\'';
+      //  console.log(fetchUrl);
+	
+        let fetchXhr = new XMLHttpRequest();
+        fetchXhr.open('GET', fetchUrl, true);
+        fetchXhr.onreadystatechange = function () {
+            if (fetchXhr.readyState === 4) {
+                if (fetchXhr.status === 200) {
+                    let response = JSON.parse(fetchXhr.responseText);
+                    vectorSource.clear();
+                    let features = new ol.format.GeoJSON().readFeatures(response);
+                    vectorSource.addFeatures(features);
+                    map.getView().fit(vectorSource.getExtent());
+                     currentLayer = vectorLayer;  // :white_check_mark: Set the active layer
+                     VNN_Road_popup();
+                } else {
+                    console.log('Error:', fetchXhr.responseText);
                 }
+            }
+        };
+        fetchXhr.send();
+    }
+});
 
-                // Add an event listener to the dropdown
-                $('#roadNamesDropdown').on('change', function () {
-                    let selectedRoadName = $(this).val();
-                    if (selectedRoadName) {
-                        fetchRoadData(selectedRoadName);
-                    }
-                });
-
-                function fetchRoadData(roadName) {
-                    let fetchUrl = wfsParams.url + '?service=' + wfsParams.service +
-                        '&version=' + wfsParams.version +
-                        '&request=GetFeature&typename=' + wfsParams.typeName +
-                        '&outputFormat=' + wfsParams.outputFormat +
-                        '&srsname=' + wfsParams.srsName +
-                        '&CQL_FILTER=road_name=\'' + roadName + '\'';
-
-                    console.log(fetchUrl);
-
-                    let fetchXhr = new XMLHttpRequest();
-                    fetchXhr.open('GET', fetchUrl, true);
-
-                    fetchXhr.onreadystatechange = function () {
-                        if (fetchXhr.readyState === 4) {
-                            if (fetchXhr.status === 200) {
-                                let response = JSON.parse(fetchXhr.responseText);
-                                vectorSource.clear();
-                                let features = new ol.format.GeoJSON().readFeatures(response);
-                                vectorSource.addFeatures(features);
-                                map.getView().fit(vectorSource.getExtent());
-                                currentLayer = vectorLayer;  // ✅ Set the active layer
-                                VNN_Road_popup();
-                            } else {
-                                console.log('Error:', fetchXhr.responseText);
-                            }
-                        }
-                    };
-                    fetchXhr.send();
-                }
-
-            });
 
 //--------------------Search bar code end----------------------------//
 
@@ -4312,76 +4086,258 @@ function fetchMVNNWardFilteredData(ward_no, column, value) {
 }
 
 //--------------------------------------------- download map and excel ----------------------------------------------------------------//
-//------------------------------------------------ download map and excel ----------------------------------------------------------------//
-let isPrinting = false;
-let originalCenter = null;
-let originalResolution = null;
-const downloadMapandExcel = document.querySelector(".fa-print");
+const downloadBtn = document.getElementById("downloadBtn");
+const downloadMenu = document.getElementById("downloadMenu");
 
-downloadMapandExcel.addEventListener("click", () => {
-  if (isPrinting) return;
-  isPrinting = true;
-
-  const table = document.getElementById('dataTable_summary');
-  document.body.classList.add("print-mode");
-  if (!table || table.rows.length === 0) {
-    alert("No data in table. Please apply a filter first.");
-    document.body.classList.remove("print-mode");
-    isPrinting = false;
-    return;
-  }
-  // Excel export
-  const wb = XLSX.utils.book_new();
-  const ws = XLSX.utils.table_to_sheet(table);
-  XLSX.utils.book_append_sheet(wb, ws, "FilteredData");
-  XLSX.writeFile(wb, `Filtered_Table_${Date.now()}.xlsx`);
-
-  setTimeout(() => {
-    map.updateSize();
-    const view = map.getView();
-
-    // ✅ ALWAYS capture ORIGINAL state first
-    originalCenter = view.getCenter().slice();
-    originalResolution = view.getResolution();
-    // ---- PRINT-ONLY ADJUSTMENT ----
-    const pixelShift = 250;      // tune once
-    const zoomFactor = 1.2;
-    const shiftInMapUnits = pixelShift * originalResolution;
-    view.setCenter([
-      originalCenter[0] + shiftInMapUnits,
-      originalCenter[1]
-    ]);
-
-    view.setResolution(originalResolution * zoomFactor);
-  }, 100);
-
-  setTimeout(() => {
-    window.print();
-  }, 500);
+downloadBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  downloadMenu.classList.toggle("hidden");
 });
 
-function restoreMap() {
-  if (!isPrinting) return;
-  document.body.classList.remove("print-mode");
-  const view = map.getView();
-  if (originalCenter && originalResolution) {
-    view.setCenter(originalCenter);
-    view.setResolution(originalResolution);
+// close menu if clicked outside
+document.addEventListener("click", () => {
+  downloadMenu.classList.add("hidden");
+});
+
+downloadMenu.addEventListener("click", (e) => {
+  const type = e.target.getAttribute("data-type");
+  if (!type) return;
+
+  downloadMenu.classList.add("hidden");
+
+  const table = document.getElementById("dataTable_summary");
+
+  if (type !== "print") {
+    if (!table || table.rows.length === 0) {
+      alert("No data in table. Please apply a filter first.");
+      return;
+    }
   }
-  map.updateSize();
-  // reset flags
-  originalCenter = null;
-  originalResolution = null;
-  isPrinting = false;
+
+  const stamp = Date.now();
+
+  switch (type) {
+    case "excel":
+      downloadTableAsExcel(table, `Filtered_Table_${stamp}.xlsx`);
+      break;
+
+    case "pdf":
+      downloadTableAsPDF(table, stamp);
+      break;
+
+   case "kml":
+  const kmlText = downloadTableAsKML(table, stamp);
+  if (kmlText) {
+    openKMLInGoogleEarth(kmlText);
+  }
+  break;
+
+   
+  case "print": {
+    document.body.classList.add("print-mode");
+
+    const view = map.getView();
+
+    // ---- SAVE ORIGINAL STATE ----
+    const originalCenter = view.getCenter().slice();
+    const originalResolution = view.getResolution();
+
+    setTimeout(() => {
+      // ---- FORCE MAP RESIZE ----
+      map.updateSize();
+
+      // ---- PRINT-ONLY ADJUSTMENT ----
+      const pixelShift = 500;          // tune once (300–500 typical)
+      const zoomFactor = 1.2;
+
+      const shiftInMapUnits = pixelShift * originalResolution;
+
+      view.setCenter([
+        originalCenter[0] + shiftInMapUnits, // X shift only
+        originalCenter[1]
+      ]);
+
+      view.setResolution(originalResolution * zoomFactor);
+
+    }, 100);
+
+    // ---- PRINT AFTER VIEW IS STABLE ----
+    setTimeout(() => {
+      window.print();
+    }, 1000);
+
+    // ---- RESTORE MAP AFTER PRINT ----
+    setTimeout(() => {
+      view.setCenter(originalCenter);
+      view.setResolution(originalResolution);
+
+      document.body.classList.remove("print-mode");
+      map.updateSize();
+    }, 1200);
+
+    break;
+  }
+
+}
+});
+function cloneTableWithoutGeom(table) {
+  const clone = table.cloneNode(true);
+
+  const headers = Array.from(clone.querySelectorAll("thead th"))
+    .map(th => th.innerText.trim().toLowerCase());
+
+  const geomIndex = headers.indexOf("geom");
+  if (geomIndex === -1) return clone;
+
+  // remove header
+  clone.querySelectorAll("thead tr").forEach(tr => {
+    tr.deleteCell(geomIndex);
+  });
+
+  // remove body cells
+  clone.querySelectorAll("tbody tr").forEach(tr => {
+    tr.deleteCell(geomIndex);
+  });
+
+  return clone;
 }
 
-window.addEventListener("afterprint", restoreMap);
-// fallback (Chrome safety)
-setInterval(() => {
-  if (isPrinting && !document.body.classList.contains("print-mode")) {
-    restoreMap();
-  }
-}, 1000);
+//===================Excel===================
+
+function downloadTableAsExcel(table, filename) {
+  const cleanTable = cloneTableWithoutGeom(table);
+
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.table_to_sheet(cleanTable);
+  XLSX.utils.book_append_sheet(wb, ws, "FilteredData");
+  XLSX.writeFile(wb, filename);
+}
+
+
+
+// ================= KML =================
+function downloadTableAsKML(table) {  
+	// ---------- XML escape (MANDATORY for Google Earth) ----------//
+  const xmlEscape = v =>    v ? v.replace(/&/g,"&amp;") .replace(/</g,"&lt;") .replace(/>/g,"&gt;").replace(/"/g,"&quot;")  
+       .replace(/'/g,"&apos;") : ""; 
+ // ---------- Normalize headers ----------
+  const headers = Array.from(table.querySelectorAll("thead th"))  .map(th =>    th.innerText      .trim()      .toLowerCase() 
+     .replace(/\(([^)]+)\)/g, "_$1")   // (km) → _km  
+    .replace(/[^a-z0-9]+/g, "_")      .replace(/^_|_$/g, "")  ); 
+ const getVal = (tr, name) => {    const key = name.toLowerCase().replace(/[^a-z0-9]+/g, "_"); 
+	   const idx = headers.indexOf(key);    return idx !== -1 ? tr.children[idx]?.innerText.trim() : "";  }; 
+	 let kml = `<?xml version="1.0" encoding="UTF-8"?>\n`; 
+	 kml += `<kml xmlns="http://www.opengis.net/kml/2.2">\n<Document>\n`;
+	  const rows = table.querySelectorAll("tbody tr");  rows.forEach((tr, i) => {    //  READ GEOM FROM DATASET  
+	  const geomText = tr.dataset.geom;  
+	  if (      !geomText ||      !geomText.startsWith("MULTILINESTRING") ||      geomText.includes("EMPTY")    ) return;  
+	  // ---------- Parse MULTILINESTRING ----------  
+	  const lines = geomText      .replace(/^MULTILINESTRING\s*\(\(/i, "")  .replace(/\)\)\s*$/i, "") .split(/\)\s*,\s*\(/); 
+	   lines.forEach((line, j) => {   
+		   const coordinates = line        .replace(/[()]/g, "") .split(",") .map(c => {    
+			      const parts = c.trim().split(/\s+/);          if (parts.length < 2) return null;       
+			   const lon = parseFloat(parts[0]);     
+			     const lat = parseFloat(parts[1]);    
+			      if (isNaN(lon) || isNaN(lat)) return null;   return `${lon},${lat},0`;        }) 
+			 .filter(Boolean)        .join(" ");      if (!coordinates) return;  
+   kml += `<Placemark>\n`;  
+    kml += `<name>${xmlEscape(getVal(tr,"road_name") || `Feature ${i+1}`)}</name>\n`; 
+     kml += `<ExtendedData> 
+ <Data name="road_id"><value>${xmlEscape(getVal(tr,"road_id"))}</value></Data> 
+ <Data name="road_name"><value>${xmlEscape(getVal(tr,"road_name"))}</value></Data> 
+ <Data name="row_meter"><value>${xmlEscape(getVal(tr,"row_meter"))}</value></Data> 
+ <Data name="length_km"><value>${xmlEscape(getVal(tr,"length_km"))}</value></Data> 
+ <Data name="material"><value>${xmlEscape(getVal(tr,"material"))}</value></Data> 
+ <Data name="ownership"><value>${xmlEscape(getVal(tr,"ownership"))}</value></Data>
+</ExtendedData>`;  
+    kml += `<LineString>  <tessellate>1</tessellate>  <coordinates>${coordinates}</coordinates></LineString></Placemark>\n`;    });  });
+  kml += `</Document>\n</kml>`; 
+ return kml;
+}
+
+// function openKMLInGoogleEarth(kmlText) {
+//   const blob = new Blob([kmlText], {
+//     type: "application/vnd.google-earth.kml+xml"
+//   });
+
+//   const url = URL.createObjectURL(blob);
+
+//   window.open("https://earth.google.com/web/", "_blank");
+
+//   setTimeout(() => {
+//     window.open(url, "_blank");
+//   }, 3000);
+// }
+
+function openKMLInGoogleEarth(kmlText) {
+  const blob = new Blob([kmlText], {
+    type: "application/vnd.google-earth.kml+xml"
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  // 🔹 FORCE DOWNLOAD
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `roads_${Date.now()}.kml`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  // 🔹 OPEN GOOGLE EARTH WEB
+  window.open("https://earth.google.com/web/", "_blank");
+
+  // cleanup
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+
+//=================PDF===================
+
+function downloadTableAsPDF(table, stamp) {
+	const jsPDF = window.jspdf?.jsPDF || window.jsPDF;
+
+	if (!jsPDF) {
+	  alert("jsPDF library not loaded");
+	  return;
+	}
+
+
+
+
+
+  const pdf = new jsPDF("l", "mm", "a4");
+  pdf.text("Filtered Table Data", 14, 15);
+
+  // ---- get headers & find GEOM index ----
+  const headerCells = Array.from(table.querySelectorAll("thead th"));
+  const headers = headerCells.map(th => th.innerText.trim());
+
+  const geomIndex = headers.findIndex(h => h.toLowerCase() === "geom");
+
+  // ---- remove GEOM from headers ----
+  const cleanHeaders =
+    geomIndex === -1
+      ? headers
+      : headers.filter((_, i) => i !== geomIndex);
+
+  // ---- build body without GEOM column ----
+  const body = Array.from(table.querySelectorAll("tbody tr")).map(tr =>
+    Array.from(tr.querySelectorAll("td"))
+      .filter((_, i) => i !== geomIndex)
+      .map(td => td.innerText.trim())
+  );
+
+  pdf.autoTable({
+    head: [cleanHeaders],
+    body: body,
+    startY: 20,
+    styles: { fontSize: 7 },
+    theme: "grid"
+  });
+
+  pdf.save(`Filtered_Table_${stamp}.pdf`);
+}
+	
 
 
 
@@ -4423,9 +4379,7 @@ function highlightZoneBoundary(geojson) {
                 color: 'yellowgreen',
                 width: 4
             }),
-            // fill: new ol.style.Fill({
-            //     color: 'rgba(255, 0, 0, 0.2)'
-            // })
+           
         })
     });
 
@@ -4491,7 +4445,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-const selectedFilters = { zone: null, ward: null, ownership: null,  material: null ,condition: null};
+const selectedFilters = { zone: null, ward: null, ownership: null, material: null ,condition: null};
 function initializeDropdown(dropdownId, endpoint, key) {
     const dropdown = document.getElementById(dropdownId);
     dropdown.innerHTML = `<option value="">Select ${key.replace('_', ' ')}</option>`;
@@ -4619,3 +4573,12 @@ function updateTable(layer, cqlFilter) {
         })
         .catch(err => console.error('Error fetching WFS data:', err));
 }
+
+
+function showSelectedRoadsLayer1() {
+    alert("Data not available");
+}
+
+document.querySelector('.back-icon').addEventListener('click', function() {
+    window.history.back();
+});

@@ -89,7 +89,6 @@
     <iframe id="progress_graph" style="display: none; "
         src="https://lookerstudio.google.com/embed/reporting/3a0e91e4-d24e-4979-902a-00b449935191/page/XCwDE">
     </iframe>
-    
     <div class="main-container">
         <div id="map">
             <div id="scale_bar"></div>
@@ -134,82 +133,53 @@
     <script src="https://cdn.jsdelivr.net/npm/ol@v9.2.4/dist/ol.js" integrity="sha384-ginU7U5lJ0DtYjPE3de0rz6w4YtkmQDW3pbsZBFbOzhX+Hnd9kY4K2vrL2iiqXed" crossorigin="anonymous"></script>
 
     <script>
-
         $(document).ready(function () {
+       (function applyRolePermissions() {
+        const role = sessionStorage.getItem("userRole");
+        const city = sessionStorage.getItem("selectedCity");
+     // const token = sessionStorage.getItem("authToken"); -->
 
-    (async function applyRolePermissions() {
-
-    // 1. Verify authentication via backend profile API
-    try {
-         if (document.cookie.includes("token")) {
-        const response = await fetch(`${API_BASE_URL}/profile`, {
-            method: "GET",
-            credentials: "include"   // send HttpOnly cookie
-        });  
- 
-}
-
-        if (!response.ok) {
-            window.location.href = "/login/Login2.html";
+        // Check authentication - redirect if not authenticated
+        if (!token || !role) {
+            window.location.href = "/login/Login2.html"; // Fixed path
             return;
         }
 
-        const data = await response.json();
-
-        if (!data.success) {
-            window.location.href = "/login/Login2.html";
-            return;
-        }
-
-        // 2. Extract user info from profile response
-        const user = data.user;
-        const role = user.role;
-        const city = user.city;
-
-        // Store UI-safe data (optional)
-        sessionStorage.setItem("userRole", role);
-        sessionStorage.setItem("selectedCity", city);
-
-        console.log("Authenticated:", role, city);
-
-        // 3. Handle USER role
+        // Handle USER role (city users) - CHANGED FROM "CITY" to "USER"
         if (role === "USER") {
+            // Lock dropdown
             const dropdown = document.getElementById("nagarNigamSelect");
-
             if (dropdown && city) {
-                dropdown.value = city.toLowerCase();
+                dropdown.value = city.toLowerCase(); // Ensure lowercase for matching
                 dropdown.disabled = true;
-
                 dropdown.style.backgroundColor = "#f5f5f5";
                 dropdown.style.cursor = "not-allowed";
                 dropdown.style.color = "#666";
                 dropdown.style.opacity = "0.7";
-
+                
                 console.log("City user - Auto-selected city:", city);
-
-                // Trigger change to load data
+                
+                // Trigger change event to load city-specific data
                 setTimeout(() => {
-                    dropdown.dispatchEvent(new Event("change"));
-                }, 300);
+                    const event = new Event("change", { bubbles: true });
+                    dropdown.dispatchEvent(event);
+                }, 500);
             }
-
+            
             // Hide progress report for city users
             const progressButton = document.getElementById("progress1");
-            if (progressButton) progressButton.style.display = "none";
+            if (progressButton) {
+                progressButton.style.display = "none";
+            }
         }
 
-        // 4. Handle ADMIN role
+        // Handle ADMIN role - FIXED spelling
         if (role === "ADMIN") {
             console.log("Admin: full access enabled");
+          
         }
-
-    } catch (error) {
-        console.error("Authentication check failed:", error);
-        window.location.href = "/login/Login2.html";
-    }
-
-})();
-
+    })();
+    
     // Initially only map visible
     $("#progress_graph").hide();
     $("#map").show();
@@ -245,7 +215,7 @@
 // ----------------------- AUTO LOGOUT ON INACTIVITY -------------------------
   let inactivityTime = function () {
     let timer;
-    const logoutAfter =  2 * 60 * 1000;  // 15 minutes
+    const logoutAfter = 15 * 60 * 1000; // 15 minutes
 
     function resetTimer() {
       clearTimeout(timer);

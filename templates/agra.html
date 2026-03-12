@@ -29,7 +29,7 @@
 
     <link rel="shortcut icon" type="image/x-icon" class="fabicon" href="../assets/icons/logo_tree.png" />
 
-    <link rel="stylesheet" href="../style/gorakhpur.css">
+    <link rel="stylesheet" href="../style/kanpur.css">
     <link rel="stylesheet" href="../style/responsive.css">
 </head>
 
@@ -55,14 +55,14 @@
     <!---------------------- header section end -------------------------->
 
     <!---------------------- sidebar section start -------------------------->
-    <!-- <div class="sidebar">
+   <div class="sidebar">
         <span><i class="fas fa-times cancel-icon"></i></span>
 
-       
+        <!-- Bootstrap Tabs -->
         <ul class="nav nav-tabs" id="sidebarTabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="amenities-tab" data-bs-toggle="tab" data-bs-target="#amenities"
-                    type="button" role="tab" aria-controls="amenities" aria-selected="true">Network </button>
+                    type="button" role="tab" aria-controls="amenities" aria-selected="true"> Amenities </button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" type="button"
@@ -76,184 +76,174 @@
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="assets-tab" data-bs-toggle="tab" data-bs-target="#assets" type="button"
-                    role="tab" aria-controls="assets" aria-selected="false"> Road Analysis</button>
+                    role="tab" aria-controls="assets" aria-selected="false">
+                    Road Analysis
+                </button>
             </li>
         </ul>
 
         <div class="tab-content" id="sidebarTabsContent">
-          
-             <div class="tab-pane fade show active" id="amenities" role="tabpanel" aria-labelledby="amenities-tab">
+            <!-- Amenities Tab Content -->
+            <div class="tab-pane fade show active" id="amenities" role="tabpanel" aria-labelledby="amenities-tab">
                 <h2></h2>
                 <form>
                     <label>
-                        <i class="icon fa fa-road"></i>
-                        <input type="checkbox" id="ShowRoads" class="main-option" name="option3" />   <- Bank--->                   
-                              <!-- <span class="text">Roads</span> -->
-                    <!-- </label>
-                    <label>
-                        <i class="icon fa-solid fa-worm"></i>
-                        <input type="checkbox" id="showDrain" class="main-option" name="option13" />
-                        <span class="text">Drainage</span>
+                        <i class="icon fas fa-university" style="margin-right: 14px;"></i>
+                        <input type="checkbox" id="showBanks" class="main-option" name="option3" />
+                        <span class="text">Banks - 314</span>
                     </label>
                     <label>
-                        <i class="icon fas fa-hospital"></i>
+                        <i class="icon fas fa-hotel" style="margin-right: 13.8px;"></i>
+                                        <input type="checkbox" id="showHotel" class="main-option" name="option13" />
+                        <span class="text">Hotels - 150</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-hospital" ></i>
                         <input type="checkbox" id="showHospital" class="main-option" name="option4" />
-                        <span class="text">Hospitals - 195</span>
+                        <span class="text">Hospitals - 175</span>
                     </label>
                     <label>
-                        <i class="icon fas fa-tree"></i>
+                        <i class="icon fas fa-tree" style="margin-right: 15.5px;"></i>
                         <input type="checkbox" id="showParks" class="main-option" name="option8" />
-                        <span class="text">Parks - 36</span>
+                        <span class="text">Parks - 52</span>
                     </label>
                     <label>
-                        <i class="icon fas fa-bus"></i>
+                        <i class="icon fas fa-bus" style="margin-right: 12px;"></i>
                         <input type="checkbox" id="showBus" class="main-option" name="option11" />
-                        <span class="text">Bus Stops - 90</span>
+                        <span class="text">Bus Stops - 12</span>
                     </label>
-                    <label>
-                        <i class="icon fas fa-gas-pump"></i>
+                    <!-- <label>
+                        <i class="icon fas fa-charging-station" style="margin-right: 12px;"></i>
                         <input type="checkbox" id="showCar" class="main-option" name="option5" />
-                        <span class="text">Car charging Station - 50</span>
-                    </label>
-
+                        <span class="text">Electric Substation - 12</span>
+                    </label>  -->
+                
                     <label>
-                        <i class="icon fas fa-gas-pump"></i>
+                        <i class="icon fas fa-gas-pump" style="margin-right: 12px;"></i>
                         <input type="checkbox" id="showPetrol" class="main-option" name="option5" />
-                        <span class="text">Petrol Pump - 111</span>
+                        <span class="text">Petrol Pump - 61</span>
                     </label>
+                    <!-- <label>
+                        <i class="icon fas fa-hockey-puck" style="margin-right: 11px;"></i>
+                        <input type="checkbox" id="showStadium" class="main-option" name="option9" />
+                        <span class="text">Stadium - 4</span>
+                    </label> -->
 
                     <label>
-                        <i class="icon fas fa-charging-station"></i>
-                        <input type="checkbox" id="showStadium" class="main-option" name="option9" />
-                        <span class="text">Stadium - 26</span>
+                        <i class="icon fas fa-hockey-puck" style="margin-right: 11px;"></i>
+                        <input type="checkbox" id="showLandmark" class="main-option" name="option9" />
+                        <span class="text">Landmark - 52</span>
                     </label>
                     <label>
-                        <i class="icon fas fa-school"></i>
-                        <input type="checkbox" id="showEducation" class="main-option" name="option2" />
-                        <span class="text">Educational Institutes - 1087</span>
-                    </label>
-                    <label>
-                        <i class="icon fas fa-cross"></i>
+                        <i class="icon fas fa-cross" style="margin-right: 14.5px;"></i>
                         <input type="checkbox" id="showGraveyard" class="main-option" name="option14" />
-                        <span class="text">Graveyard - 60</span>
+                        <span class="text">Graveyard - 5</span>
                     </label>
-                    <br><br>
+                   
+                   
                 </form>
-            </div>  --> 
+            </div>
 
             <!-- Network Tab Content -->
-            <!-- <div class="tab-pane fade" id="data" role="tabpanel" aria-labelledby="data-tab">
-             
+            <div class="tab-pane fade" id="data" role="tabpanel" aria-labelledby="data-tab">
+                <!-- <h2>Network</h2> -->
                 <form>
                     <label>
-                        <i class="icon fas fa-building"></i>
-                        <input type="checkbox" id="ShowRoads" onclick=Lucknow_All_Roads() class="main-option"
-                            name="option1" />
+                        <i class="icon fas fa-route"></i>
+                        <input type="checkbox" id="ShowRoads"  class="main-option" name="option1" />
                         <span class="text">Roads</span>
-                    </label>
-                    <label>
-                        <i class="icon fas fa-school"></i>
+                    </label> 
+                    <!-- <label>
+                        <i class="icon fas fa-bacon"></i>
                         <input type="checkbox" id="ShowDrainage" class="main-option" name="option2" />
                         <span class="text">Drainage</span>
-                    </label>
-                </form>
-            </div> -->
+                    </label> -->
+                 </form>
+            </div>  
 
             <!-- Others Tab Content -->
-            <!-- <div class="tab-pane fade" id="utilities" role="tabpanel" aria-labelledby="utilities-tab">
+            <div class="tab-pane fade" id="utilities" role="tabpanel" aria-labelledby="utilities-tab">
+                <!-- <h2>others</h2> -->
                 <form>
                     <label>
-                        <i class="icon fas fa-cross"></i>
+                        <i class="icon fas fa-book-open"></i>                       <!-- <i class="icon fas fa-school"></i> -->
+                        <input type="checkbox" id="showEducation" class="main-option" name="option2" />
+                        <span class="text">Educational Institutes - 221</span>
+                    </label>
+                    <label>
+                        <i class="fa-sharp fa-solid fa-gopuram" style="color: #050505; margin-right: 16px;" ></i>
                         <input type="checkbox" id="showReligious" class="main-option" name="option10" />
-                        <span class="text">Religious Places - 40</span>
+                        <span class="text">Religious Places - 319</span>
                     </label>
                     <label>
-                        <i class="icon fas fa-envelope"></i>
+                        <i class="icon fas fa-envelope" style="margin-right: 14px;"></i>
                         <input type="checkbox" id="showPostOffice" class="main-option" name="option12" />
-                        <span class="text">Post Offices - 12 </span>
+                        <span class="text">Post Offices - 47</span>
                     </label>
                     <label>
-                        <i class="icon fas fa-building"></i>
+                         <i class="icon fas fa-building" style="margin-right: 16px;"></i>
                         <input type="checkbox" id="showStateGov" class="main-option" name="option1" />
-                        <span class="text">State Government Offices - 26</span>
+                        <span class="text">State Government Offices - 55</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building" style="margin-right: 15px;"></i>
+                        <input type="checkbox" id="showCentralGov" class="main-option" name="option1" />
+                        <span class="text"> Central Government Offices- 55</span>
 
                     </label>
-                    <label>
-                        <i class="icon fas fa-building"></i>
-                        <input type="checkbox" id="showCentralGov" class="main-option" name="option1" />
-                        <span class="text">Central Government Offices - 15</span>
-                    </label>
-                    <label>
-                        <i class="icon fas fa-building"></i>
-                        <input type="checkbox" id="showLandmark" class="main-option" name="option1" />
-                        <span class="text">Landmark </span>
-                    </label>
-                    <label>
-                        <i class="icon fas fa-charging-station"></i>
-                        <input type="checkbox" id="showElectric_Substation" class="main-option" name="utility2" />
-                        <span class="text">Electricity Substation</span>
-                    </label>
+                  
                 </form>
-            </div> -->
+            </div>
 
             <!-- Assets Tab Content -->
-            <!--<div class="tab-pane fade" id="assets" role="tabpanel" aria-labelledby="assets-tab"> -->
-                    <!-- <h2>Assets</h2> -->
-                    <!-- <form> -->
-                        <!-- <label>
-                            <i class="icon fas fa-building"></i>
-                            <input type="checkbox" id="Slum_Boundary" class="main-option" name="option1" />
-                            <span class="text">Slum Boundary - 41</span>
+            <div class="tab-pane fade" id="assets" role="tabpanel" aria-labelledby="assets-tab">
+                <!-- <h2>Assets</h2> -->
+                <form>
+                    <!-- <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Slum_Boundary" class="main-option" name="option1" />
+                        <span class="text">Slum Boundary - 41</span>
 
-                        </label>-->
-                    
-                        <!-- <label>
-                            <i class="icon fas fa-building"></i>
-                            <input type="checkbox" id="Education_Road" class="main-option" name="option1" />
-                            <span class="text">Education's Roads - 1564</span>
-                        </label>
-                        <label>
-                            <i class="icon fas fa-building"></i>
-                            <input type="checkbox" id="Bank_Road" class="main-option" name="option1" />
-                            <span class="text">Bank's Roads - 981</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Slum_Road" class="main-option" name="option1" />
+                        <span class="text">Slum Road - 716</span>
 
-                        </label>
-                        <label>
-                            <i class="icon fas fa-building"></i>
-                            <input type="checkbox" id="Hospital_Road" class="main-option" name="option1" />
-                            <span class="text">Hospital's Roads - 135</span>
+                    </label> -->
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Education_Road"  class="main-option" name="option1" />
+                        <span class="text">Education's Road</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Bank_Road"   class="main-option" name="option1" />
+                        <span class="text">Bank's Road</span>
 
-                        </label>
-                        <label>
-                            <i class="icon fas fa-building"></i>
-                            <input type="checkbox" id="Metro_Road" class="main-option" name="option1" />
-                            <span class="text">Metro's Roads - 29</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Hospital_Road"  class="main-option" name="option1" />
+                        <span class="text">Hospital's Road</span>
 
-                        </label>
-                        <label>
-                            <i class="icon fas fa-building"></i>
-                            <input type="checkbox" id="Landmark_Road" class="main-option" name="option1" />
-                            <span class="text">Landmark's Roads - 200</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Park_Road"  class="main-option" name="option1" />
+                        <span class="text">Park's Road</span>
+                    </label>
+                    <label>
+                        <i class="icon fas fa-building"></i>
+                        <input type="checkbox" id="Hotel_Road"  class="main-option" name="option1" />
+                        <span class="text">Hotel's Road</span>
 
-                        </label>
-                        <label>
-                            <i class="icon fas fa-building"></i>
-                            <input type="checkbox" id="Park_Road" class="main-option" name="option1" />
-                            <span class="text">Park's Road - 5333</span>
-
-                        </label> 
-                        <label>
-                            <i class="icon fas fa-building"></i>
-                            <input type="checkbox" id="Drain_Road" class="main-option" name="option1" />
-                            <span class="text">Drain's Roads - 32771</span>
-
-                        </label> -->
-                    
-                    <!-- </form> -->
-            <!-- </div> -->
-
-        <!-- </div>
-    </div> -->
+                    </label>
+                 
+                </form>
+            </div>
+        </div>
+    </div>
     <!---------------------- sidebar section end -------------------------->
 
     <!---------------------- main-container section start -------------------------->
@@ -1405,7 +1395,7 @@ background-color: white; border: 2px solid black;  padding: 2px 4px;  box-shadow
         &copy; 2024 UP Remote Sensing Application Centre. All rights reserved.
     </div>
     <!--------- footer section end ----------->
-
+    <script src="../config.js"></script> 
     <script src="../javascript/agra.js"></script>
 
 </body>

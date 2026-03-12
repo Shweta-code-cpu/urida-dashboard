@@ -1,8 +1,7 @@
- const BASE_URL =`${BASE_URL_All}:8282/Kanpur`;
+const BASE_URL =`${BASE_URL_All}:8282/Kanpur`;
 const GEOSERVER_BASE_URL  =  "http://localhost:8080/geoserver/KNN_Summary";
 
 ol.proj.useGeographic();
-
 
 //---------------------- header section start --------------------------//
 
@@ -27,12 +26,9 @@ function showElements(elementIds) {
 function showTables() {
     showElements(['dataTable', 'tableContainer']);
     hideElements([ 'legendBtn', 'live_legend', 'type_legend', 'Condition_legend','CUS_legend','RoadCategory_legend','Material_legend', 'Ownership_legend',
-         //'tableContainer_Drain', 'dataTable_Drain','Scoreing_tableContainer', 'Scoring_dataTable',
          'tableContainer_summary','summary-table', 
         'tableContainer_summaryfiltermat', 'tableContainer_summaryfilter', 'tableContainer_summaryfilterOwn',
         
-        // 'Drain_Type_Legend', 'Drain_Condition_Legend',
-        // 'Drain_Material_Legend', 'Drain_Status_Legend'
     ]);
 }
 
@@ -45,10 +41,10 @@ document.getElementById('table_icon').addEventListener('click', showTables2);
 
 function showTables2() {
     showElements(['summary-table']);
-    hideElements([ 'dataTable', 'tableContainer_summary','tableContainer_summaryfilter', 'tableContainer', //'Scoring_dataTable', 'Scoreing_tableContainer','tableContainer_Drain', 'dataTable_Drain',
+    hideElements([ 'dataTable', 'tableContainer_summary','tableContainer_summaryfilter', 'tableContainer', 
          'legendBtn', 'live_legend', 'type_legend', 'Condition_legend','CUS_legend','RoadCategory_legend',
-        'Material_legend', 'Ownership_legend','tableContainer_summaryfiltermat' ,'tableContainer_summaryfilterOwn',//'Priority_legend', 'Drain_Type_Legend',
-       // 'Drain_Condition_Legend', 'Drain_Material_Legend', 'Drain_Status_Legend'
+        'Material_legend', 'Ownership_legend','tableContainer_summaryfiltermat' ,'tableContainer_summaryfilterOwn',
+       
     ]);
 }
 
@@ -104,7 +100,7 @@ var map, geojson, featureOverlay, overlays, style;
 var selected, features, layer_name, layerControl;
 var content, draw;
 var selectedFeature;
-// const london = fromLonLat([-0.12755, 51.507222]);
+
 
 var view = new ol.View({
     projection: "EPSG:4326",

@@ -1,5 +1,6 @@
-const BASE_URL = `${BASE_URL_All}:8982/Bareilly`;
-const GEOSERVER_BASE_URL  =  "http://localhost:8080/geoserver/BRL_Summary";
+//const BASE_URL = "http://192.168.100.178:8080/JhansiDashboard/Jhansi";
+const BASE_URL = `${BASE_URL_All}:8984/Jhansi`;
+const GEOSERVER_BASE_URL = "http://localhost:8080/geoserver/JHS_Summary";
 
 ol.proj.useGeographic();
 
@@ -21,12 +22,14 @@ function showElements(elementIds) {
 }
 //----------------------------------------- sidebar amenities show and hide elements -------------------------
 ['Bank_Road', 'Park_Road', 'Hospital_Road', 'Hotel_Road', 'Education_Road', 'ShowRoads'].forEach(id => {
-    document.getElementById(id).addEventListener('click', showTables); });
+    document.getElementById(id).addEventListener('click', showTables);
+});
 
 function showTables() {
     showElements(['dataTable_summary', 'tableContainer_summary']);
-    hideElements([ 'legendBtn', 'live_legend', 'Condition_legend','CUS_legend','RoadCategory_legend','Material_legend', 'Ownership_legend',
-         'summary-table',  'tableContainer_summaryfilter', 'table_data','query_tab','caption'
+    hideElements(['legendBtn', 'live_legend', 'type_legend', 'Condition_legend', 'CUS_legend', 'RoadCategory_legend', 'Material_legend', 'Ownership_legend',
+        'summary-table', 'tableContainer_summaryfilter', 
+        
     ]);
 }
 
@@ -35,9 +38,9 @@ document.getElementById('table_icon').addEventListener('click', showTables2);
 
 function showTables2() {
     showElements(['summary-table']);
-    hideElements([ 'dataTable', 'tableContainer_summary','tableContainer_summaryfilter', 'tableContainer', 
-         'legendBtn', 'live_legend', 'Condition_legend','CUS_legend','RoadCategory_legend',
-        'Material_legend', 'Ownership_legend','table_data','query_tab'
+    hideElements([ 'tableContainer_summary', 'tableContainer_summaryfilter', 
+        'legendBtn', 'live_legend', 'type_legend', 'Condition_legend', 'CUS_legend', 'RoadCategory_legend',
+        'Material_legend', 'Ownership_legend', 
     ]);
 }
 
@@ -70,12 +73,12 @@ var map, geojson, featureOverlay, overlays, style;
 var selected, features, layer_name, layerControl;
 var content, draw;
 var selectedFeature;
-
+// const london = fromLonLat([-0.12755, 51.507222]);
 
 var view = new ol.View({
     projection: "EPSG:4326",
-    center: [79.38910919189453,28.396608657836914],  
-    zoom: 13,
+    center: [78.5665950805664, 25.455008657836914],
+    zoom: 12.5,
 });
 
 var base_maps = new ol.layer.Group({
@@ -86,7 +89,7 @@ var base_maps = new ol.layer.Group({
             type: "base",
             visible: false,
             source: new ol.source.OSM(),
-           
+
         }),
         new ol.layer.Tile({
             title: "CartoDB Positron",
@@ -96,7 +99,7 @@ var base_maps = new ol.layer.Group({
                 url: "https://{1-4}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png",
                 attributions:
                     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                    crossOrigin: "anonymous"
+                crossOrigin: "anonymous"
             }),
         }),
         new ol.layer.Tile({
@@ -148,6 +151,9 @@ var base_maps = new ol.layer.Group({
             type: "base",
             visible: true,
             source: new ol.source.XYZ({
+                //  attributions: ['Powered by Esri',
+                //      'Source: Esri, DigitalGlobe, GeoEye, Earthstar Geographics, CNES/Airbus DS, USDA, USGS, AeroGRID, IGN, and the GIS User Community'
+                //  ],
                 attributionsCollapsible: false,
                 url: "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
                 crossOrigin: "anonymous",
@@ -188,6 +194,7 @@ layerSwitcher = new ol.control.LayerSwitcher({
 map.addControl(layerSwitcher);
 
 layerSwitcher.renderPanel();
+
 var mouse_position = new ol.control.MousePosition({
     coordinateFormat: ol.coordinate.createStringXY(4),
     projection: 'EPSG:4326'
@@ -207,47 +214,36 @@ map.addControl(scale_line);
 
 
 //------------------ charts and data ---------------------//
-// function data_analysis() {
-//     window.open('https://lookerstudio.google.com/reporting/a6be1a2e-7fb8-414d-a2b3-b724766cb501', '_blank'); // Open Google in a new tab
-// }
 function data_analysis() {
-    // Hide the map container
-    document.getElementById('map').style.display = 'none';   
-    // Show the iframe container
-    document.getElementById('iframe-container').style.display = 'block';
+    window.open('https://lookerstudio.google.com/reporting/5a12d4bb-d427-4dba-b903-60c61c1db7a7', '_blank'); // Open Google in a new tab
 }
 
-function closeReport() {
-    // Hide the iframe container
-    document.getElementById('iframe-container').style.display = 'none';
-    // Show the map container
-    document.getElementById('map').style.display = 'block';
-}
 
-  
 //-----------------------------------Boundaries------------------------------------//
+
+
 var zone_boundary = new ol.layer.Image({
-    title: "Bareilly Zone Boundary",
+    title: "Jhansi Zone Boundary",
     //  extent: [-180, -90, -180, 90],
     source: new ol.source.ImageWMS({
         url: `${GEOSERVER_BASE_URL}/wms?`,
         params: {
-            LAYERS: "BRL_Summary:bareilly_zone_boundary",
+            LAYERS: "JHS_Summary:jhansi_zone_boundary",
         },
         ratio: 1,
         serverType: "geoserver",
     }),
 });
 //overlays.getLayers().push(LNN_Boundary);
-map.addLayer(zone_boundary);
+//map.addLayer(zone_boundary);
 
 var ward_boundary = new ol.layer.Image({
-    title: "Bareilly Ward Boundary",
+    title: "Jhansi Ward Boundary",
     //  extent: [-180, -90, -180, 90],
     source: new ol.source.ImageWMS({
         url: `${GEOSERVER_BASE_URL}/wms?`,
         params: {
-            LAYERS: "BRL_Summary:bareilly_ward_boundary",
+            LAYERS: "JHS_Summary:jhansi_ward_boundary",
         },
         ratio: 1,
         serverType: "geoserver",
@@ -267,19 +263,19 @@ function updateNavBarWithFunctionName(functionName) {
 }
 
 function minimize1() {
- 
+
     const topnav = document.getElementById('tableContainer_summary');
 
     const navElements = document.querySelectorAll('.feature_nav');
     navElements.forEach(nav => {
         nav.style.bottom = '3%'; // Reduced width when minimized
-        }); 
+    });
     topnav.style.height = '0%'; // Reduced height when minimized
-    
-    const legendIds = [ 'Condition_legend','Material_legend','Ownership_legend'];
-    
+
+    const legendIds = ['Priority_legend', 'type_legend', 'Condition_legend', 'Material_legend', 'Ownership_legend'];
+
     // Loop through each legend and hide it
-    legendIds.forEach(function(legendId) {
+    legendIds.forEach(function (legendId) {
         const legendBtn = document.getElementById(legendId);
         if (legendBtn) {  // Check if the element exists before manipulating it
             legendBtn.style.display = 'none';
@@ -290,19 +286,13 @@ function minimize1() {
 }
 function maximize1() {
     const topnav = document.getElementById('tableContainer_summary');
-    document.querySelectorAll('.feature_nav').forEach(nav => {
-        nav.style.bottom = '22%';
+    const navElements = document.querySelectorAll('.feature_nav');
+    navElements.forEach(nav => {
+        nav.style.bottom = '29%'; // Reduced width when minimized
     });
-    topnav.style.height = '19%';
-    const legendIds = ['Condition_legend', 'Material_legend', 'Ownership_legend', 'CUS_legend', 'RoadCategory_legend' ];
-    legendIds.forEach(id => {
-        const lg = document.getElementById(id);
-        if (lg) {
-            lg.classList.remove('legend-hidden');
-            lg.classList.add('legend-visible');
-            lg.scrollTop = 0;
-        }
-    });
+
+    topnav.style.height = '29%'; // Reduced height when minimized
+
 }
 
 //------------------------------------- MULTILINESTRING feature to the map from WKT format
@@ -353,6 +343,25 @@ function addMultilinestringFeatureFromWKT_Ward(wktString) {
     return addMultilinestringFeatureFromWKT_General(wktString, 'red', 3);
 }
 
+// function addMultilinestringFeatureFromWKT_priority(wktString, priority) {
+//     let color;
+//     switch (priority) {
+//         case 'P1':
+//             color = '#EB5406';
+//             break;
+//         case 'P2':
+//             color = '#00FF00';
+//             break;
+//         case 'Not eligible':
+//             color = '#FFC300';
+//             break;
+//         default:
+//             color = 'black';
+//     }
+
+//     return addMultilinestringFeatureFromWKT_General(wktString, color, 3);
+// }
+
 /*--------------------------------------- zoom function is to on table ------------------------------------------*/
 // Define the style for the highlighted road feature
 const highlightedStyle = new ol.style.Style({
@@ -375,14 +384,14 @@ function zoomToRoadFeature(wkt) {
 
     const extent = feature.getGeometry().getExtent();
     map.getView().fit(extent, {
-        duration: 1000, 
-        maxZoom: 18     
+        duration: 1000,
+        maxZoom: 18
     });
 
     if (previouslyHighlightedFeature && previouslyHighlightedLayer) {
-        previouslyHighlightedFeature.setStyle(null);  
-        previouslyHighlightedLayer.getSource().removeFeature(previouslyHighlightedFeature); 
-        map.removeLayer(previouslyHighlightedLayer);  
+        previouslyHighlightedFeature.setStyle(null);
+        previouslyHighlightedLayer.getSource().removeFeature(previouslyHighlightedFeature);
+        map.removeLayer(previouslyHighlightedLayer);
     }
 
     feature.setStyle(highlightedStyle);
@@ -405,16 +414,15 @@ function highlightAndScrollToRow(row) {
     Array.from(dataTableBody_summary.querySelectorAll('tr')).forEach(tr => {
         tr.classList.remove('highlighted');
     });
+    Array.from(dataTable_summaryfilter.querySelectorAll('tr')).forEach(tr => {
+        tr.classList.remove('highlighted');
+    });
 
-    // Array.from(dataTableBody.querySelectorAll('tr')).forEach(tr => {
-    //     tr.classList.remove('highlighted');
-    // });
-    
     row.classList.add('highlighted');
     row.scrollIntoView({
-        behavior: 'smooth',  
-        block: 'center',    
-        inline: 'nearest'   
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest'
     });
     console.log("Row scrolled into view.");
 }
@@ -463,6 +471,97 @@ selectInteraction.on('select', function (e) {
     }
 });
 
+
+//------------------------LULC code---------------------------------
+// 1. Create the layer once (but don't add to map immediately)
+const lulcLayer = new ol.layer.Image({
+    title: "Jhansi LULC",
+    source: new ol.source.ImageWMS({
+        url: `${GEOSERVER_BASE_URL}/wms?`,
+        params: {
+            LAYERS: "JHS_Summary:lulc_jhansi",
+        },
+        ratio: 1,
+        serverType: "geoserver",
+    }),
+    visible: false // start hidden
+});
+
+// 2. Add layer to map (but hidden initially)
+map.addLayer(lulcLayer);
+
+// 3. Add checkbox event listener
+document.getElementById('showLULC').addEventListener('change', function () {
+    const checked = this.checked;
+    lulcLayer.setVisible(this.checked);
+
+
+    // Toggle legend visibility
+    const legendContainer = document.getElementById('lulcLegendContainer');
+    const legendImage = document.getElementById('lulcLegend');
+
+    if (checked) {
+        // Set legend image from GeoServer
+        const legendURL = `${GEOSERVER_BASE_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=JHS_Summary:lulc_jhansi`;
+
+        legendImage.src = legendURL;
+        legendImage.style.width = "200px"; // or whatever size you prefer
+        legendImage.style.height = "auto";
+        legendImage.style.fontSize = "12px";
+        legendContainer.style.display = 'block';
+    } else {
+        legendContainer.style.display = 'none';
+    }
+});
+let popupOverlay;  // Global
+
+const popupContainer_LULC = document.getElementById('LULC_popup');
+ popupOverlay = new ol.Overlay({
+    element: popupContainer_LULC,
+    autoPan: true,
+    autoPanAnimation: {
+        duration: 250,
+    },
+});
+map.addOverlay(popupOverlay);
+map.on('singleclick', function (evt) {
+    if (!lulcLayer.getVisible()) {
+        return; // 🔴 Exit early if LULC is hidden
+    }
+    const view = map.getView();
+    const viewResolution = view.getResolution();
+    const source = lulcLayer.getSource();
+
+    const url = source.getFeatureInfoUrl(
+        evt.coordinate,
+        viewResolution,
+        view.getProjection(),
+        {
+            'INFO_FORMAT': 'application/json',
+            'QUERY_LAYERS': 'JHS_Summary:lulc_jhansi'
+        }
+    );
+
+    if (url) {
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.features.length > 0) {
+                    const Class = data.features[0].properties.Classify || 'N/A';
+                    popupContainer_LULC.innerHTML = `<strong style="color:green">Class:</strong> ${Class}`;
+                    popupOverlay.setPosition(evt.coordinate);
+                } else {
+                    popupOverlay.setPosition(undefined);
+                }
+            })
+            .catch(error => {
+                console.error('GetFeatureInfo error:', error);
+            });
+    }
+});
+
+
+
 //-------------------------------------------All Roads-------------------------//
 ShowRoads.addEventListener('click', function () {
     updateNavBarWithFunctionName("All Roads");
@@ -493,22 +592,22 @@ ShowRoads.addEventListener('click', function () {
             console.log('Received data:', responseData);
             console.log('getting all data');
             // Clear existing table rows
-            dataTableBody_summary.innerHTML = '';
+            dataTableBody.innerHTML = '';
             // Check if 'data' is an array before iterating
             if (Array.isArray(responseData.data)) {
                 responseData.data.forEach(item => {
                     const row = document.createElement('tr');
-             row.innerHTML = `
+                    row.innerHTML = `
                                <td>${item.gis_id}</td>
-                               <td>${item.road_id}</td>
                                <td>${item.zone_no}</td>
                                <td>${item.zone_name}</td>
                                <td>${item.ward_no}</td>
-                                <td>${item.ward_name}</td>
-                                 <td>${item.ownership}</td>
-                                <td>${item.category}</td>
-                                <td>${item.road_name}</td>
-                                <td>${item.row_meter}</td>
+                            <td>${item.ward_name}</td>
+                            <td>${item.ownership}</td>
+                           
+                             <td>${item.category}</td>
+                            <td>${item.road_name}</td>
+                         <td>${item.row_meter}</td>
                             <td>${item.row_apr}</td>
                             <td>${item.carriage_w}</td>
                             <td>${item.material}</td>
@@ -516,7 +615,7 @@ ShowRoads.addEventListener('click', function () {
                                <td>${item.condition}</td>
                             <td>${item.yoc}</td>
                             <td>${item.cus}</td>`;
-                    dataTableBody_summary.appendChild(row);
+                    dataTableBody.appendChild(row);
                     // Check if the item has a geom_wkt property
                     if (item.geom_wkt) {
                         addMultilinestringFeatureFromWKT(item.geom_wkt);
@@ -535,12 +634,12 @@ ShowRoads.addEventListener('click', function () {
 
 
 //--------------------------------optimise code of sidebar road analysis -----------------------------
-function amenitiesRoadAnalysis(endpoint, layerName, featureFunction,elementId) {
+function amenitiesRoadAnalysis(endpoint, layerName, featureFunction, elementId) {
     removeCurrentLayer();
     updateNavBarWithFunctionName(layerName);
 
     map.getLayers().getArray().slice().forEach(layer => {
-        if (layer instanceof ol.layer.Vector  && layer != parkVectorLayer) {        
+        if (layer instanceof ol.layer.Vector && layer != parkVectorLayer) {
             map.removeLayer(layer);
         }
     });
@@ -551,90 +650,90 @@ function amenitiesRoadAnalysis(endpoint, layerName, featureFunction,elementId) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({})
     })
-    .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json();
-    })
-    .then(responseData => {
-        console.log(`Received data for ${layerName}:`, responseData);
-    
-        // Reset UI
-        dataTableBody_summary.innerHTML = '';
-        featureToRowMap.clear();
-        // map.getOverlays().clear();
-    
-        // 🔍 Handle new flat response structure
-        if (Array.isArray(responseData)) {
-            const countEntry = responseData[0];
-            const features = responseData.slice(1); // skip first element
-    
-            console.log(`Total features in ${layerName}:`, countEntry.count);
-    
-            features.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.json();
+        })
+        .then(responseData => {
+            console.log(`Received data for ${layerName}:`, responseData);
+
+            // Reset UI
+            dataTableBody.innerHTML = '';
+            featureToRowMap.clear();
+            // map.getOverlays().clear();
+
+            // 🔍 Handle new flat response structure
+            if (Array.isArray(responseData)) {
+                const countEntry = responseData[0];
+                const features = responseData.slice(1); // skip first element
+
+                console.log(`Total features in ${layerName}:`, countEntry.count);
+
+                features.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
                                <td>${item.gid}</td>
-                               <td>${item.road_id}</td>
                                <td>${item.zone_no}</td>
                                <td>${item.zone_name}</td>
                                <td>${item.ward_no}</td>
-                                <td>${item.ward_name}</td>
-                                <td>${item.ownership}</td>
-                                <td>${item.category}</td>
-                                <td>${item.road_name}</td>
-                                <td>${item.row_meter}</td>
-                                <td>${item.row_apr}</td>
-                                <td>${item.carriage_w}</td>
-                                <td>${item.material}</td>
-                                <td>${item.length_km ? item.length_km.toFixed(2) : 'N/A'}</td>
-                                <td>${item.condition}</td>
-                                <td>${item.yoc}</td>
-                                <td>${item.cus}</td>`;
-    
-                dataTableBody_summary.appendChild(row);
-    
-                row.addEventListener('click', function () {
+                            <td>${item.ward_name}</td>
+                            <td>${item.ownership}</td>
+                             <td>${item.category}</td>
+                            <td>${item.road_name}</td>
+                         <td>${item.row_meter}</td>
+                            <td>${item.row_apr}</td>
+                            <td>${item.carriage_w}</td>
+                            <td>${item.material}</td>
+                            <td>${item.length_km}</td>
+                               <td>${item.condition}</td>
+                            <td>${item.yoc}</td>
+                            <td>${item.cus}</td>`;
+
+                    dataTableBody.appendChild(row);
+
+                    row.addEventListener('click', function () {
+                        if (item.geom) {
+                            zoomToRoadFeature(item.geom);
+                            highlightAndScrollToRow(row);
+                        }
+                    });
+
                     if (item.geom) {
-                        zoomToRoadFeature(item.geom);
-                        highlightAndScrollToRow(row);
-                    }
-                });
-    
-                if (item.geom) {
-                    console.log(`WKT String for ${layerName}:`, item.geom);
-                    const feature = featureFunction(item.geom);
-    
-                    if (feature) {
-                        const featureId = feature.getId();
-                        if (featureId) {
-                            featureToRowMap.set(featureId, row);
+                        console.log(`WKT String for ${layerName}:`, item.geom);
+                        const feature = featureFunction(item.geom);
+
+                        if (feature) {
+                            const featureId = feature.getId();
+                            if (featureId) {
+                                featureToRowMap.set(featureId, row);
+                            }
                         }
                     }
-                }
-            });
-        } else {
-            console.error(`Expected flat array but got:`, responseData);
-        }
+                });
+            } else {
+                console.error(`Expected flat array but got:`, responseData);
+            }
 
-        document.getElementById(elementId).addEventListener('change', function () {
-            layer.setVisible(this.checked);
-        });
-    })
-    .catch(error => console.error(`Error fetching data for ${layerName}:`, error));
-    
+            document.getElementById(elementId).addEventListener('change', function () {
+                layer.setVisible(this.checked);
+            });
+        })
+        .catch(error => console.error(`Error fetching data for ${layerName}:`, error));
+
 }
 
-Bank_Road.addEventListener('click', () => showAmenityWithRoads('roads-with-atms', 'Bank with Roads', addMultilinestringFeatureFromWKT,'bank','../assets/icons/bank.png','showBanks'));
+// ShowRoads.addEventListener('click', () => showAmenityWithRoads('getAlltypeName', 'All Roads', addMultilinestringFeatureFromWKT));
+Bank_Road.addEventListener('click', () => showAmenityWithRoads('roads-with-atms', 'Bank with Roads', addMultilinestringFeatureFromWKT, 'bank', '../assets/icons/bank.png', 'showBanks'));
 Park_Road.addEventListener('click', () => showAmenityWithRoads('roads-with-Park', 'Park with Roads', addMultilinestringFeatureFromWKT_parkRoad));
-Hospital_Road.addEventListener('click', () => showAmenityWithRoads('roads_with_hospital', 'Hospital with Roads', addMultilinestringFeatureFromWKT_HospitalRoad,'hospital','../assets/icons/hospital.png','showHospital'));
-Hotel_Road.addEventListener('click', () => showAmenityWithRoads('roads-with-hotel', 'Hotel with Roads', addMultilinestringFeatureFromWKT_HotelRoad,'hotel','../assets/icons/hotel.png','showHotel'));
-Education_Road.addEventListener('click', () => showAmenityWithRoads('roads-with-Education', 'Educational Institute with Roads', addMultilinestringFeatureFromWKT_EduRoad,'education','../assets/icons/education.png','showEducation'));
+Hospital_Road.addEventListener('click', () => showAmenityWithRoads('roads_with_hospital', 'Hospital with Roads', addMultilinestringFeatureFromWKT_HospitalRoad, 'hospital', '../assets/icons/hospital.png', 'showHospital'));
+Hotel_Road.addEventListener('click', () => showAmenityWithRoads('roads-with-hotel', 'Hotel with Roads', addMultilinestringFeatureFromWKT_HotelRoad, 'hotel', '../assets/icons/hotel.png', 'showHotel'));
+Education_Road.addEventListener('click', () => showAmenityWithRoads('roads-with-Education', 'Educational Institute with Roads', addMultilinestringFeatureFromWKT_EduRoad, 'education', '../assets/icons/education.png', 'showEducation'));
 // Slum_Road.addEventListener('click', () => showAmenityWithRoads('getSlumRoad', 'Slum Roads', addMultilinestringFeatureFromWKT));
 
 /// =========== COMBINED FUNCTION: Show Roads + Icons ======================
 function showAmenityWithRoads(roadEndpoint, roadLayerName, roadFeatureFunction, pointType, iconPath, elementId, scale = 0.05) {
     // 1. Show Roads
-    amenitiesRoadAnalysis(roadEndpoint, roadLayerName, roadFeatureFunction,elementId);
+    amenitiesRoadAnalysis(roadEndpoint, roadLayerName, roadFeatureFunction, elementId);
 
     // 2. Show Icons
     const vectorSource = new ol.source.Vector();
@@ -644,6 +743,7 @@ function showAmenityWithRoads(roadEndpoint, roadLayerName, roadFeatureFunction, 
     const iconStyle = createIconStyle(iconPath, scale);
     amenitiesFeatures(pointType, iconStyle, vectorSource, iconLayer, elementId);
 }
+
 
 //----------------------------------------All amenities popup Data-------------------------//
 // Popup initialization
@@ -738,7 +838,8 @@ map.on('pointermove', function (event) {
     var hit = map.hasFeatureAtPixel(event.pixel);
     map.getTargetElement().style.cursor = hit ? 'pointer' : '';
 });
- //----------------------------------optimise amenities-----------------------------
+
+//----------------------------------optimise amenities-----------------------------
 
 function createIconStyle(iconPath, scale = 0.05) {
     return new ol.style.Style({
@@ -784,6 +885,10 @@ function amenitiesFeatures(type, iconStyle, vectorSource, layer, elementId) {
             vectorSource.addFeatures(features);
             console.log(`${type} features added:`, features);
 
+            console.log("Feature count in vectorSource:", vectorSource.getFeatures().length);
+            console.log("Layer visibility:", layer.getVisible());
+
+
             document.getElementById(elementId).addEventListener('change', function () {
                 layer.setVisible(this.checked);
             });
@@ -816,6 +921,7 @@ locationTypes.forEach(location => {
     const iconStyle = createIconStyle(location.icon, location.scale || 0.05);
     amenitiesFeatures(location.type, iconStyle, vectorSource, vectorLayer, location.id);
 });
+
 //------------------------------------------------park---------------------//
 
 function createPolygonStyle() {
@@ -947,7 +1053,10 @@ $(document).ready(function () {
             $(xml)
                 .find("FeatureType")
                 .each(function () {
+                    //var title = $(this).find('ows:Operation').attr('name');
+                    //alert(title);
                     var name = $(this).find("Name").text();
+                    //select.append("<option/><option class='ddheader' value='"+ name +"'>"+title+"</option>");
                     $(this)
                         .find("Name")
                         .each(function () {
@@ -961,10 +1070,11 @@ $(document).ready(function () {
                             );
                         });
                 });
+            //select.children(":first").text("please make a selection").attr("selected",true);
         },
     });
 });
- // attribute dropdown
+// attribute dropdown
 $(function () {
     $("#layer").change(function () {
         var attributes = document.getElementById("attributes");
@@ -984,6 +1094,8 @@ $(function () {
                 dataType: "xml",
                 success: function (xml) {
                     var select = $("#attributes");
+                    //var title = $(xml).find('xsd\\:complexType').attr('name');
+                    //  alert(title);
                     $(xml)
                         .find("xsd\\:sequence")
                         .each(function () {
@@ -991,7 +1103,9 @@ $(function () {
                                 .find("xsd\\:element")
                                 .each(function () {
                                     var value = $(this).attr("name");
+                                    //alert(value);
                                     var type = $(this).attr("type");
+                                    //alert(type);
                                     if (value != "geom" && value != "the_geom") {
                                         select.append(
                                             "<option class='ddindent' value='" +
@@ -1017,6 +1131,7 @@ $(function () {
             operator.options[i] = null;
         }
         var value_type = $(this).val();
+        // alert(value_type);
         var value_attribute = $("#attributes option:selected").text();
         operator.options[0] = new Option("Select operator", "");
         if (
@@ -1028,12 +1143,16 @@ $(function () {
             var operator1 = document.getElementById("operator");
             operator1.options[1] = new Option("Greater than", ">");
             operator1.options[2] = new Option("Less than", "<");
-            operator1.options[3] = new Option("Equal to", "=");
+             operator1.options[3] = new Option("Like", "ILike");
+            operator1.options[4] = new Option("Equal to", "=");
+
+            //  operator1.options[4] = new Option('Between', 'BETWEEN');
         } else if (value_type == "xsd:string") {
             var operator1 = document.getElementById("operator");
             operator1.options[1] = new Option("Greater than", ">");
             operator1.options[2] = new Option("Less than", "<");
             operator1.options[3] = new Option("Like", "ILike");
+             operator1.options[4] = new Option("Equal to", "=");
         }
     });
 });
@@ -1048,20 +1167,19 @@ $(document).ready(function () {
             $(xml)
                 .find("FeatureType")
                 .each(function () {
+                    //var title = $(this).find('ows:Operation').attr('name');
+                    //alert(title);
                     var name = $(this).find("Name").text();
+                    //select.append("<option/><option class='ddheader' value='"+ name +"'>"+title+"</option>");
                     $(this)
                         .find("Name")
                         .each(function () {
                             var value = $(this).text();
-                            select.append(
-                                "<option class='ddindent' value='" +
-                                value +
-                                "'>" +
-                                value +
-                                "</option>"
+                            select.append( "<option class='ddindent' value='" + value + "'>" + value +"</option>"
                             );
                         });
                 });
+            //select.children(":first").text("please make a selection").attr("selected",true);
         },
     });
 });
@@ -1094,7 +1212,7 @@ function findRowNumber(cn1, v1) {
     }
     return msg;
 }
- // function for loading query
+// function for loading query
 function query() {
     $("#table").empty();
     if (geojson) {
@@ -1128,9 +1246,20 @@ function query() {
         //value_attribute = value_attribute;
     }
     //alert(value_txt);
+     const cqlFilter = encodeURIComponent(`${value_attribute} ${value_operator} ${value_txt}`);
     var url =
-      
-        `${GEOSERVER_BASE_URL}/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=${value_layer}&CQL_FILTER=${value_attribute} ${value_operator} '${encodeURIComponent(value_txt)}'&outputFormat=application/json`;
+        // `${GEOSERVER_BASE_URL}/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=` +
+        // value_layer +
+        // "&CQL_FILTER=" +
+        // value_attribute +
+        // "%20" +
+        // value_operator +
+        // "%20" +
+        // value_txt +
+        // "%20" +
+        // "&outputFormat=application/json";
+         
+        `${GEOSERVER_BASE_URL}/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=${value_layer}&CQL_FILTER=${cqlFilter}&outputFormat=application/json`;
     //console.log(url);
     style = new ol.style.Style({
         fill: new ol.style.Fill({
@@ -1148,7 +1277,8 @@ function query() {
         }),
     });
     geojson = new ol.layer.Vector({
-     
+        //title:'dfdfd',
+        //title: '<h5>' + value_crop+' '+ value_param +' '+ value_seas+' '+value_level+'</h5>',
         source: new ol.source.Vector({
             url: url,
             format: new ol.format.GeoJSON(),
@@ -1162,7 +1292,7 @@ function query() {
             size: map.getSize(),
         });
     });
-     //overlays.getLayers().push(geojson);
+    //overlays.getLayers().push(geojson);
     map.addLayer(geojson);
     $.getJSON(url, function (data) {
         var col = [];
@@ -1219,7 +1349,7 @@ function query() {
     map.on("singleclick", highlight);
 }
 
- // highlight the feature on map and table on map click
+// highlight the feature on map and table on map click
 function highlight(evt) {
     if (selectedFeature) {
         selectedFeature.setStyle();
@@ -1232,7 +1362,15 @@ function highlight(evt) {
         var geometry = feature.getGeometry();
         var coord = geometry.getCoordinates();
         var coordinate = evt.coordinate;
-        
+        //alert(feature.get('gid'));
+        // alert(coordinate);
+        /*var content1 = '<h3>' + feature.get([name]) + '</h3>';
+    content1 += '<h5>' + feature.get('crop')+' '+ value_param +' '+ value_seas+' '+value_level+'</h5>'
+    content1 += '<h5>' + feature.get([value_param]) +' '+ unit +'</h5>';
+    // alert(content1);
+    content.innerHTML = content1;
+    overlay.setPosition(coordinate);*/
+        // console.info(feature.getProperties());
         $(function () {
             $("#table td").each(function () {
                 $(this).parent("tr").css("background-color", "white");
@@ -1275,9 +1413,16 @@ function highlight(evt) {
             });
         });
     }
-  
+    /*$(function() {
+  $("#table td").each(function() {
+  if ($(this).text() == feature.get('gid')) {
+  // $(this).css('color', 'red');
+  $(this).parent("tr").css("background-color", "grey");
+  }
+  });
+  });*/
 }
- // highlight the feature on map and table on row select in table
+// highlight the feature on map and table on row select in table
 function addRowHandlers() {
     var rows = document.getElementById("table").rows;
     var heads = table.getElementsByTagName("th");
@@ -1332,6 +1477,10 @@ function addRowHandlers() {
         })(rows[i]);
     }
 }
+
+
+
+
 
 // //------------- draw function in query panel----------------------//
 draw_type.onchange = function () {
@@ -1768,17 +1917,17 @@ function addInteraction() {
  */
 
 // function createHelpTooltip() {
-    if (helpTooltipElement) {
-        helpTooltipElement.parentNode.removeChild(helpTooltipElement);
-    }
-    helpTooltipElement = document.createElement("div");
-    helpTooltipElement.className = "tooltip hidden";
-    helpTooltip = new ol.Overlay({
-        element: helpTooltipElement,
-        offset: [15, 0],
-        positioning: "center-left",
-    });
-    map.addOverlay(helpTooltip);
+if (helpTooltipElement) {
+    helpTooltipElement.parentNode.removeChild(helpTooltipElement);
+}
+helpTooltipElement = document.createElement("div");
+helpTooltipElement.className = "tooltip hidden";
+helpTooltip = new ol.Overlay({
+    element: helpTooltipElement,
+    offset: [15, 0],
+    positioning: "center-left",
+});
+map.addOverlay(helpTooltip);
 //}
 /**
  * Creates a new measure tooltip
@@ -1799,32 +1948,36 @@ function createMeasureTooltip() {
 
 /*----------------------------------------- javascript for sidebar----------------------------------------- */
 
-// const dataTableBody = document.getElementById('dataBody');
 const dataTableBody_summary = document.getElementById('dataBody_summary');
 const dataTableBody_summaryfilter = document.getElementById('dataBody_summaryfilter');
 
 //----------------- table Cancel btn ----------------------------//
 document.querySelectorAll('.table-cancel-btn1').forEach(function (element) {
     element.addEventListener('click', function () {
-        //  document.getElementById('tableContainer').style.display = 'none';
+       // document.getElementById('tableContainer').style.display = 'none';
         document.getElementById('tableContainer_summary').style.display = 'none';
+
         document.getElementById('tableContainer_summaryfilter').style.display = 'none';
-     
 
         document.getElementById('summary-table').style.display = 'block';
-        document.getElementById('popup_road').style.display = 'none';
+        document.getElementById('popup').style.display = 'none';
 
+        // const legendBtn = document.getElementById('legendBtn');
+        // legendBtn.style.bottom = '3%';
         const Materiallegend = document.getElementById('Material_legend');
         Materiallegend.style.display = 'none';
         const Conditionlegend = document.getElementById('Condition_legend');
         Conditionlegend.style.display = 'none';
-      
+        const Typelegend = document.getElementById('type_legend');
+        Typelegend.style.display = 'none';
+
         const Ownerlegend = document.getElementById('Ownership_legend');
         Ownerlegend.style.display = 'none';
         const CUSlegend = document.getElementById('CUS_legend');
         CUSlegend.style.display = 'none';
         const RoadCatlegend = document.getElementById('RoadCategory_legend');
         RoadCatlegend.style.display = 'none';
+       
 
     });
 });
@@ -1837,7 +1990,7 @@ hamburger.addEventListener("click", () => {
     sidebar.classList.toggle("show");
     document.getElementById('query_tab').style.display = 'none';
     document.getElementById('road-filter').style.display = 'none';
- //   document.getElementById('drain-filter').style.display = 'none';
+    //   document.getElementById('drain-filter').style.display = 'none';
 });
 
 cancelIcon.addEventListener("click", () => {
@@ -1852,29 +2005,28 @@ document.querySelectorAll('.tab-cancel-icon').forEach(function (element) {
     });
 });
 
-//------------------------------------- query panel --------------------------------------//
+//---------------------------- query panel ---------------------//
 function query_panel1() {
-	const querypanel = document.getElementById('query_tab');
-	   querypanel.style.display = querypanel.style.display === 'block' ? 'none' : 'block';
-	   document.getElementById('tableContainer_summary').style.display = 'none';
-	   document.getElementById('tableContainer_summaryfilter').style.display = 'none';
-	   
+    var x = document.getElementById("query_tab");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
 }
 
 
-//-------------------------- zone wise road filter start----------------------------//
+
+//-------------- zone wise road filter start-----------------//
 function road_filter() {
     const roadFilter = document.getElementById('road-filter');
     roadFilter.style.display = roadFilter.style.display === 'block' ? 'none' : 'block';
+    document.getElementById('tableContainer_summaryfilter').style.display = 'none';
 }
 //-------------- drain filter --------------------------//
-// function drain_filter() {
-//     const drainFilter = document.getElementById('drain-filter');
-//     drainFilter.style.display = drainFilter.style.display === 'block' ? 'none' : 'block';
-// }
-
-function re_direct() {
-    alert("Data not available");
+function drain_filter() {
+    const drainFilter = document.getElementById('drain-filter');
+    drainFilter.style.display = drainFilter.style.display === 'block' ? 'none' : 'block';
 }
 
 //------------------------ Road , Drain filter & Street View Function toggle ------------------------//
@@ -1894,7 +2046,7 @@ function drain_filter() {
 // Function to handle the visibility of filters and street view
 function toggleFilter(filterId) {
     const filters = ['road-filter']//, 'drain-filter']; // List of filter IDs
-  //  const streetTab = document.getElementById('street-tab'); // Street view section
+    //  const streetTab = document.getElementById('street-tab'); // Street view section
 
     filters.forEach(id => {
         const filter = document.getElementById(id);
@@ -1917,7 +2069,9 @@ function toggleFilter(filterId) {
 document.getElementById('clear-icon').onclick = clearAllVectorLayers;
 function clearAllVectorLayers() {
     clearVectorLayers();
-
+     if (popupOverlay) {
+        popupOverlay.setPosition(undefined);
+    }
     map.getLayers().getArray().forEach(layer => {
         if (layer instanceof ol.layer.Vector) {
             layer.getSource().clear();
@@ -1927,14 +2081,16 @@ function clearAllVectorLayers() {
     if (typeof currentLayer !== 'undefined' && currentLayer) {
         map.removeLayer(currentLayer);
     }
-    const elementsToHide = ["road-filter", "query_tab","popup_road","tableContainer_summary", "search-bar","summary-table","popup","tableContainer_summaryfilter","sidebar","table_data"];
+    const elementsToHide = ["road-filter", "query_tab", "popup_road","tableContainer_summary",  "tableContainer_summaryfilter",  ];
     elementsToHide.forEach(id => {
         const el = document.getElementById(id);
         if (el) {
             el.style.display = "none";
         }
     });
-    const legendIds = ['Condition_legend','Material_legend', 'Ownership_legend', 'CUS_legend','RoadCategory_legend'];
+    const legendIds = [
+        'Priority_legend','LULC_popup', 'type_legend', 'Condition_legend','Material_legend', 'Ownership_legend', 'CUS_legend','RoadCategory_legend', 'Drain_Type_Legend',
+        'Drain_Condition_Legend', 'Drain_Material_Legend','Drain_Status_Legend'];
     legendIds.forEach(legendID => {
         const legendBtn = document.getElementById(legendID);
         if (legendBtn) {
@@ -1948,7 +2104,7 @@ function clearAllVectorLayers() {
     map.getLayers().getArray().slice().forEach(layer => {
         if ((layer instanceof ol.layer.Tile || layer instanceof ol.layer.Image) &&
             (layer.getSource() instanceof ol.source.TileWMS || layer.getSource() instanceof ol.source.ImageWMS)) {
-            if (layer.get('title') !== 'Bareilly Zone Boundary' && layer.get('title') !== 'Bareilly Ward Boundary') {
+            if (layer.get('title') !== 'Jhansi Zone Boundary' && layer.get('title') !== 'Jhansi Ward Boundary') {
                 map.removeLayer(layer);
             }
         }
@@ -1960,21 +2116,19 @@ function zoomToIndia() {
 
     // Define the approximate bounding box for India
     const extent = ol.proj.transformExtent(
-        [82.08302446765529, 26.71400889838419, 82.24602173765878, 26.811349630444568], 
-        'EPSG:4326', 
-        view.getProjection() 
+        [82.08302446765529, 26.71400889838419, 82.24602173765878, 26.811349630444568],
+        'EPSG:4326',
+        view.getProjection()
     );
     // Set the map's center and zoom level explicitly
-    view.setCenter([79.38910919189453,28.396608657836914]);
-    view.setZoom(12); 
+    view.setCenter([78.5665950805664, 25.455008657836914]);
+    view.setZoom(12);
     view.setRotation(0);
 
 }
 
-//-------------------- street view -----------------------//
-function street_view() {
-   alert("Data not available");
-}
+
+//--------------------------------------------------summary table -----------------------------------------------------------//
 
 function navigateTo(tabName) {
     const content = document.getElementById('content');
@@ -1989,31 +2143,17 @@ function navigateTo(tabName) {
     if (activeTab) {
         activeTab.classList.add('active');
     }
-
     if (tabName === 'Summary') {
         updateSummary();
-    } else if (tabName === 'Zones') {
-        if (selectedZone) {
-            updateZones(selectedZone);
+    } 
+    else if (tabName === 'Wards') {
+        if (selectedWard) {
+            updateWards(selectedWard);
         } else {
-            content.innerHTML = '<p>Select a zone from Summary to see details here.</p>';
-        }
-    } else if (tabName === 'Wards') {
-        if (selectedZone) {
-            updateWards(selectedZone);
-        } else {
-            content.innerHTML = '<p>Select a zone from Summary to see wards details here.</p>';
-        }
-    } else if (tabName === 'WardDetails') {
-        if (selectedZone && selectedWard) {
-            updateWardDetails(selectedZone, selectedWard);
-        } else {
-            content.innerHTML = '<p>Select a ward from Wards to see details here.</p>';
+            content.innerHTML = '<p>Select a ward from Summary to see details here.</p>';
         }
     }
-    // } else if (tabName === 'Amenities') {
-    //     showAllZonesForAmenities();  // Display all zones when the "Amenities" tab is clicked
-    // }
+   
 }
 
 
@@ -2022,7 +2162,7 @@ document.getElementById('table_icon').addEventListener('click', loadZones);
 document.getElementById('summary_id').addEventListener('click', loadZones);
 
 
-/* ------------------------------zone no function calling-------------------------------*/
+/* -------------------------------------------zone no function calling------------------------------------------------*/
 function loadZones() {
     fetch(`${BASE_URL}/getTotalZone`)
         .then(response => {
@@ -2041,15 +2181,18 @@ function loadZones() {
 
 function updateSummary(data) {
     if (!data || typeof data !== 'object') {
-       // console.error("❌ updateSummary() received invalid data:", data);
+        // console.error("❌ updateSummary() received invalid data:", data);
         return;
     }
+
     const content = document.getElementById('content');
     if (!content) {
         console.error("❌ #content element not found!");
         return;
     }
+
     content.innerHTML = '';
+
     console.log("✅ Received Data in updateSummary:", data); // For Debugging
 
     const safeValue = (key) => key in data && data[key] !== null && data[key] !== undefined
@@ -2057,65 +2200,65 @@ function updateSummary(data) {
         : 'N/A';
 
     const summaryData = {
-        'No. of Zones': { value: safeValue('zone_count'), onclick: 'Bareilly_Zone_no()' },
-        'Total Road Length': { value: `${safeValue('total_length_km')} km`, onclick: "Bareilly_Road_Length_Count(); updateNavBarWithFunctionName('Total Road Length');" },
-        'Total No. of Roads': { value: safeValue('total_length_count'), onclick: "Bareilly_Road_Length_Count(); updateNavBarWithFunctionName('Total Road Count');" },
-        'Total Ward No.': { value: safeValue('ayo_ward'), onclick: 'Bareilly_Ward_NO()' },
+        'No. of Zones': { value: 'NA' },
+        'Total Road Length': { value: `${safeValue('total_length_km')} km`, onclick: "Jhansi_Road_Length_Count(); updateNavBarWithFunctionName('Total Road Length');" },
+        'Total No. of Roads': { value: safeValue('total_length_count'), onclick: "Jhansi_Road_Length_Count(); updateNavBarWithFunctionName('Total Road Count');" },
+        'Total Ward No.': { value: safeValue('ward_count'), onclick: 'Jhansi_Ward_NO()' },
+
         'Road Count by Condition': {
             value: `
-                Good - <a href="javascript:void(0)" onclick="Bareilly_Condition_cat('condition','Good'); updateNavBarWithFunctionName('Road Condition : Good');" style="color:green;">${safeValue('condition_count_green')}</a><br>
-                Poor - <a href="javascript:void(0)" onclick="Bareilly_Condition_cat('condition','Poor'); updateNavBarWithFunctionName('Road Condition : Poor');" style="color:red;">${safeValue('condition_count_red')}</a><br>
-                Moderate - <a href="javascript:void(0)" onclick="Bareilly_Condition_cat('condition','Moderate'); updateNavBarWithFunctionName('Road Condition : Moderate');" style="color:yellow;">${safeValue('condition_count_yellow')}</a><br>
-              NA - <a href="javascript:void(0)" onclick="Bareilly_Condition_cat('condition','NA'); updateNavBarWithFunctionName('Road Condition : NA');" style="color:pink;">${safeValue('condition_count_na')}</a><br>
+                Good - <a href="javascript:void(0)" onclick="Jhansi_Condition_cat('condition','Good'); updateNavBarWithFunctionName('Road Condition Good');" style="color:green;">${safeValue('condition_count_green')}</a><br>
+                Poor - <a href="javascript:void(0)" onclick="Jhansi_Condition_cat('condition','Poor'); updateNavBarWithFunctionName('Road Condition Poor');" style="color:red;">${safeValue('condition_count_red')}</a><br>
+                Moderate - <a href="javascript:void(0)" onclick="Jhansi_Condition_cat('condition','Moderate'); updateNavBarWithFunctionName('Road Condition Moderate');" style="color:yellow;">${safeValue('condition_count_yellow')}</a><br>
+              NA - <a href="javascript:void(0)" onclick="Jhansi_Condition_cat('condition','NA'); updateNavBarWithFunctionName('Road Condition NA');" style="color:pink;">${safeValue('condition_count_na')}</a><br>
             `
         },
-        
+       
         'Road Count by Material': {
             value: `
-                Bitumen - <a href="javascript:void(0)" onclick="Bareilly_Material_cat('material','Bitumen'); updateNavBarWithFunctionName('Road Material : Bitumen');" style="color:darkred;">${safeValue('count_bitumen')}</a><br>
-                CC - <a href="javascript:void(0)" onclick="Bareilly_Material_cat('material','CC'); updateNavBarWithFunctionName('Road Material : CC');" style="color:#1ad7b0;">${safeValue('count_cc')}</a><br>
-                Interlocking - <a href="javascript:void(0)" onclick="Bareilly_Material_cat('material','Interlocking'); updateNavBarWithFunctionName('Road Material : Interlocking');" style="color:#2392ed;">${safeValue('count_interlocking')}</a><br>
-                BOE - <a href="javascript:void(0)" onclick="Bareilly_Material_cat('material','BOE'); updateNavBarWithFunctionName('Road Material : BOE');" style="color:#f228ab;">${safeValue('count_boe')}</a><br>
-                Kachcha - <a href="javascript:void(0)" onclick="Bareilly_Material_cat('material','Kachcha'); updateNavBarWithFunctionName('Road Material : Kachcha');" style="color:#6036d0;">${safeValue('count_kachcha')}</a><br>
-                NA - <a href="javascript:void(0)" onclick="Bareilly_Material_cat('material','NA'); updateNavBarWithFunctionName('Road Material : NA');" style="color:#dfc223;">${safeValue('count_mat_na')}</a>
+                Bitumen - <a href="javascript:void(0)" onclick="Jhansi_Material_cat('material','Bitumen'); updateNavBarWithFunctionName('Road Material Bitumen');" style="color:darkred;">${safeValue('count_bitumen')}</a><br>
+                CC - <a href="javascript:void(0)" onclick="Jhansi_Material_cat('material','CC'); updateNavBarWithFunctionName('Road Material CC');" style="color:#1ad7b0;">${safeValue('count_cc')}</a><br>
+                Interlocking - <a href="javascript:void(0)" onclick="Jhansi_Material_cat('material','Interlocking'); updateNavBarWithFunctionName('Road Material Interlocking');" style="color:#2392ed;">${safeValue('count_interlocking')}</a><br>
+                Kachcha - <a href="javascript:void(0)" onclick="Jhansi_Material_cat('material','Kachcha'); updateNavBarWithFunctionName('Road Material Kachcha');" style="color:#6036d0;">${safeValue('count_kachcha')}</a><br>
+                NA - <a href="javascript:void(0)" onclick="Jhansi_Material_cat('material','NA'); updateNavBarWithFunctionName('Road Material NA');" style="color:#dfc223;">${safeValue('count_mat_na')}</a>
                 `,
-            onclick: 'Bareilly_Material()'
+            onclick: 'Jhansi_Material()'
         },
         'Road Count by Ownership': {
             value: `
-                BNN - <a href="javascript:void(0)" onclick="Bareilly_Ownership_cat('ownership','BNN'); updateNavBarWithFunctionName('Road Ownership : Bareilly Nagar Nigam');" style="color:#5aeee5;">${safeValue('count_knn')}</a><br>
-                PWD - <a href="javascript:void(0)" onclick="Bareilly_Ownership_cat('ownership','PWD'); updateNavBarWithFunctionName('Road Ownership : PWD');" style="color:#69e70f;">${safeValue('count_pwd')}</a><br>
-                Development Authority - <a href="javascript:void(0)" onclick="Bareilly_Ownership_cat('ownership','Development Authority'); updateNavBarWithFunctionName('Road Ownership : Development Authority');" style="color:#f16a16;">${safeValue('count_kda')}</a><br>
-                Private Roads - <a href="javascript:void(0)" onclick="Bareilly_Ownership_cat('ownership','Private Roads'); updateNavBarWithFunctionName('Road Ownership : Private Road');" style="color:#ed2323;">${safeValue('count_pvt')}</a><br>
-               
-         
+                JNN - <a href="javascript:void(0)" onclick="Jhansi_Ownership_cat('ownership','JNN'); updateNavBarWithFunctionName('Road Ownership Jhansi Nagar Nigam');" style="color: #5aeee5;">${safeValue('count_jnn')}</a><br>
+                PWD - <a href="javascript:void(0)" onclick="Jhansi_Ownership_cat('ownership','PWD'); updateNavBarWithFunctionName('Road Ownership PWD');" style="color: #69e70f;">${safeValue('count_pwd')}</a><br>
+                Department Roads - <a href="javascript:void(0)" onclick="Jhansi_Ownership_cat('ownership','Department Roads'); updateNavBarWithFunctionName('Road Ownership Department Roads');" style="color: #f16a16;">${safeValue('count_kda')}</a><br>
+                Private Roads - <a href="javascript:void(0)" onclick="Jhansi_Ownership_cat('ownership','Private Roads'); updateNavBarWithFunctionName('Road Ownership Private Road');" style="color: #ed2323;">${safeValue('count_pvt')}</a><br>
+                Institutional Roads - <a href="javascript:void(0)" onclick="Jhansi_Ownership_cat('ownership','Institutional Roads'); updateNavBarWithFunctionName('Road Ownership Institutional Roads');" style="color: #831042;">${safeValue('count_pvt')}</a><br>
+                NHAI - <a href="javascript:void(0)" onclick="Jhansi_Ownership_cat('ownership','NHAI'); updateNavBarWithFunctionName('Road Ownership NHAI');" style="color: blue;">${safeValue('count_pvt')}</a><br>
+                Railway - <a href="javascript:void(0)" onclick="Jhansi_Ownership_cat('ownership','Railway'); updateNavBarWithFunctionName('Road Ownership Railway');" style="color: yellow;">${safeValue('count_pvt')}</a><br>
+        
                 `,
-            onclick: 'Bareilly_Ownership()'
+            onclick: 'Jhansi_Ownership()'
         },
         'Road Count by CUS': {
             value: `
-                14th Finance - <a href="javascript:void(0)" onclick="Bareilly_CUS_cat('cus_class','14th Finance'); updateNavBarWithFunctionName('Road CUS : 14th Finance');" style="color: #ec1248;">${safeValue('count_14th')}</a><br>
-                15th Finance - <a href="javascript:void(0)" onclick="Bareilly_CUS_cat('cus_class','15th Finance'); updateNavBarWithFunctionName('Road CUS : 15th Finance');" style="color: #e63dee;">${safeValue('count_15th')}</a><br>
-                Nagar Nigam Nidhi - <a href="javascript:void(0)" onclick="Bareilly_CUS_cat('cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Road CUS : Nagar Nigam Nidhi');" style="color: cyan;">${safeValue('count_nnn')}</a><br>
-                PWD - <a href="javascript:void(0)" onclick="Bareilly_CUS_cat('cus_class','PWD'); updateNavBarWithFunctionName('Road CUS : PWD');" style="color: #173dd6;">${safeValue('count_cus_pwd')}</a><br>
-                DUDA - <a href="javascript:void(0)" onclick="Bareilly_CUS_cat('cus_class','DUDA'); updateNavBarWithFunctionName('Road CUS : DUDA');" style="color: #d4b85a;">${safeValue('count_cus_duda')}</a><br>
-                Others - <a href="javascript:void(0)" onclick="Bareilly_CUS_cat('cus_class','Others'); updateNavBarWithFunctionName('Road CUS : Others');" style="color: #8717e2;">${safeValue('count_cus_others')}</a><br>
+                Nagar Nigam Nidhi - <a href="javascript:void(0)" onclick="Jhansi_CUS_cat('cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Road CUS Nagar Nigam Nidhi');" style="color: cyan;">${safeValue('count_nnn')}</a><br>
+                SFC - <a href="javascript:void(0)" onclick="Jhansi_CUS_cat('cus','SFC'); updateNavBarWithFunctionName('Road CUS SFC');" style="color: #14ea54;">${safeValue('count_cus_sfc')}</a><br>
+                Vidhayak Nidhi - <a href="javascript:void(0)" onclick="Jhansi_CUS_cat('cus','Vidhayak Nidhi'); updateNavBarWithFunctionName('Road CUS Vidhayak Nidhi');" style="color: #6e52e7;">${safeValue('count_cus_vidhayak')}</a><br>
+                Others - <a href="javascript:void(0)" onclick="Jhansi_CUS_cat('cus_class','others'); updateNavBarWithFunctionName('Road CUS Others');" style="color: #c70ed8;">${safeValue('count_cus_others')}</a><br>               
+                NA - <a href="javascript:void(0)" onclick="Jhansi_CUS_cat('cus','NA'); updateNavBarWithFunctionName('Road CUS NA');" style="color: #8717e2;">${safeValue('count_cus_na')}</a><br>
 
-                NA - <a href="javascript:void(0)" onclick="Bareilly_CUS_cat('cus_class','NA'); updateNavBarWithFunctionName('Road CUS : NA');" style="color: #8717e2;">${safeValue('count_cus_na')}</a><br>
+
                 `
             ,
-           // onclick: 'Bareilly_CUS()'
+            // onclick: 'Jhansi_CUS()'
         },
         'Road Count by Category': {
             value: `
-                Local Street - <a href="javascript:void(0)" onclick="Bareilly_TypeSub_cat('category','Local Street'); updateNavBarWithFunctionName('Road Category : Local Street');" style="color: #14cee3;">${safeValue('count_local_street')}</a><br>
-                Collector - <a href="javascript:void(0)" onclick="Bareilly_TypeSub_cat('category','Collector'); updateNavBarWithFunctionName('Road Category : Collector');" style="color: #e63dee;">${safeValue('count_collector')}</a><br>
-                NA - <a href="javascript:void(0)" onclick="Bareilly_TypeSub_cat('category','NA'); updateNavBarWithFunctionName('Road Category : NA');" style="color: #ec1248;">${safeValue('count_expressway')}</a><br>
-                Arterial - <a href="javascript:void(0)" onclick="Bareilly_TypeSub_cat('category','Arterial'); updateNavBarWithFunctionName('Road Category : Arterial');" style="color: #e1ca4c;">${safeValue('count_arterial')}</a><br>
-                Sub Arterial - <a href="javascript:void(0)" onclick="Bareilly_TypeSub_cat('category','Sub Arterial'); updateNavBarWithFunctionName('Road Category : Sub Arterial');" style="color: #83e45c;">${safeValue('count_subarterial')}</a><br>
+                Local Street - <a href="javascript:void(0)" onclick="Jhansi_TypeSub_cat('category','Local Street'); updateNavBarWithFunctionName('Road Category Local Street');" style="color: #14cee3;">${safeValue('count_local_street')}</a><br>
+                Collector - <a href="javascript:void(0)" onclick="Jhansi_TypeSub_cat('category','Collector'); updateNavBarWithFunctionName('Road Category Collector');" style="color: #e63dee;">${safeValue('count_collector')}</a><br>
+                Arterial - <a href="javascript:void(0)" onclick="Jhansi_TypeSub_cat('category','Arterial'); updateNavBarWithFunctionName('Road Category Arterial');" style="color: #e1ca4c;">${safeValue('count_arterial')}</a><br>
+                Sub Arterial - <a href="javascript:void(0)" onclick="Jhansi_TypeSub_cat('category','Sub Arterial'); updateNavBarWithFunctionName('Road Category Sub Arterial');" style="color: #83e45c;">${safeValue('count_subarterial')}</a><br>
 
-                `, onclick: 'Bareilly_Types()'
-            
+                `, onclick: 'Jhansi_Types()'
+
         }
     };
 
@@ -2135,48 +2278,83 @@ function populateZonesDropdown() {
     const zonesDropdown = document.getElementById('zonesDropdown');
     zonesDropdown.innerHTML = ''; // Clear existing content
 
-    // Fetch the zone data from the API
-    fetch(`${BASE_URL}/getZones`)
-        .then(response => response.json())
-        .then(data => {
-            console.log("✅ Zones API Response:", data); // Debugging: Log the API response
+    const zoneData = {
+        "Zone Not Available": "NA",
+    };
 
-            // Check if zones data exists and handle accordingly
-            if (data && data.status && Array.isArray(data.data)) {
-                data.data.forEach(zone => {
-                    const zoneElement = document.createElement('a');
-                    zoneElement.href = "#";
-                    zoneElement.innerHTML = `Zone ${zone.zone_no}`;  // Display zone number, or use zone names if available
+    Object.keys(zoneData).forEach(zoneKey => {
+        const zoneElement = document.createElement('a');
+        zoneElement.href = "#";
+        zoneElement.innerHTML = zoneKey;
 
-                    // When a zone is clicked, fetch and display its wards
-                    zoneElement.onclick = function () {
-                        const zoneNo = zone.zone_no;  // Use 'zone_no' from the API
-                        loadZoneData(zoneNo, `Zone ${zoneNo}`);  // Pass zone name as 'Zone {zone_no}'
-                        populateWardsDropdown(zoneNo);
-                        getZoneBoundary(zoneNo);  // Populate the wards dropdown based on the selected zone
-                        return false;  // Prevent the default anchor link behavior
-                    };
-                    zonesDropdown.appendChild(zoneElement);
-                });
-            } else {
-                console.error("❌ No zones data found or incorrect format:", data);
-                zonesDropdown.innerHTML = "<p>No zones available.</p>";  // Show a fallback message if no zones are found
-            }
-        })
-        .catch(error => {
-            console.error("❌ Error fetching zones data:", error);
-            zonesDropdown.innerHTML = "<p>Error loading zones.</p>";  // Show a fallback message if the fetch fails
-        });
+        zoneElement.onclick = function () {
+            const zoneNo = zoneKey.split(" ")[1]; // Extract zone number
+//loadZoneData(zoneNo, zoneData[zoneKey]);
+  //          populateWardsDropdown(zoneKey);
+          //  getZoneBoundary(zoneNo);
+            return false;
+        };
+
+        zonesDropdown.appendChild(zoneElement);
+    });
 }
 
 populateZonesDropdown();
 
-function loadZoneData(zoneNo, zoneName) {
-    fetch(`${BASE_URL}/getZoneData?zone_no=${zoneNo}`)
+
+function populateWardsDropdown() {
+    const wardsDropdown = document.getElementById('zonesDropdownwards');
+    wardsDropdown.innerHTML = '';
+
+    fetch(`${BASE_URL}/getWards`)
+        .then(response => response.json())
+        .then(res => {
+            console.log("✅ Wards API Response:", res);
+
+            // ✅ API has only { data: [...] }
+            if (!res || !Array.isArray(res.data)) {
+                wardsDropdown.innerHTML = "<p>No wards available.</p>";
+                return;
+            }
+
+            res.data.forEach(item => {
+                const wardNo = item.ward_no;
+
+                const wardElement = document.createElement('a');
+                wardElement.href = "#";
+                wardElement.textContent = `Ward ${wardNo}`;
+
+                // wardElement.onclick = function () {
+                //     loadWardData(wardNo, wardName);
+                //     getwardBoundary(wardNo);
+                //     return false;
+                // };
+                wardElement.onclick = function () {
+                    // const wardNo = zoneKey.split(" ")[1]; 
+                const wardNo = item.ward_no;
+                const wardName = `Ward ${wardNo}`; // ✅ define it
+                loadWardData(wardNo, wardName);
+                getwardBoundary(wardNo);
+                return false;
+                     };
+
+                wardsDropdown.appendChild(wardElement);
+            });
+        })
+        .catch(error => {
+            console.error("❌ Error fetching wards data:", error);
+            wardsDropdown.innerHTML = "<p>Error loading wards.</p>";
+        });
+}
+
+populateWardsDropdown();
+
+function loadWardData( wardNo, wardName){
+    fetch(`${BASE_URL}/getZoneWardData?ward_no=${wardNo}`)
         .then(response => response.json())
         .then(responseData => {
             if (responseData.status) {
-                updateZones(zoneNo, zoneName, responseData);
+                updateWards(wardNo, wardName, responseData);
             } else {
                 console.error('Error:', responseData.message);
             }
@@ -2186,91 +2364,92 @@ function loadZoneData(zoneNo, zoneName) {
         });
 }
 
-function updateZones(zoneNo, zoneName, data) {
+function updateWards(wardNo, wardName, responseData) {
     const content = document.getElementById('content');
     content.innerHTML = '';
 
-    if (!zoneNo || !zoneName || !data) {
-        content.innerHTML = '<p>No data available for this zone.</p>';
+    if (!wardNo || !wardName || !responseData) {
+        content.innerHTML = '<p>No data available for this ward.</p>';
         return;
     }
 
-    // Display Zone Header
-    const zoneInfoCard = document.createElement('div');
-    zoneInfoCard.className = 'card';
-    zoneInfoCard.style.backgroundColor = '#5072A7';
-    zoneInfoCard.style.textAlign = 'center';
-    zoneInfoCard.style.color = 'white';
-    zoneInfoCard.innerHTML = `<h4>${zoneName}</h4>`;
-    content.appendChild(zoneInfoCard);
+    // Display Ward Header
+    const wardInfoCard = document.createElement('div');
+    wardInfoCard.className = 'card';
+    wardInfoCard.style.backgroundColor = '#5072A7';
+    wardInfoCard.style.textAlign = 'center';
+    wardInfoCard.style.color = 'white';
+    wardInfoCard.innerHTML = `<h4>${wardName}</h4>`;
+    content.appendChild(wardInfoCard);
 
-    // Define zone data cards
-    const zoneCards = [
-        { 
-            title: 'Total Road Length', 
-            value: `<a href="javascript:void(0)" onclick="Bareilly_Zone_no('zone_no','${zoneNo}'); updateNavBarWithFunctionName('Zone-${zoneNo} Total Road Length');" style="color:black;">${data.length_km.toFixed(2)} km</a>` 
-        },
-        { 
-            title: 'Total No. of Roads', 
-            value: `<a href="javascript:void(0)" onclick="Bareilly_Zone_no('zone_no','${zoneNo}'); updateNavBarWithFunctionName('Zone-${zoneNo} Total Road Count');" style="color:black;">${data.total_no_of_roads}</a>` 
-        },
-        // { 
-        //     title: 'Road Type', 
-        //     value: `Major <a href="javascript:void(0)" onclick="Bareilly_Zone_Type('${zoneNo}','type','Major City Road'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Type Major');" style="color:blue;">- ${data.total_major_sum}</a> <br> 
-        //             Minor <a href="javascript:void(0)" onclick="Bareilly_Zone_Type('${zoneNo}','type','Minor City Road'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Type Minor');" style="color:yellow;">- ${data.total_minor_sum}</a>`
-        // },
-        { 
-            title: 'Road Condition', 
-            value: `Good <a href="javascript:void(0)" onclick="Bareilly_Zone_Condition('${zoneNo}','condition','Good'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Condition : Good');" style="color:green;">- ${data.count_green}</a> <br> 
-                    Moderate <a href="javascript:void(0)" onclick="Bareilly_Zone_Condition('${zoneNo}','condition','Moderate'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Condition : Moderate');" style="color:yellow;">- ${data.count_yellow}</a> <br> 
-                    Poor <a href="javascript:void(0)" onclick="Bareilly_Zone_Condition('${zoneNo}','condition','Poor'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Condition : Poor');" style="color:red;">- ${data.count_red}</a><br>
-                    NA <a href="javascript:void(0)" onclick="Bareilly_Zone_Condition('${zoneNo}','condition','NA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Condition : NA');" style="color:pink;">- ${data.count_na}</a> <br> 
-                    `
-        },
-        { 
-            title: 'Materials', 
-            value: `Bitumen <a href="javascript:void(0)" onclick="Bareilly_Zone_Material('${zoneNo}','material','Bitumen'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : Bitumen');" style="color:darkred;">- ${data.bitumen}</a> <br>
-                    CC <a href="javascript:void(0)" onclick="Bareilly_Zone_Material('${zoneNo}','material','CC'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : CC');" style="color:#1ad7b0;">- ${data.cc}</a> <br>
-                    Interlocking <a href="javascript:void(0)" onclick="Bareilly_Zone_Material('${zoneNo}','material','Interlocking'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : Interlocking');" style="color:#2392ed;">- ${data.interlocking}</a> <br>
-                    BOE <a href="javascript:void(0)" onclick="Bareilly_Zone_Material('${zoneNo}','material','BOE'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : BOE');" style="color:#f228ab;">- ${data.boe}</a> <br>
-                    Kachcha <a href="javascript:void(0)" onclick="Bareilly_Zone_Material('${zoneNo}','material','Kachcha'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : Kachcha');" style="color:#6036d0;">- ${data.kachcha}</a><br>
-                    NA <a href="javascript:void(0)" onclick="Bareilly_Zone_Material('${zoneNo}','material','NA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : NA');" style="color:#6036d0;">- ${data.count_mat_na}</a>`
+                const wardCards = [
+                   
+                    {
+                        title: 'Total Road Length',
+                        value: `<a href="javascript:void(0)" onclick="Jhansi_Ward_no('ward_no', '${wardNo}'); updateNavBarWithFunctionName('Ward-${wardNo} Total Road Length');" style="color:black;">${responseData.length_km} km</a>`
+                    },
+                    {
+                        title: 'Total No. of Roads',
+                        value: `<a href="javascript:void(0)" onclick="Jhansi_Ward_no('ward_no', '${wardNo}'); updateNavBarWithFunctionName('Ward-${wardNo} Total Road Count');" style="color:black;">${responseData.total_no_of_roads}</a>`
+                    },
+                    {
+                        title: 'Road Condition',
+                        value: `Good - <a href="javascript:void(0)" onclick="Jhansi_Ward_Condition('${wardNo}', 'condition', 'Good'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition Good');" style="color:green;">${responseData.count_green}</a> 
+                                <br> Moderate - <a href="javascript:void(0)" onclick="Jhansi_Ward_Condition('${wardNo}', 'condition', 'Moderate'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition Moderate');" style="color:yellow;">${responseData.count_yellow}</a> 
+                                <br> Poor - <a href="javascript:void(0)" onclick="Jhansi_Ward_Condition('${wardNo}', 'condition', 'Poor'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition Poor');" style="color:red;">${responseData.count_red}</a>
+                                <br> NA - <a href="javascript:void(0)" onclick="Jhansi_Ward_Condition('${wardNo}', 'condition', 'NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition NA');" style="color:pink;">${responseData.count_na}</a>`
 
-                },
-        { 
-            title: 'Ownership', 
-            value: `BNN <a href="javascript:void(0)" onclick="Bareilly_Zone_Ownership('${zoneNo}','ownership','BNN'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : Bareilly Nagar Nigam');" style="color:#5aeee5;">- ${data.knn}</a> <br>
-                    PWD <a href="javascript:void(0)" onclick="Bareilly_Zone_Ownership('${zoneNo}','ownership','PWD'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : PWD');" style="color:#69e70f;">- ${data.pwd}</a> <br>
-                    Private Roads <a href="javascript:void(0)" onclick="Bareilly_Zone_Ownership('${zoneNo}','ownership','Private Roads'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : Private Roads');" style="color:#ed2323;">- ${data.pvt}</a> 
-                    <br> Development Authority - <a href="javascript:void(0)" onclick="Bareilly_Zone_Ownership('${zoneNo}', 'ownership', 'Development Authority'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : Bareilly Development Authority');" style="color:#f16a16;">${data.kda}</a>
-                  `
-                },
-                 {
-                    title: 'CUS',
-                    value: ` 14th Finance - <a href="javascript:void(0)" onclick="Bareilly_Zone_CUS('${zoneNo}','cus_class','14th Finance'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : 14th Finance');" style="color: #ec1248;">${data.count_14th}</a><br>
-                        15th Finance - <a href="javascript:void(0)" onclick="Bareilly_Zone_CUS('${zoneNo}','cus_class','15th Finance'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : 15th Finance');" style="color: #e63dee;">${data.count_15th}</a><br>
-                        Nagar Nigam Nidhi - <a href="javascript:void(0)" onclick="Bareilly_Zone_CUS('${zoneNo}','cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : Nagar Nigam Nidhi');" style="color:cyan;">${data.count_nnn}</a><br>
-                        PWD - <a href="javascript:void(0)" onclick="Bareilly_Zone_CUS('${zoneNo}','cus_class','PWD'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : PWD');" style="color: #173dd6;">${data.count_cus_pwd}</a><br>
-                        DUDA - <a href="javascript:void(0)" onclick="Bareilly_Zone_CUS('${zoneNo}','cus_class','DUDA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : DUDA');" style="color: #d4b85a;">${data.count_cus_duda}</a><br>
-                        Others - <a href="javascript:void(0)" onclick="Bareilly_Zone_CUS('${zoneNo}','cus_class','Others'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : Others');" style="color: #8717e2;">${data.count_cus_others}</a><br>
-                        NA - <a href="javascript:void(0)" onclick="Bareilly_Zone_CUS('${zoneNo}','cus_class','NA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : NA');" style="color: #8717e2;">${data.count_cus_na}</a><br>
-                        `  },
-               {
-                title: 'Type Sub Category',
-                value: `
-                    Local Street - <a href="javascript:void(0)" onclick="Bareilly_Zone_TypeSub('${zoneNo}','category','Local Street'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category : Local Street');" style="color: #14cee3;">${data.count_local_street} </a><br>
-                    Collector - <a href="javascript:void(0)" onclick="Bareilly_Zone_TypeSub('${zoneNo}','category','Collector'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category : Collector');" style="color: #e63dee;">${data.count_collector}</a><br>
-                    NA - <a href="javascript:void(0)" onclick="Bareilly_Zone_TypeSub('${zoneNo}','category','NA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category : NA');" style="color: #ec1248;">${data.count_expressway}</a><br>
-                    Arterial - <a href="javascript:void(0)" onclick="Bareilly_Zone_TypeSub('${zoneNo}','category','Arterial'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category : Arterial');" style="color: #e1ca4c;">${data.count_arterial}</a><br>
-                    Sub Arterial - <a href="javascript:void(0)" onclick="Bareilly_Zone_TypeSub('${zoneNo}','category','Sub Arterial'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category : Sub Arterial');" style="color: #83e45c;">${data.count_subarterial}</a><br>
-    
-                    `
-                ,
-            }
-    ];
+                    },
+                    {
+                        title: 'Materials',
+                        value: `Bitumen - <a href="javascript:void(0)" onclick="Jhansi_Ward_Material('${wardNo}', 'material', 'Bitumen'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material Bitumen');" style="color:darkred;">${responseData.bitumen}</a> 
+                                <br> CC - <a href="javascript:void(0)" onclick="Jhansi_Ward_Material('${wardNo}', 'material', 'CC'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material CC');" style="color:cyan;">${responseData.cc}</a> 
+                                <br> Interlocking - <a href="javascript:void(0)" onclick="Jhansi_Ward_Material('${wardNo}', 'material', 'Interlocking'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material Interlocking');" style="color:blue;">${responseData.interlocking}</a> 
+                                <br> Kachcha - <a href="javascript:void(0)" onclick="Jhansi_Ward_Material('${wardNo}', 'material', 'Kachcha'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material Kachcha');" style="color:purple;">${responseData.kachcha}</a>
+                                 <br> NA - <a href="javascript:void(0)" onclick="Jhansi_Ward_Material('${wardNo}', 'material', 'NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material NA');" style="color:pink;">${responseData.NA}</a> 
+
+                                `
+                    },
+                    {
+                        title: 'Ownership',
+                        value: `JNN - <a href="javascript:void(0)" onclick="Jhansi_Ward_Ownership('${wardNo}', 'ownership','JNN'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership Jhansi Nagar Nigam');" style="color:#5aeee5;">${responseData.jnn}</a> 
+                                 <br> NHAI - <a href="javascript:void(0)" onclick="Jhansi_Ward_Ownership('${wardNo}', 'ownership', 'NHAI'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership Jhansi NHAI');" style="color:#f16a16;">${responseData.nhai}</a>
+       
+                                <br> PWD - <a href="javascript:void(0)" onclick="Jhansi_Ward_Ownership('${wardNo}', 'ownership', 'PWD'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership PWD');" style="color:#69e70f;">${responseData.pwd}</a> 
+                                <br> PVT - <a href="javascript:void(0)" onclick="Jhansi_Ward_Ownership('${wardNo}', 'ownership', 'Private Roads'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership Private Roads');" style="color:#ed2323;">${responseData.pvt}</a> 
+                                <br> Department Roads - <a href="javascript:void(0)" onclick="Jhansi_Ward_Ownership('${wardNo}', 'ownership', 'Department Roads'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership Jhansi Department Roads');" style="color:#f16a16;">${responseData.department}</a>
+                                <br> Institutional Roads - <a href="javascript:void(0)" onclick="Jhansi_Ward_Ownership('${wardNo}', 'ownership', 'Institutional Roads'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership Jhansi Institutional Roads');" style="color:#f16a16;">${responseData.institutional}</a>                         
+                                <br> Defence  - <a href="javascript:void(0)" onclick="Jhansi_Ward_Ownership('${wardNo}', 'ownership', 'Defence '); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership Jhansi Defence');" style="color:#f16a16;">${responseData.defence}</a>          
+                                <br> Railway - <a href="javascript:void(0)" onclick="Jhansi_Ward_Ownership('${wardNo}', 'ownership', 'Railway'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership Railway');" style="color:yellow;">${responseData.railway}</a> 
+                        `
+
+                    },
+                    {
+                        title: 'CUS',
+                        value: ` Commisioner Compound - <a href="javascript:void(0)" onclick="Jhansi_Ward_CUS('${wardNo}','cus','Commissioner Compound'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS Commissioner Compound');" style="color: #ec1248;">${responseData.compound}</a><br>
+                                    Rural Development - <a href="javascript:void(0)" onclick="Jhansi_Ward_CUS('${wardNo}','cus','Rural Development'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS Rural Development');" style="color: #e63dee;">${responseData.rural}</a><br>
+                                    Nagar Nigam Nidhi - <a href="javascript:void(0)" onclick="Jhansi_Ward_CUS('${wardNo}','cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS Nagar Nigam Nidhi');" style="color:cyan;">${responseData.nnn}</a><br>
+                                    SFC - <a href="javascript:void(0)" onclick="Jhansi_Ward_CUS('${wardNo}','cus','SFC'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS SFC');" style="color: #173dd6;">${responseData.pwd}</a><br>
+                                    Vidhayak Nidhi - <a href="javascript:void(0)" onclick="Jhansi_Ward_CUS('${wardNo}','cus','Vidhayak Nidhi'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS Vidhayak Nidhi');" style="color: #6e52e7;">${responseData.vidhayak}</a><br>
+                                    Others - <a href="javascript:void(0)" onclick="Jhansi_Ward_CUS('${wardNo}','cus_class','others'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS Others');" style="color: #c70ed8;">${responseData.others}</a><br>                                 
+                                    NA - <a href="javascript:void(0)" onclick="Jhansi_Ward_CUS('${wardNo}','cus','NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS NA');" style="color: #8717e2;;">${responseData.na}</a><br>
+                          
+                                    `  },
+                    {
+                        title: 'Type Sub Category',
+                        value: `
+                                Local Street - <a href="javascript:void(0)" onclick="Jhansi_Ward_TypeSub('${wardNo}','category','Local Street'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category Local Street');" style="color: #14cee3;">${responseData.count_local_street} </a><br>
+                                Collector - <a href="javascript:void(0)" onclick="Jhansi_Ward_TypeSub('${wardNo}','category','Collector'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category Collector');" style="color: #e63dee;">${responseData.count_collector}</a><br>
+                                Arterial - <a href="javascript:void(0)" onclick="Jhansi_Ward_TypeSub('${wardNo}','category','Arterial'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category Arterial');" style="color: #e1ca4c;">${responseData.count_arterial}</a><br>
+                                Sub Arterial - <a href="javascript:void(0)" onclick="Jhansi_Ward_TypeSub('${wardNo}','category','Sub Arterial'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category Sub Arterial');" style="color: #83e45c;">${responseData.count_subarterial}</a><br>
+                
+                                `
+                        ,
+                    }
+                ];
 
     // Append cards to the content div
-    zoneCards.forEach(card => {
+    wardCards.forEach(card => {
         const cardElement = document.createElement('div');
         cardElement.className = 'card';
         cardElement.innerHTML = `<h4>${card.title}</h4><p>${card.value}</p>`;
@@ -2278,288 +2457,6 @@ function updateZones(zoneNo, zoneName, data) {
     });
 }
 
-
-//----------------------------------------------- all Zone Data is Corrected-------------------------------------------------------------
-
-function showAllZones() {
-    const content = document.getElementById('content');
-    content.innerHTML = '';
-
-    // Handle active class for the Zones tab
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(tab => tab.classList.remove('active'));
-
-    const zonesTab = document.querySelector('[data-tab="Zones"]');
-    if (zonesTab) {
-        zonesTab.classList.add('active');
-    }
-
-    const zoneKeys = Object.keys(data).filter(key => key !== 'Summary' && key !== 'View');
-
-    zoneKeys.forEach(zoneName => {
-        const zoneData = data[zoneName];
-
-        // Create a container for each zone and a dropdown list for wards
-        const zoneContainer = document.createElement('div');
-        zoneContainer.className = 'zone-container';
-
-        const zoneElement = document.createElement('div');
-        zoneElement.className = 'card';
-        // zoneElement.style.backgroundColor = getUniqueColor();
-        zoneElement.innerHTML = `
-            <h4>${zoneName}</h4>
-            <a href="#" onclick="toggleDropdown('${zoneName}'); return false;">Toggle Wards</a>
-        `;
-
-        // Create a dropdown container for the wards
-        const dropdown = document.createElement('div');
-        dropdown.className = 'dropdown';
-        dropdown.id = `dropdown-${zoneName}`;
-        dropdown.style.display = 'none'; // Initially hidden
-
-        // Add each ward to the dropdown
-        const wards = Object.keys(zoneData.wards);
-        wards.forEach(wardName => {
-            const wardElement = document.createElement('div');
-            wardElement.className = 'ward-item';
-            wardElement.innerHTML = `
-                <p>${wardName}</p>
-                <a href="#" onclick="setCurrentWard('${zoneName}', '${wardName}'); return false;">View Details</a>
-            `;
-            dropdown.appendChild(wardElement);
-        });
-
-        // Append the dropdown to the zone container
-        zoneContainer.appendChild(zoneElement);
-        zoneContainer.appendChild(dropdown);
-
-        // Append the zone container to the content
-        content.appendChild(zoneContainer);
-    });
-}
-
-function toggleDropdown(zoneName) {
-    const dropdown = document.getElementById(`dropdown-${zoneName}`);
-    if (dropdown.style.display === 'none') {
-        dropdown.style.display = 'block';
-    } else {
-        dropdown.style.display = 'none';
-    }
-}
-
-//----------------------------zone  card count summary ----------------------------------------
-function setCurrentZone(zoneName) {
-    selectedZone = zoneName;
-    updateZones(zoneName);
-}
-
-// ----------------------------------show all zones--------------------------------------------
-function showZoneDetails(zoneName) {
-    // Implement the logic based on your requirement
-    console.log("Selected zone: " + zoneName);
-    showAllZones(); // Or use another function to show the selected zone details
-}
-
-
-// //------------------------------- ward populate -------------------------------------------------------------------------------
-
-function populateWardsDropdown(zoneNo) {
-    const wardsDropdown = document.getElementById('zonesDropdownwards');
-    wardsDropdown.innerHTML = ''; // Clear existing content
-
-    // Fetch the wards data for the selected zone
-    fetch(`${BASE_URL}/getWardsForZone?zone_no=${zoneNo}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log("✅ Wards API Response:", data);  // Debugging: Log the wards data
-
-            if (data && data.status && Array.isArray(data.data)) {
-                // Loop through the wards and create links
-                data.data.forEach(ward => {
-                    const wardElement = document.createElement('a');
-                    wardElement.href = "#";
-                    wardElement.innerHTML = `Ward ${ward.ward_no}`;  // Assuming the ward has 'ward_no' property
-
-                    // When a ward is clicked, load its details
-                    wardElement.onclick = function () {
-                        const wardNo = ward.ward_no;  // Use 'ward_no' from the API
-                        loadWardData(zoneNo, wardNo, `Ward ${wardNo}`); 
-                        getwardBoundary(wardNo); // Fetch ward data
-                        return false;  // Prevent the default anchor link behavior
-                    };
-
-                    wardsDropdown.appendChild(wardElement);
-                });
-            } else {
-                console.error("❌ No wards data found for the selected zone:", data);
-                wardsDropdown.innerHTML = "<p>No wards available for this zone.</p>";  // Show a fallback message if no wards are found
-            }
-        })
-        .catch(error => {
-            console.error("❌ Error fetching wards data:", error);
-            wardsDropdown.innerHTML = "<p>Error loading wards.</p>";  // Show a fallback message if the fetch fails
-        });
-}
-
-
-function loadWardData(zoneNo, wardNo, wardName) {
-    fetch(`${BASE_URL}/getZoneWardData?zone_no=${zoneNo}&ward_no=${wardNo}`)
-        .then(response => response.json())
-        .then(responseData => {
-            if (responseData.status) {
-                console.log("Ward Data Fetched:", responseData);
-
-                // Get content container
-                const content = document.getElementById('content');
-                content.innerHTML = '';
-
-                // Set active class for the Wards tab
-                document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-                document.querySelector('[data-tab="Wards"]')?.classList.add('active');
-
-                // Create Ward Info Card
-                const wardInfoCard = document.createElement('div');
-                wardInfoCard.className = 'card ward-card';
-                wardInfoCard.innerHTML = `<h4>${wardName}</h4>`;
-                content.appendChild(wardInfoCard);
-
-                // Define dynamic details with colors and onclick functions
-                const details = [
-                    // { 
-                    //     title: 'Road Type', 
-                    //     value: `Major - <a href="javascript:void(0)" onclick="Bareilly_Ward_Type('${wardNo}', 'type', 'Major City Road'); updateNavBarWithFunctionName('Ward-${wardNo} Road Type Major');" style="color:blue;">${responseData.total_major_sum}</a><br> 
-                    //              Minor - <a href="javascript:void(0)" onclick="Bareilly_Ward_Type('${wardNo}', 'type', 'Minor City Road'); updateNavBarWithFunctionName('Ward-${wardNo} Road Type Minor');" style="color:orange;">${responseData.total_minor_sum}</a>` 
-                    // },
-                    { 
-                        title: 'Total Road Length', 
-                        value: `<a href="javascript:void(0)" onclick="Bareilly_Zone_no('ward_no', '${wardNo}'); updateNavBarWithFunctionName('Ward-${wardNo} Total Road Length');" style="color:black;">${responseData.length_km} km</a>` 
-                    },
-                    { 
-                        title: 'Total No. of Roads', 
-                        value: `<a href="javascript:void(0)" onclick="Bareilly_Zone_no('ward_no', '${wardNo}'); updateNavBarWithFunctionName('Ward-${wardNo} Total Road Count');" style="color:black;">${responseData.total_no_of_roads}</a>` 
-                    },
-                    { 
-                        title: 'Road Condition', 
-                        value: `Good - <a href="javascript:void(0)" onclick="Bareilly_Ward_Condition('${wardNo}', 'condition', 'Good'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition : Good');" style="color:green;">${responseData.count_green}</a> 
-                                <br> Moderate - <a href="javascript:void(0)" onclick="Bareilly_Ward_Condition('${wardNo}', 'condition', 'Moderate'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition : Moderate');" style="color:yellow;">${responseData.count_yellow}</a> 
-                                <br> Poor - <a href="javascript:void(0)" onclick="Bareilly_Ward_Condition('${wardNo}', 'condition', 'Poor'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition : Poor');" style="color:red;">${responseData.count_red}</a>
-                                <br> NA - <a href="javascript:void(0)" onclick="Bareilly_Ward_Condition('${wardNo}', 'condition', 'NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition : NA');" style="color:pink;">${responseData.count_na}</a>` 
-
-                            },
-                    { 
-                        title: 'Materials', 
-                        value: `Bitumen - <a href="javascript:void(0)" onclick="Bareilly_Ward_Material('${wardNo}', 'material', 'Bitumen'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : Bitumen');" style="color:darkred;">${responseData.bitumen}</a> 
-                                <br> CC - <a href="javascript:void(0)" onclick="Bareilly_Ward_Material('${wardNo}', 'material', 'CC'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : CC');" style="color:cyan;">${responseData.cc}</a> 
-                                <br> Interlocking - <a href="javascript:void(0)" onclick="Bareilly_Ward_Material('${wardNo}', 'material', 'Interlocking'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : Interlocking');" style="color:blue;">${responseData.interlocking}</a> 
-                                <br> BOE - <a href="javascript:void(0)" onclick="Bareilly_Ward_Material('${wardNo}', 'material', 'BOE'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : BOE');" style="color:pink;">${responseData.boe}</a> 
-                                <br> Kachcha - <a href="javascript:void(0)" onclick="Bareilly_Ward_Material('${wardNo}', 'material', 'Kachcha'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : Kachcha');" style="color:purple;">${responseData.kachcha}</a>
-                                <br> NA - <a href="javascript:void(0)" onclick="Bareilly_Ward_Material('${wardNo}', 'material', 'NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : NA');" style="color:pink;">${responseData.count_mat_na}</a>`
-
-                            },
-                    { 
-                        title: 'Ownership', 
-                        value: `BNN - <a href="javascript:void(0)" onclick="Bareilly_Ward_Ownership('${wardNo}', 'ownership','BNN'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership : Bareilly Nagar Nigam');" style="color:#5aeee5;">${responseData.knn}</a> 
-                                <br> PWD - <a href="javascript:void(0)" onclick="Bareilly_Ward_Ownership('${wardNo}', 'ownership', 'PWD'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership : PWD');" style="color:#69e70f;">${responseData.pwd}</a> 
-                                <br> PVT - <a href="javascript:void(0)" onclick="Bareilly_Ward_Ownership('${wardNo}', 'ownership', 'Private Roads'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership : Private Roads');" style="color:#ed2323;">${responseData.pvt}</a> 
-                                <br> Development Authority - <a href="javascript:void(0)" onclick="Bareilly_Ward_Ownership('${wardNo}', 'ownership', 'Development Authority'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership : Bareilly Development Authority');" style="color:#f16a16;">${responseData.kda}</a>
-                                `
-                            },
-                            {
-                                title: 'CUS',
-                                value: ` 14th Finance - <a href="javascript:void(0)" onclick="Bareilly_Ward_CUS('${wardNo}','cus_class','14th Finance'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS : 14th Finance');" style="color: #ec1248;">${responseData.count_14th14th}</a><br>
-                                    15th Finance - <a href="javascript:void(0)" onclick="Bareilly_Ward_CUS('${wardNo}','cus_class','15th Finance'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS : 15th Finance');" style="color: #e63dee;">${responseData.count_15th15th}</a><br>
-                                    Nagar Nigam Nidhi - <a href="javascript:void(0)" onclick="Bareilly_Ward_CUS('${wardNo}','cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS : Nagar Nigam Nidhi');" style="color:cyan;">${responseData.count_nnn}</a><br>
-                                    PWD - <a href="javascript:void(0)" onclick="Bareilly_Ward_CUS('${wardNo}','cus_class','PWD'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS : PWD');" style="color: #14ea54;">${responseData.count_cus_pwd}</a><br>
-                                    DUDA - <a href="javascript:void(0)" onclick="Bareilly_Ward_CUS('${wardNo}','cus_class','Duda'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS : DUDA');" style="color: #d4b85a;">${responseData.count_cus_duda}</a><br>
-                                    NA - <a href="javascript:void(0)" onclick="Bareilly_Ward_CUS('${wardNo}','cus_class','NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS : NA');" style="color: #8717e2;;">${responseData.count_cus_na}</a><br>
-                                    Others - <a href="javascript:void(0)" onclick="Bareilly_Ward_CUS('${wardNo}','cus_class','Others'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS : Others');" style="color: #8717e2;;">${responseData.count_cus_others}</a><br>
-
-                                    `  },
-                           {
-                            title: 'Type Sub Category',
-                            value: `
-                                Local Street - <a href="javascript:void(0)" onclick="Bareilly_Ward_TypeSub('${wardNo}','category','Local Street'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category : Local Street');" style="color: #14cee3;">${responseData.count_local_street} </a><br>
-                                Collector - <a href="javascript:void(0)" onclick="Bareilly_Ward_TypeSub('${wardNo}','category','Collector'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category : Collector');" style="color: #e63dee;">${responseData.count_collector}</a><br>
-                                NA - <a href="javascript:void(0)" onclick="Bareilly_Ward_TypeSub('${wardNo}','category','NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category : NA');" style="color: #ec1248;">${responseData.count_expressway}</a><br>
-                                Arterial - <a href="javascript:void(0)" onclick="Bareilly_Ward_TypeSub('${wardNo}','category','Arterial'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category : Arterial');" style="color: #e1ca4c;">${responseData.count_arterial}</a><br>
-                                Sub Arterial - <a href="javascript:void(0)" onclick="Bareilly_Ward_TypeSub('${wardNo}','category','Sub Arterial'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category : Sub Arterial');" style="color: #83e45c;">${responseData.count_subarterial}</a><br>
-                               `,}
-                        ];
-
-                // Create and append vertical detail cards
-                details.forEach(detail => {
-                    const detailElement = document.createElement('div');
-                    detailElement.className = 'card detail-card';
-                    detailElement.innerHTML = `<h4>${detail.title}</h4><p>${detail.value}</p>`;
-                    content.appendChild(detailElement);
-                });
-
-            } else {
-                console.error('Error:', responseData.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching ward data:', error);
-        });
-}
-
-
-function setCurrentWard(zoneName, wardName) {
-    selectedZone = zoneName;
-    selectedWard = wardName;
-    navigateTo('WardDetails');
-}
-
-let selectedZone = null;
-let selectedWard = null;
-
-function removeWards() {
-    selectedWard = ''; // Clear current ward selection
-    const content = document.getElementById('content');
-    content.innerHTML = '';
-}
-
-//--------------------------------------ward wise Deatils -------------------------------------------------------------------------
-
-function updateWards(zoneName) {
-    const content = document.getElementById('content');
-    content.innerHTML = '';
-
-    // Display a card showing which zone's wards are being displayed
-    const wardInfoCard = document.createElement('div');
-    wardInfoCard.className = 'card';
-    wardInfoCard.style.backgroundColor = '#5072A7';
-    wardInfoCard.style.alignContent = 'center';
-    wardInfoCard.style.textAlign = 'center';
-    wardInfoCard.style.color = 'white';
-    wardInfoCard.innerHTML = `
-        <h4> Wards in ${zoneName}</h4>
-    `;
-    content.appendChild(wardInfoCard);
-
-    if (!data[zoneName] || !data[zoneName].wards) {
-        const noWardsCard = document.createElement('div');
-        noWardsCard.className = 'card';
-        // noWardsCard.style.backgroundColor = getUniqueColor();
-        noWardsCard.innerHTML = '<p>No wards data available for this zone.</p>';
-        content.appendChild(noWardsCard);
-        return;
-    }
-
-    const wards = data[zoneName].wards;
-    Object.keys(wards).forEach(wardName => {
-        const ward = wards[wardName];
-        const wardElement = document.createElement('div');
-        wardElement.className = 'card';
-        // wardElement.style.backgroundColor = getUniqueColor();
-        wardElement.innerHTML = `
-            <h4>${wardName}</h4>
-            <p>Total No. of Roads: ${ward.totalRoads}</p>
-            <a href="#${wardName}" onclick="setCurrentWard('${wardName}'); return false;">View Details</a>
-        `;
-        content.appendChild(wardElement);
-    });
-}
 
 function minimize() {
     const topnav = document.getElementById('topnav');
@@ -2588,17 +2485,17 @@ function maximize() {
 function closeNav() {
     document.getElementById('topnav').style.display = 'none';
     document.getElementById('content-wrapper').style.display = 'none';
- //   document.getElementById('showButton').classList.add('show');
+    //   document.getElementById('showButton').classList.add('show');
 }
 
 function summary_table() {
-console.log("table-icon clicked");
+    console.log("table-icon clicked");
     const topnav = document.getElementById('topnav');
     const contentWrapper = document.getElementById('content-wrapper');
 
     document.getElementById('road-filter').style.display = 'none';
     // document.getElementById('drain-filter').style.display = 'none';
-     document.getElementById('query_tab').style.display = 'none';
+    document.getElementById('query_tab').style.display = 'none';
 
 
     if (topnav.classList.contains('hidden')) {
@@ -2624,8 +2521,8 @@ navigateTo('Summary');
 function clearVectorLayers() {
     // Create an array to hold layers that you want to preserve
     map.getLayers().getArray().slice().forEach(layer => {
-        if (layer instanceof ol.layer.Vector 
-           //  && !isLayerInPreservedList(layer)
+        if (layer instanceof ol.layer.Vector
+            //  && !isLayerInPreservedList(layer)
         ) {
             map.removeLayer(layer);
         }
@@ -2633,6 +2530,7 @@ function clearVectorLayers() {
     map.getOverlays().clear();
 
 }
+
 
 // function for highlighting table row and click on table then highlight layer--------------//
 
@@ -2730,26 +2628,25 @@ function highlightTableRowByGISID(gisId) {
 let highlightLayer;
 // :white_check_mark: Function to Append Data to Table and Add Click Event for Highlighting
 function Table_Row_and_Layer_highlight(data) {
-   // let dataTableBody_summary = document.getElementById("dataTableBody_summary");
     dataTableBody_summary.innerHTML = ""; // Clear previous data
     if (Array.isArray(data)) {
         data.forEach(item => {
             const row = document.createElement('tr');
-                 row.innerHTML = `
+            row.innerHTML = `
                 <td>${item.gis_id}</td>
-                <td>${item.road_id}</td>
                 <td>${item.zone_no}</td>
                 <td>${item.zone_name}</td>
                 <td>${item.ward_no}</td>
                 <td>${item.ward_name}</td>
                 <td>${item.ownership}</td>
-                <td>${item.category}</td>
+               
+                 <td>${item.category}</td>
                 <td>${item.road_name}</td>
                 <td>${item.row_meter}</td>
                 <td>${item.row_apr}</td>
                 <td>${item.carriage_w}</td>
                 <td>${item.material}</td>
-                <td>${item.length_km ? item.length_km.toFixed(2) : 'N/A'}</td>
+                <td>${item.length_km}</td>
                 <td>${item.condition}</td>
                 <td>${item.yoc}</td>
                 <td>${item.cus}</td>
@@ -2777,7 +2674,7 @@ function highlightTableRow(selectedRow) {
 // :white_check_mark: Function to Highlight Feature on Map Based on GIS ID
 function highlightFeatureOnMap(gisId) {
     let wfsUrl = `${GEOSERVER_BASE_URL}/wfs?service=WFS&version=1.1.0&request=GetFeature
-        &typename=BRL_Summary:bareilly_road_net
+        &typename=JHS_Summary:jhansi_road_net
         &outputFormat=application/json
         &CQL_FILTER=gis_id=${gisId}`;
     console.log('Fetching Feature:', wfsUrl);
@@ -2805,7 +2702,7 @@ function addFeatureHighlight(feature) {
         console.warn("No feature found to highlight.");
         return;
     }
-     highlightLayer = new ol.layer.Vector({
+    highlightLayer = new ol.layer.Vector({
         source: new ol.source.Vector(),
         style: new ol.style.Style({
             stroke: new ol.style.Stroke({
@@ -2818,7 +2715,7 @@ function addFeatureHighlight(feature) {
         })
     });
     map.addLayer(highlightLayer); // Add highlight layer to map
-   //.getSource().clear(); // Clear previous highlights
+    //.getSource().clear(); // Clear previous highlights
     highlightLayer.getSource().addFeature(feature); // Add feature to highlight layer
     // Ensure the feature has valid geometry before zooming
     let extent = feature.getGeometry().getExtent();
@@ -2828,6 +2725,45 @@ function addFeatureHighlight(feature) {
         console.warn("Feature has invalid geometry:", feature);
     }
 }
+
+
+// Function to append data to the table
+// function appendToSummaryTablefilter(data) {
+//     if (Array.isArray(data)) {
+//         data.forEach(item => {
+//             const row = document.createElement('tr');
+//             row.innerHTML = `
+//                 <td>${item.gis_id}</td>
+//                 <td>${item.zone_no}</td>
+//                 <td>${item.zone_name}</td>
+//                 <td>${item.ward_no}</td>
+//                 <td>${item.ward_name}</td>
+//                 <td>${item.ownership}</td>
+               
+//                 <td>${item.road_name}</td>
+//                 <td>${item.row_meter}</td>
+//                 <td>${item.row_apr}</td>
+//                 <td>${item.carriage_w}</td>
+//                 <td>${item.material}</td>
+//                 <td>${item.length_km}</td>
+//                 <td>${item.condition}</td>
+//                 <td>${item.yoc}</td>
+//                 <td>${item.cus}</td>
+//                 <!-- Add more table columns if necessary -->
+//             `;
+//             dataTableBody_summaryfilter.appendChild(row);
+//             row.addEventListener('click', function () {
+//                 if (item.geom_wkt) {
+//                     zoomToRoadFeature(item.geom_wkt);  // Zoom to the road and highlight it
+//                     highlightAndScrollToRow(row);      // Highlight the clicked row
+//                 }
+//             });
+
+//         });
+//     } else {
+//         console.error('Expected an array but received:', data);
+//     }
+// }
 
 //-----------------------------Data fetch to table summary------------//
 
@@ -2840,54 +2776,16 @@ function removeCurrentLayer() {
     }
 }
 
-// function Bareilly_Zone_no() {
-//     removeCurrentLayer();
-//     clearVectorLayers();
-//     // Create the WMS layer
-//     currentLayer = new ol.layer.Image({
-//         title: 'Zone Boundary',
-//         source: new ol.source.ImageWMS({
-//             url: 'http://localhost:8080/geoserver/Ayodhya/wms',
-//             params: {
-//                 'LAYERS': 'Ayodhya:Ayodhaya Zone Boundary',
-//                 // 'TILED':true,
-//                 // 'FORMAT': 'image/png8'
-//             },
-//             ratio: 1,
-//             serverType: 'geoserver'
-//         })
-//     });
 
-//     // Add the layer to the map
-//     map.addLayer(currentLayer);
-// }
-// function Bareilly_Ward_NO() {
-//     removeCurrentLayer(); clearVectorLayers();
-//     currentLayer = new ol.layer.Image({
-//         title: 'Ward Boundary',
-//         //     extent: [-180, -90, -180, 90],
-//         source: new ol.source.ImageWMS({
-//             url: 'http://localhost:8080/geoserver/Ayodhya/wms',
-//             params: {
-//                 'LAYERS': 'Ayodhya:Ayodhaya Ward Boundary',
-
-//             },
-//             ratio: 1,
-//             serverType: 'geoserver'
-//         })
-//     });
-
-//     //overlays.getLayers().push(LNN_Ward_Boundary);
-//     map.addLayer(currentLayer);
-// }
 
 //--------------popup code for road----------------------//
-function BNN_Road_popup() {
-
+function JNN_Road_popup() {
+  
     const existingPopup = document.getElementById('popup_road');
     if (existingPopup) {
         existingPopup.remove();  // Remove any old popups
     }
+
     // Create a popup element
     const popup = document.createElement('div');
     popup.id = 'popup_road';
@@ -2895,8 +2793,10 @@ function BNN_Road_popup() {
 
     document.body.appendChild(popup);
 
+   
+
     // Add a click event listener
-  map.on('singleclick', function (event) {
+    map.on('singleclick', function (event) {
 
         const viewResolution = map.getView().getResolution();
         const projection = map.getView().getProjection();
@@ -2911,83 +2811,75 @@ function BNN_Road_popup() {
                 { 'INFO_FORMAT': 'application/json' }
             );
 
-	if (url) {
-				fetch(url)
-				.then(res => res.json())
-				.then(data => {
-					if (data.features && data.features.length > 0) {
-					const properties = data.features[0].properties;
-					selectedRoadProperties = properties;
-					popup.innerHTML = buildPopupHTML(properties);
-					popup.style.display = 'block';
-				// Attach close button AFTER HTML loads
-					setTimeout(() => {
-					const closeBtn = document.getElementById("popupCloseBtn");
-					if (closeBtn) {
-						closeBtn.onclick = () => popup.style.display = "none";
-							}
-							}, 0);
-						 } else popup.style.display = 'none';
-					 })
-					.catch(() => popup.style.display = 'none');
-						}
-					 return;
-					}
-				// ---------- VECTOR LAYER ----------
-					let found = false;
-					map.forEachFeatureAtPixel(event.pixel, function (feature, layer) {
-						if (layer === currentLayer) {
-							const properties = feature.getProperties();
-							selectedRoadProperties = properties;
-							popup.innerHTML = buildPopupHTML(properties);
-							popup.style.display = 'block';
-						// Attach close button AFTER HTML loads
-							setTimeout(() => {
-								const closeBtn = document.getElementById("popupCloseBtn");
-								if (closeBtn) {
-								    closeBtn.onclick = () => popup.style.display = "none";
-								        }
-								    }, 0);
-								found = true;
-								return true;
-								    }
-								});
-						if (!found)popup.style.display = 'none';
-					});
-			    function buildPopupHTML(properties) {
-			        return `
-					<div style=" position:relative; background: rgb(255 255 255 / 90%); color: rgba(0, 0, 0, 1); padding: 10px 13px; border-radius: 10px;
-							            border-left: 4px solid #3772a7ff; box-shadow: 0 2px 10px rgba(240, 235, 235, 0.5); font-family: 'Segoe UI', Roboto, sans-serif; font-size: 14px;
-							            line-height: 1.5; max-width: 330px; ">
-					<span id="popupCloseBtn" style=" position:absolute; top:6px; right:0px; cursor:pointer;
-					                font-size:20px; color:#ff0000; font-weight:bold; ">&times;</span>
-								<h3 style="margin-top:0; margin-bottom:8px; font-size:21px; color:brown;
-								                  font-weight:900; border-bottom:1px solid #2a6194ff; padding-bottom:4px;">
-								           Road Information
-								       </h3>
-					  <div class="row-line"><strong>Road Id :</strong> ${properties.road_id || 'N/A'}</div>
-					  <div class="row-line"><strong>Zone No :</strong> ${properties.zone_no || 'N/A'}</div>
-					  <div class="row-line"><strong>Zone Name :</strong> ${properties.zone_name || 'N/A'}</div>
-					  <div class="row-line"><strong>Ward No :</strong> ${properties.ward_no || 'N/A'}</div>
-					  <div class="row-line"><strong>Ward Name :</strong> ${properties.ward_name || 'N/A'}</div>
-					  <div class="row-line"><strong>Right of Way :</strong> ${properties.row_meter || 'N/A'}</div>
-					  <div class="row-line"><strong>Carriage Width :</strong> ${properties.carriage_w || 'N/A'}</div>
-					  <div class="row-line"><strong>Category :</strong> ${properties.category || 'N/A'}</div>
-					  <div class="row-line"><strong>Condition :</strong> ${properties.condition || 'N/A'}</div>
-					  <div class="row-line"><strong>Material :</strong> ${properties.material || 'N/A'}</div>
-					  <div class="row-line"><strong>Ownership :</strong> ${properties.ownership || 'N/A'}</div>
-					  <div class="row-line"><strong>Length (Km) :</strong> ${
-					      properties.length_km !== null && properties.length_km !== undefined
-					          ? Number(properties.length_km).toFixed(2)
-					          : 'N/A'
-					  }</div>
+            if (url) {
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.features && data.features.length > 0) {
+                            const feature = data.features[0];
+                            const properties = feature.properties;
+                            selectedRoadProperties = properties;
 
-					  <div class="row-line"><strong>Road Name :</strong> ${properties.road_name || 'N/A'}</div>
-					</div>
-					        `;
-			    }
-			}
-function Bareilly_Road_Length_Count() {
+                            // Show the popup with feature info
+                            popup.innerHTML = buildPopupHTML(properties);
+                            popup.style.display = 'block';
+
+                        } else {
+                            popup.style.display = 'none';
+                        }
+                    })
+                    .catch(() => {
+                        popup.style.display = 'none';
+                    });
+            } else {
+                popup.style.display = 'none';
+            }
+        } else {
+            // Assume Vector Layer (WFS GeoJSON)
+            let found = false;
+            map.forEachFeatureAtPixel(event.pixel, function (feature, layer) {
+                if (layer === currentLayer) {
+                    const properties = feature.getProperties();
+                    selectedRoadProperties = properties;
+
+                    popup.innerHTML = buildPopupHTML(properties);
+                    popup.style.display = 'block';
+
+                    found = true;
+                    return true;
+                }
+            }, { hitTolerance: 5 });
+
+            if (!found) {
+                popup.style.display = 'none';
+            }
+        }
+    });
+
+    function buildPopupHTML(properties) {
+        return `
+            <div  style="background-color:white; padding:10px; border-radius:6px;">
+                <table style="background-color:white;">
+                    <tr><td><strong>Field Name</strong></td><td><strong>Value</strong></td></tr>
+                    <tr><td><strong>Zone No.</strong></td><td>${properties.zone_no || 'N/A'}</td></tr>
+                    <tr><td><strong>Zone Name</strong></td><td>${properties.zone_name || 'N/A'}</td></tr>
+                    <tr><td><strong>Ward No.</strong></td><td>${properties.ward_no || 'N/A'}</td></tr>
+                    <tr><td><strong>Ward Name</strong></td><td>${properties.ward_name || 'N/A'}</td></tr>
+                    <tr><td><strong>Right of Way</strong></td><td>${properties.row_meter || 'N/A'}</td></tr>
+                    <tr><td><strong>Carriage Width</strong></td><td>${properties.carriage_w || 'N/A'}</td></tr>
+                    <tr><td><strong>Type</strong></td><td>${properties.type || 'N/A'}</td></tr>
+                    <tr><td><strong>Condition</strong></td><td>${properties.condition || 'N/A'}</td></tr>
+                    <tr><td><strong>Material</strong></td><td>${properties.material || 'N/A'}</td></tr>
+                    <tr><td><strong>Ownership</strong></td><td>${properties.ownership || 'N/A'}</td></tr>
+                    <tr><td><strong>Length(Km)</strong></td><td>${properties.length_km || 'N/A'}</td></tr>
+                    <tr><td><strong>Road Name</strong></td><td>${properties.road_name || 'N/A'}</td></tr>
+                </table>
+            </div>
+        `;
+    }
+}
+
+function Jhansi_Road_Length_Count() {
     removeCurrentLayer();
     clearVectorLayers();
 
@@ -2997,7 +2889,7 @@ function Bareilly_Road_Length_Count() {
         source: new ol.source.ImageWMS({
             url: `${GEOSERVER_BASE_URL}/wms`,
             params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_net',
+                'LAYERS': 'JHS_Summary:jhansi_road_net',
 
             },
             ratio: 1,
@@ -3007,48 +2899,108 @@ function Bareilly_Road_Length_Count() {
 
     //overlays.getLayers().push(LNN_Ward_Boundary);
     map.addLayer(currentLayer);
-    BNN_Road_popup();
+    JNN_Road_popup();
 
 }
 
+
+function Jhansi_Ownership(cqlFilter) {
+    removeCurrentLayer(); clearVectorLayers();
+    currentLayer = new ol.layer.Image({
+        //   title: 'Ward Boundary',
+        //     extent: [-180, -90, -180, 90],
+        source: new ol.source.ImageWMS({
+            url: `${GEOSERVER_BASE_URL}/wms`,
+            params: {
+                'LAYERS': 'JHS_Summary:jhansi_road_own',                                  
+                'CQL_FILTER': cqlFilter,
+            },
+            ratio: 1,
+            serverType: 'geoserver'
+        })
+    });
+
+    //overlays.getLayers().push(LNN_Ward_Boundary);
+    map.addLayer(currentLayer);
+    document.getElementById('summary-table').style.display = 'none';
+    document.getElementById('dataTable_summaryfilter').style.display = 'block';
+    document.getElementById('tableContainer_summaryfilter').style.display = 'block';
+
+    JNN_Road_popup();
+    //  fetchJNNTypeData();
+     updateTable(cqlFilter);
+}
+
+function Jhansi_Material(cqlFilter) {
+    removeCurrentLayer(); clearVectorLayers();
+    currentLayer = new ol.layer.Image({
+        //   title: 'Ward Boundary',
+        //     extent: [-180, -90, -180, 90],
+        source: new ol.source.ImageWMS({
+            url: `${GEOSERVER_BASE_URL}/wms`,
+            params: {
+                'LAYERS': 'JHS_Summary:jhansi_road_mat',                               
+                'CQL_FILTER': cqlFilter,
+            },
+            ratio: 1,
+            serverType: 'geoserver'
+        })
+    });
+
+    //overlays.getLayers().push(LNN_Ward_Boundary);
+    map.addLayer(currentLayer);
+    document.getElementById('summary-table').style.display = 'none';
+    document.getElementById('dataTable_summaryfilter').style.display = 'block';
+    document.getElementById('tableContainer_summaryfilter').style.display = 'block';
+
+    JNN_Road_popup();
+    //  fetchJNNTypeData();
+    updateTable(cqlFilter);
+}
+function Jhansi_Types(cqlFilter) {
+    removeCurrentLayer(); clearVectorLayers();
+    currentLayer = new ol.layer.Image({
+        //   title: 'Ward Boundary',
+        //     extent: [-180, -90, -180, 90],
+        source: new ol.source.ImageWMS({
+            url: `${GEOSERVER_BASE_URL}/wms`,
+            params: {
+                'LAYERS': 'JHS_Summary:jhansi_road_category',                                                        
+                'CQL_FILTER': cqlFilter,
+            },
+            ratio: 1,
+            serverType: 'geoserver'
+        })
+    });
+
+    //overlays.getLayers().push(LNN_Ward_Boundary);
+    map.addLayer(currentLayer);
+    document.getElementById('summary-table').style.display = 'none';
+    document.getElementById('dataTable_summaryfilter').style.display = 'block';
+    document.getElementById('tableContainer_summaryfilter').style.display = 'block';
+
+    JNN_Road_popup();
+    // fetchJNNTypeData();
+     updateTable(cqlFilter);
+}
 
 //--------------------Search bar code--------------------------//
 var currentLayer = null;
 
 $(document).ready(function () {
-   $('#roadNamesDropdown').select2({
-	    placeholder: "Type road name",
-	    allowClear: true,
-	    width: '100%',
-		});
-	
-			$(document).on('keyup', '.select2-search__field', function () {
-			    const typedText = $(this).val();
-			    const selection = $('.select2-selection__rendered');
-			    if (typedText && typedText.trim() !== '') {
-			        selection
-			            .text(typedText)
-			            .attr('title', typedText)
-			            .css({
-			                'font-weight': '700',   // bold
-			                'color': '#000000'      // black
-			            });
-			    } else {
-			        selection
-			            .text('Type road name or number')
-			            .css({
-			                'font-weight': '400',
-			                'color': '#666666'
-			            });
-			    }
-			});
+    // Initialize Select2 on the dropdown
+    $('#roadNamesDropdown').select2({
+        placeholder: "Search by road name",
+        allowClear: true
+    });
+
     // Define your WFS parameters
     var wfsParams = {
         service: 'WFS',
         version: '1.1.0',
         outputFormat: 'application/json',
         srsName: 'EPSG:4326', // Coordinate system of your data
-        typeName: 'BRL_Summary:bareilly_road_net',   // Replace with your WFS layer typename
+        typeName: 'JHS_Summary:jhansi_road_net',   // Replace with your WFS layer typename
         url: `${GEOSERVER_BASE_URL}/wfs` // Replace with your WFS server URL
     };
 
@@ -3062,14 +3014,14 @@ $(document).ready(function () {
         style: new ol.style.Style({
             stroke: new ol.style.Stroke({
                 color: 'cyan', // Custom line color
-                width: 5 // Custom line width in pixels
+                width: 4 // Custom line width in pixels
             })
         })
     });
     map.addLayer(vectorLayer);
 
     // Define the URL for the WFS request
-    const url = `${GEOSERVER_BASE_URL}/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=BRL_Summary:bareilly_road_net&outputFormat=application/json`;
+    const url = `${GEOSERVER_BASE_URL}/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=JHS_Summary:jhansi_road_net&outputFormat=application/json`;
 
     // Create the XMLHttpRequest
     let xhr = new XMLHttpRequest();
@@ -3147,8 +3099,8 @@ $(document).ready(function () {
                     let features = new ol.format.GeoJSON().readFeatures(response);
                     vectorSource.addFeatures(features);
                     map.getView().fit(vectorSource.getExtent());
-                     currentLayer = vectorLayer;  // ✅ Set the active layer
-                    BNN_Road_popup();
+                    currentLayer = vectorLayer;  // ✅ Set the active layer
+                    JNN_Road_popup();
                 } else {
                     console.log('Error:', fetchXhr.responseText);
                 }
@@ -3162,91 +3114,48 @@ $(document).ready(function () {
 
 //--------------------Search bar code end----------------------------//
 
-//-----------------------------------Don't Delete this commented code----------------------------------------//
-// Function to update the displayed layer dynamically
-// function updateAyodhyaRoadLayer(layerType) {
+// function Jhansi_Zone_no(column, value) {
 //     removeCurrentLayer();
-//     clearVectorLayers();
-
-//     // Define available layers
-//     let layersMap = {
-//         'type': 'BRL_Summary:ayodhaya_road_data',
-//         'condition': 'BRL_Summary:ayodhaya_road_condition',
-//         'material': 'BRL_Summary:ayodhaya_road_material',
-//         'ownership': 'BRL_Summary:ayodhaya_road_ownership'
-//     };
-    
-//     // Check if the selected layer exists
-//     if (!layersMap[layerType]) {
-//         console.error("Invalid layer type selected:", layerType);
-//         return;
-//     }
-
-//     // Create a WMS layer based on user selection
-//     let selectedLayer = new ol.layer.Image({
+//     // clearVectorLayers();
+//     // Define dynamic CQL filter
+//     let cqlFilter = `(${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
+//     console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+//     // Create a single WMS layer with CQL filter
+//     currentLayer = new ol.layer.Image({
 //         source: new ol.source.ImageWMS({
 //             url: `${GEOSERVER_BASE_URL}/wms`,
 //             params: {
-//                 'LAYERS': layersMap[layerType],
+//                 'LAYERS': 'JHS_Summary:jhansi_road',   // Same layer for all filters
+//                 'CQL_FILTER': cqlFilter, // Apply dynamic filtering
 //                 'TILED': true
 //             },
 //             ratio: 1,
-//             serverType: 'geoserver'
+//             serverType: 'geoserver',
+//             crossOrigin: "anonymous"
 //         })
 //     });
-
-//     selectedLayer.setZIndex(10); // Ensure it is displayed properly
-//     map.addLayer(selectedLayer);
-  
-//     console.log(`Layer updated to: ${layersMap[layerType]}`);
-
-//    // fetchTableData(layerType);
-    
+//     currentLayer.setZIndex(10); // Ensure it is displayed on top
+//     JNN_Road_popup();
+//     map.addLayer(currentLayer);
+//     // Show data table
+//     // Fetch corresponding data
+//     fetchJNN_ALLFilteredData(column, value);
 // }
 
-
-//--------------------------------------------summary and road filter layer fetch-----------------------------------------------
-function Bareilly_Zone_no(column, value) {
+function Jhansi_Ward_no(column, value) {
     removeCurrentLayer();
-   // clearVectorLayers();
-    // Define dynamic CQL filter
-    let cqlFilter = `(${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
-    // Create a single WMS layer with CQL filter
-    currentLayer = new ol.layer.Image({
-        source: new ol.source.ImageWMS({
-            url: `${GEOSERVER_BASE_URL}/wms`,
-            params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_net',   
-                'CQL_FILTER': cqlFilter, // Apply dynamic filtering
-                'TILED': true
-            },
-            ratio: 1,
-            serverType: 'geoserver',
-            crossOrigin: "anonymous"
-        })
-    });
-    currentLayer.setZIndex(10); // Ensure it is displayed on top
-    BNN_Road_popup();
-    map.addLayer(currentLayer);
-    // Show data table
-    // Fetch corresponding data
-    fetchBNN_ALLFilteredData(column, value);
-}
-function Bareilly_Ward_no(column, value) {
-    removeCurrentLayer();
-   // clearVectorLayers();
+    // clearVectorLayers();
 
     // Enhanced CQL Filter to capture ward_no with mixed values
     let cqlFilter = `(${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
-    
+
     console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debug log
 
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
             url: `${GEOSERVER_BASE_URL}/wms`,
             params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_net',
+                'LAYERS': 'JHS_Summary:jhansi_road_net',
                 'CQL_FILTER': cqlFilter,
                 'TILED': true
             },
@@ -3257,16 +3166,17 @@ function Bareilly_Ward_no(column, value) {
     });
 
     currentLayer.setZIndex(10);
-    BNN_Road_popup();
+    JNN_Road_popup();
     map.addLayer(currentLayer);
 
     // Fetch data with enhanced logic (pass the same CQL filter)
-    fetchBNN_ALLFilteredData(column, value);  // Optional: You can enhance this function too if needed
+    fetchJNN_ALLFilteredData(column, value);  // Optional: You can enhance this function too if needed
 }
 
-function Bareilly_Condition_cat(column, value) {
+
+function Jhansi_Condition_cat(column, value) {
     removeCurrentLayer();
-  ///  clearVectorLayers();
+    ///  clearVectorLayers();
     // Define dynamic CQL filter
     let cqlFilter = `(${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
     console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
@@ -3275,7 +3185,7 @@ function Bareilly_Condition_cat(column, value) {
         source: new ol.source.ImageWMS({
             url: `${GEOSERVER_BASE_URL}/wms`,
             params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_condition',   // Same layer for all filters
+                'LAYERS': 'JHS_Summary:jhansi_road_condition',   // Same layer for all filters
                 'CQL_FILTER': cqlFilter, // Apply dynamic filtering
                 'TILED': true
             },
@@ -3285,20 +3195,19 @@ function Bareilly_Condition_cat(column, value) {
         })
     });
     currentLayer.setZIndex(10); // Ensure it is displayed on top
-    BNN_Road_popup();
+    JNN_Road_popup();
     map.addLayer(currentLayer);
     document.getElementById('Condition_legend').style.display = 'block';
     document.getElementById('Ownership_legend').style.display = 'none';
     document.getElementById('Material_legend').style.display = 'none';
-   // document.getElementById('Priority_legend').style.display = 'none';
     document.getElementById('CUS_legend').style.display = 'none';
     document.getElementById('RoadCategory_legend').style.display = 'none';
     // Fetch corresponding data
-    fetchBNN_ALLFilteredData(column, value);
+    fetchJNN_ALLFilteredData(column, value);
 }
-function Bareilly_Material_cat(column, value) {
+function Jhansi_Material_cat(column, value) {
     removeCurrentLayer();
-  //  clearVectorLayers();
+    //  clearVectorLayers();
     // Define dynamic CQL filter
     let cqlFilter = `(${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
     console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
@@ -3307,7 +3216,7 @@ function Bareilly_Material_cat(column, value) {
         source: new ol.source.ImageWMS({
             url: `${GEOSERVER_BASE_URL}/wms`,
             params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_mat',  // Same layer for all filters
+                'LAYERS': 'JHS_Summary:jhansi_road_mat',  // Same layer for all filters
                 'CQL_FILTER': cqlFilter, // Apply dynamic filtering
                 'TILED': true
             },
@@ -3317,23 +3226,22 @@ function Bareilly_Material_cat(column, value) {
         })
     });
     currentLayer.setZIndex(10); // Ensure it is displayed on top
-    BNN_Road_popup();
+    JNN_Road_popup();
     map.addLayer(currentLayer);
     document.getElementById('Material_legend').style.display = 'block';
     document.getElementById('Ownership_legend').style.display = 'none';
     document.getElementById('Condition_legend').style.display = 'none';
-   // document.getElementById('Priority_legend').style.display = 'none';
     document.getElementById('CUS_legend').style.display = 'none';
     document.getElementById('RoadCategory_legend').style.display = 'none';
-   
+
     // Fetch corresponding data
-    fetchBNN_ALLFilteredData(column, value);
-    
+    fetchJNN_ALLFilteredData(column, value);
+
 }
 
-function Bareilly_Ownership_cat(column, value) {
+function Jhansi_Ownership_cat(column, value) {
     removeCurrentLayer();
-  //  clearVectorLayers();
+    //  clearVectorLayers();
     // Define dynamic CQL filter
     let cqlFilter = `(${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
     console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
@@ -3342,7 +3250,7 @@ function Bareilly_Ownership_cat(column, value) {
         source: new ol.source.ImageWMS({
             url: `${GEOSERVER_BASE_URL}/wms`,
             params: {
-                'LAYERS':'BRL_Summary:bareilly_road_own',   // Same layer for all filters
+                'LAYERS': 'JHS_Summary:jhansi_road_own',   // Same layer for all filters
                 'CQL_FILTER': cqlFilter, // Apply dynamic filtering
                 'TILED': true
             },
@@ -3352,21 +3260,20 @@ function Bareilly_Ownership_cat(column, value) {
         })
     });
     currentLayer.setZIndex(10); // Ensure it is displayed on top
-    BNN_Road_popup();
+    JNN_Road_popup();
     map.addLayer(currentLayer);
     document.getElementById('Ownership_legend').style.display = 'block';
     document.getElementById('Condition_legend').style.display = 'none';
     document.getElementById('Material_legend').style.display = 'none';
-  //  document.getElementById('Priority_legend').style.display = 'none';
     document.getElementById('CUS_legend').style.display = 'none';
     document.getElementById('RoadCategory_legend').style.display = 'none';
     // Fetch corresponding data
-    fetchBNN_ALLFilteredData(column, value);
+    fetchJNN_ALLFilteredData(column, value);
 }
 
-function Bareilly_CUS_cat(column, value) {
+function Jhansi_CUS_cat(column, value) {
     removeCurrentLayer();
-   // clearVectorLayers();
+    // clearVectorLayers();
     // Define dynamic CQL filter
     let cqlFilter = `(${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
     console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
@@ -3375,7 +3282,7 @@ function Bareilly_CUS_cat(column, value) {
         source: new ol.source.ImageWMS({
             url: `${GEOSERVER_BASE_URL}/wms`,
             params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_cus',   // Same layer for all filters
+                'LAYERS': 'JHS_Summary:jhansi_road_cus',   // Same layer for all filters
                 'CQL_FILTER': cqlFilter, // Apply dynamic filtering
                 'TILED': true
             },
@@ -3385,7 +3292,7 @@ function Bareilly_CUS_cat(column, value) {
         })
     });
     currentLayer.setZIndex(10); // Ensure it is displayed on top
-    BNN_Road_popup();
+    JNN_Road_popup();
     map.addLayer(currentLayer);
     document.getElementById('CUS_legend').style.display = 'block';
     document.getElementById('Ownership_legend').style.display = 'none';
@@ -3393,12 +3300,12 @@ function Bareilly_CUS_cat(column, value) {
     document.getElementById('Material_legend').style.display = 'none';
     document.getElementById('RoadCategory_legend').style.display = 'none';
     // Fetch corresponding data
-    fetchBNN_ALLFilteredData(column, value);
+    fetchJNN_ALLFilteredData(column, value);
 }
 
-function Bareilly_TypeSub_cat(column, value) {
+function Jhansi_TypeSub_cat(column, value) {
     removeCurrentLayer();
-   // clearVectorLayers();
+    // clearVectorLayers();
     // Define dynamic CQL filter
     let cqlFilter = `(${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
     console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
@@ -3407,7 +3314,7 @@ function Bareilly_TypeSub_cat(column, value) {
         source: new ol.source.ImageWMS({
             url: `${GEOSERVER_BASE_URL}/wms`,
             params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_category',   // Same layer for all filters
+                'LAYERS': 'JHS_Summary:jhansi_road_category',   // Same layer for all filters
                 'CQL_FILTER': cqlFilter, // Apply dynamic filtering
                 'TILED': true
             },
@@ -3417,19 +3324,20 @@ function Bareilly_TypeSub_cat(column, value) {
         })
     });
     currentLayer.setZIndex(10); // Ensure it is displayed on top
-    BNN_Road_popup();
+    JNN_Road_popup();
     map.addLayer(currentLayer);
     document.getElementById('RoadCategory_legend').style.display = 'block';
     document.getElementById('CUS_legend').style.display = 'none';
     document.getElementById('Ownership_legend').style.display = 'none';
     document.getElementById('Condition_legend').style.display = 'none';
     document.getElementById('Material_legend').style.display = 'none';
-
+    document.getElementById('Priority_legend').style.display = 'none';
+    document.getElementById('type_legend').style.display = 'none';
     // Fetch corresponding data
-    fetchBNN_ALLFilteredData(column, value);
+    fetchJNN_ALLFilteredData(column, value);
 }
-//---------------------------------------------fetch data for summary and road filter ------------------------------------------------------
-function fetchBNN_ALLFilteredData(column, value) {
+// Function to fetch data dynamically based on column and value
+function fetchJNN_ALLFilteredData(column, value) {
     fetch(`${BASE_URL}/getData?column=${column}&value=${value}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -3442,297 +3350,40 @@ function fetchBNN_ALLFilteredData(column, value) {
                 console.error("Invalid API response:", responseData);
                 return; // :rotating_light: Prevent function execution if data is not valid
             }
-           // appendToSummaryTable(responseData.data);
-           Table_Row_and_Layer_highlight(responseData.data);
+            // appendToSummaryTable(responseData.data);
+            Table_Row_and_Layer_highlight(responseData.data);
             document.getElementById('summary-table').style.display = 'none';
             document.getElementById('dataTable_summary').style.display = 'block';
             document.getElementById('tableContainer_summary').style.display = 'block';
-           
+
 
         })
         .catch(error => {
             console.error(`Error fetching data for ${column}=${value}:`, error);
         });
-       // document.getElementById('live_legend').addEventListener('click', showlegend);
-        document.getElementById('Condition_legend').addEventListener('click', showlegend);
-        document.getElementById('Material_legend').addEventListener('click', showlegend);
-        document.getElementById('Ownership_legend').addEventListener('click', showlegend);
-        document.getElementById('CUS_legend').addEventListener('click', showlegend);
-        document.getElementById('RoadCategory_legend').addEventListener('click', showlegend);
-       
-function showlegend() {
-       
-  //  var legendBtn = document.getElementById('legendBtn');
-    legendBtn.style.display = 'block';
-    legendBtn.style.bottom = '20%';
-    legendBtn.style.left = '1%'; // Example of additional style
-    legendBtn.style.Color = 'color'; // Example of additional style
-}
+    // document.getElementById('live_legend').addEventListener('click', showlegend);
+    document.getElementById('Condition_legend').addEventListener('click', showlegend);
+    document.getElementById('Material_legend').addEventListener('click', showlegend);
+    document.getElementById('Ownership_legend').addEventListener('click', showlegend);
+    document.getElementById('CUS_legend').addEventListener('click', showlegend);
+    document.getElementById('RoadCategory_legend').addEventListener('click', showlegend);
+
+    function showlegend() {
+
+        //  var legendBtn = document.getElementById('legendBtn');
+        legendBtn.style.display = 'block';
+        legendBtn.style.bottom = '20%';
+        legendBtn.style.left = '1%'; // Example of additional style
+        legendBtn.style.Color = 'color'; // Example of additional style
+    }
 }
 
-//-------------------------------Zonewise summary and road filter layer fetching --------------------------------------------//
-function Bareilly_Zone_Condition(zone_no, column, value) {
+//---------------------------Wardwise filter new code -----------------------//
+
+function Jhansi_Ward_Condition(ward_no, column, value) {
     removeCurrentLayer();
-  //  clearVectorLayers();
+    //  clearVectorLayers();
 
-    let validColumns = ["condition", "category", "material", "ownership", "cus"];
-    if (!validColumns.includes(column)) {
-        console.error(`Invalid column: ${column}`);
-        return;
-    }
-
-    // ✅ Smart CQL filter for fields that might have combined values (multi-value columns)
-    let cqlFilter = "";
-
-    if (["material", "condition", "category", "ownership", "cus"].includes(column)) {
-        cqlFilter = `zone_no='${zone_no}' AND (${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
-    } else {
-        cqlFilter = `zone_no='${zone_no}' AND ${column}='${value}'`;
-    }
-
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging
-
-    currentLayer = new ol.layer.Image({
-        source: new ol.source.ImageWMS({
-            url: `${GEOSERVER_BASE_URL}/wms`,
-            params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_condition',
-                'CQL_FILTER': cqlFilter,
-                'TILED': true
-            },
-            ratio: 1,
-            serverType: 'geoserver',
-            crossOrigin: "anonymous"
-        })
-    });
-
-    currentLayer.setZIndex(10);
-    BNN_Road_popup();
-    map.addLayer(currentLayer);
-
-    // Legend display logic
-    document.getElementById('Condition_legend').style.display = column === "condition" ? 'block' : 'none';
-    document.getElementById('Material_legend').style.display = column === "material" ? 'block' : 'none';
-    document.getElementById('Ownership_legend').style.display = column === "ownership" ? 'block' : 'none';
-    document.getElementById('CUS_legend').style.display = column === "cus" ? 'none' : 'none';
-    document.getElementById('RoadCategory_legend').style.display = 'none';
-    // Fetch filtered table data
-    fetchBNNFilteredData(zone_no, column, value);
-}
-
-function Bareilly_Zone_Material(zone_no, column, value) {
-    removeCurrentLayer();
-  //  clearVectorLayers();
-    // Ensure column is valid to prevent errors
-    let validColumns = ["condition", "category", "material", "ownership","cus"];
-    if (!validColumns.includes(column)) {
-        console.error(`Invalid column: ${column}`);
-        return;
-    }
-    // Define dynamic CQL filter for Zone + Column + Value
-    let cqlFilter = "";
-
-    if (["material", "condition", "category", "ownership" ,"cus"].includes(column)) {
-        cqlFilter = `zone_no='${zone_no}' AND (${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
-    } else {
-        cqlFilter = `zone_no='${zone_no}' AND ${column}='${value}'`;
-    }
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
-    // Create a single WMS layer with CQL filter
-    currentLayer = new ol.layer.Image({
-        source: new ol.source.ImageWMS({
-            url: `${GEOSERVER_BASE_URL}/wms`,
-            params: {
-                'LAYERS':'BRL_Summary:bareilly_road_mat',   // Main layer for filtering
-                'CQL_FILTER': cqlFilter, // Apply dynamic filtering
-                'TILED': true
-            },
-            ratio: 1,
-            serverType: 'geoserver',
-            crossOrigin: "anonymous"
-        })
-    });
-    currentLayer.setZIndex(10); // Ensure it is displayed on top
-    BNN_Road_popup();
-    map.addLayer(currentLayer);
-    document.getElementById('Material_legend').style.display = 'block';
-    document.getElementById('Ownership_legend').style.display = 'none';
-    document.getElementById('Condition_legend').style.display = 'none';
-    document.getElementById('CUS_legend').style.display = 'none';
-    document.getElementById('RoadCategory_legend').style.display = 'none';
-    // Fetch corresponding data
-    fetchBNNFilteredData(zone_no, column, value);
-}
-function Bareilly_Zone_Ownership(zone_no, column, value) {
-    removeCurrentLayer();
-   // clearVectorLayers();
-    // Ensure column is valid to prevent errors
-    let validColumns = ["condition", "category", "material", "ownership", "cus"];
-    if (!validColumns.includes(column)) {
-        console.error(`Invalid column: ${column}`);
-        return;
-    }
-    // Define dynamic CQL filter for Zone + Column + Value
-    let cqlFilter = "";
-
-    if (["material", "condition", "category", "ownership", "cus"].includes(column)) {
-        cqlFilter = `zone_no='${zone_no}' AND (${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
-    } else {
-        cqlFilter = `zone_no='${zone_no}' AND ${column}='${value}'`;
-    }
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
-    // Create a single WMS layer with CQL filter
-    currentLayer = new ol.layer.Image({
-        source: new ol.source.ImageWMS({
-            url: `${GEOSERVER_BASE_URL}/wms`,
-            params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_own',   // Main layer for filtering
-                'CQL_FILTER': cqlFilter, // Apply dynamic filtering
-                'TILED': true
-            },
-            ratio: 1,
-            serverType: 'geoserver',
-            crossOrigin: "anonymous"
-        })
-    });
-    currentLayer.setZIndex(10); // Ensure it is displayed on top
-    BNN_Road_popup();
-    map.addLayer(currentLayer);
-    document.getElementById('Ownership_legend').style.display = 'block';
-    document.getElementById('Material_legend').style.display = 'none';
-    document.getElementById('Condition_legend').style.display = 'none';
-    document.getElementById('CUS_legend').style.display = 'none';
-    document.getElementById('RoadCategory_legend').style.display = 'none';
-    fetchBNNFilteredData(zone_no, column, value);
-}
-
-function Bareilly_Zone_CUS(zone_no, column, value) {
-    removeCurrentLayer();
-   // clearVectorLayers();
-    // Ensure column is valid to prevent errors
-    let validColumns = ["condition", "category", "material", "ownership", "cus"];
-    if (!validColumns.includes(column)) {
-        console.error(`Invalid column: ${column}`);
-        return;
-    }
-    // Define dynamic CQL filter for Zone + Column + Value
-    let cqlFilter = "";
-
-    if (["material", "condition", "category", "ownership" ,"cus"].includes(column)) {
-        cqlFilter = `zone_no='${zone_no}' AND (${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
-    } else {
-        cqlFilter = `zone_no='${zone_no}' AND ${column}='${value}'`;
-    }
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
-    // Create a single WMS layer with CQL filter
-    currentLayer = new ol.layer.Image({
-        source: new ol.source.ImageWMS({
-            url: `${GEOSERVER_BASE_URL}/wms`,
-            params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_cus',   // Main layer for filtering
-                'CQL_FILTER': cqlFilter, // Apply dynamic filtering
-                'TILED': true
-            },
-            ratio: 1,
-            serverType: 'geoserver',
-            crossOrigin: "anonymous"
-        })
-    });
-    currentLayer.setZIndex(10); // Ensure it is displayed on top
-    BNN_Road_popup();
-    map.addLayer(currentLayer);
-    document.getElementById('Ownership_legend').style.display = 'none';
-    document.getElementById('Material_legend').style.display = 'none';
-    document.getElementById('Condition_legend').style.display = 'none';
-    document.getElementById('CUS_legend').style.display = 'block';
-    document.getElementById('RoadCategory_legend').style.display = 'none';
-    fetchBNNFilteredData(zone_no, column, value);
-}
-
-function Bareilly_Zone_TypeSub(zone_no, column, value) {
-    removeCurrentLayer();
-    clearVectorLayers();
-    // Ensure column is valid to prevent errors
-    let validColumns = ["condition", "category", "material", "ownership", "cus",];
-    if (!validColumns.includes(column)) {
-        console.error(`Invalid column: ${column}`);
-        return;
-    }
-    // Define dynamic CQL filter for Zone + Column + Value
-    let cqlFilter = "";
-    if (["material", "condition", "category", "ownership" ,"cus","category"].includes(column)) {
-        cqlFilter = `zone_no='${zone_no}' AND (${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
-    } else {
-        cqlFilter = `zone_no='${zone_no}' AND ${column}='${value}'`;
-    }
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
-    // Create a single WMS layer with CQL filter
-    currentLayer = new ol.layer.Image({
-        source: new ol.source.ImageWMS({
-            url: `${GEOSERVER_BASE_URL}/wms`,
-            params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_category',   // Main layer for filtering
-                'CQL_FILTER': cqlFilter, // Apply dynamic filtering
-                'TILED': true
-            },
-            ratio: 1,
-            serverType: 'geoserver',
-            crossOrigin: "anonymous"
-        })
-    });
-    currentLayer.setZIndex(10); // Ensure it is displayed on top
-    BNN_Road_popup();
-    map.addLayer(currentLayer);
-    document.getElementById('Ownership_legend').style.display = 'none';
-    document.getElementById('Material_legend').style.display = 'none';
-    document.getElementById('Condition_legend').style.display = 'none';
-    document.getElementById('CUS_legend').style.display = 'none';
-    document.getElementById('RoadCategory_legend').style.display = 'block';
-    fetchBNNFilteredData(zone_no, column, value);
-}
-
-//------------------------------------------ fetch data based on Zone summary and road filter ------------------------------------------------------------
-function fetchBNNFilteredData(zone_no, column, value) {
-    fetch(`${BASE_URL}/getDataByZoneAndFilter?zone_no=${zone_no}&column=${column}&value=${value}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({})
-    })
-        .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
-            return response.json();
-        })
-        .then(responseData => {
-            console.log(`Received data for ${zone_no}, ${column}=${value}:`, responseData);
-            dataTableBody_summary.innerHTML = ''; // Clear existing table rows
-           // appendToSummaryTable(responseData.data);
-           Table_Row_and_Layer_highlight(responseData.data);
-            document.getElementById('summary-table').style.display = 'none';
-            document.getElementById('dataTable_summary').style.display = 'block';
-            document.getElementById('tableContainer_summary').style.display = 'block';
-       
-         })
-        .catch(error => {
-            console.error(`Error fetching data for ${zone_no}, ${column}=${value}:`, error);
-        });
-      //  document.getElementById('live_legend').addEventListener('click', showlegend);
-        document.getElementById('Condition_legend').addEventListener('click', showlegend);
-        document.getElementById('Material_legend').addEventListener('click', showlegend);
-        document.getElementById('Ownership_legend').addEventListener('click', showlegend);
-function showlegend() {  
-  //  var legendBtn = document.getElementById('legendBtn');
-    legendBtn.style.display = 'block';
-    legendBtn.style.top = '70%';
-    legendBtn.style.left = '1%'; // Example of additional style
-    legendBtn.style.Color = 'color'; // Example of additional style
-}
-}
-
-//-------------------------------------------------- Wardwise  summary and road filter layer fetching -----------------------------------------//
-function Bareilly_Ward_Condition(ward_no, column, value) {
-    removeCurrentLayer();
-  //  clearVectorLayers();
-   
     // Ensure column is valid to prevent errors
     let validColumns = ["condition", "category", "material", "ownership", "cus"];
     if (!validColumns.includes(column)) {
@@ -3748,7 +3399,7 @@ function Bareilly_Ward_Condition(ward_no, column, value) {
         source: new ol.source.ImageWMS({
             url: `${GEOSERVER_BASE_URL}/wms`,
             params: {
-                'LAYERS':'BRL_Summary:bareilly_road_condition', // Main layer for filtering
+                'LAYERS': 'JHS_Summary:jhansi_road_condition', // Main layer for filtering
                 'CQL_FILTER': cqlFilter, // Apply dynamic filtering
                 'TILED': true
             },
@@ -3758,20 +3409,20 @@ function Bareilly_Ward_Condition(ward_no, column, value) {
         })
     });
     currentLayer.setZIndex(10); // Ensure it is displayed on top
-    BNN_Road_popup();
+    JNN_Road_popup();
     map.addLayer(currentLayer);
     document.getElementById('Material_legend').style.display = 'none';
     document.getElementById('Ownership_legend').style.display = 'none';
     document.getElementById('Condition_legend').style.display = 'block';
     document.getElementById('CUS_legend').style.display = 'none';
     document.getElementById('RoadCategory_legend').style.display = 'none';
-  
+
     // Fetch corresponding data
-    fetchBNNWardFilteredData(ward_no, column, value);
+    fetchJNNWardFilteredData(ward_no, column, value);
 }
-function Bareilly_Ward_Material(ward_no, column, value) {
+function Jhansi_Ward_Material(ward_no, column, value) {
     removeCurrentLayer();
-   // clearVectorLayers();
+    // clearVectorLayers();
     // Ensure column is valid to prevent errors
     let validColumns = ["condition", "category", "material", "ownership", "cus"];
     if (!validColumns.includes(column)) {
@@ -3787,7 +3438,7 @@ function Bareilly_Ward_Material(ward_no, column, value) {
         source: new ol.source.ImageWMS({
             url: `${GEOSERVER_BASE_URL}/wms`,
             params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_mat',   // Main layer for filtering
+                'LAYERS': 'JHS_Summary:jhansi_road_mat',   // Main layer for filtering
                 'CQL_FILTER': cqlFilter, // Apply dynamic filtering
                 'TILED': true
             },
@@ -3797,22 +3448,22 @@ function Bareilly_Ward_Material(ward_no, column, value) {
         })
     });
     currentLayer.setZIndex(10); // Ensure it is displayed on top
-    BNN_Road_popup();
+    JNN_Road_popup();
     map.addLayer(currentLayer);
     document.getElementById('Material_legend').style.display = 'block';
     document.getElementById('Ownership_legend').style.display = 'none';
     document.getElementById('Condition_legend').style.display = 'none';
     document.getElementById('CUS_legend').style.display = 'none';
     document.getElementById('RoadCategory_legend').style.display = 'none';
-    
+
     // Fetch corresponding data
-    fetchBNNWardFilteredData(ward_no, column, value);
+    fetchJNNWardFilteredData(ward_no, column, value);
 }
 
-function Bareilly_Ward_Ownership(ward_no, column, value) {
+function Jhansi_Ward_Ownership(ward_no, column, value) {
     removeCurrentLayer();
-  //  clearVectorLayers();
-   
+    //  clearVectorLayers();
+
     // Ensure column is valid to prevent errors
     let validColumns = ["condition", "category", "material", "ownership", "cus"];
     if (!validColumns.includes(column)) {
@@ -3829,7 +3480,7 @@ function Bareilly_Ward_Ownership(ward_no, column, value) {
             url: `${GEOSERVER_BASE_URL}/wms`,
             crossOrigin: 'anonymous', // ✅ REQUIRED!
             params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_own',   // Main layer for filtering
+                'LAYERS': 'JHS_Summary:jhansi_road_own',   // Main layer for filtering
                 'CQL_FILTER': cqlFilter, // Apply dynamic filtering
                 'TILED': true
             },
@@ -3837,26 +3488,26 @@ function Bareilly_Ward_Ownership(ward_no, column, value) {
             serverType: 'geoserver',
             crossOrigin: "anonymous"
         })
-        
+
     });
     currentLayer.setZIndex(10); // Ensure it is displayed on top
-    BNN_Road_popup();
+    JNN_Road_popup();
     map.addLayer(currentLayer);
     document.getElementById('Material_legend').style.display = 'none';
     document.getElementById('Ownership_legend').style.display = 'block';
     document.getElementById('Condition_legend').style.display = 'none';
     document.getElementById('CUS_legend').style.display = 'none';
     document.getElementById('RoadCategory_legend').style.display = 'none';
-   
+
     // Fetch corresponding data
-    fetchBNNWardFilteredData(ward_no, column, value);
+    fetchJNNWardFilteredData(ward_no, column, value);
 }
-function Bareilly_Ward_CUS(ward_no, column, value) {
+function Jhansi_Ward_CUS(ward_no, column, value) {
     removeCurrentLayer();
-   // clearVectorLayers();
-   
+    // clearVectorLayers();
+
     // Ensure column is valid to prevent errors
-    let validColumns = ["condition", "category", "material", "ownership","cus"];
+    let validColumns = ["condition", "category", "material", "ownership", "cus"];
     if (!validColumns.includes(column)) {
         console.error(`Invalid column: ${column}`);
         return;
@@ -3870,7 +3521,7 @@ function Bareilly_Ward_CUS(ward_no, column, value) {
         source: new ol.source.ImageWMS({
             url: `${GEOSERVER_BASE_URL}/wms`,
             params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_cus',   // Main layer for filtering
+                'LAYERS': 'JHS_Summary:jhansi_road_cus',   // Main layer for filtering
                 'CQL_FILTER': cqlFilter, // Apply dynamic filtering
                 'TILED': true
             },
@@ -3880,23 +3531,23 @@ function Bareilly_Ward_CUS(ward_no, column, value) {
         })
     });
     currentLayer.setZIndex(10); // Ensure it is displayed on top
-    BNN_Road_popup();
+    JNN_Road_popup();
     map.addLayer(currentLayer);
     // Showlegend
     document.getElementById('Material_legend').style.display = 'none';
     document.getElementById('Ownership_legend').style.display = 'none';
     document.getElementById('Condition_legend').style.display = 'none';
-    document.getElementById('CUS_legend').style.display = 'block';  
+    document.getElementById('CUS_legend').style.display = 'block';
     document.getElementById('RoadCategory_legend').style.display = 'none';
 
     // Fetch corresponding data
-    fetchBNNWardFilteredData(ward_no, column, value);
+    fetchJNNWardFilteredData(ward_no, column, value);
 }
-function Bareilly_Ward_TypeSub(ward_no, column, value) {
+function Jhansi_Ward_TypeSub(ward_no, column, value) {
     removeCurrentLayer();
     clearVectorLayers();
     // Ensure column is valid to prevent errors
-    let validColumns = ["condition", "category", "material", "ownership","cus"];
+    let validColumns = ["condition", "category", "material", "ownership", "cus"];
     if (!validColumns.includes(column)) {
         console.error(`Invalid column: ${column}`);
         return;
@@ -3909,7 +3560,7 @@ function Bareilly_Ward_TypeSub(ward_no, column, value) {
         source: new ol.source.ImageWMS({
             url: `${GEOSERVER_BASE_URL}/wms`,
             params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_category',   // Main layer for filtering
+                'LAYERS': 'JHS_Summary:jhansi_road_category',   // Main layer for filtering
                 'CQL_FILTER': cqlFilter, // Apply dynamic filtering
                 'TILED': true
             },
@@ -3919,20 +3570,21 @@ function Bareilly_Ward_TypeSub(ward_no, column, value) {
         })
     });
     currentLayer.setZIndex(10); // Ensure it is displayed on top
-    BNN_Road_popup();
+    JNN_Road_popup();
     map.addLayer(currentLayer);
     // Showlegend
     document.getElementById('Material_legend').style.display = 'none';
+    document.getElementById('type_legend').style.display = 'none';
     document.getElementById('Ownership_legend').style.display = 'none';
     document.getElementById('Condition_legend').style.display = 'none';
     document.getElementById('CUS_legend').style.display = 'none';
     document.getElementById('RoadCategory_legend').style.display = 'block';
     // Fetch corresponding data
-    fetchBNNWardFilteredData(ward_no, column, value);
+    fetchJNNWardFilteredData(ward_no, column, value);
 }
 
-// ----------------------------- fetch data based on Ward summary and road filter ----------------------------------------------------
-function fetchBNNWardFilteredData(ward_no, column, value) {
+// Function to fetch data dynamically based on Zone, Column, and Value
+function fetchJNNWardFilteredData(ward_no, column, value) {
     fetch(`${BASE_URL}/getDataByWardAndFilter?ward_no=${ward_no}&column=${column}&value=${value}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -3945,7 +3597,7 @@ function fetchBNNWardFilteredData(ward_no, column, value) {
         .then(responseData => {
             console.log(`Received data for ${ward_no}, ${column}=${value}:`, responseData);
             dataTableBody_summary.innerHTML = ''; // Clear existing table rows
-          //  appendToSummaryTable(responseData.data);
+            //  appendToSummaryTable(responseData.data);
             Table_Row_and_Layer_highlight(responseData.data);
             document.getElementById('summary-table').style.display = 'none';
             document.getElementById('dataTable_summary').style.display = 'block';
@@ -3954,30 +3606,42 @@ function fetchBNNWardFilteredData(ward_no, column, value) {
         .catch(error => {
             console.error(`Error fetching data for ${ward_no}, ${column}=${value}:`, error);
         });
-        
+
 }
 
+//------------------download map and excel------------------------//
 
 
-//---------------------------------------------------------------------- Zone Boundary ------------------------------------------------
+// document.querySelectorAll(".fa-print").forEach(printBtn => {
+//     printBtn.addEventListener("click", () => {
+//         // Determine which table this print button belongs to
+//         const container = printBtn.closest('div[id^="tableContainer_summary"]');
+//         const table = container?.querySelector("table");
+
+//         if (!table || table.rows.length === 0) {
+//             alert("No data in table. Please apply a filter first.");
+//             return;
+//         }
+
+//         // Export to Excel
+//         const wb = XLSX.utils.book_new();
+//         const ws = XLSX.utils.table_to_sheet(table);
+//         XLSX.utils.book_append_sheet(wb, ws, "FilteredData");
+//         XLSX.writeFile(wb, `Filtered_Table_${Date.now()}.xlsx`);
+
+//         // Print Map (optional)
+//         window.print();
+//     });
+// });
+
+
+
 
 let currentZoneLayer = null; // Store the current layer
 
-function getZoneBoundary(zoneNo) {
-    fetch(`${BASE_URL}/getZoneBoundary?zone_no=${zoneNo}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status) {
-                const geojson = JSON.parse(data.geometry);
-                highlightZoneBoundary(geojson);
-            } else {
-                console.error("Error:", data.message);
-            }
-        })
-        .catch(error => console.error("Error fetching boundary:", error));
-}
 
 function highlightZoneBoundary(geojson) {
+   
     removeCurrentLayer();
     clearVectorLayers();
     const format = new ol.format.GeoJSON();
@@ -4026,91 +3690,24 @@ function getwardBoundary(wardNo) {
         .catch(error => console.error("Error fetching boundary:", error));
 }
 
-//------------------------------------------------ summary filter based on zone , ward, material,ownership ---------------------------------------------------
-function Bareilly_Ownership(cqlFilter) {
-    removeCurrentLayer(); clearVectorLayers();
-    currentLayer = new ol.layer.Image({
-        source: new ol.source.ImageWMS({
-            url: `${GEOSERVER_BASE_URL}/wms`,
-            params: {
-                'LAYERS':'BRL_Summary:bareilly_road_own',                               
-                'CQL_FILTER': cqlFilter,
-            },
-            ratio: 1,
-            serverType: 'geoserver'
-        })
-    });
 
-    map.addLayer(currentLayer);
-    document.getElementById('summary-table').style.display = 'none';
-    // document.getElementById('dataTable_summary').style.display = 'block';
-    document.getElementById('dataTable_summaryfilter').style.display = 'block';
-    document.getElementById('tableContainer_summaryfilter').style.display = 'block';
 
-    BNN_Road_popup();
-    updateTable(cqlFilter);
-}
-
-function Bareilly_Material(cqlFilter) {
-    removeCurrentLayer(); clearVectorLayers();
-    currentLayer = new ol.layer.Image({
-        source: new ol.source.ImageWMS({
-            url: `${GEOSERVER_BASE_URL}/wms`,
-            params: {
-                'LAYERS':'BRL_Summary:bareilly_road_mat',                                  
-                'CQL_FILTER': cqlFilter,
-            },
-            ratio: 1,
-            serverType: 'geoserver'
-        })
-    });
-
-    map.addLayer(currentLayer);
-    document.getElementById('summary-table').style.display = 'none';
-    // document.getElementById('dataTable_summary').style.display = 'block';
-    document.getElementById('dataTable_summaryfilter').style.display = 'block';
-    document.getElementById('tableContainer_summaryfilter').style.display = 'block';
-
-    BNN_Road_popup();
-    updateTable(cqlFilter);
-}
-function Bareilly_Types(cqlFilter) {
-    removeCurrentLayer(); clearVectorLayers();
-    currentLayer = new ol.layer.Image({
-        source: new ol.source.ImageWMS({
-            url: `${GEOSERVER_BASE_URL}/wms`,
-            params: {
-                'LAYERS': 'BRL_Summary:bareilly_road_category',                                                       
-                'CQL_FILTER': cqlFilter,
-            },
-            ratio: 1,
-            serverType: 'geoserver'
-        })
-    });
-
-    map.addLayer(currentLayer);
-    document.getElementById('summary-table').style.display = 'none';
-    // document.getElementById('dataTable_summary').style.display = 'block';
-    document.getElementById('dataTable_summaryfilter').style.display = 'block';
-    document.getElementById('tableContainer_summaryfilter').style.display = 'block';
-
-    BNN_Road_popup();
-    updateTable(cqlFilter);
-}
-
+//--------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', () => {
-    initializeDropdown('zoneSelect', '/getZones', 'zone_no');
+    // Initialize dropdown only for wards since zone is no longer relevant
+    initializeDropdown('wardSelect', '/getWards', 'ward_no');
 
-    document.getElementById('zoneSelect').addEventListener('change', (e) => {
-        const selectedZone = e.target.value;
-        fetchAndPopulateWards(selectedZone, 'wardSelect');
-        selectedFilters.zone = selectedZone;
-        selectedFilters.ward = null; // Reset ward when zone changes
-        updateMapAndTable();
+    // Event listener for ward selection (no zone selection involved here)
+    document.getElementById('wardSelect').addEventListener('change', (e) => {
+        const selectedWard = e.target.value;
+        selectedFilters.ward = selectedWard;  // Store selected ward
+        selectedFilters.zone = null; // Reset zone as we no longer need it
+        updateMapAndTable();  // Update the map and table based on the selected ward
     });
 
-    const filters = ['ward', 'ownership', 'type', 'material'];
+    // Filtering logic for other dropdowns
+    const filters = ['ownership', 'type', 'material'];
     filters.forEach(filter => {
         document.querySelector(`.${filter}-dropdown`).addEventListener('change', (e) => {
             selectedFilters[filter] = e.target.value;
@@ -4140,29 +3737,10 @@ function initializeDropdown(dropdownId, endpoint, key) {
         .catch(err => console.error('Error fetching dropdown data:', err));
 }
 
-function fetchAndPopulateWards(zone, wardDropdownId) {
-    const wardDropdown = document.getElementById(wardDropdownId);
-    wardDropdown.innerHTML = '<option value="">Select Ward</option>';
-
-    fetch(`${BASE_URL}/getWardsForZone?zone_no=${zone}`)
-        .then(res => res.json())
-        .then(data => {
-            if (data.status && data.data.length) {
-                data.data.forEach(ward => {
-                    const option = document.createElement('option');
-                    option.value = ward.ward_no;
-                    option.textContent = ward.ward_no;
-                    wardDropdown.appendChild(option);
-                });
-            }
-        })
-        .catch(err => console.error('Error fetching wards:', err));
-}
-
 function updateMapAndTable() {
     let filterConditions = [];
 
-    if (selectedFilters.zone) filterConditions.push(`zone_no='${selectedFilters.zone}'`);
+    // Apply filter for ward selection (zone is not used anymore)
     if (selectedFilters.ward) filterConditions.push(`ward_no='${selectedFilters.ward}'`);
     if (selectedFilters.ownership) filterConditions.push(`ownership='${selectedFilters.ownership}'`);
     if (selectedFilters.type) filterConditions.push(`category='${selectedFilters.type}'`);
@@ -4177,13 +3755,13 @@ function updateMapAndTable() {
 
 function determineLayer() {
     if (selectedFilters.material) {
-        return 'BRL_Summary:bareilly_road_mat';
+        return 'JHS_Summary:jhansi_road_mat';
     } else if (selectedFilters.type) {
-        return 'BRL_Summary:bareilly_road_category';
+        return 'JHS_Summary:jhansi_road_category';
     } else if (selectedFilters.ownership) {
-        return 'BRL_Summary:bareilly_road_own';
+        return 'JHS_Summary:jhansi_road_own';
     }
-    return 'BRL_Summary:bareilly_road_category';
+    return 'JHS_Summary:jhansi_road_category';
 }
 
 function updateMapLayer(layer, cqlFilter) {
@@ -4201,6 +3779,7 @@ function updateMapLayer(layer, cqlFilter) {
 
     map.addLayer(currentLayer);
 }
+
 function updateTable(layer, cqlFilter) {
     const tableBody = document.getElementById('dataBody_summaryfilter');
     tableBody.innerHTML = '';
@@ -4213,9 +3792,6 @@ function updateTable(layer, cqlFilter) {
                     tableBody.insertAdjacentHTML('beforeend', `
                         <tr>
                             <td>${properties.gis_id}</td>
-                            <td>${properties.road_id}</td>
-                            <td>${properties.zone_no || 'N/A'}</td>
-                            <td>${properties.zone_name || 'N/A'}</td>
                             <td>${properties.ward_no || 'N/A'}</td>
                             <td>${properties.ward_name || 'N/A'}</td>
                             <td>${properties.ownership || 'N/A'}</td>
@@ -4225,11 +3801,10 @@ function updateTable(layer, cqlFilter) {
                             <td>${properties.row_apr || 'N/A'}</td>
                             <td>${properties.carriage_w || 'N/A'}</td>
                             <td>${properties.material || 'N/A'}</td>
-                            <td>${properties.length_km ? properties.length_km.toFixed(2) : 'N/A'}</td>
+                            <td>${properties.length_km || 'N/A'}</td>
                             <td>${properties.condition || 'N/A'}</td>
                             <td>${properties.yoc || 'N/A'}</td>
                             <td>${properties.cus || 'N/A'}</td>
-                            
                         </tr>`);
                 });
             } else {
@@ -4239,13 +3814,8 @@ function updateTable(layer, cqlFilter) {
         .catch(err => console.error('Error fetching WFS data:', err));
 }
 
-function showSelectedRoadsLayer1() {
-    alert("Data not available");
-}
 
 
-
-//------------------ download map and excel ------------------------//
 
 let isPrinting = false;
 let originalCenter = null;
@@ -4316,3 +3886,11 @@ setInterval(() => {
     restoreMap();
   }
 }, 1000);
+
+
+
+
+
+
+
+

@@ -22,15 +22,15 @@
     <script src="/libs/jquery-ui-1.12.1/external/jquery/jquery.js"></script>
     <script src="/libs/jquery-ui-1.12.1/jquery-ui.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha384-PPIZEGYM1v8zp5Py7UjFb79S58UeqCL9pYVnVPURKEqvioPROaVAJKKLzvH2rDnI" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-5e2ESR8Ycmos6g3gAKr1Jvwye8sW4U1u/cAKulfVJnkakCcMqhOudbtPnvJ+nbv7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" integrity="sha384-OXVF05DQEe311p6ohU11NwlnX08FzMCsyoXzGOaL+83dKAb3qS17yZJxESl8YrJQ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" integrity="sha384-d3UHjPdzJkZuk5H3qKYMLRyWLAQBJbby2yr2Q58hXXtAGF8RSNO9jpLDlKKPv5v3" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
 
     <link rel="shortcut icon" type="image/x-icon" class="fabicon" href="../assets/icons/logo_tree.png" />
 
-    <link rel="stylesheet" href="../style/kanpur.css">
+    <link rel="stylesheet" href="../style/jhansi.css">
     <link rel="stylesheet" href="../style/responsive.css">
 </head>
 
@@ -41,25 +41,20 @@
         <div class="center-content">
             <img src="../assets/logo/mathura_logo.jpg" class="logo" alt="" />
             <h2 class="title">Mathura Nagar Nigam</h2>
-            <img src="../assets/logo/rsac (1).png" class="logo" alt="dp" />
+            <img src="../assets/logo/images.jpg" class="logo" alt="dp" />
+            <img src="../assets/logo/download.png" class="logo1"  id="up_logo"alt="dp" />
         </div>
-        <!-- <i class="fa-solid fa-print"></i> -->
-        <!-- <i id="logoutButton" class="fas fa-sign-out-alt"></i> -->
-
+        
          <div class="search-container" id="search-bar">  
             <!-- <i class="search-icon">&#128269;</i>         Unicode for search icon -->
            <select id="roadNamesDropdown"></select>
         </div>
-        <!-- <div id="popup-search" class="ol-popup-search">
-            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-            <div id="popup-content-search"></div>
-        </div>  -->
-
+        
     </div>
     <!---------------------- header section end -------------------------->
 
     <!---------------------- sidebar section start -------------------------->
-  <div class="sidebar">
+    <div class="sidebar">
         <span><i class="fas fa-times cancel-icon"></i></span>
 
         <!-- Bootstrap Tabs -->
@@ -193,7 +188,6 @@
                         <i class="icon fas fa-building" style="margin-right: 15px;"></i>
                         <input type="checkbox" id="showCentralGov" class="main-option" name="option1" />
                         <span class="text"> Central Government Offices- 87</span>
-
                     </label>
                   
                 </form>
@@ -224,27 +218,22 @@
                         <i class="icon fas fa-building"></i>
                         <input type="checkbox" id="Bank_Road"   class="main-option" name="option1" />
                         <span class="text">Bank's Road</span>
-
                     </label>
                     <label>
                         <i class="icon fas fa-building"></i>
                         <input type="checkbox" id="Hospital_Road"  class="main-option" name="option1" />
                         <span class="text">Hospital's Road</span>
-
                     </label>
                     <label>
                         <i class="icon fas fa-building"></i>
                         <input type="checkbox" id="Park_Road"  class="main-option" name="option1" />
                         <span class="text">Park's Road</span>
-
                     </label>
                     <label>
                         <i class="icon fas fa-building"></i>
                         <input type="checkbox" id="Hotel_Road"  class="main-option" name="option1" />
                         <span class="text">Hotel's Road</span>
-
                     </label>
-                 
                 </form>
             </div>
         </div>
@@ -255,44 +244,51 @@
     <div class="main-container">
 
         <!---------------------- map section start ------------------>
-          <div id="map">
-          <div class="map-icons-left">
-                        <!-- <button class="map-icon" id="View_point" title="Street View" onclick="street_view()"><i
-                                class="fas fa-street-view"></i></button>
-                        <h6 class="h6">Street View</h6> -->
+        <div id="map">
+            <div class="map-icons-left">
+                <button class="map-icon" id="View_point" title="Street View" onclick="street_view()">
+                    <i class="fas fa-street-view"></i></button>
+                        <!-- <h6 class="h6">Street View</h6> -->
                    
-
-                        <button class="map-icon" title="Data Analysis" onclick="data_analysis()">
-                            <i class="fas fa-chart-simple"></i></a></button>
-                        <h6 class="h6">Data Analysis</h6>
-
-                        <button class="map-icon" id="road_btn" title="Zone wise Road" onclick="road_filter()"><i
-                                class="fas fa-road"></i></button>
-                        <h6 class="h6">Road Filter</h6>
-
-                        <button class="map-icon" id="query_btn" onclick="query_panel1()" title="Query Panel"><i
-                            class="fas fa-window-maximize"></i></button><h6 class="h6"> Query </h6>
+                <button class="map-icon" title="Data Analysis" onclick="data_analysis()">
+                    <i class="fas fa-chart-simple"></i></a></button>
+                        
+                <button class="map-icon" id="road_btn" title="Zone wise Road" onclick="road_filter()">
+                    <i class="fas fa-road"></i></button>
+                        
+                <button class="map-icon" title="Decision Support System " onclick="re_direct()">
+                    <i class="fa-solid fa-chart-area"></i></button>
+					
+				<button class="map-icon" id="showBoxBtn" title="Road Selection" onclick="showSelectedRoadsLayer1()"><i
+						class="fa-solid fa-worm"></i></button>
                       
-                        <!-- <button class="map-icon" title="Get Info"><i class="fas fa-circle-info"></i></button> -->
-                        <!-- <button class="map-icon" title="Drain" onclick="drain_filter()"><i class="fa-solid fa-worm"></i></button><h6 class="h6">Drain Filter</h6> -->
-                    </div>
+                <!-- <button class="map-icon" title="Drain" onclick="drain_filter()"><i class="fa-solid fa-worm"></i></button><h6 class="h6">Drain Filter</h6> -->
+            </div>
+            <div class="map-icons">
+                <button class="map-icon" id="search-icon" title="Search"><i class="fas fa-search"></i></button>
+                        
+                <!-- <button class="map-icon" id="measure-icon" onclick="measure_tab()" title="Measure Tool"><i class="fas fa-ruler"></i></button> -->
+                <!-- <button class="map-icon" id="basemap-icon" title="Toggle Basemap"><i class="fas fa-map"></i></button> -->
 
-           <div class="map-icons">
-                        <button class="map-icon" id="search-icon" title="Search"><i class="fas fa-search"></i></button>
-                        <h6 class="h6"> Search </h6>
-                        <!-- <button class="map-icon" id="measure-icon" onclick="measure_tab()" title="Measure Tool"><i class="fas fa-ruler"></i></button> -->
-                        <!-- <button class="map-icon" id="basemap-icon" title="Toggle Basemap"><i class="fas fa-map"></i></button> -->
+                <button class="map-icon" id="table_icon" title="Summary Data" onclick="summary_table()">
+                    <i class="fas fa-table "></i></button>
 
-                        <button class="map-icon" id="table_icon" title="Summary Data" onclick="summary_table()"><i
-                        class="fas fa-table "></i></button><h6 class="h6"> Summary </h6>
-
-                        <button class="map-icon" id="clear-icon" title="Clear" onclick="delete_layers()"><i
-                                class="fa fa-trash"></i></button>
-                        <h6 class="h6">Clear</h6>
-                    </div>
+                <button class="map-icon" id="query_btn" onclick="query_panel1()" title="Query Panel">
+                    <i class="fas fa-window-maximize"></i></button>
+                        
+				<button class="map-icon" id="information-icon" title="Information" onclick="showSelectedRoadsLayer1()"><i
+					    class="fa fa-info"></i></button>
+								
+                <button class="map-icon" id="clear-icon" title="Clear" onclick="delete_layers()"><i
+                        class="fa fa-trash"></i></button>                       
+            </div>
         </div>
         <!-------------------- map section end -------------------->
-
+          <div id="iframe-container" style="display:none;">
+                <button id="close-btn" onclick="closeReport()">Close Report</button>
+              <!--  <iframe id="data-iframe" width="100%" height="100%" 
+				src="https://lookerstudio.google.com/embed/reporting/69db6c3f-070c-47b0-9d8b-fd382b89eaa4/page/zneHF" frameborder="0" style="border:0"></iframe>-->
+        </div>
         <!---------------------- query panel section start -------------------------->
         <div id="query_tab" class="query-tab">
             <span class="tab-cancel-icon"><i class="fas fa-times cancel-icon"></i></span>
@@ -337,9 +333,7 @@
                   
                     <select id="layer1" class="form-select form-select-sm" aria-label=".form-select-sm example">
                         <option selected>Select Layer</option>
-                    </select>
-                    <br>
-                  
+                    </select><br>
                     <select id="draw_type" class="form-select form-select-sm" aria-label=".form-select-sm example">
                         <option value="select">Select Shape</option>
                         <option value="Square">Square</option>
@@ -365,39 +359,28 @@
         <!------------------- measure-options section end ----------------->
 
         <!-------------------- zone wise road filter start -------------------------->
-           <div id="road-filter" class="road-filter">
+            <div id="road-filter" class="road-filter">
                     <ul>
                         <label style="margin-left:20px;"><b>Select Roads</b></label>
                         <li><a class="dropdown"> Mathura All Roads &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <!-- <li>
-                                    <a class="dropdown" id="Priority_Data">Priority Based Road &raquo;</a>
-                                    <ul class="dropdown-menu dropdown-submenu">
-                                        <li id="P1"><a class="dropdown-item">First Priority</a></li>
-                                        <li id="P2"><a class="dropdown-item">Second Priority</a></li>
-                                        <li id="Not_Eligible"><a class="dropdown-item">Not Eligible</a></li>
-
-                                    </ul>
-                                </li> -->
-
-                                 <li>
+                            <ul class="dropdown-menu">                              
+                                <li>
                                     <a class="dropdown" id="Type"
                                         onclick="updateAyodhyaRoadLayer('type'); updateNavBarWithFunctionName('Mathura Road Type');">Road
                                        Category &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="LocalStreet"><a class="dropdown-item"
-                                                onclick="Mathura_TypeSub_cat('category','Local Street'); updateNavBarWithFunctionName('Mathura Road Category Local Street');">Local Street</a>
+                                                onclick="Mathura_TypeSub_cat('category','Local Street'); updateNavBarWithFunctionName('Mathura Road Category : Local Street');">Local Street</a>
                                             </li>
                                         <li id="Collector"><a class="dropdown-item"
-                                                onclick="Mathura_TypeSub_cat('category','Collector'); updateNavBarWithFunctionName('Mathura Road Category Collector');">Collector</a>
+                                                onclick="Mathura_TypeSub_cat('category','Collector'); updateNavBarWithFunctionName('Mathura Road Category : Collector');">Collector</a>
                                             </li>
                                         <li id="Arterial"><a class="dropdown-item"
-                                                onclick="Mathura_TypeSub_cat('category','Arterial'); updateNavBarWithFunctionName('Mathura Road Type Arterial');">Arterial</a>
+                                                onclick="Mathura_TypeSub_cat('category','Arterial'); updateNavBarWithFunctionName('Mathura Road Category : Arterial');">Arterial</a>
                                             </li>
                                         <li id="Sub Arterial"><a class="dropdown-item"
-                                                onclick="Mathura_TypeSub_cat('category','Sub Arterial'); updateNavBarWithFunctionName('Mathura Road Category Sub Arterial');">Sub Arterial</a>
-                                            </li>
-                                        
+                                                onclick="Mathura_TypeSub_cat('category','Sub Arterial'); updateNavBarWithFunctionName('Mathura Road Category : Sub Arterial');">Sub Arterial</a>
+                                            </li>                                       
                                     </ul>
                                 </li> 
                                 <li>
@@ -406,16 +389,16 @@
                                         Road Conditions &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Good"><a class="dropdown-item"
-                                                onclick="Mathura_Condition_cat('condition','Good'); updateNavBarWithFunctionName('Mathura Road Condition Good');">Good</a>
+                                                onclick="Mathura_Condition_cat('condition','Good'); updateNavBarWithFunctionName('Mathura Road Condition : Good');">Good</a>
                                             </li>
                                         <li id="Moderate"><a class="dropdown-item"
-                                                onclick="Mathura_Condition_cat('condition','Moderate'); updateNavBarWithFunctionName('Mathura Road Condition Moderate');">Moderate</a>
+                                                onclick="Mathura_Condition_cat('condition','Moderate'); updateNavBarWithFunctionName('Mathura Road Condition : Moderate');">Moderate</a>
                                             </li>
                                         <li id="Poor"><a class="dropdown-item"
-                                                onclick="Mathura_Condition_cat('condition','Poor'); updateNavBarWithFunctionName('Mathura Road Condition Poor');">Poor</a>
+                                                onclick="Mathura_Condition_cat('condition','Poor'); updateNavBarWithFunctionName('Mathura Road Condition : Poor');">Poor</a>
                                             </li>
                                          <li id="NA"><a class="dropdown-item"
-                                                onclick="Mathura_Condition_cat('condition','NA'); updateNavBarWithFunctionName('Mathura Road Condition Not define');">NA</a>
+                                                onclick="Mathura_Condition_cat('condition','NA'); updateNavBarWithFunctionName('Mathura Road Condition : Not Define');">NA</a>
                                             </li>
                                     </ul>
                                 </li>
@@ -425,22 +408,22 @@
                                         Material &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Bitumen"><a class="dropdown-item"
-                                                onclick="Mathura_Material_cat('material','Bitumen'); updateNavBarWithFunctionName('Mathura Road Material Bitumen');">Bitumen</a>
+                                                onclick="Mathura_Material_cat('material','Bitumen'); updateNavBarWithFunctionName('Mathura Road Material : Bitumen');">Bitumen</a>
                                             </li>
                                         <li id="BOE"><a class="dropdown-item"
-                                                onclick="Mathura_Material_cat('material','BOE'); updateNavBarWithFunctionName('Mathura Road Material BOE');">BOE</a>
+                                                onclick="Mathura_Material_cat('material','BOE'); updateNavBarWithFunctionName('Mathura Road Material : BOE');">BOE</a>
                                             </li>
                                         <li id="CC"><a class="dropdown-item"
-                                                onclick="Mathura_Material_cat('material','CC'); updateNavBarWithFunctionName('Mathura Road Material CC');">CC</a>
+                                                onclick="Mathura_Material_cat('material','CC'); updateNavBarWithFunctionName('Mathura Road Material : CC');">CC</a>
                                             </li>
                                         <li id="Interlocking"><a class="dropdown-item"
-                                                onclick="Mathura_Material_cat('material','Interlocking'); updateNavBarWithFunctionName('Mathura Road Material Interlocking');">Interlocking</a>
+                                                onclick="Mathura_Material_cat('material','Interlocking'); updateNavBarWithFunctionName('Mathura Road Material : Interlocking');">Interlocking</a>
                                             </li>
                                         <li id="Kachcha"><a class="dropdown-item"
-                                                onclick="Mathura_Material_cat('material','Kachcha'); updateNavBarWithFunctionName('Mathura Road Material Kachcha');">Kachcha</a>
+                                                onclick="Mathura_Material_cat('material','Kachcha'); updateNavBarWithFunctionName('Mathura Road Material : Kachcha');">Kachcha</a>
                                             </li>
                                         <li id="NA"><a class="dropdown-item"
-                                            onclick="Mathura_Material_cat('material','NA'); updateNavBarWithFunctionName('Mathura Road Material Not Define');">NA</a>
+                                            onclick="Mathura_Material_cat('material','NA'); updateNavBarWithFunctionName('Mathura Road Material : Not Define');">NA</a>
                                             </li>
                                     </ul>
                                 </li>
@@ -449,62 +432,65 @@
                                         onclick="updateAyodhyaRoadLayer('ownership'); updateNavBarWithFunctionName('Mathura Road Ownership');">Road Ownership &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="NHAI"><a class="dropdown-item"
-                                                onclick="Mathura_Ownership_cat('ownership','NHAI'); updateNavBarWithFunctionName('Mathura Road Ownership National Highways Authority of India');">NHAI
+                                                onclick="Mathura_Ownership_cat('ownership','NHAI'); updateNavBarWithFunctionName('Mathura Road Ownership : National Highways Authority of India');">NHAI
                                             </a></li>
                                         <li id="MVNN"><a class="dropdown-item"
-                                                onclick="Mathura_Ownership_cat('ownership','MVNN'); updateNavBarWithFunctionName('Mathura Road Ownership Mathura Nagar Nigam');">Mathura Nagar Nigam
+                                                onclick="Mathura_Ownership_cat('ownership','MVNN'); updateNavBarWithFunctionName('Mathura Road Ownership : Mathura Nagar Nigam');">Mathura Nagar Nigam
                                             </a></li>
                                         <li id="Private Road"><a class="dropdown-item"
-                                                onclick="Mathura_Ownership_cat('ownership','Private Road'); updateNavBarWithFunctionName('Mathura Road Ownership Private Road');">Private Road</a>
+                                                onclick="Mathura_Ownership_cat('ownership','Private Road'); updateNavBarWithFunctionName('Mathura Road Ownership : Private Road');">Private Road</a>
                                             </li>
                                         <li id="PWD"><a class="dropdown-item"
-                                                onclick="Mathura_Ownership_cat('ownership','PWD'); updateNavBarWithFunctionName('Mathura Road Ownership PWD');">PWD
+                                                onclick="Mathura_Ownership_cat('ownership','PWD'); updateNavBarWithFunctionName('Mathura Road Ownership : PWD');">PWD
                                             </a></li>
                                         <li id="Defence"><a class="dropdown-item"
-                                                onclick="Mathura_Ownership_cat('ownership','Defence'); updateNavBarWithFunctionName('Mathura Road Ownership Defence');">
+                                                onclick="Mathura_Ownership_cat('ownership','Defence'); updateNavBarWithFunctionName('Mathura Road Ownership : Defence');">
                                                 Defence </a></li>
                                         <li id="Development Authority"><a class="dropdown-item"
-                                                onclick="Mathura_Ownership_cat('ownership','MVDA'); updateNavBarWithFunctionName('Mathura Road Ownership Development Authority');"> Development Authority
+                                                onclick="Mathura_Ownership_cat('ownership','MVDA'); updateNavBarWithFunctionName('Mathura Road Ownership : Development Authority');"> Development Authority
                                                 </a></li>
                                         <!-- <li id="NA"><a class="dropdown-item"
-                                            onclick="Mathura_Ownership_cat('ownership','NA'); updateNavBarWithFunctionName('Mathura Road Ownership Not Define');">NA</a>
+                                            onclick="Mathura_Ownership_cat('ownership','NA'); updateNavBarWithFunctionName('Mathura Road Ownership : Not Define');">NA</a>
                                         </li> -->
                                                     
                                     </ul>
                                 </li>
                                  <li>
                                     <a class="dropdown" id="CUS"
-                                        onclick="updateAyodhyaRoadLayer('cus'); updateNavBarWithFunctionName('Mathura Road CUS');"> Road CUS &raquo;</a>
+                                        onclick="updateAyodhyaRoadLayer('cus'); updateNavBarWithFunctionName('Mathura Road CUS ');"> Road CUS &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="15th_Finance"><a class="dropdown-item"
-                                                onclick="Mathura_CUS_cat('cus','15th Finance'); updateNavBarWithFunctionName('Mathura Road CUS 15th Finance');">15th Finance</a>
+                                                onclick="Mathura_CUS_cat('cus_class','15th Finance'); updateNavBarWithFunctionName('Mathura Road CUS : 15th Finance');">15th Finance</a>
                                             </li>
                                         <li id="Nagar_Nigam_Nidhi"><a class="dropdown-item"
-                                                onclick="Mathura_CUS_cat('cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Mathura Road CUS Nagar Nigam Nidhi');">Nagar Nigam Nidhi</a>
+                                                onclick="Mathura_CUS_cat('cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Mathura Road CUS : Nagar Nigam Nidhi');">Nagar Nigam Nidhi</a>
                                             </li>
-                                        <li id="NHAI"><a class="dropdown-item"
-                                            onclick="Mathura_CUS_cat('cus','NHAI'); updateNavBarWithFunctionName('Mathura Road CUS NHAI');">NHAI</a>
-                                            </li>
+                                        <!-- <li id="NHAI"><a class="dropdown-item"
+                                            onclick="Mathura_CUS_cat('cus','NHAI'); updateNavBarWithFunctionName('Mathura Road CUS : NHAI');">NHAI</a>
+                                            </li> -->
                                         <li id="MVDA"><a class="dropdown-item"
-                                            onclick="Mathura_CUS_cat('cus','MVDA'); updateNavBarWithFunctionName('Mathura Road CUS MVDA');">MVDA</a>
+                                            onclick="Mathura_CUS_cat('cus_class','MVDA'); updateNavBarWithFunctionName('Mathura Road CUS : MVDA');">MVDA</a>
                                             </li>  
-                                        <li id="IOCL"><a class="dropdown-item"
-                                            onclick="Mathura_CUS_cat('cus','IOCL'); updateNavBarWithFunctionName('Mathura Road CUS IOCL');">IOCL</a>
-                                            </li>
-                                        <li id="NagarPalika"><a class="dropdown-item"
-                                            onclick="Mathura_CUS_cat('cus','Nagar Palika'); updateNavBarWithFunctionName('Mathura Road CUS Nagar Palika');">Nagar Palika</a>
+                                        <!-- <li id="IOCL"><a class="dropdown-item"
+                                            onclick="Mathura_CUS_cat('cus_class','IOCL'); updateNavBarWithFunctionName('Mathura Road CUS : IOCL');">IOCL</a>
+                                            </li> -->
+                                        <li id="DUDA"><a class="dropdown-item"
+                                            onclick="Mathura_CUS_cat('cus_class','DUDA'); updateNavBarWithFunctionName('Mathura Road CUS : DUDA');">DUDA</a>
                                             </li>
                                         <li id="PWD"><a class="dropdown-item"
-                                            onclick="Mathura_CUS_cat('cus','PWD'); updateNavBarWithFunctionName('Mathura Road CUS PWD');">PWD</a>
+                                            onclick="Mathura_CUS_cat('cus_class','PWD'); updateNavBarWithFunctionName('Mathura Road CUS : PWD');">PWD</a>
                                             </li>
-                                        <li id="TWARITYOJANA"><a class="dropdown-item"
-                                            onclick="Mathura_CUS_cat('cus','State Finanace Commission'); updateNavBarWithFunctionName('Mathura Road CUS State Finance Commission');">State Finance Commission</a>
+                                        <!-- <li id="TWARITYOJANA"><a class="dropdown-item"
+                                            onclick="Mathura_CUS_cat('cus','State Finanace Commission'); updateNavBarWithFunctionName('Mathura Road CUS : State Finance Commission');">State Finance Commission</a>
                                             </li>
                                         <li id="BareilysmartCity"><a class="dropdown-item"
-                                            onclick="Mathura_CUS_cat('cus','Ambedkar Gram Vikas Yojna'); updateNavBarWithFunctionName('Mathura Road CUS Ambedkar Gram Vikas Yojna');">Ambedkar Gram Vikas Yojna</a>
-                                            </li>
+                                            onclick="Mathura_CUS_cat('cus','Ambedkar Gram Vikas Yojna'); updateNavBarWithFunctionName('Mathura Road CUS : Ambedkar Gram Vikas Yojna');">Ambedkar Gram Vikas Yojna</a>
+                                            </li> -->
                                         <li id="NA"><a class="dropdown-item"
-                                            onclick="Mathura_CUS_cat('cus','NA'); updateNavBarWithFunctionName('Mathura Road cus Not Define');">NA</a>
+                                            onclick="Mathura_CUS_cat('cus_class','NA'); updateNavBarWithFunctionName('Mathura Road CUS : Not Define');">NA</a>
+                                            </li>
+                                        <li id="Others"><a class="dropdown-item"
+                                            onclick="Mathura_CUS_cat('cus_class','Others'); updateNavBarWithFunctionName('Mathura Road CUS : Others');">Others</a>
                                             </li>
 
                                     </ul>
@@ -568,129 +554,132 @@
                                 </li>
                                 <li>
                                     <a class="dropdown" id="AyodhayaDham_type"
-                                        onclick="Mathura_TypeSub_cat('zone_no','1'); updateNavBarWithFunctionName('Zone1 Category wise Road ');">Road Category &raquo;</a>
+                                        onclick="Mathura_TypeSub_cat('zone_no','1'); updateNavBarWithFunctionName('Zone 1 Category wise Road ');">Road Category &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
 
                                         <li id="Zone1_type_LocalStreet"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('1','category','Local Street'); updateNavBarWithFunctionName('Zone1 Road Category Local Street');">Local Street</a>
+                                                onclick="Mathura_Zone_TypeSub('1','category','Local Street'); updateNavBarWithFunctionName('Zone 1 Road Category : Local Street');">Local Street</a>
                                             </li>
                                         <li id="Zone1_type_Collector"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('1','category','Collector'); updateNavBarWithFunctionName('Zone1 Road Category Collector');">Collector</a>
+                                                onclick="Mathura_Zone_TypeSub('1','category','Collector'); updateNavBarWithFunctionName('Zone 1 Road Category : Collector');">Collector</a>
                                             </li>
-                                         <li id="Zone1_type_Arterial"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('1','category','Arterial'); updateNavBarWithFunctionName('Zone1 Road Category Arterial');">Arterial</a>
+                                        <li id="Zone1_type_Arterial"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_TypeSub('1','category','Arterial'); updateNavBarWithFunctionName('Zone 1 Road Category : Arterial');">Arterial</a>
                                             </li>
-                                         <li id="Zone1_type_Sub Arterial"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('1','category','Sub Arterial'); updateNavBarWithFunctionName('Zone1 Road Category Sub Arterial');">Sub Arterial</a>
+                                        <li id="Zone1_type_Sub Arterial"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_TypeSub('1','category','Sub Arterial'); updateNavBarWithFunctionName('Zone 1 Road Category : Sub Arterial');">Sub Arterial</a>
                                             </li>
                                          <!-- <li id="Zone1_type_NA"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('1','category','NA'); updateNavBarWithFunctionName('Zone1 Road Category NA');">NA</a>
+                                                onclick="Mathura_Zone_TypeSub('1','category','NA'); updateNavBarWithFunctionName('Zone 1 Road Category : NA');">NA</a>
                                         </li> -->
                                     </ul>
                                 </li>
                                 <li>
                                     <a class="dropdown" id="Zone1_condition"
-                                        onclick="Mathura_Condition_cat('zone_no','1'); updateNavBarWithFunctionName('Zone1 Condition wise Road ');">
+                                        onclick="Mathura_Condition_cat('zone_no','1'); updateNavBarWithFunctionName('Zone 1 Condition wise Road ');">
                                         Road Conditions &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone1_condition_good"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Condition('1','condition','Good'); updateNavBarWithFunctionName('Zone1 Road Condition Good');">Good</a>
+                                                onclick="Mathura_Zone_Condition('1','condition','Good'); updateNavBarWithFunctionName('Zone 1 Road Condition : Good');">Good</a>
                                             </li>
                                         <li id="Zone1_condition_moderate"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Condition('1','condition','Moderate'); updateNavBarWithFunctionName('Zone1 Road Condition Moderate');">Moderate</a>
+                                                onclick="Mathura_Zone_Condition('1','condition','Moderate'); updateNavBarWithFunctionName('Zone 1 Road Condition : Moderate');">Moderate</a>
                                             </li>
                                         <li id="Zone1_condition_poor"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Condition('1','condition','Poor'); updateNavBarWithFunctionName('Zone1 Road Condition Poor');">Poor</a>
+                                                onclick="Mathura_Zone_Condition('1','condition','Poor'); updateNavBarWithFunctionName('Zone 1 Road Condition : Poor');">Poor</a>
                                             </li>
                                         <li id="Zone1_condition_NA"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_Condition('1','condition','NA'); updateNavBarWithFunctionName('Zone1 Road Condition NA');">NA</a>
+                                            onclick="Mathura_Zone_Condition('1','condition','NA'); updateNavBarWithFunctionName('Zone 1 Road Condition : NA');">NA</a>
                                             </li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a class="dropdown" id="Zone1_material"
-                                        onclick="Mathura_Material_cat('zone_no','1'); updateNavBarWithFunctionName('Zone1 Material wise Road ');">Road
+                                        onclick="Mathura_Material_cat('zone_no','1'); updateNavBarWithFunctionName('Zone 1 Material wise Road ');">Road
                                         Material &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone1_material_bitumen"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('1','material','Bitumen'); updateNavBarWithFunctionName('Zone1 Road Material Bitumen');">Bitumen</a>
+                                                onclick="Mathura_Zone_Material('1','material','Bitumen'); updateNavBarWithFunctionName('Zone 1 Road Material : Bitumen');">Bitumen</a>
                                             </li>
                                         <li id="Zone1_material_BOE"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('1','material','BOE'); updateNavBarWithFunctionName('Zone1 Road Material BOE');">BOE</a>
+                                                onclick="Mathura_Zone_Material('1','material','BOE'); updateNavBarWithFunctionName('Zone 1 Road Material : BOE');">BOE</a>
                                             </li>
                                         <li id="Zone1_material_CC"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('1','material','CC'); updateNavBarWithFunctionName('Zone1 Road Material CC');">CC</a>
+                                                onclick="Mathura_Zone_Material('1','material','CC'); updateNavBarWithFunctionName('Zone 1 Road Material : CC');">CC</a>
                                             </li>
                                         <li id="Zone1_material_interlocking"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('1','material','Interlocking'); updateNavBarWithFunctionName('Zone1 Road Material Interlocking');">Interlocking</a>
+                                                onclick="Mathura_Zone_Material('1','material','Interlocking'); updateNavBarWithFunctionName('Zone 1 Road Material : Interlocking');">Interlocking</a>
                                             </li>
                                         <li id="Zone1_material_kachcha"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('1','material','Kachcha'); updateNavBarWithFunctionName('Zone1 Road Material Kachcha');">Kachcha</a>
+                                                onclick="Mathura_Zone_Material('1','material','Kachcha'); updateNavBarWithFunctionName('Zone 1 Road Material : Kachcha');">Kachcha</a>
                                             </li>
                                         <li id="Zone1_material_NA"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_Material('1','material','NA'); updateNavBarWithFunctionName('Zone1 Road Material NA');">NA</a>
+                                            onclick="Mathura_Zone_Material('1','material','NA'); updateNavBarWithFunctionName('Zone 1 Road Material : NA');">NA</a>
                                             </li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a class="dropdown" id="Zone1_ownership"
-                                        onclick="Mathura_Ownership_cat('zone_no','1'); updateNavBarWithFunctionName('Zone1 Ownership wise Road ');">Road
+                                        onclick="Mathura_Ownership_cat('zone_no','1'); updateNavBarWithFunctionName('Zone 1 Ownership wise Road ');">Road
                                         Ownership &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone1_ownership_NHAI"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('1','ownership','NHAI'); updateNavBarWithFunctionName('Zone1 Road Ownership National Highways Authority of India');">NHAI
+                                                onclick="Mathura_Zone_Ownership('1','ownership','NHAI'); updateNavBarWithFunctionName('Zone 1 Road Ownership : National Highways Authority of India');">NHAI
                                             </a></li>
                                         <li id="Zone1_ownership_MVNN"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('1','ownership','MVNN'); updateNavBarWithFunctionName('Zone1 Road Ownership Mathura Nagar Nigam');">Mathura Nagar Nigam
+                                                onclick="Mathura_Zone_Ownership('1','ownership','MVNN'); updateNavBarWithFunctionName('Zone 1 Road Ownership : Mathura Nagar Nigam');">Mathura Nagar Nigam
                                             </a></li>
                                         <li id="Zone1_ownership_PVT"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('1','ownership','Private Road'); updateNavBarWithFunctionName('Zone1 Road Ownership Private Road');">PVT</a>
+                                                onclick="Mathura_Zone_Ownership('1','ownership','Private Road'); updateNavBarWithFunctionName('Zone 1 Road Ownership : Private Road');">PVT</a>
                                             </li>
                                         <li id="Zone1_ownership_PWD"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('1','ownership','PWD'); updateNavBarWithFunctionName('Zone1 Road Ownership PWD');">PWD
+                                                onclick="Mathura_Zone_Ownership('1','ownership','PWD'); updateNavBarWithFunctionName('Zone 1 Road Ownership : PWD');">PWD
                                             </a></li>
                                         <li id="Zone1_ownership_Defence"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('1','ownership','Defence'); updateNavBarWithFunctionName('Zone1 Road Ownership Defence');">
+                                                onclick="Mathura_Zone_Ownership('1','ownership','Defence'); updateNavBarWithFunctionName('Zone 1 Road Ownership : Defence');">
                                                 Defence </a></li>
                                         <li id="Zone1_ownership_Development Authority"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('1','ownership','MVDA'); updateNavBarWithFunctionName('Zone1 Road Ownership Development Authority');"> Development Authority
+                                                onclick="Mathura_Zone_Ownership('1','ownership','MVDA'); updateNavBarWithFunctionName('Zone 1 Road Ownership : Development Authority');"> Development Authority
                                                 </a></li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a class="dropdown" id="CUS"
-                                        onclick="Mathura_CUS_cat('zone_no','1'); updateNavBarWithFunctionName('Zone1 Road CUS');">
+                                        onclick="Mathura_CUS_cat('zone_no','1'); updateNavBarWithFunctionName('Zone 1 Road CUS');">
                                         Road CUS &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="15th_Finance"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('1', 'cus','15th Finance'); updateNavBarWithFunctionName('Zone-1 Road CUS 15th Finance');">15th Finance</a>
+                                                onclick="Mathura_Zone_CUS('1', 'cus_class','15th Finance'); updateNavBarWithFunctionName('Zone 1 Road CUS : 15th Finance');">15th Finance</a>
                                             </li>
                                         <li id="Nagar_Nigam_Nidhi"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('1', 'cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-1 Road CUS Nagar Nigam Nidhi');">Nagar Nigam Nidhi</a>
+                                                onclick="Mathura_Zone_CUS('1', 'cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone 1 Road CUS : Nagar Nigam Nidhi');">Nagar Nigam Nidhi</a>
                                             </li>
-                                        <li id="NHAI"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_CUS('1', 'cus','NHAI'); updateNavBarWithFunctionName('Zone-1 Road CUS NHAI');">NHAI</a>
-                                            </li>
+                                        <!-- <li id="NHAI"><a class="dropdown-item"
+                                            onclick="Mathura_Zone_CUS('1', 'cus','NHAI'); updateNavBarWithFunctionName('Zone 1 Road CUS :NHAI');">NHAI</a>
+                                            </li> -->
                                         <li id="MVDA"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('1', 'cus','MVDA'); updateNavBarWithFunctionName('Zone-1 Road CUS MVDA');">MVDA</a>
+                                                onclick="Mathura_Zone_CUS('1', 'cus_class','MVDA'); updateNavBarWithFunctionName('Zone 1 Road CUS : MVDA');">MVDA</a>
                                             </li>
-                                        <li id="IOCL"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('1', 'cus','IOCL'); updateNavBarWithFunctionName('Zone-1 Road CUS IOCL');">IOCL</a>
-                                            </li>
-                                        <li id="NagarPalika"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('1', 'cus','Nagar Palika'); updateNavBarWithFunctionName('Zone-1 Road CUS Nagar Palika');">Nagar Palika</a>
-                                            </li>
+                                        <!-- <li id="IOCL"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('1', 'cus','IOCL'); updateNavBarWithFunctionName('Zone 1 Road CUS : IOCL');">IOCL</a>
+                                            </li> -->
+                                        <!-- <li id="DUDA"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('1', 'cus','DUDA'); updateNavBarWithFunctionName('Zone 1 Road CUS : DUDA');">DUDA</a>
+                                            </li> -->
                                         <li id="PWD"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('1', 'cus','PWD'); updateNavBarWithFunctionName('Zone-1 Road CUS PWD');">PWD</a>
+                                                onclick="Mathura_Zone_CUS('1', 'cus_class','PWD'); updateNavBarWithFunctionName('Zone 1 Road CUS : PWD');">PWD</a>
                                             </li>
-                                        <li id="TWARITYOJANA"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('1', 'cus','State Finanace Commission'); updateNavBarWithFunctionName('Zone-1 Road CUS State Finance Commission');">State Finance Commission</a>
+                                        <!-- <li id="TWARITYOJANA"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('1', 'cus','State Finanace Commission'); updateNavBarWithFunctionName('Zone 1 Road CUS :State Finance Commission');">State Finance Commission</a>
                                             </li>
                                         <li id="BareilysmartCity"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('1', 'cus','Ambedkar Gram Vikas Yojna'); updateNavBarWithFunctionName('Zone-1 Road CUS Ambedkar Gram Vikas Yojna');"> Ambedkar Gram Vikas Yojna</a>
-                                            </li>
+                                                onclick="Mathura_Zone_CUS('1', 'cus','Ambedkar Gram Vikas Yojna'); updateNavBarWithFunctionName('Zone 1 Road CUS :Ambedkar Gram Vikas Yojna');"> Ambedkar Gram Vikas Yojna</a>
+                                            </li> -->
                                         <li id="Zone1_cus_NA"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_CUS('1','cus','NA'); updateNavBarWithFunctionName('Zone1 Road cus NA');">NA</a>
+                                            onclick="Mathura_Zone_CUS('1','cus_class','NA'); updateNavBarWithFunctionName('Zone 1 Road CUS : NA');">NA</a>
+                                            </li>
+                                        <li id="Zone1_cus_Others"><a class="dropdown-item"
+                                            onclick="Mathura_Zone_CUS('1','cus_class','Others'); updateNavBarWithFunctionName('Zone 1 Road CUS : Others');">Others</a>
                                             </li>
                                     </ul>
                                 </li>
@@ -786,63 +775,61 @@
                                         Category &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone2_type_LocalStreet"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('2','category','Local Street'); updateNavBarWithFunctionName('Zone2 Road Category Local Street');">Local Street</a>
+                                                onclick="Mathura_Zone_TypeSub('2','category','Local Street'); updateNavBarWithFunctionName('Zone 2 Road Category : Local Street');">Local Street</a>
                                             </li>
                                         <li id="Zone2_type_Collector"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('2','category','Collector'); updateNavBarWithFunctionName('Zone2 Road Category Collector');">Collector</a>
+                                                onclick="Mathura_Zone_TypeSub('2','category','Collector'); updateNavBarWithFunctionName('Zone 2 Road Category : Collector');">Collector</a>
                                             </li>
                                          <li id="Zone2_type_Arterial"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('2','category','Arterial'); updateNavBarWithFunctionName('Zone2 Road Category Arterial');">Arterial</a>
+                                                onclick="Mathura_Zone_TypeSub('2','category','Arterial'); updateNavBarWithFunctionName('Zone 2 Road Category : Arterial');">Arterial</a>
                                             </li>
                                          <li id="Zone2_type_Sub Arterial"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('2','category','Sub Arterial'); updateNavBarWithFunctionName('Zone2 Road Category Sub Arterial');">Sub Arterial</a>
+                                                onclick="Mathura_Zone_TypeSub('2','category','Sub Arterial'); updateNavBarWithFunctionName('Zone 2 Road Category : Sub Arterial');">Sub Arterial</a>
                                             </li>
                                          <!-- <li id="Zone2_type_NA"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('2','category','NA'); updateNavBarWithFunctionName('Zone2 Road Category NA');">NA</a>
+                                                onclick="Mathura_Zone_TypeSub('2','category','NA'); updateNavBarWithFunctionName('Zone 2 Road Category : NA');">NA</a>
                                         </li> -->
                                     </ul>
                                 </li> 
                                 <li>
                                     <a class="dropdown" id="Zone2_condition"
-                                        onclick="Mathura_Condition_cat('zone_no','2'); updateNavBarWithFunctionName('Zone 2 Condition wise Road ');">
-                                        Road Conditions &raquo;</a>
+                                        onclick="Mathura_Condition_cat('zone_no','2'); updateNavBarWithFunctionName('Zone 2 Road Condition wise Road ');"> Road Conditions &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone2_condition_good"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Condition('2','condition','Good'); updateNavBarWithFunctionName('Zone 2 Condition Good Road');">Good</a>
+                                                onclick="Mathura_Zone_Condition('2','condition','Good'); updateNavBarWithFunctionName('Zone 2 Road Condition : Good ');">Good</a>
                                             </li>
                                         <li id="Zone2_condition_moderate"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Condition('2','condition','Moderate'); updateNavBarWithFunctionName('Zone 2 Condition Moderate Road');">Moderate</a>
+                                                onclick="Mathura_Zone_Condition('2','condition','Moderate'); updateNavBarWithFunctionName('Zone 2 Road Condition : Moderate ');">Moderate</a>
                                             </li>
                                         <li id="Zone2_condition_poor"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Condition('2','condition','Poor'); updateNavBarWithFunctionName('Zone 2 Condition Poor Road');">Poor</a>
+                                                onclick="Mathura_Zone_Condition('2','condition','Poor'); updateNavBarWithFunctionName('Zone 2 Road Condition : Poor');">Poor</a>
                                             </li>
                                         <li id="Zone2_condition_poor"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_Condition('2','condition','NA'); updateNavBarWithFunctionName('Zone 2 Condition NA');">NA</a>
+                                            onclick="Mathura_Zone_Condition('2','condition','NA'); updateNavBarWithFunctionName('Zone 2 Road Condition :  NA');">NA</a>
                                             </li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a class="dropdown" id="Zone2_material"
-                                        onclick="Mathura_Material_cat('zone_no','2'); updateNavBarWithFunctionName('Zone 2 Material wise Road ');">Road
-                                        Material &raquo;</a>
+                                        onclick="Mathura_Material_cat('zone_no','2'); updateNavBarWithFunctionName('Zone 2 Material wise Road ');">Road Material &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone2_material_bitumen"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('2','material','Bitumen'); updateNavBarWithFunctionName('Zone 2 Road Material Bitumen');">Bitumen</a>
+                                                onclick="Mathura_Zone_Material('2','material','Bitumen'); updateNavBarWithFunctionName('Zone 2 Road Material : Bitumen');">Bitumen</a>
                                             </li>
                                         <li id="Zone2_material_BOE"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('2','material','BOE'); updateNavBarWithFunctionName('Zone 2 Road Material BOE');">BOE</a>
+                                                onclick="Mathura_Zone_Material('2','material','BOE'); updateNavBarWithFunctionName('Zone 2 Road Material : BOE');">BOE</a>
                                             </li>
                                         <li id="Zone2_material_CC"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('2','material','CC'); updateNavBarWithFunctionName('Zone 2 Road Material CC');">CC</a>
+                                                onclick="Mathura_Zone_Material('2','material','CC'); updateNavBarWithFunctionName('Zone 2 Road Material : CC');">CC</a>
                                             </li>
                                         <li id="Zone2_material_interlocking"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('2','material','Interlocking'); updateNavBarWithFunctionName('Zone 2 Road Material Interlocking');">Interlocking</a>
+                                                onclick="Mathura_Zone_Material('2','material','Interlocking'); updateNavBarWithFunctionName('Zone 2 Road Material : Interlocking');">Interlocking</a>
                                             </li>
                                         <li id="Zone2_material_kachcha"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('2','material','Kachcha'); updateNavBarWithFunctionName('Zone 2 Road Material Kachcha');">Kachcha</a>
+                                                onclick="Mathura_Zone_Material('2','material','Kachcha'); updateNavBarWithFunctionName('Zone 2 Road Material : Kachcha');">Kachcha</a>
                                             </li>
                                         <li id="Zone2_material_kachcha"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_Material('2','material','NA'); updateNavBarWithFunctionName('Zone 2 Road Material NA');">NA</a>
+                                            onclick="Mathura_Zone_Material('2','material','NA'); updateNavBarWithFunctionName('Zone 2 Road Material : NA');">NA</a>
                                             </li>
                                     </ul>
                                 </li>
@@ -852,22 +839,22 @@
                                         Ownership &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone2_ownership_NHAI"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('2','ownership','NHAI'); updateNavBarWithFunctionName('Zone 2 Road Ownership National Highways Authority of India');">NHAI
+                                                onclick="Mathura_Zone_Ownership('2','ownership','NHAI'); updateNavBarWithFunctionName('Zone 2 Road Ownership :  National Highways Authority of India');">NHAI
                                             </a></li>
                                         <li id="Zone2_ownership_MVNN"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('2','ownership','MVNN'); updateNavBarWithFunctionName('Zone 2 Road Ownership Mathura Nagar Nigam');">Mathura Nagar  Nigam
+                                                onclick="Mathura_Zone_Ownership('2','ownership','MVNN'); updateNavBarWithFunctionName('Zone 2 Road Ownership :  Mathura Nagar Nigam');">Mathura Nagar  Nigam
                                             </a></li>
                                         <li id="Zone2_ownership_PrivateRoad"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('2','ownership','Private Road'); updateNavBarWithFunctionName('Zone 2 Road Ownership Private Road');">Private Road
+                                                onclick="Mathura_Zone_Ownership('2','ownership','Private Road'); updateNavBarWithFunctionName('Zone 2 Road Ownership :  Private Road');">Private Road
                                             </a></li>
                                         <li id="Zone2_ownership_PWD"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('2','ownership','PWD'); updateNavBarWithFunctionName('Zone 2 Road Ownership PWD');">PWD
+                                                onclick="Mathura_Zone_Ownership('2','ownership','PWD'); updateNavBarWithFunctionName('Zone 2 Road Ownership :  PWD');">PWD
                                             </a></li>
                                         <li id="Zone2_ownership_Development Authority"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('2','ownership','MVDA'); updateNavBarWithFunctionName('Zone 2 Road Ownership Development Authority');"> Development Authority
+                                                onclick="Mathura_Zone_Ownership('2','ownership','MVDA'); updateNavBarWithFunctionName('Zone 2 Road Ownership :  Development Authority');"> Development Authority
                                                 </a></li>
                                          <li id="Zone2_ownership_Defence"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('2','ownership','Defence'); updateNavBarWithFunctionName('Zone 2 Road Ownership Defence');">
+                                                onclick="Mathura_Zone_Ownership('2','ownership','Defence'); updateNavBarWithFunctionName('Zone 2 Road Ownership :  Defence');">
                                                 Defence </a></li>
                                                
                                     </ul>
@@ -880,37 +867,33 @@
                                     <ul class="dropdown-menu dropdown-submenu">
                                   
                                         <li id="15th_Finance"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('2', 'cus','15th Finance'); updateNavBarWithFunctionName('Zone-2 Road CUS 15th Finance');">15th Finance</a>
+                                                onclick="Mathura_Zone_CUS('2', 'cus_class','15th Finance'); updateNavBarWithFunctionName('Zone 2 Road CUS :  15th Finance');">15th Finance</a>
                                             </li>
                                         <li id="Nagar_Nigam_Nidhi"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('2', 'cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-2 Road CUS Nagar Nigam Nidhi');">Nagar Nigam Nidhi</a>
+                                                onclick="Mathura_Zone_CUS('2', 'cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone 2 Road CUS :  Nagar Nigam Nidhi');">Nagar Nigam Nidhi</a>
                                             </li>
-                                        <li id="NHAI"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_CUS('2', 'cus','NHAI'); updateNavBarWithFunctionName('Zone-2 Road CUS NHAI');">NHAI</a>
-                                            </li>
+                                        <!-- <li id="NHAI"><a class="dropdown-item"
+                                            onclick="Mathura_Zone_CUS('2', 'cus','NHAI'); updateNavBarWithFunctionName('Zone 2 Road CUS :  NHAI');">NHAI</a>
+                                            </li> -->
                                         <li id="MVDA"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('2', 'cus','MVDA'); updateNavBarWithFunctionName('Zone-2 Road CUS MVDA');">MVDA</a>
+                                                onclick="Mathura_Zone_CUS('2', 'cus','MVDA'); updateNavBarWithFunctionName('Zone 2 Road CUS :  MVDA');">MVDA</a>
                                             </li>
-                                        <li id="Panchayat"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('2', 'cus','IOCL'); updateNavBarWithFunctionName('Zone-2 Road CUS IOCL');">IOCL</a>
-                                            </li>
-                                        <li id="Panchayat"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('2', 'cus','Nagar Palika'); updateNavBarWithFunctionName('Zone-2 Road CUS Nagar Palika');">Nagar Palika</a>
+                                        <!-- <li id="Panchayat"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('2', 'cus','IOCL'); updateNavBarWithFunctionName('Zone 2 Road CUS :  IOCL');">IOCL</a>
+                                            </li> -->
+                                        <li id="DUDA"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('2', 'cus_class','DUDA'); updateNavBarWithFunctionName('Zone 2 Road CUS :  DUDA');">DUDA</a>
                                             </li>
                                         <li id="PWD"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('2', 'cus','PWD'); updateNavBarWithFunctionName('Zone-2 Road CUS PWD');">PWD</a>
+                                                onclick="Mathura_Zone_CUS('2', 'cus_class','PWD'); updateNavBarWithFunctionName('Zone 2 Road CUS :  PWD');">PWD</a>
                                             </li>
-                                    
-                                        <li id="TWARITYOJANA"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('2', 'cus','State Finanace Commission'); updateNavBarWithFunctionName('Zone-2 Road CUS State Finance Commission');">State Finance Commission</a>
-                                            </li>
-                                        <li id="BareilysmartCity"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('2', 'cus','Ambedkar Gram Vikas Yojna'); updateNavBarWithFunctionName('Zone-2 Road CUS Ambedkar Gram Vikas Yojna');"> Ambedkar Gram Vikas Yojna</a>
-                                            </li>
+                          
                                         <li id="Zone2_na"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('2','cus','NA'); updateNavBarWithFunctionName('Zone 2 Road cus NA');">NA</a>
+                                                onclick="Mathura_Zone_CUS('2','cus_class','NA'); updateNavBarWithFunctionName('Zone 2 Road CUS : NA');">NA</a>
                                             </li>
-
+                                        <li id="Zone2_others"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('2','cus_class','Others'); updateNavBarWithFunctionName('Zone 2 Road CUS : Others');">Others</a>
+                                            </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -951,9 +934,7 @@
                                         <li><a class="dropdown-item" id="Ward33"
                                                 onclick="Mathura_Ward_no('ward_no','33'); updateNavBarWithFunctionName('Ward 33 Road ');">Ward
                                                 33</a></li>
-                                        <!-- <li><a class="dropdown-item" id="Ward39"
-                                                onclick="Mathura_Ward_no('ward_no','37'); updateNavBarWithFunctionName('Ward 37 Road ');">Ward
-                                                37</a></li> -->
+                                    
                                         <li><a class="dropdown-item" id="Ward40"
                                                 onclick="Mathura_Ward_no('ward_no','38'); updateNavBarWithFunctionName('Ward 38 Road ');">Ward
                                                 38</a></li>
@@ -983,19 +964,19 @@
                                         Category &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone3_type_LocalStreet"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('3','category','Local Street'); updateNavBarWithFunctionName('Zone3 Road Category Local Street');">Local Street</a>
+                                                onclick="Mathura_Zone_TypeSub('3','category','Local Street'); updateNavBarWithFunctionName('Zone 3 Road Category :  Local Street');">Local Street</a>
                                             </li>
                                         <li id="Zone3_type_Collector"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('3','category','Collector'); updateNavBarWithFunctionName('Zone3 Road Category Collector');">Collector</a>
+                                                onclick="Mathura_Zone_TypeSub('3','category','Collector'); updateNavBarWithFunctionName('Zone 3 Road Category :  Collector');">Collector</a>
                                             </li>
                                          <li id="Zone3_type_Arterial"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('3','category','Arterial'); updateNavBarWithFunctionName('Zone3 Road Category Arterial');">Arterial</a>
+                                                onclick="Mathura_Zone_TypeSub('3','category','Arterial'); updateNavBarWithFunctionName('Zone 3 Road Category :  Arterial');">Arterial</a>
                                             </li>
                                          <li id="Zone3_type_Sub Arterial"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('3','category','Sub Arterial'); updateNavBarWithFunctionName('Zone3 Road Category Sub Arterial');">Sub Arterial</a>
+                                                onclick="Mathura_Zone_TypeSub('3','category','Sub Arterial'); updateNavBarWithFunctionName('Zone 3 Road Category :  Sub Arterial');">Sub Arterial</a>
                                             </li>
                                          <!-- <li id="Zone3_type_NA"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('3','category','NA'); updateNavBarWithFunctionName('Zone3 Road Category NA');">NA</a>
+                                                onclick="Mathura_Zone_TypeSub('3','category','NA'); updateNavBarWithFunctionName('Zone 3 Road Category :  NA');">NA</a>
                                         </li> -->
                                     </ul>
                                 </li>
@@ -1005,16 +986,16 @@
                                         Road Conditions &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone3_condition_good"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Condition('3','condition','Good'); updateNavBarWithFunctionName('Zone 3 Condition Good Road');">Good</a>
+                                                onclick="Mathura_Zone_Condition('3','condition','Good'); updateNavBarWithFunctionName('Zone 3 Road Condition :  Good ');">Good</a>
                                             </li>
                                         <li id="Zone3_condition_moderate"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Condition('3','condition','Moderate'); updateNavBarWithFunctionName('Zone 3 Condition Moderate Road');">Moderate</a>
+                                                onclick="Mathura_Zone_Condition('3','condition','Moderate'); updateNavBarWithFunctionName('Zone 3 Road Condition :  Moderate ');">Moderate</a>
                                             </li>
                                         <li id="Zone3_condition_poor"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Condition('3','condition','Poor'); updateNavBarWithFunctionName('Zone 3 Condition Poor Road');">Poor</a>
+                                                onclick="Mathura_Zone_Condition('3','condition','Poor'); updateNavBarWithFunctionName('Zone 3 Road Condition :  Poor ');">Poor</a>
                                             </li>
                                         <li id="Zone3_condition_NA"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_Condition('3','condition','NA'); updateNavBarWithFunctionName('Zone 3 Condition NA ');">NA</a>
+                                            onclick="Mathura_Zone_Condition('3','condition','NA'); updateNavBarWithFunctionName('Zone 3 Road Condition :  NA ');">NA</a>
                                             </li>
                                     </ul>
                                 </li>
@@ -1024,22 +1005,22 @@
                                         Material &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone3_material_bitumen"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('3','material','Bitumen'); updateNavBarWithFunctionName('Zone 3 Material Bitumen Road');">Bitumen</a>
+                                                onclick="Mathura_Zone_Material('3','material','Bitumen'); updateNavBarWithFunctionName('Zone 3 Road Material :  Bitumen ');">Bitumen</a>
                                             </li>
                                         <li id="Zone3_material_BOE"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('3','material','BOE'); updateNavBarWithFunctionName('Zone 3 Material BOE Road');">BOE</a>
+                                                onclick="Mathura_Zone_Material('3','material','BOE'); updateNavBarWithFunctionName('Zone 3 Road Material :  BOE ');">BOE</a>
                                             </li>
                                         <li id="Zone3_material_CC"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('3','material','CC'); updateNavBarWithFunctionName('Zone 3 Material CC Road');">CC</a>
+                                                onclick="Mathura_Zone_Material('3','material','CC'); updateNavBarWithFunctionName('Zone 3 Road Material :  CC ');">CC</a>
                                             </li>
                                         <li id="Zone3_material_interlocking"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('3','material','Interlocking'); updateNavBarWithFunctionName('Zone 3 Material Interlocking Road');">Interlocking</a>
+                                                onclick="Mathura_Zone_Material('3','material','Interlocking'); updateNavBarWithFunctionName('Zone 3 Road Material :  Interlocking ');">Interlocking</a>
                                             </li>
                                         <li id="Zone3_material_kachcha"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('3','material','Kachcha'); updateNavBarWithFunctionName('Zone 3 Material Kachcha Road');">Kachcha</a>
+                                                onclick="Mathura_Zone_Material('3','material','Kachcha'); updateNavBarWithFunctionName('Zone 3 Road Material :  Kachcha ');">Kachcha</a>
                                             </li>
                                         <li id="Zone3_material_NA"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_Material('3','material','NA'); updateNavBarWithFunctionName('Zone 3 Material Road Not defined');">NA</a>
+                                            onclick="Mathura_Zone_Material('3','material','NA'); updateNavBarWithFunctionName('Zone 3 Road Material :   Not defined');">NA</a>
                                             </li>
                                     </ul>
                                 </li>
@@ -1049,22 +1030,22 @@
                                         Ownership &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone3_ownership_NHAI"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('3','ownership','NHAI'); updateNavBarWithFunctionName('Zone 3 Road Ownership National Highways Authority of India');">NHAI
+                                                onclick="Mathura_Zone_Ownership('3','ownership','NHAI'); updateNavBarWithFunctionName('Zone 3 Road Ownership :  National Highways Authority of India');">NHAI
                                             </a></li>
                                         <li id="Zone3_ownership_MVNN"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('3','ownership','MVNN'); updateNavBarWithFunctionName('Zone 3 Road Ownership Mathura Nagar Nigam');">Mathura Nagar Nigam
+                                                onclick="Mathura_Zone_Ownership('3','ownership','MVNN'); updateNavBarWithFunctionName('Zone 3 Road Ownership :  :  Mathura Nagar Nigam');">Mathura Nagar Nigam
                                             </a></li>
                                         <li id="Zone3_ownership_PWD"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('3','ownership','PWD'); updateNavBarWithFunctionName('Zone 3 Road Ownership PWD');">PWD
+                                                onclick="Mathura_Zone_Ownership('3','ownership','PWD'); updateNavBarWithFunctionName('Zone 3 Road Ownership :  :  PWD');">PWD
                                             </a></li>
                                         <li id="Zone3_ownership_Defence"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('3','ownership','Defence'); updateNavBarWithFunctionName('Zone 3 Road Ownership Defence');">
+                                                onclick="Mathura_Zone_Ownership('3','ownership','Defence'); updateNavBarWithFunctionName('Zone 3 Road Ownership :  :  Defence');">
                                                 Defence </a></li>
                                         <li id="Zone3_ownership_PrivateRoad"><a class="dropdown-item"
-                                                    onclick="Mathura_Zone_Ownership('3','ownership','Private Road'); updateNavBarWithFunctionName('Zone 3 Road Ownership Private Road');">Private Road</a>
+                                                    onclick="Mathura_Zone_Ownership('3','ownership','Private Road'); updateNavBarWithFunctionName('Zone 3 Road Ownership :  :  Private Road');">Private Road</a>
                                             </li>
                                         <li id="Zone3_ownership_Development Authority"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('3','ownership','MVDA'); updateNavBarWithFunctionName('Zone 3 Road Ownership Development Authority');"> Development Authority
+                                                onclick="Mathura_Zone_Ownership('3','ownership','MVDA'); updateNavBarWithFunctionName('Zone 3 Road Ownership :  :  Development Authority');"> Development Authority
                                             </a></li>        
                                     </ul>
                                 </li>
@@ -1074,40 +1055,42 @@
                                         Road CUS &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="15th_Finance"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('3', 'cus','15th Finance'); updateNavBarWithFunctionName('Zone-3 Road CUS 15th Finance');">15th Finance</a>
+                                                onclick="Mathura_Zone_CUS('3', 'cus_class','15th Finance'); updateNavBarWithFunctionName('Zone 3 Road CUS :  15th Finance');">15th Finance</a>
                                             </li>
                                         <li id="Nagar_Nigam_Nidhi"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('3', 'cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-3 Road CUS Nagar Nigam Nidhi');">Nagar Nigam Nidhi</a>
+                                                onclick="Mathura_Zone_CUS('3', 'cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone 3 Road CUS :  Nagar Nigam Nidhi');">Nagar Nigam Nidhi</a>
                                             </li>
-                                        <li id="NHAI"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_CUS('3', 'cus','NHAI'); updateNavBarWithFunctionName('Zone-3 Road CUS NHAI');">NHAI</a>
-                                        </li>
+                                        <!-- <li id="NHAI"><a class="dropdown-item"
+                                            onclick="Mathura_Zone_CUS('3', 'cus','NHAI'); updateNavBarWithFunctionName('Zone 3 Road CUS :  NHAI');">NHAI</a>
+                                        </li> -->
                                             <li id="MVDA"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('3', 'cus','MVDA'); updateNavBarWithFunctionName('Zone-3 Road CUS MVDA');">MVDA</a>
+                                                onclick="Mathura_Zone_CUS('3', 'cus_class','MVDA'); updateNavBarWithFunctionName('Zone 3 Road CUS :  MVDA');">MVDA</a>
                                             </li>
-                                        <li id="IOCL"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('3', 'cus','IOCL'); updateNavBarWithFunctionName('Zone-3 Road CUS IOCL');">IOCL</a>
-                                            </li>
-                                        <li id="NagarPalika"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('3', 'cus','Nagar Palika'); updateNavBarWithFunctionName('Zone-3 Road CUS Nagar Palika');">Nagar Palika</a>
+                                        <!-- <li id="IOCL"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('3', 'cus_class','IOCL'); updateNavBarWithFunctionName('Zone 3 Road CUS :  IOCL');">IOCL</a>
+                                            </li> -->
+                                        <li id="DUDA"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('3', 'cus_class','DUDA'); updateNavBarWithFunctionName('Zone 3 Road CUS :  DUDA');">DUDA</a>
                                             </li>
                                         <li id="PWD"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('3', 'cus','PWD'); updateNavBarWithFunctionName('Zone-3 Road CUS PWD');">PWD</a>
+                                                onclick="Mathura_Zone_CUS('3', 'cus_class','PWD'); updateNavBarWithFunctionName('Zone 3 Road CUS :  PWD');">PWD</a>
                                             </li>
-                                        <li id="TWARITYOJANA"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('3', 'cus','State Finanace Commission'); updateNavBarWithFunctionName('Zone-3 Road CUS State Finance Commission');">State Finance Commission</a>
+                                        <!-- <li id="TWARITYOJANA"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('3', 'cus','State Finanace Commission'); updateNavBarWithFunctionName('Zone 3 Road CUS :  State Finance Commission');">State Finance Commission</a>
                                             </li>
                                         <li id="BareilysmartCity"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('3', 'cus','Ambedkar Gram Vikas Yojna'); updateNavBarWithFunctionName('Zone-3 Road CUS Ambedkar Gram Vikas Yojna');"> Ambedkar Gram Vikas Yojna</a>
-                                            </li>
+                                                onclick="Mathura_Zone_CUS('3', 'cus','Ambedkar Gram Vikas Yojna'); updateNavBarWithFunctionName('Zone 3 Road CUS :  Ambedkar Gram Vikas Yojna');"> Ambedkar Gram Vikas Yojna</a>
+                                            </li> -->
                                        <li id="Zone3_material_NA"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_CUS('3','cus','NA'); updateNavBarWithFunctionName('Zone 3 cus Road Not defined');">NA</a>
+                                            onclick="Mathura_Zone_CUS('3','cus_class','NA'); updateNavBarWithFunctionName('Zone 3 Road CUS : Not defined');">NA</a>
+                                            </li>
+                                        <li id="Zone3_others"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('3','cus_class','Others'); updateNavBarWithFunctionName('Zone 3 Road CUS : Others');">Others</a>
                                             </li>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
-
                         <li><a id="Zone4" class="dropdown" onclick="Mathura_Zone_no('zone_no','4'); updateNavBarWithFunctionName('Zone 4 Zone Road ');"> Zone 4 &raquo;</a>
                             <ul class="dropdown-menu">
                                 <li>
@@ -1182,16 +1165,16 @@
                                         Road Conditions &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone4_condition_good"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Condition('4','condition','Good'); updateNavBarWithFunctionName('Zone 4 Condition Good Road');">Good</a>
+                                                onclick="Mathura_Zone_Condition('4','condition','Good'); updateNavBarWithFunctionName('Zone 4 Road Condition :  Good ');">Good</a>
                                             </li>
                                         <li id="Zone4_condition_moderate"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Condition('4','condition','Moderate'); updateNavBarWithFunctionName('Zone 4 Condition Moderate Road');">Moderate</a>
+                                                onclick="Mathura_Zone_Condition('4','condition','Moderate'); updateNavBarWithFunctionName('Zone 4 Road Condition :  Moderate ');">Moderate</a>
                                             </li>
                                         <li id="Zone4_condition_poor"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Condition('4','condition','Poor'); updateNavBarWithFunctionName('Zone 4 Condition Poor Road');">Poor</a>
+                                                onclick="Mathura_Zone_Condition('4','condition','Poor'); updateNavBarWithFunctionName('Zone 4 Road Condition :  Poor ');">Poor</a>
                                             </li>
                                         <li id="Zone4_condition_NA"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_Condition('4','condition','NA'); updateNavBarWithFunctionName('Zone 4 Condition NA Road');">NA</a>
+                                            onclick="Mathura_Zone_Condition('4','condition','NA'); updateNavBarWithFunctionName('Zone 4 Road Condition :  NA ');">NA</a>
                                             </li>
                                     </ul>
                                 </li>
@@ -1201,22 +1184,22 @@
                                         Material &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone4_material_bitumen"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('4','material','Bitumen'); updateNavBarWithFunctionName('Zone 4 Material Bitumen Road');">Bitumen</a>
+                                                onclick="Mathura_Zone_Material('4','material','Bitumen'); updateNavBarWithFunctionName('Zone 4 Road Material :  Bitumen Road');">Bitumen</a>
                                             </li>
                                         <li id="Zone4_material_BOE"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('4','material','BOE'); updateNavBarWithFunctionName('Zone 4 Material BOE Road');">BOE</a>
+                                                onclick="Mathura_Zone_Material('4','material','BOE'); updateNavBarWithFunctionName('Zone 4 Road Material :  BOE Road');">BOE</a>
                                             </li>
                                         <li id="Zone4_material_CC"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('4','material','CC'); updateNavBarWithFunctionName('Zone 4 Material CC Road');">CC</a>
+                                                onclick="Mathura_Zone_Material('4','material','CC'); updateNavBarWithFunctionName('Zone 4 Road Material :  CC Road');">CC</a>
                                             </li>
                                         <li id="Zone4_material_interlocking"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('4','material','Interlocking'); updateNavBarWithFunctionName('Zone 4 Material Interlocking Road');">Interlocking</a>
+                                                onclick="Mathura_Zone_Material('4','material','Interlocking'); updateNavBarWithFunctionName('Zone 4 Road Material :  Interlocking Road');">Interlocking</a>
                                             </li>
                                         <li id="Zone4_material_kachcha"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('4','material','Kachcha'); updateNavBarWithFunctionName('Zone 4 Material Kachcha Road');">Kachcha</a>
+                                                onclick="Mathura_Zone_Material('4','material','Kachcha'); updateNavBarWithFunctionName('Zone 4 Road Material :  Kachcha Road');">Kachcha</a>
                                             </li>
                                         <li id="Zone4_material_NA"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_Material('4','material','NA'); updateNavBarWithFunctionName('Zone 4 Material Road Not defined'); ">NA</a>
+                                            onclick="Mathura_Zone_Material('4','material','NA'); updateNavBarWithFunctionName('Zone 4 Road Material :  Road Not defined'); ">NA</a>
                                             </li>
                                     </ul>
                                 </li>
@@ -1226,59 +1209,62 @@
                                         Ownership &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone4_ownership_NHAI"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('4','ownership','NHAI'); updateNavBarWithFunctionName('Zone 4 Road Ownership National Highways Authority of India');">NHAI
+                                                onclick="Mathura_Zone_Ownership('4','ownership','NHAI'); updateNavBarWithFunctionName('Zone 4 Road Ownership :  National Highways Authority of India');">NHAI
                                             </a></li>
                                         <li id="Zone4_ownership_MVNN"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('4','ownership','MVNN'); updateNavBarWithFunctionName('Zone 4 Road Ownership Mathura Nagar Nigam');">Mathura Nagar Nigam
+                                                onclick="Mathura_Zone_Ownership('4','ownership','MVNN'); updateNavBarWithFunctionName('Zone 4 Road Ownership :  Mathura Nagar Nigam');">Mathura Nagar Nigam
                                             </a></li>
                                         <li id="Zone4_ownership_PrivateRoad"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('4','ownership','Private Road'); updateNavBarWithFunctionName('Zone 4 Road Ownership Private Road');">Private Road</a>
+                                                onclick="Mathura_Zone_Ownership('4','ownership','Private Road'); updateNavBarWithFunctionName('Zone 4 Road Ownership :  Private Road');">Private Road</a>
                                             </li>
                                         <li id="Zone4_ownership_PWD"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('4','ownership','PWD'); updateNavBarWithFunctionName('Zone 4 Road Ownership PWD');">PWD
+                                                onclick="Mathura_Zone_Ownership('4','ownership','PWD'); updateNavBarWithFunctionName('Zone 4 Road Ownership :  PWD');">PWD
                                             </a></li>
                                         <li id="Zone4_ownership_Defence"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('4','ownership','Defence'); updateNavBarWithFunctionName('Zone 4 Road Ownership Defence');">
+                                                onclick="Mathura_Zone_Ownership('4','ownership','Defence'); updateNavBarWithFunctionName('Zone 4 Road Ownership :  Defence');">
                                                 Defence </a></li>
                                         <li id="Zone4_ownership_Development Authority"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('4','ownership','MVDA'); updateNavBarWithFunctionName('Zone 4 Road Ownership Development Authority');"> Development Authority
+                                                onclick="Mathura_Zone_Ownership('4','ownership','MVDA'); updateNavBarWithFunctionName('Zone 4 Road Ownership :  Development Authority');"> Development Authority
                                                 </a></li>   
                                     </ul>
                                 </li>
                                 <li>
                                     <a class="dropdown" id="CUS"
-                                        onclick="Mathura_CUS_cat('zone_no','4'); updateNavBarWithFunctionName('Zone 3 Road CUS');">
+                                        onclick="Mathura_CUS_cat('zone_no','4'); updateNavBarWithFunctionName('Zone 4 Road CUS');">
                                         Road CUS &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="15th_Finance"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('4', 'cus','15th Finance'); updateNavBarWithFunctionName('Zone-4 Road CUS 15th Finance');">15th Finance</a>
+                                                onclick="Mathura_Zone_CUS('4', 'cus_class','15th Finance'); updateNavBarWithFunctionName('Zone 4 Road CUS :  15th Finance');">15th Finance</a>
                                             </li>
                                         <li id="Nagar_Nigam_Nidhi"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('4', 'cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-4 Road CUS Nagar Nigam Nidhi');">Nagar Nigam Nidhi</a>
+                                                onclick="Mathura_Zone_CUS('4', 'cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone 4 Road CUS :  Nagar Nigam Nidhi');">Nagar Nigam Nidhi</a>
                                             </li>
-                                        <li id="NHAI"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_CUS('4', 'cus','NHAI'); updateNavBarWithFunctionName('Zone-4 Road CUS NHAI');">NHAI</a>
-                                            </li>
+                                        <!-- <li id="NHAI"><a class="dropdown-item"
+                                            onclick="Mathura_Zone_CUS('4', 'cus','NHAI'); updateNavBarWithFunctionName('Zone 4 Road CUS :  NHAI');">NHAI</a>
+                                            </li> -->
                                         <li id="MVDA"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('4', 'cus','MVDA'); updateNavBarWithFunctionName('Zone-4 Road CUS MVDA');">MVDA</a>
+                                                onclick="Mathura_Zone_CUS('4', 'cus_class','MVDA'); updateNavBarWithFunctionName('Zone 4 Road CUS :  MVDA');">MVDA</a>
                                             </li>
-                                        <li id="Panchayat"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('4', 'cus','IOCL'); updateNavBarWithFunctionName('Zone-4 Road CUS IOCL');">IOCL</a>
-                                            </li>
-                                        <li id="Nagar Palika"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('4', 'cus','Nagar Palika'); updateNavBarWithFunctionName('Zone-4 Road CUS Nagar Palika');">Nagar Palika</a>
-                                            </li>
+                                        <!-- <li id="Panchayat"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('4', 'cus_class','IOCL'); updateNavBarWithFunctionName('Zone 4 Road CUS :  IOCL');">IOCL</a>
+                                            </li> -->
+                                        <!-- <li id="DUDA"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('4', 'cus_class   ','DUDA'); updateNavBarWithFunctionName('Zone 4 Road CUS :  DUDA');">DUDA</a>
+                                            </li> -->
                                         <li id="PWD"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('4', 'cus','PWD'); updateNavBarWithFunctionName('Zone-4 Road CUS PWD');">PWD</a>
+                                                onclick="Mathura_Zone_CUS('4', 'cus_class','PWD'); updateNavBarWithFunctionName('Zone 4 Road CUS :  PWD');">PWD</a>
                                             </li>
-                                        <li id="TWARITYOJANA"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('4', 'cus','State Finanace Commission'); updateNavBarWithFunctionName('Zone-4 Road CUS State Finance Commission');">State Finance Commission</a>
+                                        <!-- <li id="TWARITYOJANA"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('4', 'cus','State Finanace Commission'); updateNavBarWithFunctionName('Zone 4 Road CUS :  State Finance Commission');">State Finance Commission</a>
                                             </li>
                                         <li id="BareilysmartCity"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('4', 'cus','Ambedkar Gram Vikas Yojna'); updateNavBarWithFunctionName('Zone-4 Road CUS Ambedkar Gram Vikas Yojna');"> Ambedkar Gram Vikas Yojna</a>
-                                            </li>
+                                                onclick="Mathura_Zone_CUS('4', 'cus','Ambedkar Gram Vikas Yojna'); updateNavBarWithFunctionName('Zone 4 Road CUS :  Ambedkar Gram Vikas Yojna');"> Ambedkar Gram Vikas Yojna</a>
+                                            </li> -->
                                         <li id="Zone4_material_NA"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_CUS('4','cus','NA'); updateNavBarWithFunctionName('Zone 4 cus Road Not defined'); ">NA</a>
+                                            onclick="Mathura_Zone_CUS('4','cus_class','NA'); updateNavBarWithFunctionName('Zone 4 Road CUS : Not defined'); ">NA</a>
+                                            </li>
+                                        <li id="Zone4_others"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('4','cus_class','Others'); updateNavBarWithFunctionName('Zone 4 Road CUS : Others');">Others</a>      
                                             </li>
                                     </ul>
                                 </li>
@@ -1323,19 +1309,19 @@
                                         Category &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone4_type_LocalStreet"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('5','category','Local Street'); updateNavBarWithFunctionName('Zone5 Road Category Local Street');">Local Street</a>
+                                                onclick="Mathura_Zone_TypeSub('5','category','Local Street'); updateNavBarWithFunctionName('Zone 5 Road Category :  Local Street');">Local Street</a>
                                             </li>
                                         <li id="Zone4_type_Collector"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('5','category','Collector'); updateNavBarWithFunctionName('Zone5 Road Category Collector');">Collector</a>
+                                                onclick="Mathura_Zone_TypeSub('5','category','Collector'); updateNavBarWithFunctionName('Zone 5 Road Category :  Collector');">Collector</a>
                                             </li>
                                         <li id="Zone4_type_Arterial"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('5','category','Arterial'); updateNavBarWithFunctionName('Zone5 Road Category Arterial');">Arterial</a>
+                                                onclick="Mathura_Zone_TypeSub('5','category','Arterial'); updateNavBarWithFunctionName('Zone 5 Road Category :  Arterial');">Arterial</a>
                                             </li>
                                         <li id="Zone4_type_Sub Arterial"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('5','category','Sub Arterial'); updateNavBarWithFunctionName('Zone5 Road Category Sub Arterial');">Sub Arterial</a>
+                                                onclick="Mathura_Zone_TypeSub('5','category','Sub Arterial'); updateNavBarWithFunctionName('Zone 5 Road Category :  Sub Arterial');">Sub Arterial</a>
                                             </li>
                                          <!-- <li id="Zone4_type_NA"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_TypeSub('4','category','NA'); updateNavBarWithFunctionName('Zone4 Road Category NA');">NA</a>
+                                                onclick="Mathura_Zone_TypeSub('4','category','NA'); updateNavBarWithFunctionName('Zone 5 Road Category : NA');">NA</a>
                                         </li> -->
                                     </ul>   
                                 </li>
@@ -1345,16 +1331,16 @@
                                         Road Conditions &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone4_condition_good"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Condition('5','condition','Good'); updateNavBarWithFunctionName('Zone 5 Condition Good Road');">Good</a>
+                                                onclick="Mathura_Zone_Condition('5','condition','Good'); updateNavBarWithFunctionName('Zone 5 Road Condition :  Good ');">Good</a>
                                             </li>
                                         <li id="Zone4_condition_moderate"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Condition('5','condition','Moderate'); updateNavBarWithFunctionName('Zone 5 Condition Moderate Road');">Moderate</a>
+                                                onclick="Mathura_Zone_Condition('5','condition','Moderate'); updateNavBarWithFunctionName('Zone 5 Road Condition :  Moderate ');">Moderate</a>
                                             </li>
                                         <li id="Zone4_condition_poor"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Condition('5','condition','Poor'); updateNavBarWithFunctionName('Zone 5 Condition Poor Road');">Poor</a>
+                                                onclick="Mathura_Zone_Condition('5','condition','Poor'); updateNavBarWithFunctionName('Zone 5 Road Condition :  Poor ');">Poor</a>
                                             </li>
                                         <li id="Zone4_condition_NA"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_Condition('5','condition','NA'); updateNavBarWithFunctionName('Zone 5 Condition NA Road');">NA</a>
+                                            onclick="Mathura_Zone_Condition('5','condition','NA'); updateNavBarWithFunctionName('Zone 5 Road Condition :  NA ');">NA</a>
                                             </li>
                                     </ul>
                                 </li>
@@ -1364,22 +1350,22 @@
                                         Material &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone4_material_bitumen"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('5','material','Bitumen'); updateNavBarWithFunctionName('Zone 5 Material Bitumen Road');">Bitumen</a>
+                                                onclick="Mathura_Zone_Material('5','material','Bitumen'); updateNavBarWithFunctionName('Zone 5 Road Material :  Bitumen Road');">Bitumen</a>
                                             </li>
                                         <li id="Zone4_material_BOE"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('5','material','BOE'); updateNavBarWithFunctionName('Zone 5 Material BOE Road');">BOE</a>
+                                                onclick="Mathura_Zone_Material('5','material','BOE'); updateNavBarWithFunctionName('Zone 5 Road Material :  BOE Road');">BOE</a>
                                             </li>
                                         <li id="Zone4_material_CC"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('5','material','CC'); updateNavBarWithFunctionName('Zone 5 Material CC Road');">CC</a>
+                                                onclick="Mathura_Zone_Material('5','material','CC'); updateNavBarWithFunctionName('Zone 5 Road Material :  CC Road');">CC</a>
                                             </li>
                                         <li id="Zone4_material_interlocking"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('5','material','Interlocking'); updateNavBarWithFunctionName('Zone 5 Material Interlocking Road');">Interlocking</a>
+                                                onclick="Mathura_Zone_Material('5','material','Interlocking'); updateNavBarWithFunctionName('Zone 5 Road Material :  Interlocking Road');">Interlocking</a>
                                             </li>
                                         <li id="Zone4_material_kachcha"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Material('5','material','Kachcha'); updateNavBarWithFunctionName('Zone 5 Material Kachcha Road');">Kachcha</a>
+                                                onclick="Mathura_Zone_Material('5','material','Kachcha'); updateNavBarWithFunctionName('Zone 5 Road Material :  Kachcha Road');">Kachcha</a>
                                             </li>
                                         <li id="Zone4_material_NA"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_Material('5','material','NA'); updateNavBarWithFunctionName('Zone 5 Material Road Not defined'); ">NA</a>
+                                            onclick="Mathura_Zone_Material('5','material','NA'); updateNavBarWithFunctionName('Zone 5 Road Material :  Road Not defined'); ">NA</a>
                                             </li>
                                     </ul>
                                 </li>
@@ -1389,22 +1375,22 @@
                                         Ownership &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Zone4_ownership_NHAI"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('5','ownership','NHAI'); updateNavBarWithFunctionName('Zone 5 Road Ownership National Highways Authority of India');">NHAI
+                                                onclick="Mathura_Zone_Ownership('5','ownership','NHAI'); updateNavBarWithFunctionName('Zone 5 Road Ownership :  National Highways Authority of India');">NHAI
                                             </a></li>
                                         <li id="Zone4_ownership_MVNN"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('5','ownership','MVNN'); updateNavBarWithFunctionName('Zone 5 Road Ownership Mathura Nagar Nigam');">Mathura Nagar Nigam
+                                                onclick="Mathura_Zone_Ownership('5','ownership','MVNN'); updateNavBarWithFunctionName('Zone 5 Road Ownership :  Mathura Nagar Nigam');">Mathura Nagar Nigam
                                             </a></li>
                                         <li id="Zone4_ownership_PrivateRoad"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('5','ownership','Private Road'); updateNavBarWithFunctionName('Zone 5 Road Ownership Private Road');">Private Road</a>
+                                                onclick="Mathura_Zone_Ownership('5','ownership','Private Road'); updateNavBarWithFunctionName('Zone 5 Road Ownership :  Private Road');">Private Road</a>
                                             </li>
                                         <li id="Zone4_ownership_PWD"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('5','ownership','PWD'); updateNavBarWithFunctionName('Zone 5 Road Ownership PWD');">PWD
+                                                onclick="Mathura_Zone_Ownership('5','ownership','PWD'); updateNavBarWithFunctionName('Zone 5 Road Ownership :  PWD');">PWD
                                             </a></li>
                                         <li id="Zone4_ownership_Defence"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('5','ownership','Defence'); updateNavBarWithFunctionName('Zone 5 Road Ownership Defence');">
+                                                onclick="Mathura_Zone_Ownership('5','ownership','Defence'); updateNavBarWithFunctionName('Zone 5 Road Ownership :  Defence');">
                                                 Defence </a></li>
                                         <li id="Zone4_ownership_Development Authority"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_Ownership('5','ownership','MVDA'); updateNavBarWithFunctionName('Zone 5 Road Ownership Development Authority');"> Development Authority
+                                                onclick="Mathura_Zone_Ownership('5','ownership','MVDA'); updateNavBarWithFunctionName('Zone 5 Road Ownership :  Development Authority');"> Development Authority
                                                 </a></li>   
                                     </ul>
                                 </li>
@@ -1414,35 +1400,38 @@
                                         Road CUS &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="15th_Finance"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('5', 'cus','15th Finance'); updateNavBarWithFunctionName('Zone-5 Road CUS 15th Finance');">15th Finance</a>
+                                                onclick="Mathura_Zone_CUS('5', 'cus_class','15th Finance'); updateNavBarWithFunctionName('Zone 5 Road CUS :  15th Finance');">15th Finance</a>
                                             </li>
                                         <li id="Nagar_Nigam_Nidhi"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('5', 'cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-5 Road CUS Nagar Nigam Nidhi');">Nagar Nigam Nidhi</a>
+                                                onclick="Mathura_Zone_CUS('5', 'cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone 5 Road CUS :  Nagar Nigam Nidhi');">Nagar Nigam Nidhi</a>
                                             </li>
-                                        <li id="NHAI"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_CUS('5', 'cus','NHAI'); updateNavBarWithFunctionName('Zone-5 Road CUS NHAI');">NHAI</a>
-                                            </li>
+                                        <!-- <li id="NHAI"><a class="dropdown-item"
+                                            onclick="Mathura_Zone_CUS('5', 'cus','NHAI'); updateNavBarWithFunctionName('Zone 5 Road CUS :  NHAI');">NHAI</a>
+                                            </li> -->
                                         <li id="MVDA"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('5', 'cus','MVDA'); updateNavBarWithFunctionName('Zone-5 Road CUS MVDA');">MVDA</a>
+                                                onclick="Mathura_Zone_CUS('5', 'cus_class','MVDA'); updateNavBarWithFunctionName('Zone 5 Road CUS :  MVDA');">MVDA</a>
                                             </li>
-                                        <li id="Panchayat"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('5', 'cus','IOCL'); updateNavBarWithFunctionName('Zone-5 Road CUS IOCL');">IOCL</a>
-                                            </li>
-                                        <li id="Nagar Palika"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('5', 'cus','Nagar Palika'); updateNavBarWithFunctionName('Zone-5 Road CUS Nagar Palika');">Nagar Palika</a>
-                                            </li>
+                                        <!-- <li id="Panchayat"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('5', 'cus_class','IOCL'); updateNavBarWithFunctionName('Zone 5 Road CUS :  IOCL');">IOCL</a>
+                                            </li> -->
+                                        <!-- <li id="DUDA"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('5', 'cus','DUDA'); updateNavBarWithFunctionName('Zone 5 Road CUS :  DUDA');">DUDA</a>
+                                            </li> -->
                                         <li id="PWD"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('5', 'cus','PWD'); updateNavBarWithFunctionName('Zone-5 Road CUS PWD');">PWD</a>
+                                                onclick="Mathura_Zone_CUS('5', 'cus_class','PWD'); updateNavBarWithFunctionName('Zone 5 Road CUS :  PWD');">PWD</a>
                                             </li>
-                                        <li id="TWARITYOJANA"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('5', 'cus','State Finanace Commission'); updateNavBarWithFunctionName('Zone-5 Road CUS State Finance Commission');">State Finance Commission</a>
+                                        <!-- <li id="TWARITYOJANA"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('5', 'cus','State Finanace Commission'); updateNavBarWithFunctionName('Zone 5 Road CUS :  State Finance Commission');">State Finance Commission</a>
                                             </li>
                                         <li id="BareilysmartCity"><a class="dropdown-item"
-                                                onclick="Mathura_Zone_CUS('5', 'cus','Ambedkar Gram Vikas Yojna'); updateNavBarWithFunctionName('Zone-5 Road CUS Ambedkar Gram Vikas Yojna');"> Ambedkar Gram Vikas Yojna</a>
-                                            </li>
+                                                onclick="Mathura_Zone_CUS('5', 'cus','Ambedkar Gram Vikas Yojna'); updateNavBarWithFunctionName('Zone 5 Road CUS :  Ambedkar Gram Vikas Yojna');"> Ambedkar Gram Vikas Yojna</a>
+                                            </li> -->
                                         <li id="Zone4_material_NA"><a class="dropdown-item"
-                                            onclick="Mathura_Zone_CUS('5','cus','NA'); updateNavBarWithFunctionName('Zone 5 cus Road Not defined'); ">NA</a>
+                                            onclick="Mathura_Zone_CUS('5','cus_class','NA'); updateNavBarWithFunctionName('Zone 5 Road CUS : Not defined'); ">NA</a>
                                             </li>
+                                        <li id="Zone4_others"><a class="dropdown-item"
+                                                onclick="Mathura_Zone_CUS('5','cus_class','Others'); updateNavBarWithFunctionName('Zone 5 Road CUS : Others');">Others</a>                  
+                                                </li>
                                     </ul>
                                 </li>
                             </ul>
@@ -1451,378 +1440,11 @@
                 </div>
         <!-------------------- zone wise road filter end -------------------------->
 
-        <!------------------- drain filter start ----------------->
-        <!-- <div id="drain-filter" class="drain-filter">
-            <ul>
-                <label style="margin-left:20px;"><b>Select Drain</b></label>
-                <li ><a class="dropdown">Ghaziabad All Drain &raquo;</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
-                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
-                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
-                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
-                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
-                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
-                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
-                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
-                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
-                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a class="dropdown">Kavinagar Zone &raquo;</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
-                                <li id="Ward16"><a class="dropdown-item">Morta 16</a></li>
-                                <li id="Ward46"><a class="dropdown-item">Guldhar Duhai 46</a></li>
-                                <li id="Ward53"><a class="dropdown-item">Raiespur 53</a></li>
-                                <li id="Ward84"><a class="dropdown-item">Raj Nagar 84</a></li>
-                                <li id="Ward71"><a class="dropdown-item">Sanjay Nagar2 71</a></li>
-                                <li id="Ward91"><a class="dropdown-item">Kavi Nagar 91</a></li>
-                                <li id="Ward"><a class="dropdown-item">Sadarpur </a></li>
-                                <li id="Ward69"><a class="dropdown-item">Govindpuram 69</a></li>
-                                <li id="Ward67"><a class="dropdown-item">Kamla Nehru Sanjay 67</a></li>
-                                <li id="Ward40"><a class="dropdown-item">Shastri Nagar 40</a></li>
-                                <li id="Ward4"><a class="dropdown-item">Mehroli 4</a></li>
-                                <li id="Ward2"><a class="dropdown-item">Chiranjeev Vihari 2</a></li>
-                                <li id="Ward2"><a class="dropdown-item">Shahpur Bamheta 2</a></li>
-                                <li id="Ward65"><a class="dropdown-item">Vivekanand 65</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
-                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
-                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
-                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
-                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
-                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
-                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
-                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
-                            <ul class="dropdown-menu ">
-                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
-                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
-                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a class="dropdown">City Zone &raquo;</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
-                                <li><a class="dropdown-item" id="Ward33">SarayNajar Ali 33</a></li>
-                                <li><a class="dropdown-item" id="Ward92">Kaila Islam Nagar 92</a></li>
-                                <li><a class="dropdown-item" id="Ward53">Saddik Noor Nagar 53</a></li>
-                                <li><a class="dropdown-item" id="Ward48">Nand Gram, Mariyam Nagar 48</a></li>
-                                <li><a class="dropdown-item" id="Ward14">Nandgram Sihani 14</a></li>
-                                <li><a class="dropdown-item" id="Ward32">Krishana Nagar 32</a></li>
-                                <li><a class="dropdown-item" id="Ward">Nandgram</a></li>
-                                <li><a class="dropdown-item" id="Ward6">DeenDayalpuri 6</a></li>
-                                <li><a class="dropdown-item" id="Ward17">Sewa Nagar 17</a></li>
-                                <li><a class="dropdown-item" id="Ward13">Ghukna 13</a></li>
-                                <li><a class="dropdown-item" id="Ward">Nehru Nagar Second</a></li>
-                                <li><a class="dropdown-item" id="Ward9">Shibanpura, Patel Nagar 9</a></li>
-                                <li><a class="dropdown-item" id="Ward19">Mukund Nagar 19</a></li>
-                                <li><a class="dropdown-item" id="Ward93">Kaila Bhatta 93</a></li>
-                                <li><a class="dropdown-item" id="Ward53">Charanpuri 53</a></li>
-                                <li><a class="dropdown-item" id="Ward96">Nehru Nagar Third 96</a></li>
-                                <li><a class="dropdown-item" id="Ward39">Nasirpur 39</a></li>
-                                <li><a class="dropdown-item" id="Ward0">Daulatpura 0</a></li>
-                                <li><a class="dropdown-item" id="Ward">Gandhi Nagar </a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
-                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
-                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
-                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
-                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
-                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
-                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
-                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
-                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
-                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a class="dropdown">Vijay Nagar Zone  &raquo;</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
-                                <li><a class="dropdown-item" id="Ward15">Charansingh Colony 15</a></li>
-                                <li><a class="dropdown-item" id="Ward11">Pratap Vihar Sector 11</a></li>
-                                <li><a class="dropdown-item" id="Ward55">Vijay Nagar Sector-11 55</a></li>
-                                <li><a class="dropdown-item" id="Ward48">Mirzapur Pratap Vihar 48</a></li>
-                                <li><a class="dropdown-item" id="Ward4">Mata Colony 4</a></li>
-                                <li><a class="dropdown-item" id="Ward35">Akbarpur 35</a></li>
-                                <li><a class="dropdown-item" id="Ward1">Bhagu Bhim 1</a></li>
-                                <li><a class="dropdown-item" id="Ward49">Shivpuri 49</a></li>
-                                <li><a class="dropdown-item" id="Ward9">Rahul Vihar Siddharth 9</a></li>
-                                <li><a class="dropdown-item" id="Ward7">Biharipuira 7</a></li>
-                                <li><a class="dropdown-item" id="Ward5">Dhundhera 5</a></li>
-                                <li><a class="dropdown-item" id="Ward3">Purana Vijay Nagar 3</a></li>
-                                <li><a class="dropdown-item" id="Ward14">New Vijay Nagar 14</a></li>
-                                <li><a class="dropdown-item" id="Ward25">Ambedkar Nagar Mahendra Enclave 25</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
-                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
-                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
-                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
-                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
-                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
-                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
-                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
-                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
-                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a class="dropdown">Mohan Nagar Zone  &raquo;</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
-                                <li><a class="dropdown-item" id="Ward5">Ganga Vihar 5</a></li>
-                                <li><a class="dropdown-item" id="Ward29">Kuti 29</a></li>
-                                <li><a class="dropdown-item" id="Ward64">Garima Garden 64</a></li>
-                                <li><a class="dropdown-item" id="Ward63">Pasonda 63</a></li>
-                                <li><a class="dropdown-item" id="Ward63">Mausam Vihar 63</a></li>
-                                <li><a class="dropdown-item" id="Ward82">Jawahar Park 82</a></li>
-                                <li><a class="dropdown-item" id="Ward19">Shalimar Garden  Main 19</a></li>
-                                <li><a class="dropdown-item" id="Ward26">Kadkad Model 26</a></li>
-                                <li><a class="dropdown-item" id="Ward34">Shaheed Nagar-1 34</a></li>
-                                <li><a class="dropdown-item" id="Ward78">Shalimar Extention-I 78</a></li>
-                                <li><a class="dropdown-item" id="Ward70">Jankipuram 70</a></li>
-                                <li><a class="dropdown-item" id="Ward86">Rajendra Nagar Sector-5 86</a></li>
-                                <li><a class="dropdown-item" id="Ward80">Rajendra Nagar Sector-9 80</a></li>
-                                <li><a class="dropdown-item" id="Ward83">Shyam Park Extention 83</a></li>
-                                <li><a class="dropdown-item" id="Ward28">Rajeev Colony 28</a></li>
-                                <li><a class="dropdown-item" id="Ward85">Lajpat Nagar-II 85</a></li>
-                                <li><a class="dropdown-item" id="Ward75">Lajpat Nagar-I 75</a></li>
-                                <li><a class="dropdown-item" id="Ward0">Arthala 0</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
-                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
-                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
-                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
-                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
-                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
-                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
-                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
-                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
-                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li><a class="dropdown">Vasundhara Zone &raquo;</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
-                                <li><a class="dropdown-item" id="Ward2">Sahibabad 40</a></li>
-                                <li><a class="dropdown-item" id="Ward8">Gyan Khand Indrapuram 87</a></li>
-                                <li><a class="dropdown-item" id="Ward9">Vaibhav Khand-1 99</a></li>
-                                <li><a class="dropdown-item" id="Ward10">Shipra Suncity(Indrapuram) 100</a></li>
-                                <li><a class="dropdown-item" id="Ward11">Bhouvapur 21</a></li>
-                                <li><a class="dropdown-item" id="Ward15">Vaishali-1 76</a></li>
-                                <li><a class="dropdown-item" id="Ward16">Vaishali-2 77</a></li>
-                                <li><a class="dropdown-item" id="Ward20">Kaushambi 72</a></li>
-                                <li><a class="dropdown-item" id="Ward0">Vasundhara-1 54</a></li>
-                                <li><a class="dropdown-item" id="Ward4">Vasundhara-2 61</a></li>
-                                <li><a class="dropdown-item" id="Ward25">Abhay Khand 79</a></li>
-                                <li><a class="dropdown-item" id="Ward29">Shakti Khand 81</a></li>
-                                <li><a class="dropdown-item" id="Ward34">Vasundhara-3 74</a></li>
-                                <li><a class="dropdown-item" id="Ward35">Maharajpur 41</a></li>
-                                <li><a class="dropdown-item" id="Ward2">Ram Prashta 97</a></li>
-                                <li><a class="dropdown-item" id="Ward43">Kad Kad Model 43</a></li>
-                                <li><a class="dropdown-item" id="Ward26">Surya Nagar 94</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Type &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="main()">Main</a></li>
-                                <li><a class="dropdown-item" onclick="Primary()">Primary</a></li>
-                                <li><a class="dropdown-item" onclick="Secondary()">Secondary</a></li>
-                                <li><a class="dropdown-item" onclick="Tertiary()">Tertiary</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Conditions &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="chocked()">Chocked </a></li>
-                                <li><a class="dropdown-item" onclick="running()">Running </a></li>
-                                <li><a class="dropdown-item" onclick="damaged()">Damaged</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" ">Drain Material &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="bricked()">Bricked</a></li>
-                                <li><a class="dropdown-item" onclick="RCC()">RCC</a></li>
-                                <li><a class="dropdown-item" onclick="kaccha()">Kaccha</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown" onclick=" "> Drain Status &raquo;</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="opened()">Opened</a></li>
-                                <li><a class="dropdown-item" onclick="covered()">Covered</a></li>
-                                <li><a class="dropdown-item" onclick="pipe()">Pipe</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div> -->
-        <!--------------------- drain filter end ---------------->
-
-        <!--------------------- street view tab start ------------->
-        <!-- <div class="street-view" id="street-tab">
-            <span class="tab-cancel-icon" ><i class="fas fa-times cancel-icon"></i></span>
-            <label for="layer" style="margin-left:15px;">Available Layers</label>
-            <select id="layer">
-     
-            </select>
-            <div class="button-group">
-                <button onclick="add_layer()"><b>Add Layer to Map</b></button>
-                <button onclick="clear_layer()"><b>Clear Layer</b></button>
-            </div>      
-        </div>  -->
-        <!------------------------ street view tab end --------------->
-
         <!----------------- Legend btn code start-------------->
        <div class="legend-tab">
             <!-- <button id="legendBtn">Show Legend</button> -->
             <div id="live_legend" style="display: none;"><h6>Legend</h6></div>
 
-            <div id="type_legend" Class="Legend_panel" >
-                <h6>Legend By Type</h6>
-                <ul>
-                    <li><span style="background-color: #0000ff; width: 20px; height: 2px; display: inline-block;"></span>
-                        Major</li>
-                    <li><span style="background-color: #e2e832; width: 20px; height: 2px; display: inline-block;"></span>
-                        Minor</li>
-                    <!-- <li><span style="background-color: #32e1e3; width: 20px; height: 2px; display: inline-block;"></span>
-                Service Road</li>
-            
-                <li><span style="background-color: #ff00ff; width: 20px; height: 2px; display: inline-block;"></span>
-                    NA</li> -->
-
-                    <!-- Add more legend items as needed -->
-                </ul>
-            </div>
             <div id="Condition_legend" Class="Legend_panel" >
                 <h6>Legend By Condition</h6>
                 <ul>
@@ -1830,7 +1452,7 @@
                         Good Road</li>
                     <li><span style="background-color: #e2e832; width: 20px; height: 2px; display: inline-block;"></span>
                         Moderate Road</li>
-                    <li><span style="background-color: #e330; width: 20px; height: 2px; display: inline-block;"></span>
+                    <li><span style="background-color: #ec2020; width: 20px; height: 2px; display: inline-block;"></span>
                         Poor Road</li>
 
                     <li><span style="background-color: #eb49bf; width: 20px; height: 2px; display: inline-block;"></span>
@@ -1853,32 +1475,12 @@
                     PWD</li>
                     
                     <li><span style="background-color: #14ea54; width: 20px; height: 2px; display: inline-block;"></span>
-                    Nagar Palika</li>
-                    
-                    <li><span style="background-color: #6a41e7; width: 20px; height: 2px; display: inline-block;"></span>
-                    NHAI</li>
-                    
-                    <li><span style="background-color: #c70ed8; width: 20px; height: 2px; display: inline-block;"></span>
-                    IOCL</li>
-                    
-                    <li><span style="background-color: #b4b85a; width: 20px; height: 2px; display: inline-block;"></span>
-                    Ambedkar Gram Vikas Yojna</li>
-                    
+                    DUDA</li>
+
                     <li><span style="background-color: #e14a22; width: 20px; height: 2px; display: inline-block;"></span>
                     MVDA</li>
-                    
-                    <li><span style="background-color: #e6497d; width: 20px; height: 2px; display: inline-block;"></span>
-                    State Finance Commission</li>
-                    
-                    <!-- <li><span style="background-color: #1cdad1; width: 20px; height: 2px; display: inline-block;"></span>
-                    State Finanace Commission</li>
-                    <li><span style="background-color: #bad057; width: 20px; height: 2px; display: inline-block;"></span>
-                    IOCL</li>
-                    <li><span style="background-color: #f4ee40; width: 20px; height: 2px; display: inline-block;"></span>
-                     Ambedkar Gram Vikas Yojna</li>
-                    <li><span style="background-color: #35d1a4; width: 20px; height: 2px; display: inline-block;"></span>
-                    Up Bridge Corporation Ltd</li> -->
-                    
+                    <li><span style="background-color: #c53465; width: 20px; height: 2px; display: inline-block;"></span>
+                    Others</li>
                     <li><span style="background-color: #8717e2; width: 20px; height: 2px; display: inline-block;"></span>
                     NA</li>
                 
@@ -1948,66 +1550,59 @@
 
         <!--------spping boot live Road Table data getting----->
 
-           <div id="tableContainer_summary">
+        <div id="tableContainer_summary" class="tablediv">
             <!-- Navigation Bar -->
-             <nav class="feature_nav">
-                <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 15px;">Feature Name - </a>
-                <a id="featureName" class="feature_name1"
-                    style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+            <nav class="feature_nav">
+                <a >Feature Name - </a>
+                <a id="featureName" class="feature_name1"></a>
                 <div style="display: flex; align-items: center; margin-left: auto;">
-                    <i class="fa-solid fa-print" style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fa-solid fa-print" style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
                     <i class="fas fa-window-minimize" onclick="minimize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                        style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
                     <i class="fas fa-window-maximize" onclick="maximize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
-                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
+                    <span class="table-cancel-btn1" style="color: rgb(0, 0, 0);">
                         <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
                     </span>
                 </div>
             </nav>
-           <table id="dataTable_summary" >
-               <thead>
-                   <tr>
-                       <th> Gis Id </th>
-                       <th> Zone No </th>
-                       <th> Zone Name </th>
-                       <th> Ward No </th>
-                       <th> Ward Name </th>
-                       <th> Ownership </th>
-                       <!--<th> Type </th>--->
-                       <th> Road Category </th>
-                       <th> Road Name </th>
-                       <th> Row (meter) </th>
-                       <th> Row as per </th>
-                       <th> Carriage Width </th>
-                       <th> Material </th>
-                       <th> Length (km) </th>
-                       <th> Conditon </th>
-                       <th> Year Of Construction </th>
-                       <th> CUS &nbsp;&nbsp; 
-                           <!-- <span class="table-cancel-btn1">
-                               <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
-                           </span> -->
-                       </th>
-                   </tr>
-               </thead>
-               <tbody id="dataBody_summary"></tbody>
-           </table>
-       </div> 
+            <table id="dataTable_summary">
+                <thead>
+                    <tr>
+                        <th> Gis Id </th>
+                        <th> Road Id </th>
+                        <th> Zone No </th>
+                        <th> Zone Name </th>
+                        <th> Ward No </th>
+                        <th> Ward Name </th>
+                        <th> Ownership </th>
+                        <th> Road Category </th>
+                        <th> Road Name </th>
+                        <th> Row (meter) </th>
+                        <th> Row Class </th>
+                        <th> Carriage Width </th>
+                        <th> Material </th>
+                        <th> Length (km) </th>
+                        <th> condition </th>
+                        <th> Year Of Construction/Relaying</th>
+                        <th> CUS &nbsp;&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody id="dataBody_summary"></tbody>
+            </table>
+        </div>
         <!----------------------Road Age Table----------------->
 
         <div id="tableContainer_summaryfilter">
-            <nav class="feature_nav">
-                <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 15px;">Filter Data According to Zone and Column </a>
-                <a id="featureName" class="feature_name1"
-                    style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+             <nav class="feature_nav">
+                <a >Filter Data According to zone and Column </a>
+                <a id="featureName" ></a>
                 <div style="display: flex; align-items: center; margin-left: auto;">
-                    <i class="fa-solid fa-print" style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
                     <i class="fas fa-window-minimize" onclick="minimize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                        style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
                     <i class="fas fa-window-maximize" onclick="maximize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
-                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
+                    <span class="table-cancel-btn1" style="color: rgb(0, 0, 0);">
                         <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
                     </span>
                 </div>
@@ -2016,13 +1611,13 @@
                 <thead>
                     <tr>
                         <th> Gis Id </th>
+                        <th> Road Id </th>
                         <th> Zone No
                             <select class="zone-dropdown" style="overflow-y:scroll" id="zoneSelect"></select>
                         </th>
                         <th> Zone Name </th>
                         <th> Ward No
                             <select class="ward-dropdown" style="overflow-y:scroll" id="wardSelect"></select>
-                            </select>
                         </th>
                         <th> Ward Name </th>
                         <th> Ownership
@@ -2033,14 +1628,12 @@
                                 <option value="NHAI">NHAI</option>
                                 <option value="PWD">PWD</option>
                                 <option value="Defence">Defence</option>
-                                <option value="MVDA">Development Authority</option>
-                                 
-
+                                <option value="MVDA">Development Authority</option>                                
                                 <!-- Add more ownership options here -->
                             </select>
                         </th>             
                         <th> Road Category 
-                            <select class="type-dropdown">
+                            <select class="category-dropdown">
                                 <option value="">Category</option> 
                                 <option value="Local Street">Local Street </option>
                                 <option value="Collector">Collector</option>
@@ -2051,7 +1644,7 @@
                         <th> Road Name </th>
                         <th> Row (meter) </th>
                         <th> Row as per </th>
-                        <th> carriage Width </th>
+                        <th> Carriage Width </th>
                         <th> Material
                             <select class="material-dropdown">
                                 <option value="">Material</option>
@@ -2065,20 +1658,16 @@
                         </th>
                         <th> Length (km) </th>
                         <th> Conditon
-                        <!-- <select class="condition-dropdownOwn">
+                        <select class="condition-dropdown">
                             <option value="">Condition</option>
-                            <option value="Green">Good</option>
-                            <option value="Red">Poor</option>
-                            <option value="Yellow">Moderate</option>
-                        </select>     -->
+                            <option value="Good">Good</option>
+                            <option value="Poor">Poor</option>
+                            <option value="Moderate">Moderate</option>
+                        </select>    
                           
                         </th>
-                        <th> Year Of Construction </th>
-                        <th> CUS &nbsp;&nbsp; 
-                            <!-- <span class="table-cancel-btn1">
-                                <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
-                            </span> -->
-                        </th>
+                        <th> Year Of Construction/Relaying </th>
+                        <th> CUS &nbsp;&nbsp; </th>
                     </tr>
                 </thead>
                 <tbody id="dataBody_summaryfilter">
@@ -2086,36 +1675,7 @@
             </table>
         </div>
 
-        <!--------spping boot live Drain data getting----->
-        <!-- <div id="tableContainer_Drain">
-            <table id="dataTable_Drain">
-                <thead>
-                    <tr>
-                        <th style="width:17px"> Zone No </th>
-                        <th style="width:17px"> Zone Name </th>
-                        <th style="width:17px"> Gis Id </th>
-                        <th style="width:17px"> Ward No </th>
-                        <th style="width:17px"> Ward Name </th>
-                        <th style="width:17px"> Ownership </th>
-                        <th style="width:17px"> Type </th>
-                        <th style="width:17px"> Status </th>
-                        <th style="width:17px"> Material </th>
-                        <th style="width:17px"> Length (meter) </th>
-                        <th style="width:17px"> Condition </th>
-                        <th style="width:17px"> Year of Construction </th>
-                        <th style="width:17px"> Width </th>
-                        <th style="width:17px"> Depth &nbsp;&nbsp; <span class="table-cancel-btn">
-                                <i id="cancelbtn1" class="fas fa-times cancel-btn"></i>
-                            </span> </th>
-
-                    </tr>
-                </thead>
-                <tbody id="dataBody_Drain">
-                  
-                </tbody>
-            </table>
-        </div> -->
-
+      
         <!-- Your HTML content -->
         <!-- <div id="popup" class="ol-popup"> 
          </div> -->
@@ -2132,16 +1692,14 @@
                             <div class="dropdown">
                                 <a href="#Zones"  class="dropbtn">Zones</a>
                                 <div class="dropdown-content" id="zonesDropdown">
-                                    <!-- Dropdown content will be dynamically inserted here -->
-                                     
+                                    <!-- Dropdown content will be dynamically inserted here -->                                    
                                 </div>
                             </div>
                             <!-- <a href="#Wards" onclick="navigateTo('Wards')">Wards</a> -->
                             <div class="dropdown">
                                 <a href="#Wards"  class="dropbtn">Wards</a>
                                 <div class="dropdown-content" id="zonesDropdownwards">
-                                    <!-- Dropdown content will be dynamically inserted here -->
-                                     
+                                    <!-- Dropdown content will be dynamically inserted here -->    
                                 </div>
                             </div>
                             <!-- <a href="#Amenities" class="tab" data-tab="Amenities" onclick="navigateTo('Amenities')">Amenities</a> -->
@@ -2166,12 +1724,11 @@
 
     <!----------- footer section start ---------->
     <div class="footer">
-        &copy; 204 UP Remote Sensing Application Centre. All rights reserved.
+        &copy; 2024 UP Remote Sensing Application Centre. All rights reserved.
     </div>
     <!--------- footer section end ----------->
-
     <script src="../config.js"></script> 
-    <script src="../javascript/Mathura.js"></script>
+    <script src="../javascript/mathura.js"></script>
     
 </body>
 </html>

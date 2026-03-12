@@ -22,10 +22,12 @@
     <script src="/libs/jquery-ui-1.12.1/external/jquery/jquery.js"></script>
     <script src="/libs/jquery-ui-1.12.1/jquery-ui.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha384-PPIZEGYM1v8zp5Py7UjFb79S58UeqCL9pYVnVPURKEqvioPROaVAJKKLzvH2rDnI" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-5e2ESR8Ycmos6g3gAKr1Jvwye8sW4U1u/cAKulfVJnkakCcMqhOudbtPnvJ+nbv7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" integrity="sha384-OXVF05DQEe311p6ohU11NwlnX08FzMCsyoXzGOaL+83dKAb3qS17yZJxESl8YrJQ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" integrity="sha384-d3UHjPdzJkZuk5H3qKYMLRyWLAQBJbby2yr2Q58hXXtAGF8RSNO9jpLDlKKPv5v3" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
+
 
     <link rel="shortcut icon" type="image/x-icon" class="fabicon" href="../assets/icons/logo_tree.png" />
 
@@ -40,7 +42,8 @@
         <div class="center-content">
             <img src="../assets/logo/saharanpur-logo.png" class="logo" alt="" />
             <h2 class="title">Saharanpur Nagar Nigam</h2>
-            <img src="../assets/logo/rsac (1).png" class="logo" alt="dp" />
+            <img src="../assets/logo/images.jpg" class="logo" alt="dp" />
+            <img src="../assets/logo/download.png" class="logo1"  id="up_logo"alt="dp" />
         </div>
         <div class="search-container" id="search-bar">  -
             <!-- <i class="search-icon">&#128269;</i>         Unicode for search icon -->
@@ -62,24 +65,19 @@
         <ul class="nav nav-tabs" id="sidebarTabs" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="amenities-tab" data-bs-toggle="tab" data-bs-target="#amenities"
-                    type="button" role="tab" aria-controls="amenities" aria-selected="true"> Amenities </button>
-            </li>
+                    type="button" role="tab" aria-controls="amenities" aria-selected="true"> Amenities </button></li>
+
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" type="button"
-                    role="tab" aria-controls="data" aria-selected="false"> Network </button>
-            </li>
+                    role="tab" aria-controls="data" aria-selected="false"> Network </button></li>
+
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="utilities-tab" data-bs-toggle="tab" data-bs-target="#utilities"
-                    type="button" role="tab" aria-controls="utilities" aria-selected="false">
-                    Others
-                </button>
-            </li>
+                    type="button" role="tab" aria-controls="utilities" aria-selected="false"> Others</button></li>
+
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="assets-tab" data-bs-toggle="tab" data-bs-target="#assets" type="button"
-                    role="tab" aria-controls="assets" aria-selected="false">
-                    Road Analysis
-                </button>
-            </li>
+                    role="tab" aria-controls="assets" aria-selected="false">Road Analysis</button></li>
         </ul>
 
         <div class="tab-content" id="sidebarTabsContent">
@@ -129,24 +127,11 @@
                         <input type="checkbox" id="showStadium" class="main-option" name="option9" />
                         <span class="text">Stadium - 4</span>
                     </label>
-                  
-                    <!-- <label>
-                    <i class="icon fas fa-electricity"></i>
-                    <input type="checkbox" id="showElectricity" class="main-option" name="utility2" />
-                    <span class="text">Electricity</span>
-                    </label>  -->
-                    <!-- <label>
-              <i class="icon fas fa-gas-pump"></i>
-              <input type="checkbox" id="showGasSupply" class="main-option" name="utility3" />
-              <span class="text">Gas Supply</span>
-            </label> -->
                     <label>
                         <i class="icon fas fa-cross" style="margin-right: 14.5px;"></i>
                         <input type="checkbox" id="showGraveyard" class="main-option" name="option14" />
                         <span class="text">Graveyard - 15</span>
                     </label>
-                   
-                   
                 </form>
             </div>
 
@@ -186,11 +171,6 @@
                         <input type="checkbox" id="showPostOffice" class="main-option" name="option12" />
                         <span class="text">Post Offices - 11</span>
                     </label>
-                    <!-- <label>
-            <i class="icon fas fa-shield-alt"></i>
-            <input type="checkbox" id="showPolice" class="main-option" name="option6" />
-            <span class="text">Police Stations</span>
-          </label> -->
                     <label>
                          <i class="icon fas fa-building" style="margin-right: 16px;"></i>
                         <input type="checkbox" id="showStateGov" class="main-option" name="option1" />
@@ -200,9 +180,7 @@
                         <i class="icon fas fa-building" style="margin-right: 15px;"></i>
                         <input type="checkbox" id="showCentralGov" class="main-option" name="option1" />
                         <span class="text"> Central Government Offices- 37</span>
-
-                    </label>
-                  
+                    </label>                 
                 </form>
             </div>
 
@@ -210,18 +188,6 @@
             <div class="tab-pane fade" id="assets" role="tabpanel" aria-labelledby="assets-tab">
                 <!-- <h2>Assets</h2> -->
                 <form>
-                    <!-- <label>
-                        <i class="icon fas fa-building"></i>
-                        <input type="checkbox" id="Slum_Boundary" class="main-option" name="option1" />
-                        <span class="text">Slum Boundary - 41</span>
-
-                    </label>
-                    <label>
-                        <i class="icon fas fa-building"></i>
-                        <input type="checkbox" id="Slum_Road" class="main-option" name="option1" />
-                        <span class="text">Slum Road - 716</span>
-
-                    </label> -->
                     <label>
                         <i class="icon fas fa-building"></i>
                         <input type="checkbox" id="Education_Road"  class="main-option" name="option1" />
@@ -231,27 +197,22 @@
                         <i class="icon fas fa-building"></i>
                         <input type="checkbox" id="Bank_Road"   class="main-option" name="option1" />
                         <span class="text">Bank's Road</span>
-
                     </label>
                     <label>
                         <i class="icon fas fa-building"></i>
                         <input type="checkbox" id="Hospital_Road"  class="main-option" name="option1" />
                         <span class="text">Hospital's Road</span>
-
                     </label>
                     <label>
                         <i class="icon fas fa-building"></i>
                         <input type="checkbox" id="Park_Road"  class="main-option" name="option1" />
                         <span class="text">Park's Road</span>
-
                     </label>
                     <label>
                         <i class="icon fas fa-building"></i>
                         <input type="checkbox" id="Hotel_Road"  class="main-option" name="option1" />
                         <span class="text">Hotel's Road</span>
-
-                    </label>
-                 
+                    </label>                
                 </form>
             </div>
         </div>
@@ -264,40 +225,50 @@
         <!---------------------- map section start ------------------>
         <div id="map">
             <div class="map-icons-left">
-                <!-- <button class="map-icon" id="View_point" title="Street View" onclick="street_view()"><i
-                        class="fas fa-street-view"></i></button><h6 class="h6">Street View</h6> -->
-              
-                    <button class="map-icon" title="Data Analysis" onclick="data_analysis()">
-                            <i class="fas fa-chart-simple"></i></a></button>
-                        <h6 class="h6">Data Analysis</h6>
-
-                <button class="map-icon" title="Zone wise Road" onclick="road_filter()"><i 
-                    class="fas fa-road"></i></button><h6 class="h6">Road Filter</h6>
-                
-                <button class="map-icon" id="query_btn" onclick="query_panel1()" title="Query Panel"><i
-                    class="fas fa-window-maximize"></i></button><h6 class="h6"> Query </h6>
-
-                <!-- <button class="map-icon" title="Get Info"><i class="fas fa-circle-info"></i></button> -->
+                <button class="map-icon" id="View_point" title="Street View" onclick="street_view()">
+                    <i class="fas fa-street-view"></i></button>
+                        <!-- <h6 class="h6">Street View</h6> -->
+                   
+                <button class="map-icon" title="Data Analysis" onclick="data_analysis()">
+                    <i class="fas fa-chart-simple"></i></a></button>
+                        
+                <button class="map-icon" id="road_btn" title="Zone wise Road" onclick="road_filter()">
+                    <i class="fas fa-road"></i></button>
+                        
+                <button class="map-icon" title="Decision Support System " onclick="re_direct()">
+                    <i class="fa-solid fa-chart-area"></i></button>
+					
+				<button class="map-icon" id="showBoxBtn" title="Road Selection" onclick="showSelectedRoadsLayer1()"><i
+						class="fa-solid fa-worm"></i></button>
+                      
                 <!-- <button class="map-icon" title="Drain" onclick="drain_filter()"><i class="fa-solid fa-worm"></i></button><h6 class="h6">Drain Filter</h6> -->
             </div>
-
             <div class="map-icons">
                 <button class="map-icon" id="search-icon" title="Search"><i class="fas fa-search"></i></button>
-                <h6 class="h6"> Search </h6>
-
+                        
                 <!-- <button class="map-icon" id="measure-icon" onclick="measure_tab()" title="Measure Tool"><i class="fas fa-ruler"></i></button> -->
                 <!-- <button class="map-icon" id="basemap-icon" title="Toggle Basemap"><i class="fas fa-map"></i></button> -->
 
-                <button class="map-icon" id="table_icon" title="Summary Data" onclick="summary_table()"><i
-                        class="fas fa-table "></i></button><h6 class="h6"> Summary </h6>
+                <button class="map-icon" id="table_icon" title="Summary Data" onclick="summary_table()">
+                    <i class="fas fa-table "></i></button>
 
-                <button class="map-icon" id="clear-icon" title="Clear" onclick="clearAllVectorLayers()"><i
-                                class="fa fa-trash"></i></button>
-                        <h6 class="h6">Clear</h6>
+                <button class="map-icon" id="query_btn" onclick="query_panel1()" title="Query Panel">
+                    <i class="fas fa-window-maximize"></i></button>
+                        
+				<button class="map-icon" id="information-icon" title="Information" onclick="showSelectedRoadsLayer1()"><i
+					    class="fa fa-info"></i></button>
+								
+                <button class="map-icon" id="clear-icon" title="Clear" onclick="delete_layers()"><i
+                        class="fa fa-trash"></i></button>                       
             </div>
         </div>
         <!----------------------- map section end -------------------------------->
 
+        <div id="iframe-container" style="display:none;">
+                <button id="close-btn" onclick="closeReport()">Close Report</button>
+           <iframe id="data-iframe" width="100%" height="100%" 
+				src="https://lookerstudio.google.com/reporting/5a12d4bb-d427-4dba-b903-60c61c1db7a7" frameborder="0" style="border:0"></iframe>
+        </div>
         <!---------------------- query panel section start -------------------------->
         <div id="query_tab" class="query-tab">
             <span class="tab-cancel-icon"><i class="fas fa-times cancel-icon"></i></span>
@@ -316,23 +287,16 @@
                     aria-labelledby="nav-attributes-tab">
                     
                     <select id="layer" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                        <option selected>Select Layer</option>
-                    </select>
-                    <br>
+                        <option selected>Select Layer</option></select><br>
                
                     <select id="attributes" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                        <option selected>Select Attribute</option>
-                    </select>
-                    <br>
+                        <option selected>Select Attribute</option></select><br>
                 
                     <select id="operator" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                        <option selected>Select Operator</option>
-                    </select>
-                    <br>
+                        <option selected>Select Operator</option></select><br>
                
-                    <input type="text" class="form-control form-select-sm" id="value" placeholder="Enter Value"
-                        name="value">
-                    <br>
+                    <input type="text" class="form-control form-select-sm" id="value" placeholder="Enter Value" name="value"><br>
+
                     <button id="load-layer" onclick="query()" type="button" style="margin-left:10px;"
                         class="btn btn-danger btn-sm">Load Layer</button>
                     <br><br>
@@ -341,9 +305,7 @@
                 <div class="tab-pane fade" id="nav-draw" role="tabpanel" aria-labelledby="nav-draw-tab">
                   
                     <select id="layer1" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                        <option selected>Select Layer</option>
-                    </select>
-                    <br>
+                        <option selected>Select Layer</option></select><br>
                   
                     <select id="draw_type" class="form-select form-select-sm" aria-label=".form-select-sm example">
                         <option value="select">Select Shape</option>
@@ -375,154 +337,107 @@
                         <label style="margin-left:20px;"><b>Select Roads</b></label>
                         <li><a class="dropdown"> Saharanpur All Roads &raquo;</a>
                             <ul class="dropdown-menu">
-                                <!-- <li>
-                                    <a class="dropdown" id="Priority_Data">Priority Based Road &raquo;</a>
-                                    <ul class="dropdown-menu dropdown-submenu">
-                                        <li id="P1"><a class="dropdown-item">First Priority</a></li>
-                                        <li id="P2"><a class="dropdown-item">Second Priority</a></li>
-                                        <li id="Not_Eligible"><a class="dropdown-item">Not Eligible</a></li>
-
-                                    </ul>
-                                </li> -->
+                               
 
                                 <li>
-                                    <a class="dropdown" id="Ward"
-                                        onclick="updateAyodhyaRoadLayer('ward'); updateNavBarWithFunctionName('Saharanpur Ward Roads ');">
-                                        Road Ward &raquo;
-                                    </a>
+                                    <a class="dropdown" id="Ward" > Road Ward &raquo; </a>
                                     <ul class="dropdown-menu dropdown-submenu" id="wardListContainer" style="max-height: 300px;  overflow-y: auto;  overflow-x: hidden;">
                                         <!-- Ward items will be generated by JS -->
                                     </ul>
                                 </li>
-                                 <li>
+                                <li>
                                     <a class="dropdown" id="Category"
-                                        onclick="updateAyodhyaRoadLayer('category'); updateNavBarWithFunctionName('Saharanpur Road Category');">Road
-                                        Category &raquo;</a>
+                                        onclick="updateAyodhyaRoadLayer('category'); updateNavBarWithFunctionName('Saharanpur Road Category');">Road Category &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Major"><a class="dropdown-item"
-                                                onclick="Saharanpur_Type_cat('category','Local Street'); updateNavBarWithFunctionName('Saharanpur Road Type Local Street');">Local Street</a>
-                                        </li>
+                                                onclick="Saharanpur_TypeSub_cat('category','Local Street'); updateNavBarWithFunctionName('Saharanpur Road Category : Local Street');">Local Street</a></li>
                                         <li id="Minor"><a class="dropdown-item"
-                                                onclick="Saharanpur_Type_cat('category','Collector'); updateNavBarWithFunctionName('Saharanpur Road Type Collector');">Collector</a>
-                                        </li>
+                                                onclick="Saharanpur_TypeSub_cat('category','Collector'); updateNavBarWithFunctionName('Saharanpur Road Category : Collector');">Collector</a></li>
                                          <li id="Arterial"><a class="dropdown-item"
-                                                onclick="Saharanpur_Type_cat('category','Arterial'); updateNavBarWithFunctionName('Saharanpur Road Type Arterial');">Arterial</a>
-                                        </li>
+                                                onclick="Saharanpur_TypeSub_cat('category','Arterial'); updateNavBarWithFunctionName('Saharanpur Road Category : Arterial');">Arterial</a></li>
                                          <li id="Subarterial"><a class="dropdown-item"
-                                                onclick="Saharanpur_Type_cat('category','Sub Arterial'); updateNavBarWithFunctionName('Saharanpur Road Type Sub Arterial');">Sub Arterial</a>
-                                        </li>
+                                                onclick="Saharanpur_TypeSub_cat('category','Sub Arterial'); updateNavBarWithFunctionName('Saharanpur Road Category : Sub Arterial');">Sub Arterial</a></li>
                                          <!-- <li id="NA"><a class="dropdown-item"
-                                                onclick="Saharanpur_Type_cat('category','NA'); updateNavBarWithFunctionName('Saharanpur Road Type not define');">NA</a>
+                                                onclick="Saharanpur_TypeSub_cat('category','NA'); updateNavBarWithFunctionName('Saharanpur Road Category : not define');">NA</a>
                                         </li> -->
                                     </ul>
                                 </li> 
                                 <li>
                                     <a class="dropdown" id="Condition"
-                                        onclick="updateAyodhyaRoadLayer('condition'); updateNavBarWithFunctionName('Saharanpur Road Condition');">
-                                        Road Conditions &raquo;</a>
+                                        onclick="updateAyodhyaRoadLayer('condition'); updateNavBarWithFunctionName('Saharanpur Road Condition');"> Road Conditions &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Good"><a class="dropdown-item"
-                                                onclick="Saharanpur_Condition_cat('condition','Good'); updateNavBarWithFunctionName('Saharanpur Road Condition Good');">Good</a>
-                                        </li>
+                                                onclick="Saharanpur_Condition_cat('condition','Good'); updateNavBarWithFunctionName('Saharanpur Road Condition : Good');">Good</a></li>
                                         <li id="Moderate"><a class="dropdown-item"
-                                                onclick="Saharanpur_Condition_cat('condition','Moderate'); updateNavBarWithFunctionName('Saharanpur Road Condition Moderate');">Moderate</a>
-                                        </li>
+                                                onclick="Saharanpur_Condition_cat('condition','Moderate'); updateNavBarWithFunctionName('Saharanpur Road Condition : Moderate');">Moderate</a></li>
                                         <li id="Poor"><a class="dropdown-item"
-                                                onclick="Saharanpur_Condition_cat('condition','Poor'); updateNavBarWithFunctionName('Saharanpur Road Condition Poor');">Poor</a>
-                                        </li>
+                                                onclick="Saharanpur_Condition_cat('condition','Poor'); updateNavBarWithFunctionName('Saharanpur Road Condition : Poor');">Poor</a></li>
                                          <!-- <li id="NA"><a class="dropdown-item"
-                                                onclick="Saharanpur_Condition_cat('condition','NA'); updateNavBarWithFunctionName('Saharanpur Road Condition NA');">NA</a>
+                                                onclick="Saharanpur_Condition_cat('condition','NA'); updateNavBarWithFunctionName('Saharanpur Road Condition : NA');">NA</a>
                                         </li> -->
                                     </ul>
                                 </li>
                                 <li>
                                     <a class="dropdown" id="Material"
-                                        onclick="updateAyodhyaRoadLayer('material'); updateNavBarWithFunctionName('Saharanpur Road Material');">Road
-                                        Material &raquo;</a>
+                                        onclick="updateAyodhyaRoadLayer('material'); updateNavBarWithFunctionName('Saharanpur Road Material');">Road Material &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Bitumen"><a class="dropdown-item"
-                                                onclick="Saharanpur_Material_cat('material','Bitumen'); updateNavBarWithFunctionName('Saharanpur Road Material Bitumen');">Bitumen</a>
-                                        </li>
+                                                onclick="Saharanpur_Material_cat('material','Bitumen'); updateNavBarWithFunctionName('Saharanpur Road Material : Bitumen');">Bitumen</a></li>
                                         <li id="BOE"><a class="dropdown-item"
-                                                onclick="Saharanpur_Material_cat('material','BOE'); updateNavBarWithFunctionName('Saharanpur Road Material BOE');">BOE</a>
-                                        </li>
+                                                onclick="Saharanpur_Material_cat('material','BOE'); updateNavBarWithFunctionName('Saharanpur Road Material : BOE');">BOE</a></li>
                                         <li id="CC"><a class="dropdown-item"
-                                                onclick="Saharanpur_Material_cat('material','CC'); updateNavBarWithFunctionName('Saharanpur Road Material CC');">CC</a>
-                                        </li>
+                                                onclick="Saharanpur_Material_cat('material','CC'); updateNavBarWithFunctionName('Saharanpur Road Material : CC');">CC</a></li>
                                         <li id="Interlocking"><a class="dropdown-item"
-                                                onclick="Saharanpur_Material_cat('material','Interlocking'); updateNavBarWithFunctionName('Saharanpur Road Material Interlocking');">Interlocking</a>
-                                        </li>
+                                                onclick="Saharanpur_Material_cat('material','Interlocking'); updateNavBarWithFunctionName('Saharanpur Road Material : Interlocking');">Interlocking</a></li>
                                         <li id="Kachcha"><a class="dropdown-item"
-                                                onclick="Saharanpur_Material_cat('material','Kachcha'); updateNavBarWithFunctionName('Saharanpur Road Material Kachcha');">Kachcha</a>
-                                        </li>
+                                                onclick="Saharanpur_Material_cat('material','Kachcha'); updateNavBarWithFunctionName('Saharanpur Road Material : Kachcha');">Kachcha</a></li>
                                         <!-- <li id="NA"><a class="dropdown-item"
-                                            onclick="Saharanpur_Material_cat('material','NA'); updateNavBarWithFunctionName('Saharanpur Road Material Not Define');">NA</a>
+                                            onclick="Saharanpur_Material_cat('material','NA'); updateNavBarWithFunctionName('Saharanpur Road Material : Not Define');">NA</a>
                                     </li> -->
                                     </ul>
                                 </li>
                                 <li>
                                     <a class="dropdown" id="Ownership"
-                                        onclick="updateAyodhyaRoadLayer('ownership'); updateNavBarWithFunctionName('Saharanpur Road Ownership');">Road
-                                        Ownership &raquo;</a>
+                                        onclick="updateAyodhyaRoadLayer('ownership'); updateNavBarWithFunctionName('Saharanpur Road Ownership');">Road Ownership &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
-                                        <li id="C.M Grid"><a class="dropdown-item"
-                                                onclick="Saharanpur_Ownership_cat('ownership','C.M Grid'); updateNavBarWithFunctionName('Saharanpur Road Ownership National Highways Authority of India');">C.M Grid
-                                            </a></li>
+                                        <!-- <li id="C.M Grid"><a class="dropdown-item" -->
+                                                <!-- onclick="Saharanpur_Ownership_cat('ownership','C.M Grid'); updateNavBarWithFunctionName('Saharanpur Road Ownership : National Highways Authority of India');">C.M Grid </a></li> -->
                                         <li id="SNN"><a class="dropdown-item"
-                                                onclick="Saharanpur_Ownership_cat('ownership','SNN'); updateNavBarWithFunctionName('Saharanpur Road Ownership Saharanpur Nagar Nigam');">Saharanpur Nagar Nigam
-                                            </a></li>
+                                                onclick="Saharanpur_Ownership_cat('ownership','SNN'); updateNavBarWithFunctionName('Saharanpur Road Ownership : Saharanpur Nagar Nigam');">Saharanpur Nagar Nigam </a></li>
                                         <li id="Private Road"><a class="dropdown-item"
-                                                onclick="Saharanpur_Ownership_cat('ownership','Private'); updateNavBarWithFunctionName('Saharanpur Road Ownership Private Roads');">Private Road</a>
-                                        </li>
+                                                onclick="Saharanpur_Ownership_cat('ownership','Private'); updateNavBarWithFunctionName('Saharanpur Road Ownership : Private Roads');">Private Road</a></li>
                                         <li id="PWD"><a class="dropdown-item"
-                                                onclick="Saharanpur_Ownership_cat('ownership','PWD'); updateNavBarWithFunctionName('Saharanpur Road Ownership PWD');">PWD
-                                            </a></li>
+                                                onclick="Saharanpur_Ownership_cat('ownership','PWD'); updateNavBarWithFunctionName('Saharanpur Road Ownership : PWD');">PWD</a></li>
                                         <li id="Railway"><a class="dropdown-item"
-                                                onclick="Saharanpur_Ownership_cat('ownership','Railway'); updateNavBarWithFunctionName('Saharanpur Road Ownership Railway');">
-                                                Railway </a></li>
-                                        <li id="DUDA"><a class="dropdown-item"
-                                                onclick="Saharanpur_Ownership_cat('ownership','DUDA'); updateNavBarWithFunctionName('Saharanpur Road Ownership Defence');">
-                                                    DUDA </a></li>
-                                         <li id="Smart City"><a class="dropdown-item"
-                                                onclick="Saharanpur_Ownership_cat('ownership','Smart City'); updateNavBarWithFunctionName('Saharanpur Road Ownership Department Roads');">
-                                                Smart City </a></li>
+                                                onclick="Saharanpur_Ownership_cat('ownership','Railway'); updateNavBarWithFunctionName('Saharanpur Road Ownership : Railway');">Railway </a></li>
+                                        <li id="Development Authority"><a class="dropdown-item"
+                                                onclick="Saharanpur_Ownership_cat('ownership','Development Authority'); updateNavBarWithFunctionName('Saharanpur Road Ownership : Defence');"> Development Authority </a></li>
+                                        <!-- <li id="Smart City"><a class="dropdown-item" -->
+                                                <!-- onclick="Saharanpur_Ownership_cat('ownership','Smart City'); updateNavBarWithFunctionName('Saharanpur Road Ownership : Department Roads');"> Smart City </a></li> -->
                                         <li id="Others"><a class="dropdown-item"
-                                                onclick="Saharanpur_Ownership_cat('ownership','Others'); updateNavBarWithFunctionName('Saharanpur Road Ownership Others');">
-                                                    Others </a></li>
+                                                onclick="Saharanpur_Ownership_cat('ownership','Others'); updateNavBarWithFunctionName('Saharanpur Road Ownership : Others');"> Others </a></li>
                                     </ul>
                                 </li>
-                                 <li>
+                                <li>
                                     <a class="dropdown" id="CUS"
-                                        onclick="updateAyodhyaRoadLayer('cus'); updateNavBarWithFunctionName('Saharanpur Road CUS');">
-                                        Road CUS &raquo;</a>
+                                        onclick="updateAyodhyaRoadLayer('cus'); updateNavBarWithFunctionName('Saharanpur Road CUS');"> Road CUS &raquo;</a>
                                     <ul class="dropdown-menu dropdown-submenu">
                                         <li id="Nagar_Palika"><a class="dropdown-item"
-                                                onclick="Saharanpur_CUS_cat('cus','Nagar Palika'); updateNavBarWithFunctionName('Saharanpur Road CUS Nagar Palika');">Nagar Palika</a>
-                                        </li>
+                                                onclick="Saharanpur_CUS_cat('cus_class','15th Finance'); updateNavBarWithFunctionName('Saharanpur Road CUS : 15th Finance');">15th Finance</a></li>
                                         <li id="PWD"><a class="dropdown-item"
-                                                onclick="Saharanpur_CUS_cat('cus','PWD'); updateNavBarWithFunctionName('Saharanpur Road CUS PWD');">PWD</a>
-                                        </li>
+                                                onclick="Saharanpur_CUS_cat('cus_class','PWD'); updateNavBarWithFunctionName('Saharanpur Road CUS : PWD');">PWD</a></li>
                                         <li id="Nagar_Nigam_Nidhi"><a class="dropdown-item"
-                                                onclick="Saharanpur_CUS_cat('cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Saharanpur Road CUS Nagar Nigam Nidhi');">Nagar NIgam Nidhi</a>
-                                        </li>
+                                                onclick="Saharanpur_CUS_cat('cus_class','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Saharanpur Road CUS : Nagar Nigam Nidhi');">Nagar NIgam Nidhi</a></li>
                                         <li id="SansadNidhi"><a class="dropdown-item"
-                                            onclick="Saharanpur_CUS_cat('cus','Sansad Nidhi'); updateNavBarWithFunctionName('Saharanpur Road CUS Sansad Nidhi');">Sansad Nidhi</a>
-                                    </li>
-                                     <li id="VidhayakNidhi"><a class="dropdown-item"
-                                            onclick="Saharanpur_CUS_cat('cus','Vidhayak Nidhi'); updateNavBarWithFunctionName('Saharanpur Road CUS Vidhayak Nidhi');">Vidhayak Nidhi</a>
-                                    </li>
-                                
-                                    <li id="DUDA"><a class="dropdown-item"
-                                            onclick="Saharanpur_CUS_cat('cus','DUDA'); updateNavBarWithFunctionName('Saharanpur Road CUS DUDA');">DUDA</a>
-                                    </li>
-                                     <li id="NA"><a class="dropdown-item"
-                                            onclick="Saharanpur_CUS_cat('cus','NA'); updateNavBarWithFunctionName('Saharanpur Road CUS NA');">NA</a>
-                                    </li>
-
-                                    <li id="smartCity"><a class="dropdown-item"
-                                            onclick="Saharanpur_CUS_cat('cus','Smart City'); updateNavBarWithFunctionName('Saharanpur Road CUS Smart City');">Smart City</a>
-                                    </li>
-
+                                            onclick="Saharanpur_CUS_cat('cus_class','SDA'); updateNavBarWithFunctionName('Saharanpur Road CUS : SDA');">SDA</a></li>
+                                        <li id="VidhayakNidhi"><a class="dropdown-item"
+                                            onclick="Saharanpur_CUS_cat('cus_class','Railway'); updateNavBarWithFunctionName('Saharanpur Road CUS : Railway');">Railway</a></li>
+                                        <li id="DUDA"><a class="dropdown-item"
+                                                onclick="Saharanpur_CUS_cat('cus_class','DUDA'); updateNavBarWithFunctionName('Saharanpur Road CUS : DUDA');">DUDA</a></li>
+                                        <li id="NA"><a class="dropdown-item"
+                                                onclick="Saharanpur_CUS_cat('cus_class','NA'); updateNavBarWithFunctionName('Saharanpur Road CUS : NA');">NA</a></li>
+                                        <li id="smartCity"><a class="dropdown-item"
+                                                onclick="Saharanpur_CUS_cat('cus_class','Others'); updateNavBarWithFunctionName('Saharanpur Road CUS : Others');">Others</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -550,22 +465,7 @@
             <div class="legend-tab">
             <!-- <button id="legendBtn">Show Legend</button> -->
             <div id="live_legend" style="display: none;"><h6>Legend</h6></div>
-            <div id="type_legend" Class="Legend_panel" >
-                <h6>Legend By Type</h6>
-                <ul>
-                    <li><span style="background-color: #0000ff; width: 20px; height: 2px; display: inline-block;"></span>
-                        Major</li>
-                    <li><span style="background-color: #e2e832; width: 20px; height: 2px; display: inline-block;"></span>
-                        Minor</li>
-                    <!-- <li><span style="background-color: #32e1e3; width: 20px; height: 2px; display: inline-block;"></span>
-                Service Road</li>
-            
-                <li><span style="background-color: #ff00ff; width: 20px; height: 2px; display: inline-block;"></span>
-                    NA</li> -->
-
-                    <!-- Add more legend items as needed -->
-                </ul>
-            </div>
+           
             <div id="Condition_legend" Class="Legend_panel" >
                 <h6>Legend By Condition</h6>
                 <ul>
@@ -574,11 +474,7 @@
                     <li><span style="background-color: #e2e832; width: 20px; height: 2px; display: inline-block;"></span>
                         Moderate Road</li>
                     <li><span style="background-color: #e33232; width: 20px; height: 2px; display: inline-block;"></span>
-                        Poor Road</li>
-
-                    <li><span style="background-color: #eb58bf; width: 20px; height: 2px; display: inline-block;"></span>
-                    NA</li>
-               
+                        Poor Road</li>           
                     <!-- Add more legend items as needed -->
                 </ul>
             </div>
@@ -586,7 +482,7 @@
                 <h6>Legend By CUS</h6>
                 <ul>
                     <li><span style="background-color: #ec1248; width: 20px; height: 2px; display: inline-block;"></span>
-                        Nagar Palika</li>
+                        15th Finance</li>
                     <li><span style="background-color: #e63dee; width: 20px; height: 2px; display: inline-block;"></span>
                         PWD</li>
                     <li><span style="background-color: #14cee3; width: 20px; height: 2px; display: inline-block;"></span>
@@ -596,13 +492,13 @@
                     DUDA</li>
                     
                     <li><span style="background-color: #6a52e7; width: 20px; height: 2px; display: inline-block;"></span>
-                    Vidhayak Nidhi</li>
+                    Railway</li>
                     
                     <li><span style="background-color: #c70ed8; width: 20px; height: 2px; display: inline-block;"></span>
-                    Sansad Nidhi</li>
+                    SDA</li>
 
                     <li><span style="background-color: #f4ee40; width: 20px; height: 2px; display: inline-block;"></span>
-                    Smart City</li>
+                    Others</li>
                                         
                     <li><span style="background-color: #8717e2; width: 20px; height: 2px; display: inline-block;"></span>
                     NA</li>
@@ -624,10 +520,7 @@
                         Kachcha Road</li>
                     <li><span style="background-color: #f228ab; width: 20px; height: 2px; display: inline-block;"></span>
                         BOE Road</li>
-                    <li><span style="background-color: #dfc223; width: 20px; height: 2px; display: inline-block;"></span>
-                            N/A</li>
-                            <!-- <li><span style="background-color: rgb(209, 216, 149); width: 20px; height: 2px; display: inline-block;"></span>
-                               NA</li> -->
+                  
                     <!-- Add more legend items as needed -->
                 </ul>
             </div>
@@ -644,7 +537,7 @@
                     <li><span style="background-color: #5aeee5; width: 20px; height: 2px; display: inline-block;"></span>
                         SNN</li>
                      <li><span style="background-color: #f16a16; width: 20px; height: 2px; display: inline-block;"></span>
-                        DUDA</li>
+                        Development Authority</li>
                     <li><span style="background-color: #eec82e; width: 20px; height: 2px; display: inline-block;"></span>
                        C.M Grid</li>
                     <li><span style="background-color: #168de7; width: 20px; height: 2px; display: inline-block;"></span>
@@ -660,8 +553,7 @@
                         Local Street</li>
                     <li><span style="background-color: #e63dee; width: 20px; height: 2px; display: inline-block;"></span>
                         Collector</li>
-                    <li><span style="background-color: #ec1248; width: 20px; height: 2px; display: inline-block;"></span>
-                       Expressway</li>
+                   
                     <li><span style="background-color: #83e45c; width: 20px; height: 2px; display: inline-block;"></span>
                        Sub Arterial</li>
                     <li><span style="background-color: #e1ca4c; width: 20px; height: 2px; display: inline-block;"></span>
@@ -673,69 +565,18 @@
 
         <!--------spping boot live Road Table data getting----->
 
-       <div id="tableContainer">
-                    <nav class="feature_nav">
-                        <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 18px;font-weight: bold;">Feature Name - </a>
-                        <a id="featureName" class="feature_name1"
-                            style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none; font-size: 18px;font-weight: bold;"></a>
-                        <div style="display: flex; align-items: center; margin-left: auto; ">
-                             <i class="fa-solid fa-print" style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
-                                <!-- <i class="fa-solid fa-file-arrow-down"></i> -->
-                            <i class="fas fa-window-minimize" onclick="minimize1()"
-                                style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
-                            <i class="fas fa-window-maximize" onclick="maximize1()"
-                                style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
-                            <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
-                                <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
-                            </span>
-                        </div>
-                    </nav>
-
-                    <table id="dataTable">
-                        <thead>
-                            <tr>
-                                <th> Gis Id </th>
-                                <th> zone No </th>
-                                <th> zone Name </th>
-                                <th> Ward No </th>
-                                <th> Ward Name </th>
-                                <th> Ownership </th>
-                                <!--<th> Type </th>--->
-                                <th> Road Categoury </th>
-                                <th> Road Name </th>
-                                <th> Row meter </th>
-                                <th> Row as per </th>
-                                <th> Carriage Width </th>
-                                <th> Material </th>
-                                <th> Length (km) </th>
-                                <th> Conditon </th>
-                                <th> Year Of Construction </th>
-                                <th> CUS &nbsp;&nbsp;
-                                     <!-- <span class="table-cancel-btn">
-                                        <i id="cancelbtn1" class="fas fa-times cancel-btn"></i>
-                                    </span> -->
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody id="dataBody">
-
-                        </tbody>
-                    </table>
-            </div>
-
-        <div id="tableContainer_summary">
+        <div id="tableContainer_summary" class="tablediv">
             <!-- Navigation Bar -->
             <nav class="feature_nav">
-                <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 18px;">Feature Name - </a>
-                <a id="featureName" class="feature_name1"
-                    style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none; font-size: 18px;font-weight: bold;"></a>
+                <a >Feature Name - </a>
+                <a id="featureName" class="feature_name1"></a>
                 <div style="display: flex; align-items: center; margin-left: auto;">
-                     <i class="fa-solid fa-print" style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                    <i class="fa-solid fa-print" style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
                     <i class="fas fa-window-minimize" onclick="minimize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                        style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
                     <i class="fas fa-window-maximize" onclick="maximize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
-                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
+                    <span class="table-cancel-btn1" style="color: rgb(0, 0, 0);">
                         <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
                     </span>
                 </div>
@@ -744,32 +585,26 @@
                <thead>
                    <tr>
                        <th> Gis Id </th>
+                       <th> Road Id </th>
                        <th> Zone No </th>
                        <th> Zone Name </th>
                        <th> Ward No </th>
                        <th> Ward Name </th>
                        <th> Ownership </th>
                        <!--<th> Type </th>--->
-                       <th> Road Categoury </th>
+                       <th> Road Category </th>
                        <th> Road Name </th>
                        <th> Row (meter) </th>
                        <th> Row as per </th>
-                       <th> carriage Width </th>
+                       <th> Carriage Width </th>
                        <th> Material </th>
                        <th> Length (km) </th>
-                       <th> conditon </th>
-                       <th> Year Of Construction </th>
-                       <th> CUS &nbsp;&nbsp; 
-                           <!-- <span class="table-cancel-btn1">
-                               <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
-                           </span> -->
-                       </th>
-               
+                       <th> Conditon </th>
+                        <th> Year Of Construction/Relaying</th>
+                       <th> CUS &nbsp;&nbsp; </th>             
                    </tr>
                </thead>
-               <tbody id="dataBody_summary">
-
-               </tbody>
+               <tbody id="dataBody_summary"></tbody>
            </table>
        </div> 
         <!----------------------Road Age Table----------------->
@@ -777,14 +612,14 @@
               <!--------wms & wfs Road Table data getting layer----->
         <div id="tableContainer_summaryfilter">
             <nav class="feature_nav">
-                <a style="color: rgb(244, 239, 239); margin-right: 20px; font-size: 15px;">Filter Data According to zone and Column </a>
-                <a id="featureName" style="color: rgb(243, 236, 236); margin-left: 8px;text-decoration: none;"></a>
+                <a >Filter Data According to zone and Column </a>
+                <a id="featureName" ></a>
                 <div style="display: flex; align-items: center; margin-left: auto;">
                     <i class="fas fa-window-minimize" onclick="minimize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
+                        style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
                     <i class="fas fa-window-maximize" onclick="maximize1()"
-                        style="margin-right: 10px;color: rgb(243, 236, 236);"></i>
-                    <span class="table-cancel-btn1" style="color: rgb(243, 236, 236);">
+                        style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
+                    <span class="table-cancel-btn1" style="color: rgb(0, 0, 0);">
                         <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
                     </span>
                 </div>
@@ -793,13 +628,11 @@
                 <thead>
                     <tr>
                         <th> Gis Id </th>
-                        <!-- <th> Zone No
-                            <select class="zone-dropdown" style="overflow-y:scroll" id="zoneSelect"></select>
-                        </th>
-                        <th> Zone Name </th> -->
+                        <th> Road Id </th>
+                        <th> Zone No</th>
+                        <!--<th> Zone Name </th> -->
                         <th> Ward No
                             <select class="ward-dropdown" style="overflow-y:scroll" id="wardSelect"></select>
-                            </select>
                         </th>
                         <th> Ward Name </th>
                         <th> Ownership
@@ -807,39 +640,27 @@
                                 <option value="">Ownership</option>
                                 <option value="SNN">SNN</option>
                                 <option value="Private">Private Roads</option>
-                                <option value="C.M Grid">C.M Grid</option>
                                 <option value="PWD">PWD</option>
                                 <option value="Railway">Railway</option>
-                                <option value="Smart City">Smart City</option>
-                                <option value="DUDA">DUDA</option>
+                                <option value="Development Authority">Development Authority</option>
                                 <option value="Others">Others</option>
-
             
                                 <!-- Add more ownership options here -->
                             </select>
                         </th>
-                        <!-- <th> Type
-                            <select class="type-dropdown">
-                                <option value="">Type</option> 
-                                <option value="Minor City Road">Minor</option>
-                                <option value="Major City Road">Major</option>
-                            
-                            </select>
-                        </th> -->
                         <th> Road Category 
                             <select class="type-dropdown">
-                        <option value="">Category</option> 
-                        <option value="Local Street">Local Street </option>
-                        <option value="Collector">Collector</option>
-                        <option value="Arterial">Arterial</option>
-                        <option value="Sub Arterial">Sub Arterial</option>
-                    
-                    </select>
+                                <option value="">Category</option> 
+                                <option value="Local Street">Local Street </option>
+                                <option value="Collector">Collector</option>
+                                <option value="Arterial">Arterial</option>
+                                <option value="Sub Arterial">Sub Arterial</option>
+                            </select>
                         </th>
                         <th> Road Name </th>
                         <th> Row (meter) </th>
                         <th> Row as per </th>
-                        <th> carriage Width </th>
+                        <th> Carriage Width </th>
                         <th> Material
                             <select class="material-dropdown">
                                 <option value="">Material</option>
@@ -851,21 +672,17 @@
                             </select>
                         </th>
                         <th> Length (km) </th>
-                        <th> conditon
-                            <!-- <select class="condition-dropdown">
+                        <th> Conditon
+                          <select class="condition-dropdown">
                                 <option value="">Condition</option>
                                 <option value="Good">Good</option>
                                 <option value="Poor">Poor</option>
                                 <option value="Moderate">Moderate</option>
                             
-                            </select>     -->
+                            </select>   
                         </th>
                         <th> Year Of Construction </th>
-                        <th> CUS &nbsp;&nbsp; 
-                            <!-- <span class="table-cancel-btn1">
-                                <i id="cancelbtn_table" class="fas fa-times cancel-btn"></i>
-                            </span> -->
-                        </th>
+                        <th> CUS &nbsp;&nbsp; </th>
                     </tr>
                 </thead>
                 <tbody id="dataBody_summaryfilter">
@@ -882,7 +699,7 @@
 
 
         <!------------------------- summary table start ------------------->
-       <div class="table_summary" id="summary-table">
+        <div class="table_summary" id="summary-table">
                     <div class="topnav" id="topnav">
                         <div class="nav-links">
                             <a href="#Summary" id="summary_id" onclick="navigateTo('Summary')">Summary</a>
@@ -926,12 +743,12 @@
         &copy; 2024 UP Remote Sensing Application Centre. All rights reserved.
     </div>
     <!--------- footer section end ----------->
-       <script src="../config.js"></script> 
+    <script src="../config.js"></script> 
     <script src="../javascript/saharanpur.js"></script>
 
 </body>
 <script>
-  // Generate 60 ward entries
+  // Generate  ward entries
   const wardListContainer = document.getElementById("wardListContainer");
 
   for (let i = 1; i <= 70; i++) {

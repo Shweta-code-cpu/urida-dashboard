@@ -5,7 +5,7 @@ body {
 }
 
 .sidebar {
-    height: 706px;
+    height: 896px;
     width: 380px;
     position: fixed;
     top: 1px;
@@ -228,8 +228,8 @@ body {
     background-color: #dc3545; /* Bootstrap danger color */
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 12px 13px;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 14px;
     font-weight: bold;
@@ -238,7 +238,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-        position: fixed;
+    position: fixed;
     top: 8%;
     right: 0.5%;
 }
@@ -403,9 +403,10 @@ font-size: 10px;
     bottom: 20px; /* Place button at the bottom of the container */
     left: 50px; /* Place the button at a specific horizontal position */
     display: flex; /* Use flex to center text */
-     align-items: center; 
+    align-items: center; 
     justify-content: center; 
     text-align: center; }
+
 #progress_graph{
     top: 1px;
     position: fixed;

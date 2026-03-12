@@ -137,7 +137,7 @@ var base_maps = new ol.layer.Group({
         new ol.layer.Tile({
             source: new ol.source.TileJSON({
                 attributions: "@MapTiler",
-                url: "https://api.maptiler.com/maps/toner-v2/tiles.json?key=iVy8qXSX5hN7aJhQp2Na",
+                url: "https://api.maptiler.com/maps/toner-v2/tiles.json?key=iTVgqgYSsJMT2uIrziZq",
                 crossOrigin: "anonymous"
             }),
             title: "Toner",
@@ -608,92 +608,6 @@ ShowRoads.addEventListener('click', function () {
         })
 
 });
-//-------------------------------------------All Drains-------------------------//
-// ShowDrainage.addEventListener('click', function () {
-//     removeCurrentLayer();
-//     map.getLayers().getArray().slice().forEach(layer => {
-//         if (layer instanceof ol.layer.Vector 
-//             // && !isLayerInPreservedList(layer)
-//         ) {
-//             map.removeLayer(layer);
-//         }
-//     });
-//     map.getOverlays().clear();
-//     fetch(`${BASE_URL}/getAllDrainName`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             // Add any request body if required
-//         })
-//     })
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//             return response.json();
-//         })
-//         .then(responseData => {
-//             console.log('Received data:', responseData);
-//             console.log('getting all data');
-
-//             // Clear existing table rows
-//             dataTableBody_Drain.innerHTML = '';
-
-//             // Check if 'data' is an array before iterating
-//             if (Array.isArray(responseData.data)) {
-//                 responseData.data.forEach(item => {
-//                     const row = document.createElement('tr');
-//                     row.innerHTML = `
-//                 <td>${item.gid}</td>
-//                 <td>${item.zone_no}</td>
-//                 <td>${item.zone_name}</td>
-//                 <td>${item.ward_no}</td>                         
-//                 <td>${item.ward_name}</td>
-//                 <td>${item.ownership}</td>                       
-//                 <td>${item.type}</td>
-//                 <td>${item.status}</td>
-//                 <td>${item.material}</td>
-//                 <td>${item.length}</td>
-//                 <td>${item.condition}</td>
-//                 <td>${item.const_year}</td>
-//                 <td>${item.width}</td>
-//                 <td>${item.depth}</td>
-               
-
-//                 <!-- Add more table data cells as needed -->
-//             `;
-//                     dataTableBody_Drain.appendChild(row);
-
-//                     // Check if the item has a geom_wkt property
-//                     if (item.geom_wkt) {
-//                         addMultilinestringFeatureFromWKT_Ward(item.geom_wkt);
-//                     }
-//                 });
-//             } else {
-//                 console.error('Expected array but received:', responseData.data);
-//                 // Handle non-array data if needed
-//             }
-//         })
-//         .catch(error => {
-//             console.error('Error fetching data:', error);
-//             // Handle error condition if needed
-//         })
-
-//         legendBtn.addEventListener('click', function () {
-//             const legends = [ type_legend, live_legend, Priority_legend, Condition_legend, Material_legend, Ownership_legend, 
-//                 Drain_Type_Legend, Drain_Condition_Legend, Drain_Material_Legend, Drain_Status_Legend
-//             ];
-        
-//             const isVisible = legends.some(legend => legend.style.display === 'block');
-        
-//             legends.forEach(legend => {
-//                 legend.style.display = isVisible ? 'none' : 'block';
-//             });
-//         });
-
-// });
 
 //-------------------------------------optimise code of priority ---------------
 /*
@@ -822,8 +736,7 @@ Not_Eligible.addEventListener('click', function () {
     priorityBasedScoring('Not eligible', "Not Eligible");
     toggleLegend(Priority_legend, live_legend);
 });
-*/
-//--------------------------------optimise code of sidebar road analysis -----------------------------
+*///--------------------------------optimise code of sidebar road analysis -----------------------------
 function amenitiesRoadAnalysis(endpoint, layerName, featureFunction,elementId) {
     removeCurrentLayer();
     updateNavBarWithFunctionName(layerName);
@@ -937,89 +850,7 @@ function showAmenityWithRoads(roadEndpoint, roadLayerName, roadFeatureFunction, 
     amenitiesFeatures(pointType, iconStyle, vectorSource, iconLayer, elementId);
 }
 
-/*----------------------------------------------------slum Data--------------------------------------------------*/
-// Define your polygon style
-// Define the polygon style for the slum boundaries
-/*var SlumStyle = new ol.style.Style({
-    fill: new ol.style.Fill({
-        color: 'Transparent', // Green color with 50% opacity
-    }),
-    stroke: new ol.style.Stroke({
-        color: 'cyan', // Cyan border#8816b8
-        width: 4,
-    }),
-});
 
-// Define the slum vector source and layer
-var SlumVectorSource = new ol.source.Vector();
-var SlumVectorLayer = new ol.layer.Vector({
-    source: SlumVectorSource,
-    visible: false // Initially not visible
-});
-
-// Add the vector layer to the map
-map.addLayer(SlumVectorLayer);
-
-// Handle the checkbox to toggle visibility of the vector layer
-document.getElementById('Slum_Boundary').addEventListener('change', function () {
-    SlumVectorLayer.setVisible(this.checked);
-});
-
-// Fetch the MultiPolygon data using a POST request and add it to the layer
-fetch(`${BASE_URL}/getSlumBoundry`, {
-    method: 'POST', // Use POST method
-    headers: {
-        'Content-Type': 'application/json' // Set the content type to JSON
-    },
-    body: JSON.stringify({ /* Include any data to send with the POST request */ //})
-/*})
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Log the data to understand its structure
-        console.log('Fetched data:', data);
-
-        // Check if data and data.data are defined
-        if (!data || !Array.isArray(data.data)) {
-            throw new Error('Invalid data format: expected an object with an array in "data" property.');
-        }
-
-        var format = new ol.format.WKT();
-        var features = data.data.map(function (ann_slum_boundary) {
-            console.log("WKT Geometry:", ann_slum_boundary.geom_point);
-
-            try {
-                var feature = format.readFeature('MULTIPOLYGON' + ann_slum_boundary.geom_point.slice(12), {
-                    dataProjection: 'EPSG:4326', // Assuming WKT data is in EPSG:4326
-                    featureProjection: 'EPSG:4326' // Assuming map view is EPSG:3857 (Web Mercator)
-                });
-
-                feature.setStyle(SlumStyle); // Apply the style to the feature
-                feature.set('name', ann_slum_boundary.name); // Add the slum name as an attribute
-                return feature;
-            } catch (error) {
-                console.error('Error converting WKT to Feature:', ann_slum_boundary.geom_point, error);
-                return null;
-            }
-        }).filter(Boolean); // Filter out null features if any WKT parsing fails
-
-        SlumVectorSource.addFeatures(features); // Add all features to the source
-        console.log('Slum features added:', features);
-
-        // Adjust the map view to fit the extent of the features
-        if (features.length > 0) {
-            map.getView().fit(SlumVectorSource.getExtent(), {
-                size: map.getSize(),
-                maxZoom: 12
-            });
-        }
-    })
-    .catch(error => console.error('Error fetching slum data:', error));
-*/
 //----------------------------------------All amenities popup Data-------------------------//
 // Popup initialization
 var popupContainer = document.getElementById("popup_1");
@@ -1132,7 +963,7 @@ function createVectorLayer(source) {
 }
 
 function amenitiesFeatures(type, iconStyle, vectorSource, layer, elementId) {
-    console.log("The URL is:", `${BASE_URL}/getLocationData?type=${type}`);
+  //  console.log("The URL is:", `${BASE_URL}/getLocationData?type=${type}`);
     fetch(`${BASE_URL}/getLocationData?type=${type}`)
         .then(response => response.json())
         .then(data => {
@@ -1156,7 +987,7 @@ function amenitiesFeatures(type, iconStyle, vectorSource, layer, elementId) {
             }).filter(Boolean);
 
             vectorSource.addFeatures(features);
-            console.log(`${type} features added:`, features);
+          //  console.log(`${type} features added:`, features);
 
             document.getElementById(elementId).addEventListener('change', function () {
                 layer.setVisible(this.checked);
@@ -1191,59 +1022,6 @@ locationTypes.forEach(location => {
     amenitiesFeatures(location.type, iconStyle, vectorSource, vectorLayer, location.id);
 });
 
-
-//--------------------Graveyard --------------//  
-// var iconStyleGraveyard = new ol.style.Style({
-//     image: new ol.style.Icon({
-//         anchor: [0.5, 1],
-//         src: '../assets/icons/graveyard.png',
-//         scale: 0.05,
-//     })
-// });
-
-// var GraveyardVectorSource = new ol.source.Vector();
-// var GraveyardVectorLayer = new ol.layer.Vector({
-//     source: GraveyardVectorSource,
-//     visible: false // Initially not visible
-// });
-// map.addLayer(GraveyardVectorLayer);
-
-// // Fetch and add Graveyard features
-// fetch(`${BASE_URL}/getgraveyardName`)
-//     .then(response => response.json())
-//     .then(data => {
-//         var features = data.data.map(function (point) {
-//             try {
-//                 // Extract and transform coordinates from EPSG:4326 to EPSG:3857
-//                 var coords = point.geom_point.replace('POINT(', '').replace(')', '').split(' ');
-//                 var lonLat = [parseFloat(coords[0]), parseFloat(coords[1])];
-//                 //var transformedCoords = ol.proj.transform(lonLat, 'EPSG:4326', 'EPSG:3857');
-
-//                 var feature = new ol.Feature({
-//                     geometry: new ol.geom.Point(lonLat),
-//                     name: point.name,
-//                     address: point.address,
-//                   //  phonenumbe: point.phonenumbe
-//                 });
-
-//                 feature.setStyle(iconStyleGraveyard);
-//                 return feature;
-//             } catch (error) {
-//                 console.error('Error adding point feature:', error);
-//             }
-//         }).filter(Boolean); // Filter out undefined features if an error occurred
-
-//         GraveyardVectorSource.addFeatures(features);
-//         console.log('Graveyard features added:', features);
-
-//         document.getElementById('showGraveyard').addEventListener('change', function () {
-//             GraveyardVectorLayer.setVisible(this.checked);
-//         });
-
-//     })
-//     .catch(error => console.error('Error fetching Graveyard data:', error));
-
-
 //------------------------------------------------park---------------------//
 
 function createPolygonStyle() {
@@ -1269,7 +1047,7 @@ function park_amenityFeature(url, vectorSource, layer, elementId) {
         })
         .then(data => {
             // Log the data to understand its structure
-            console.log('Fetched park data:', data);
+           // console.log('Fetched park data:', data);
 
             if (!data || !Array.isArray(data.data)) {
                 throw new Error('Invalid data format: expected an object with an array in "data" property.');
@@ -1277,7 +1055,7 @@ function park_amenityFeature(url, vectorSource, layer, elementId) {
 
             var format = new ol.format.WKT();
             var features = data.data.map(function (park) {
-                console.log("WKT Geometry:", park.geom_point);
+              //  console.log("WKT Geometry:", park.geom_point);
 
                 try {
                     var feature = format.readFeature(park.geom_point, {
@@ -1295,7 +1073,7 @@ function park_amenityFeature(url, vectorSource, layer, elementId) {
             }).filter(Boolean);
 
             vectorSource.addFeatures(features); // Add features to the source
-            console.log('Park features added:', features);
+          //  console.log('Park features added:', features);
 
             // Adjust map view to fit the extent of the features
             if (features.length > 0) {
@@ -1319,45 +1097,6 @@ map.addLayer(parkVectorLayer);
 
 // Fetch and add park features
 park_amenityFeature(`${BASE_URL}/getPark_newName`, parkVectorSource, parkVectorLayer, 'showParks');
-
-//-------------------------------------- Stadium Layer (Fetching and adding features)---------------------------------------------------
-// const stadiumVectorSource = new ol.source.Vector();
-// var stadiumVectorLayer = createVectorLayer(stadiumVectorSource);
-// map.addLayer(stadiumVectorLayer);
-
-// fetch(`${BASE_URL}/getStadiumName`)
-//     .then(response => response.json())
-//     .then(data => {
-//         const features = data.data.map(function (point) {
-//             try {
-//                 const coords = point.geom_point.replace('POINT(', '').replace(')', '').split(' ');
-//                 const lonLat = [parseFloat(coords[0]), parseFloat(coords[1])];
-
-//                 const feature = new ol.Feature({
-//                     geometry: new ol.geom.Point(lonLat),
-//                     name: point.name,
-//                     address: point.address,
-//                     phonenumbe: point.phonenumbe
-//                 });
-
-//                 feature.setStyle(createIconStyle('../assets/icons/stadium.png', 0.05)); // Apply stadium icon style
-//                 return feature;
-//             } catch (error) {
-//                 console.error('Error adding Stadium feature:', error);
-//             }
-//         }).filter(Boolean); // Filter out undefined features if an error occurred
-
-//         stadiumVectorSource.addFeatures(features); // Add features to the vector source
-//         console.log('Stadium features added:', features);
-
-//         // Add event listener to toggle visibility based on checkbox
-//         document.getElementById('showStadium').addEventListener('change', function () {
-//             stadiumVectorLayer.setVisible(this.checked);
-//         });
-//     })
-//     .catch(error => console.error('Error fetching Stadium data:', error));
-
-
 
 //------------------------ query panel ---------------------------------/ /
 document.getElementById('load-layer').addEventListener('click', function () {
@@ -1430,7 +1169,7 @@ $(document).ready(function () {
                             );
                         });
                 });
-            //select.children(":first").text("please make a selection").attr("selected",true);
+            
         },
     });
 });
@@ -2394,54 +2133,6 @@ function toggleFilter(filterId) {
 }
 
 document.getElementById('clear-icon').onclick = clearAllVectorLayers;
-// function clearAllVectorLayers() {
-//     clearVectorLayers();
-//     // Iterate through all layers on the map
-//     map.getLayers().getArray().forEach(layer => {
-//         if (layer instanceof ol.layer.Vector) {
-//             layer.getSource().clear(); // Clear all features from this vector layer
-//         }
-//         zoomToIndia();
-//     });
-//     map.removeLayer(currentLayer);
-
-//     document.getElementById("tableContainer").style.display = "none";
-//     document.getElementById("road-filter").style.display = "none";
-//     document.getElementById("filterBox").style.display = "none";
-//     document.getElementById("query_tab").style.display = "none";
-//     document.getElementById("popup_road").style.display = "none";
- 
-//     document.getElementById("tableContainer_summary").style.display = "none";
-//     document.getElementById("tableContainer_Road_Age").style.display = "none";
-//     document.getElementById('tableContainer_summaryfilter').style.display = 'none';
-//     document.getElementById('tableContainer_summaryfiltermat').style.display = 'none';
-//     document.getElementById('tableContainer_summaryfilterOwn').style.display = 'none';
-   
-//     //   document.querySelector('.Legend_panel').style.display = 'none';
-//       const legendId= ['Priority_legend', 'type_legend', 'Condition_legend','Material_legend','Ownership_legend','CUS_legend','RoadCategory_legend', 
-//         'Drain_Type_Legend', 'Drain_Condition_Legend','Drain_Material_Legend','Drain_Status_Legend']
-//    legendId.forEach(function(legendID){
-//       const legendBtn =document.getElementById(legendID);
-//       if(legendBtn){  //check if element exists befor manipulating it
-//       legendBtn.style.display = 'none';
-//    }
-//    });
-   
-//     const legendBtn = document.getElementById('legendBtn');
-//     legendBtn.style.bottom = '3%';
-
-//     map.getLayers().getArray().slice().forEach(layer => {
-//         if ((layer instanceof ol.layer.Tile || layer instanceof ol.layer.Image) &&
-//             (layer.getSource() instanceof ol.source.TileWMS || layer.getSource() instanceof ol.source.ImageWMS)) {
-
-//             // Check if the layer is not the zone_boundary layer
-//             if (layer.get('title') !== 'Kanpur Zone Boundary' && layer.get('title') !== 'Kanpur Ward Boundary') {
-//                 map.removeLayer(layer);  // Remove GeoServer WMS layers
-//             }
-//         }
-//     });
-// }
-
 function clearAllVectorLayers() {
     clearVectorLayers();
 
@@ -2506,115 +2197,8 @@ function zoomToIndia() {
 
 }
 
-//----------------------------------------------- street view ------------------------------------------------//
-
-// function street_view() {
-//     // Remove any existing layer
-//     removeCurrentLayer();
-
-//     // Create the new WMS layer
-//     currentLayer = new ol.layer.Image({
-//         title: 'ann View points',
-//         source: new ol.source.ImageWMS({
-//             url: `${GEOSERVER_BASE_URL}/wms`,
-//             params: {
-//                 'LAYERS': 'KNN_Summary:annviewpoints',
-//             },
-//             ratio: 1,
-//             serverType: 'geoserver'
-//         })
-//     });
-
-//     // Add the new layer to the map
-//     map.addLayer(currentLayer);
-
-//     // Define the popup container
-//     var container = document.getElementById('popup');
-
-//     // Set up click event handler
-//     map.on('singleclick', function (evt) {
-//         var viewResolution = map.getView().getResolution();
-//         var url = currentLayer.getSource().getFeatureInfoUrl(
-//             evt.coordinate, viewResolution, 'EPSG:4326', {
-//             'INFO_FORMAT': 'text/html'
-//         });
-
-//         console.log('Feature Info URL:', url); // Log the URL for debugging
-
-//         if (url) {
-//             $.get(url)
-//                 .done(function (data) {
-//                     console.log('Feature Info Response:', data); // Log the response for debugging
-
-//                     var contentHtml = '<h6>Street View and Road Images</h6>';
-//                     var parsedData = $(data);
-
-//                     // Initialize variables to store URLs
-//                     var streetViewUrl = '';
-//                     var imageUrl = '';
-
-//                     // Find the correct <td> elements containing the URLs
-//                     parsedData.find('td').each(function () {
-//                         var text = $(this).text().trim();
-//                         if (text.startsWith('http://maps.google.com') || text.startsWith('https://maps.google.com') || text.startsWith('https://www.google.com')) {
-//                             streetViewUrl = text;
-//                         }
-//                         if (text.startsWith('https://drive.google.com')) {
-//                             imageUrl = text;
-//                         }
-//                     });
-
-//                     console.log("street_view_url:", streetViewUrl);
-//                     console.log("image_url:", imageUrl);
-
-//                     // Build popup content with icons
-//                     if (streetViewUrl || imageUrl) {
-//                         contentHtml += '<div class="icons-container">';
-
-//                         if (streetViewUrl) {
-//                             contentHtml += '<button class="icon-button" onclick="window.open(\'' + streetViewUrl + '\', \'_blank\')">' +
-//                                 '<img src="image_path/google-maps.png" alt="Street View" class="icon-img"></button>';
-//                         }
-//                         if (imageUrl) {
-//                             contentHtml += '<button class="icon-button" onclick="window.open(\'' + imageUrl + '\', \'_blank\')">' +
-//                                 '<img src="image_path/image-files.png" alt="Image" class="icon-img"></button>';
-//                         }
-
-//                         contentHtml += '</div>';
-//                     } else {
-//                         contentHtml += '<p>No information available for this point.</p>';
-//                     }
-
-//                     // Display the popup at the clicked coordinate
-//                     popup.setPosition(evt.coordinate);
-//                     popup.getElement().innerHTML = contentHtml; // Set popup content
-//                     container.style.display = 'block'; // Ensure the popup is visible
-//                 })
-//                 .fail(function (jqXHR, textStatus, errorThrown) {
-//                     console.error('Error fetching feature info:', textStatus, errorThrown);
-//                     popup.setPosition(evt.coordinate);
-//                     popup.getElement().innerHTML = '<p>Failed to fetch feature info.</p>'; // Display error message
-//                     container.style.display = 'block'; // Ensure the popup is visible
-//                 });
-//         } else {
-//             console.error('No URL returned for WMS GetFeatureInfo request.');
-//         }
-//     });
-// }
 
 //---------------------------------------------------------------summary table ---------------------------------------------------------------------//
-
-const data1 = {
-    'Summary':{},
-    'Zone 1': { wards: ['Ward 1', 'Ward 32', 'Ward 56', 'Ward 76', 'Ward 78', 'Ward 79', 'Ward 83', 'Ward 89', 'Ward 90', 'Ward 94', 'Ward 98', 'Ward 101', 'Ward 103', 'Ward 104', 'Ward 106', 'Ward 107', 'Ward 108', 'Ward 109'] },
-    'Zone 2': { wards: ['Ward 11', 'Ward 12', 'Ward 22', 'Ward 24', 'Ward 26', 'Ward 28', 'Ward 29', 'Ward 31', 'Ward 41', 'Ward 46', 'Ward 47', 'Ward 58', 'Ward 62', 'Ward 63', 'Ward 66', 'Ward 68', 'Ward 73', 'Ward 74', 'Ward 95', 'Ward 96', 'Ward 99'] },
-    'Zone 3': { wards: ['Ward 14', 'Ward 18', 'Ward 21', 'Ward 36', 'Ward 38', 'Ward 39', 'Ward 65', 'Ward 70', 'Ward 77', 'Ward 80', 'Ward 82', 'Ward 84', 'Ward 87', 'Ward 88', 'Ward 92', 'Ward 100', 'Ward 102', 'Ward 105'] },
-    'Zone 4': { wards: ['Ward 3', 'Ward 4', 'Ward 5', 'Ward 10', 'Ward 13', 'Ward 15', 'Ward 37', 'Ward 42', 'Ward 49', 'Ward 59', 'Ward 61', 'Ward 75', 'Ward 97', 'Ward 108','Ward 110']},
-    'Zone 5': {wards: ['Ward 2', 'Ward 6', 'Ward 7', 'Ward 9', 'Ward 16', 'Ward 20', 'Ward 34', 'Ward 45', 'Ward 48', 'Ward 50', 'Ward 51', 'Ward 53', 'Ward 55', 'Ward 57','Ward 67', 'Ward 72',, 'Ward 81', 'Ward 93']},
-    'Zone 6':{wards: ['Ward 8', 'Ward 17', 'Ward 19', 'Ward 23', 'Ward 25', 'Ward 27', 'Ward 30', 'Ward 33', 'Ward 35', 'Ward 40', 'Ward 43', 'Ward 44', 'Ward 52', 'Ward 54','Ward 60','Ward 64','Ward 69','Ward 85','Ward 86','Ward 91']},
-
-};
-
 function navigateTo(tabName) {
     const content = document.getElementById('content');
     content.innerHTML = '';
@@ -2697,10 +2281,10 @@ function updateSummary(data) {
         : 'N/A';
 
     const summaryData = {
-        'No. of Zones': { value: safeValue('zone_count'), onclick: 'Kanpur_Zone_no()' },
+        'No. of Zones': { value: safeValue('zone_count') },
         'Total Road Length': { value: `${safeValue('total_length_km')} km`, onclick: "Kanpur_Road_Length_Count(); updateNavBarWithFunctionName('Total Road Length');" },
         'Total No. of Roads': { value: safeValue('total_length_count'), onclick: "Kanpur_Road_Length_Count(); updateNavBarWithFunctionName('Total Road Count');" },
-        'Total Ward No.': { value: safeValue('ayo_ward'), onclick: 'Kanpur_Ward_NO()' },
+        'Total Ward No.': { value: safeValue('ayo_ward') },
         'Road Count by Condition': {
             value: `
                 Good - <a href="javascript:void(0)" onclick="Kanpur_Condition_cat('condition','Good'); updateNavBarWithFunctionName('Road Condition Good');" style="color:green;">${safeValue('condition_count_green')}</a><br>
@@ -2776,34 +2360,73 @@ function updateSummary(data) {
 }
 
 //----------------------------------- Dropdown Zone Selection Code  -----------------------------------------------------------------//
+// function populateZonesDropdown() {
+//     const zonesDropdown = document.getElementById('zonesDropdown');
+//     zonesDropdown.innerHTML = ''; // Clear existing content
+
+//     const zoneData = {
+//         "Zone 1": "Civil Line",
+//         "Zone 2": "Govind Nagar",
+//         "Zone 3": "Kidwai Nagar",
+//         "Zone 4": "Krishna Nagar",
+//         "Zone 5": "Mariyampur",
+//         "Zone 6": "Motijheel"
+//     };
+
+//     Object.keys(zoneData).forEach(zoneKey => {
+//         const zoneElement = document.createElement('a');
+//         zoneElement.href = "#";
+//         zoneElement.innerHTML = zoneKey;
+
+//         zoneElement.onclick = function () {
+//             const zoneNo = zoneKey.split(" ")[1]; // Extract zone number
+//             loadZoneData(zoneNo, zoneData[zoneKey]);
+//             populateWardsDropdown(zoneKey);
+//             getZoneBoundary(zoneNo);
+//             return false;
+//         };
+
+//         zonesDropdown.appendChild(zoneElement);
+//     });
+// }
+
+
 function populateZonesDropdown() {
     const zonesDropdown = document.getElementById('zonesDropdown');
     zonesDropdown.innerHTML = ''; // Clear existing content
 
-    const zoneData = {
-        "Zone 1": "Civil Line",
-        "Zone 2": "Govind Nagar",
-        "Zone 3": "Kidwai Nagar",
-        "Zone 4": "Krishna Nagar",
-        "Zone 5": "Mariyampur",
-        "Zone 6": "Motijheel"
-    };
+    // Fetch the zone data from the API
+    fetch(`${BASE_URL}/getZones`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("✅ Zones API Response:", data); // Debugging: Log the API response
 
-    Object.keys(zoneData).forEach(zoneKey => {
-        const zoneElement = document.createElement('a');
-        zoneElement.href = "#";
-        zoneElement.innerHTML = zoneKey;
+            // Check if zones data exists and handle accordingly
+            if (data && data.status && Array.isArray(data.data)) {
+                data.data.forEach(zone => {
+                    const zoneElement = document.createElement('a');
+                    zoneElement.href = "#";
+                    zoneElement.innerHTML = `Zone ${zone.zone_no}`;  // Display zone number, or use zone names if available
 
-        zoneElement.onclick = function () {
-            const zoneNo = zoneKey.split(" ")[1]; // Extract zone number
-            loadZoneData(zoneNo, zoneData[zoneKey]);
-            populateWardsDropdown(zoneKey);
-            getZoneBoundary(zoneNo);
-            return false;
-        };
-
-        zonesDropdown.appendChild(zoneElement);
-    });
+                    // When a zone is clicked, fetch and display its wards
+                    zoneElement.onclick = function () {
+                        const zoneNo = zone.zone_no;  // Use 'zone_no' from the API
+                        loadZoneData(zoneNo, `Zone ${zoneNo}`);  // Pass zone name as 'Zone {zone_no}'
+                        populateWardsDropdown(zoneNo);
+                        getZoneBoundary(zoneNo);  // Populate the wards dropdown based on the selected zone
+                        return false;  // Prevent the default anchor link behavior
+                    };
+                    zonesDropdown.appendChild(zoneElement);
+                });
+            } else {
+                console.error("❌ No zones data found or incorrect format:", data);
+                zonesDropdown.innerHTML = "<p>No zones available.</p>";  // Show a fallback message if no zones are found
+            }
+        })
+        .catch(error => {
+            console.error("❌ Error fetching zones data:", error);
+            zonesDropdown.innerHTML = "<p>Error loading zones.</p>";  // Show a fallback message if the fetch fails
+        });
 }
 
 populateZonesDropdown();
@@ -3066,29 +2689,68 @@ function getwardBoundary(wardNo) {
 }
 
 //------------------------------- ward populate -------------------------------------------------------------------------------
-function populateWardsDropdown(zoneName) {
+// function populateWardsDropdown(zoneName) {
+//     const wardsDropdown = document.getElementById('zonesDropdownwards');
+//     wardsDropdown.innerHTML = ''; // Clear existing content
+
+//     // Fetch ward list from predefined data
+//     const wards = data1[zoneName].wards;
+
+//     // Populate the dropdown
+//     wards.forEach(wardName => {
+//         const wardElement = document.createElement('a');
+//         wardElement.href = "#";
+//         wardElement.innerHTML = wardName;
+
+//         wardElement.onclick = function () {
+//             const wardNo = wardName.split(" ")[1]; // Extract ward number dynamically
+//             loadWardData(zoneName.split(" ")[1], wardNo, wardName); // Call the single function
+//             getwardBoundary(wardNo);
+//             return false;
+//         };
+
+//         wardsDropdown.appendChild(wardElement);
+//     });
+// }
+
+function populateWardsDropdown(zoneNo) {
     const wardsDropdown = document.getElementById('zonesDropdownwards');
     wardsDropdown.innerHTML = ''; // Clear existing content
 
-    // Fetch ward list from predefined data
-    const wards = data1[zoneName].wards;
+    // Fetch the wards data for the selected zone
+    fetch(`${BASE_URL}/getWardsForZone?zone_no=${zoneNo}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("✅ Wards API Response:", data);  // Debugging: Log the wards data
 
-    // Populate the dropdown
-    wards.forEach(wardName => {
-        const wardElement = document.createElement('a');
-        wardElement.href = "#";
-        wardElement.innerHTML = wardName;
+            if (data && data.status && Array.isArray(data.data)) {
+                // Loop through the wards and create links
+                data.data.forEach(ward => {
+                    const wardElement = document.createElement('a');
+                    wardElement.href = "#";
+                    wardElement.innerHTML = `Ward ${ward.ward_no}`;  // Assuming the ward has 'ward_no' property
 
-        wardElement.onclick = function () {
-            const wardNo = wardName.split(" ")[1]; // Extract ward number dynamically
-            loadWardData(zoneName.split(" ")[1], wardNo, wardName); // Call the single function
-            getwardBoundary(wardNo);
-            return false;
-        };
+                    // When a ward is clicked, load its details
+                    wardElement.onclick = function () {
+                        const wardNo = ward.ward_no;  // Use 'ward_no' from the API
+                        loadWardData(zoneNo, wardNo, `Ward ${wardNo}`); 
+                        getwardBoundary(wardNo); // Fetch ward data
+                        return false;  // Prevent the default anchor link behavior
+                    };
 
-        wardsDropdown.appendChild(wardElement);
-    });
+                    wardsDropdown.appendChild(wardElement);
+                });
+            } else {
+                console.error("❌ No wards data found for the selected zone:", data);
+                wardsDropdown.innerHTML = "<p>No wards available for this zone.</p>";  // Show a fallback message if no wards are found
+            }
+        })
+        .catch(error => {
+            console.error("❌ Error fetching wards data:", error);
+            wardsDropdown.innerHTML = "<p>Error loading wards.</p>";  // Show a fallback message if the fetch fails
+        });
 }
+
 
 function loadWardData(zoneNo, wardNo, wardName) {
     fetch(`${BASE_URL}/getZoneWardData?zone_no=${zoneNo}&ward_no=${wardNo}`)
@@ -3548,7 +3210,7 @@ function Table_Row_and_Layer_highlight(data) {
                 <td>${item.ward_name}</td>
                 <td>${item.ownership}</td>
                 <td>${item.type}</td>
-                 <td>${item.category}</td>
+                <td>${item.category}</td>
                 <td>${item.road_name}</td>
                 <td>${item.row_meter}</td>
                 <td>${item.row_as_per}</td>
@@ -3698,7 +3360,7 @@ function Table_Row_and_Layer_highlight_Drain(data) {
      } else {
          console.error('Expected an array but received:', data);
      }
- }
+}
 
 // Function to append data to the table
 function appendToSummaryTablefilter(data) {
@@ -4093,132 +3755,132 @@ function KNN_Road_popup() {
 
 
 //--------------------Search bar code--------------------------//
-var currentLayer = null;
+// var currentLayer = null;
 
-$(document).ready(function () {
-    // Initialize Select2 on the dropdown
-    $('#roadNamesDropdown').select2({
-        placeholder: "Search by road name",
-        allowClear: true
-    });
+// $(document).ready(function () {
+//     // Initialize Select2 on the dropdown
+//     $('#roadNamesDropdown').select2({
+//         placeholder: "Search by road name",
+//         allowClear: true
+//     });
 
-    // Define your WFS parameters
-    var wfsParams = {
-        service: 'WFS',
-        version: '1.1.0',
-        outputFormat: 'application/json',
-        srsName: 'EPSG:4326', // Coordinate system of your data
-        typeName: 'KNN_Summary:kanpur_road_net',   // Replace with your WFS layer typename
-        url: `${GEOSERVER_BASE_URL}/wfs` // Replace with your WFS server URL
-    };
+//     // Define your WFS parameters
+//     var wfsParams = {
+//         service: 'WFS',
+//         version: '1.1.0',
+//         outputFormat: 'application/json',
+//         srsName: 'EPSG:4326', // Coordinate system of your data
+//         typeName: 'KNN_Summary:kanpur_road_net',   // Replace with your WFS layer typename
+//         url: `${GEOSERVER_BASE_URL}/wfs` // Replace with your WFS server URL
+//     };
 
-    // Create a vector source and layer
-    var vectorSource = new ol.source.Vector({
-        format: new ol.format.GeoJSON()
-    });
+//     // Create a vector source and layer
+//     var vectorSource = new ol.source.Vector({
+//         format: new ol.format.GeoJSON()
+//     });
 
-    var vectorLayer = new ol.layer.Vector({
-        source: vectorSource,
-        style: new ol.style.Style({
-            stroke: new ol.style.Stroke({
-                color: 'cyan', // Custom line color
-                width: 5 // Custom line width in pixels
-            })
-        })
-    });
-    map.addLayer(vectorLayer);
+//     var vectorLayer = new ol.layer.Vector({
+//         source: vectorSource,
+//         style: new ol.style.Style({
+//             stroke: new ol.style.Stroke({
+//                 color: 'cyan', // Custom line color
+//                 width: 5 // Custom line width in pixels
+//             })
+//         })
+//     });
+//     map.addLayer(vectorLayer);
 
-    // Define the URL for the WFS request
-    const url = `${GEOSERVER_BASE_URL}/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=KNN_Summary:kanpur_road_net&outputFormat=application/json`;
+//     // Define the URL for the WFS request
+//     const url = `${GEOSERVER_BASE_URL}/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=KNN_Summary:kanpur_road_net&outputFormat=application/json`;
 
-    // Create the XMLHttpRequest
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
+//     // Create the XMLHttpRequest
+//     let xhr = new XMLHttpRequest();
+//     xhr.open('GET', url, true);
+//     console.time("RoadNameFetch");
+//     xhr.onreadystatechange = function () {
+//         if (xhr.readyState === 4) {
+//             if (xhr.status === 200) {
+//                 // Parse the JSON response
+//                 let response = JSON.parse(xhr.responseText);
+//                 console.timeEnd("RoadNameFetch");
+//                 // Extract road_name properties from the features, filter out nulls
+//                 let roadNames = response.features
+//                     .map(feature => feature.properties.road_name)
+//                     .filter(roadName => roadName !== null && roadName !== '');
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                // Parse the JSON response
-                let response = JSON.parse(xhr.responseText);
+//                 populateDropdown(roadNames);
+//                 // Log the road names
+//                 console.log('Road Names:', roadNames);
+//             } else {
+//                 console.error('Error:', xhr.responseText);
+//             }
+//         }
+//     };
 
-                // Extract road_name properties from the features, filter out nulls
-                let roadNames = response.features
-                    .map(feature => feature.properties.road_name)
-                    .filter(roadName => roadName !== null && roadName !== '');
+//     // Send the request
+//     xhr.send();
 
-                populateDropdown(roadNames);
-                // Log the road names
-                console.log('Road Names:', roadNames);
-            } else {
-                console.error('Error:', xhr.responseText);
-            }
-        }
-    };
+//     function populateDropdown(roadNames) {
+//         let dropdown = $('#roadNamesDropdown');
 
-    // Send the request
-    xhr.send();
+//         // Clear existing options
+//         dropdown.empty();
 
-    function populateDropdown(roadNames) {
-        let dropdown = $('#roadNamesDropdown');
+//         // Create a default option
+//         let defaultOption = new Option('Search by Road Name', '', true, true);
+//         dropdown.append(defaultOption);
 
-        // Clear existing options
-        dropdown.empty();
+//         // Populate dropdown with road names
+//         roadNames.forEach(roadName => {
+//             let option = new Option(roadName, roadName, false, false);
+//             dropdown.append(option);
+//         });
 
-        // Create a default option
-        let defaultOption = new Option('Search by Road Name', '', true, true);
-        dropdown.append(defaultOption);
+//         // Refresh Select2
+//         dropdown.trigger('change');
+//     }
 
-        // Populate dropdown with road names
-        roadNames.forEach(roadName => {
-            let option = new Option(roadName, roadName, false, false);
-            dropdown.append(option);
-        });
+//     // Add an event listener to the dropdown
+//     $('#roadNamesDropdown').on('change', function () {
+//         let selectedRoadName = $(this).val();
+//         if (selectedRoadName) {
+//             fetchRoadData(selectedRoadName);
+//         }
+//     });
 
-        // Refresh Select2
-        dropdown.trigger('change');
-    }
+//     function fetchRoadData(roadName) {
+//         let fetchUrl = wfsParams.url + '?service=' + wfsParams.service +
+//             '&version=' + wfsParams.version +
+//             '&request=GetFeature&typename=' + wfsParams.typeName +
+//             '&outputFormat=' + wfsParams.outputFormat +
+//             '&srsname=' + wfsParams.srsName +
+//             '&CQL_FILTER=road_name=\'' + roadName + '\'';
 
-    // Add an event listener to the dropdown
-    $('#roadNamesDropdown').on('change', function () {
-        let selectedRoadName = $(this).val();
-        if (selectedRoadName) {
-            fetchRoadData(selectedRoadName);
-        }
-    });
+//         console.log(fetchUrl);
 
-    function fetchRoadData(roadName) {
-        let fetchUrl = wfsParams.url + '?service=' + wfsParams.service +
-            '&version=' + wfsParams.version +
-            '&request=GetFeature&typename=' + wfsParams.typeName +
-            '&outputFormat=' + wfsParams.outputFormat +
-            '&srsname=' + wfsParams.srsName +
-            '&CQL_FILTER=road_name=\'' + roadName + '\'';
+//         let fetchXhr = new XMLHttpRequest();
+//         fetchXhr.open('GET', fetchUrl, true);
 
-        console.log(fetchUrl);
+//         fetchXhr.onreadystatechange = function () {
+//             if (fetchXhr.readyState === 4) {
+//                 if (fetchXhr.status === 200) {
+//                     let response = JSON.parse(fetchXhr.responseText);
+//                     vectorSource.clear();
+//                     let features = new ol.format.GeoJSON().readFeatures(response);
+//                     vectorSource.addFeatures(features);
+//                     map.getView().fit(vectorSource.getExtent());
+//                      currentLayer = vectorLayer;  // ✅ Set the active layer
+//                     KNN_Road_popup();
+//                 } else {
+//                     console.log('Error:', fetchXhr.responseText);
+//                 }
+//             }
+//         };
+//         fetchXhr.send();
+//     }
+// });
 
-        let fetchXhr = new XMLHttpRequest();
-        fetchXhr.open('GET', fetchUrl, true);
-
-        fetchXhr.onreadystatechange = function () {
-            if (fetchXhr.readyState === 4) {
-                if (fetchXhr.status === 200) {
-                    let response = JSON.parse(fetchXhr.responseText);
-                    vectorSource.clear();
-                    let features = new ol.format.GeoJSON().readFeatures(response);
-                    vectorSource.addFeatures(features);
-                    map.getView().fit(vectorSource.getExtent());
-                     currentLayer = vectorLayer;  // ✅ Set the active layer
-                    KNN_Road_popup();
-                } else {
-                    console.log('Error:', fetchXhr.responseText);
-                }
-            }
-        };
-        fetchXhr.send();
-    }
-});
-
-//--------------------Search bar code end----------------------------//
+//-------------------------------------- Search bar code end ----------------------------//
 
 //------------------------------------------------------------ summary and road filter functions --------------------------------------------------------//
 function Kanpur_Zone_no(column, value) {
@@ -5148,7 +4810,6 @@ function Kanpur_Road_Length_Count() {
 
 }
 
-
 function Kanpur_Ownership(cqlFilter) {
     removeCurrentLayer(); clearVectorLayers();
     currentLayer = new ol.layer.Image({
@@ -5370,7 +5031,6 @@ document.getElementById('zoneSelect').addEventListener('change', (e) => {
     }
 });
 
-
 function updateMapLayer(zoneNo) {
     // Remove any existing layer 
     removeCurrentLayer();
@@ -5466,7 +5126,6 @@ function fetchWardsForZone(zone, dropdownId = 'wardSelect') {
             console.error('Error fetching wards:', error);
         });
 }
-
 
 function updateMapLayertype(type1) {
     // Remove any existing layer
@@ -6780,7 +6439,7 @@ function applyColorBasedOnSelection(filteredRoads) {
     // Apply color only to roads from filtered data
     features.forEach(feature => {
         const road = feature.getProperties();
-        let strokeColor = '#FF0000'; // Default
+        let strokeColor = '#0011ffff'; // Default
 
         // Color based on actual data presence
         if ((document.getElementById('poor1').checked || document.getElementById('poor2').checked || document.getElementById('poor4').checked) && road.condition === 'Poor') {
@@ -6821,8 +6480,11 @@ document.addEventListener("DOMContentLoaded", function() {
 // Event listener for zone dropdown change
 document.getElementById('select-zone').addEventListener('change', (e) => {
     const selectedZoneNo2 = e.target.value;
+   const zoneNo = e.target.value;    // ✔ always exists
 
-    if (selectedZoneNo2) { 
+   
+    if (selectedZoneNo2 || zoneNo) { 
+        getZoneBoundary(zoneNo);
        fetchWardsForZone(selectedZoneNo2, 'select-ward');
         updateMapLayer(selectedZoneNo2);
     }
@@ -6958,7 +6620,7 @@ function fetchRoadsGreaterThan5() {
 
 function fetchRoadsBetween1And5() {
     const mainRoadOnly = document.getElementById('mainRoad1').checked || document.getElementById('mainRoad2').checked;
-
+    
     // Get selected zone number from dropdown
     let selectedZoneNo2 = document.getElementById('select-zone')?.value;
     if (!selectedZoneNo2) {
@@ -6971,9 +6633,10 @@ function fetchRoadsBetween1And5() {
         alert("Please select a ward before fetching roads.");
         return;
     }
+
     // Construct API URL with zoneNo parameter
     let apiUrl = `${BASE_URL}/filter-roads-between-1-and-5?mainRoadOnly=${mainRoadOnly}&zoneNo=${selectedZoneNo2}`;
-
+    
        if (selectedWard2) {
         apiUrl += `&wardNo=${selectedWard2}`;  // Add wardNo to the API URL if ward is selected
     }
@@ -7296,3 +6959,295 @@ function showSelectedRoadsLayer() {
     document.getElementById('downloadRoadsBtn').style.display = 'block';
     document.getElementById('downloadLabel').style.display = 'block';
 }
+
+
+
+
+
+
+
+
+
+//var currentLayer = null;
+//var searchTimeout = null;  // For debouncing
+
+// $(document).ready(function () {
+//     // Initialize Select2 on the dropdown
+//     $('#roadNamesDropdown').select2({
+//         placeholder: "Search by road name",
+//         allowClear: true,
+//         minimumInputLength: 2,  // Start searching after typing 2 characters
+//     });
+
+//     // Define your WFS parameters
+//     var wfsParams = {
+//         service: 'WFS',
+//         version: '1.1.0',
+//         outputFormat: 'application/json',
+//         srsName: 'EPSG:4326', // Coordinate system of your data
+//         typeName: 'KNN_Summary:kanpur_road_net',   // Replace with your WFS layer typename
+//         url: `${GEOSERVER_BASE_URL}/wfs` // Replace with your WFS server URL
+//     };
+
+//     // Create a vector source and layer
+//     var vectorSource = new ol.source.Vector({
+//         format: new ol.format.GeoJSON()
+//     });
+
+//     var vectorLayer = new ol.layer.Vector({
+//         source: vectorSource,
+//         style: new ol.style.Style({
+//             stroke: new ol.style.Stroke({
+//                 color: 'cyan', // Custom line color
+//                 width: 5 // Custom line width in pixels
+//             })
+//         })
+//     });
+//     map.addLayer(vectorLayer);
+
+//     // Add an event listener to the dropdown
+//     $('#roadNamesDropdown').on('change', function () {
+//         let selectedRoadName = $(this).val();
+//         if (selectedRoadName) {
+//             fetchRoadData(selectedRoadName);
+//         }
+//     });
+
+//     // Debounced input handling
+//     $('#roadNamesDropdown').on('select2:open', function () {
+//         let dropdown = $('#roadNamesDropdown');
+//         dropdown.on('select2:select', function (e) {
+//             let selectedRoadName = e.params.data.text;
+//             fetchRoadData(selectedRoadName);
+//         });
+//     });
+
+//     $('#roadNamesDropdown').on('select2:search', function (e) {
+//         let searchQuery = e.target.value;
+//         if (searchTimeout) clearTimeout(searchTimeout);
+//         searchTimeout = setTimeout(function () {
+//             fetchRoadNames(searchQuery);  // Fetch matching road names
+//         }, 300);  // Delay the fetch by 300ms after typing stops
+//     });
+
+//     // Function to fetch road names that match the search query
+//     function fetchRoadNames(query) {
+//         const url = `${GEOSERVER_BASE_URL}/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=KNN_Summary:kanpur_road_net&outputFormat=application/json&CQL_FILTER=road_name LIKE '%${query}%'`;
+
+//         let xhr = new XMLHttpRequest();
+//         xhr.open('GET', url, true);
+//         xhr.onreadystatechange = function () {
+//             if (xhr.readyState === 4) {
+//                 if (xhr.status === 200) {
+//                     let response = JSON.parse(xhr.responseText);
+//                     let roadNames = response.features
+//                         .map(feature => feature.properties.road_name)
+//                         .filter(roadName => roadName !== null && roadName !== '');
+
+//                     populateDropdown(roadNames);
+//                 } else {
+//                     console.error('Error:', xhr.responseText);
+//                 }
+//             }
+//         };
+//         xhr.send();
+//     }
+
+//     // Function to populate the dropdown with road names
+//     function populateDropdown(roadNames) {
+//         let dropdown = $('#roadNamesDropdown');
+
+//         // Clear existing options
+//         dropdown.empty();
+
+//         // Create a default option
+//         let defaultOption = new Option('Search by Road Name', '', true, true);
+//         dropdown.append(defaultOption);
+
+//         // Populate dropdown with road names
+//         roadNames.forEach(roadName => {
+//             let option = new Option(roadName, roadName, false, false);
+//             dropdown.append(option);
+//         });
+
+//         // Refresh Select2 dropdown
+//         dropdown.trigger('change');
+//     }
+
+//     // Function to fetch data of the selected road name
+//     function fetchRoadData(roadName) {
+//         let fetchUrl = wfsParams.url + '?service=' + wfsParams.service +
+//             '&version=' + wfsParams.version +
+//             '&request=GetFeature&typename=' + wfsParams.typeName +
+//             '&outputFormat=' + wfsParams.outputFormat +
+//             '&srsname=' + wfsParams.srsName +
+//             '&CQL_FILTER=road_name=\'' + roadName + '\'';
+
+//         let fetchXhr = new XMLHttpRequest();
+//         fetchXhr.open('GET', fetchUrl, true);
+
+//         fetchXhr.onreadystatechange = function () {
+//             if (fetchXhr.readyState === 4) {
+//                 if (fetchXhr.status === 200) {
+//                     let response = JSON.parse(fetchXhr.responseText);
+//                     vectorSource.clear();
+//                     let features = new ol.format.GeoJSON().readFeatures(response);
+//                     vectorSource.addFeatures(features);
+//                     map.getView().fit(vectorSource.getExtent());
+//                     currentLayer = vectorLayer;  // ✅ Set the active layer
+//                     KNN_Road_popup();
+//                 } else {
+//                     console.log('Error:', fetchXhr.responseText);
+//                 }
+//             }
+//         };
+//         fetchXhr.send();
+//     }
+// });
+
+
+var currentLayer = null;
+
+$(document).ready(function () {
+    // Initialize Select2 with AJAX support for searching road names dynamically
+    $('#roadNamesDropdown').select2({
+        placeholder: "Search by road name",
+        allowClear: true,
+        minimumInputLength: 2,  // Start searching after typing 2 characters
+        ajax: {
+            url: function (params) {
+                // The search term typed by the user
+                let query = params.term || '';
+
+                // Define the limit and the current page based on Select2 parameters
+                let page = params.page || 1;
+
+                // Construct the URL with the search term, page, and limit
+                let url = `${GEOSERVER_BASE_URL}/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=KNN_Summary:kanpur_road_net&outputFormat=application/json&CQL_FILTER=road_name LIKE '%${query}%'&startIndex=${(page - 1) * 10}&maxFeatures=10`;
+
+                // Log the URL and CQL_FILTER for debugging
+                console.log("Fetching road names from URL: " + url);
+
+                return url;
+            },
+            dataType: 'json',
+            processResults: function (data, params) {
+                // Log the data received from the WFS server for debugging
+                console.log("Data received from server:", data);
+
+                if (data.features.length === 0) {
+                    console.log("No features found for query:", params.term);
+                }
+
+                // Parse the response and map it to the expected format for Select2
+                let roadNames = data.features.map(function (feature) {
+                    return {
+                        id: feature.properties.road_name,  // ID of the option (can be any unique identifier)
+                        text: feature.properties.road_name  // Display text in the dropdown
+                    };
+                });
+
+                // Return the results with pagination info
+                return {
+                    results: roadNames,
+                    pagination: {
+                        more: data.features.length === 10  // If we get exactly 10 items, there might be more
+                    }
+                };
+            },
+            cache: true  // Enable caching for better performance on repeated searches
+        }
+    });
+
+    // Event listener when a road name is selected from the dropdown
+    $('#roadNamesDropdown').on('change', function () {
+        let selectedRoadName = $(this).val();
+        if (selectedRoadName) {
+            fetchRoadData(selectedRoadName);  // Fetch data for the selected road name
+        }
+    });
+
+    // Function to fetch detailed road data based on the selected road name
+    function fetchRoadData(roadName) {
+        let fetchUrl = `${GEOSERVER_BASE_URL}/wfs?service=WFS&version=1.1.0&request=GetFeature&typeName=KNN_Summary:kanpur_road_net&outputFormat=application/json&CQL_FILTER=road_name='${roadName}'`;
+
+        let fetchXhr = new XMLHttpRequest();
+        fetchXhr.open('GET', fetchUrl, true);
+
+        fetchXhr.onreadystatechange = function () {
+            if (fetchXhr.readyState === 4) {
+                if (fetchXhr.status === 200) {
+                    let response = JSON.parse(fetchXhr.responseText);
+                    vectorSource.clear();  // Clear the existing features on the map
+                    let features = new ol.format.GeoJSON().readFeatures(response);  // Parse the features
+                    vectorSource.addFeatures(features);  // Add new features to the vector layer
+                    map.getView().fit(vectorSource.getExtent());  // Adjust the map view to fit the new features
+                    currentLayer = vectorLayer;  // Set the active layer
+                    KNN_Road_popup();  // Show a popup or additional info if necessary
+                } else {
+                    console.log('Error:', fetchXhr.responseText);  // Log any errors from the server
+                }
+            }
+        };
+        fetchXhr.send();  // Send the request to fetch the road data
+    }
+
+    // Function to populate the dropdown with road names dynamically
+    function populateDropdown(roadNames) {
+        let dropdown = $('#roadNamesDropdown');
+
+        // Clear any existing options in the dropdown
+        dropdown.empty();
+
+        // Create a default placeholder option for the dropdown
+        let defaultOption = new Option('Search by Road Name', '', true, true);
+        dropdown.append(defaultOption);
+
+        // Loop through the road names and add each to the dropdown
+        roadNames.forEach(function (roadName) {
+            let option = new Option(roadName, roadName, false, false);
+            dropdown.append(option);
+        });
+
+        // Trigger a change event to refresh the Select2 dropdown
+        dropdown.trigger('change');
+    }
+
+    // Add an event listener to handle search term change in the Select2 input
+    $('#roadNamesDropdown').on('select2:search', function (e) {
+        let searchQuery = e.target.value;
+
+        // Only fetch road names if the user has entered at least 2 characters
+        if (searchQuery.length >= 2) {
+            fetchRoadNames(searchQuery);  // Fetch road names matching the search term
+        }
+    });
+
+    // Function to fetch road names based on the search query (AJAX)
+    function fetchRoadNames(query) {
+        const url = `${GEOSERVER_BASE_URL}/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=KNN_Summary:kanpur_road_net&outputFormat=application/json&CQL_FILTER=road_name LIKE '%${query}%'`;
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    let response = JSON.parse(xhr.responseText);
+                    let roadNames = response.features
+                        .map(function (feature) {
+                            return feature.properties.road_name;
+                        })
+                        .filter(function (roadName) {
+                            return roadName !== null && roadName !== '';  // Filter out null or empty names
+                        });
+
+                    // Populate the dropdown with the fetched road names
+                    populateDropdown(roadNames);
+                } else {
+                    console.error('Error:', xhr.responseText);  // Log any error from the request
+                }
+            }
+        };
+        xhr.send();  // Send the request to fetch road names
+    }
+});

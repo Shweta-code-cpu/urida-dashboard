@@ -27,6 +27,13 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" integrity="sha384-d3UHjPdzJkZuk5H3qKYMLRyWLAQBJbby2yr2Q58hXXtAGF8RSNO9jpLDlKKPv5v3" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
 
+			<!-- 1️⃣ jsPDF CORE (UMD build) -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+			<!-- 2️⃣ jsPDF AutoTable plugin -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+
 
     <link rel="shortcut icon" type="image/x-icon" class="fabicon" href="../assets/icons/logo_tree.png" />
 
@@ -53,6 +60,11 @@
             <a href="#" id="popup-closer" class="ol-popup-closer"></a>
             <div id="popup-content-search"></div>
         </div> -->
+		
+		<button class="back-icon" title="Back">
+						    <i class="fa fa-arrow-circle-left"></i>
+						</button>
+
 
     </div>
     <!---------------------- header section end -------------------------->
@@ -233,40 +245,51 @@
     <!---------------------- main-container section start -------------------------->
     <div class="main-container">
         <!---------------------- map section start ------------------>
-        <div id="map">
+          <div id="map">
             <div class="map-icons-left">
-                <button class="map-icon" id="View_point" title="Street View" onclick="street_view()">
-                    <i class="fas fa-street-view"></i></button>
-                        <!-- <h6 class="h6">Street View</h6> -->
-                   
+                <button class="map-icon" id="View_point" title="Street View" onclick="showSelectedRoadsLayer1()"><i
+                                class="fas fa-street-view"></i></button>
+                       <!--  <h6 class="h6">Street View</h6> -->
+               
+
                 <button class="map-icon" title="Data Analysis" onclick="data_analysis()">
                     <i class="fas fa-chart-simple"></i></a></button>
-                        
-                <button class="map-icon" id="road_btn" title="Zone wise Road" onclick="road_filter()">
-                    <i class="fas fa-road"></i></button>
-                        
-                <button class="map-icon" title="Decision Support System " onclick="re_direct()">
-                    <i class="fa-solid fa-chart-area"></i></button>
-                      
-                <!-- <button class="map-icon" title="Drain" onclick="drain_filter()"><i class="fa-solid fa-worm"></i></button><h6 class="h6">Drain Filter</h6> -->
+              <!--   <h6 class="h6">Data Analysis</h6>  -->
+
+                <button class="map-icon" id="road_btn" title="Zone wise Road" onclick="road_filter()"><i
+                        class="fas fa-road"></i></button>
+              <!--   <h6 class="h6">Road Filter</h6> -->
+
+
+                <button class="map-icon" title="Decision Support System " onclick="showSelectedRoadsLayer1()"><i
+                        class="fa-solid fa-chart-area"></i></i></button>
+             <!--    <h6 class="h6">DSS Road</h6>  -->
+
+			 <button class="map-icon" id="showBoxBtn" title="Road Selection" onclick="showSelectedRoadsLayer1()"><i
+				         class="fa-solid fa-worm"></i></button>
+
+               
+               
             </div>
+
             <div class="map-icons">
                 <button class="map-icon" id="search-icon" title="Search"><i class="fas fa-search"></i></button>
-                        
-                <!-- <button class="map-icon" id="measure-icon" onclick="measure_tab()" title="Measure Tool"><i class="fas fa-ruler"></i></button> -->
-                <!-- <button class="map-icon" id="basemap-icon" title="Toggle Basemap"><i class="fas fa-map"></i></button> -->
+                <!-- <h6 class="h6"> Search </h6>  -->
+               
+                <button class="map-icon" id="table_icon" title="Summary Data" onclick="summary_table()"><i
+                        class="fas fa-table "></i></button>
+              <!--   <h6 class="h6"> Summary </h6>  -->
 
-                <button class="map-icon" id="table_icon" title="Summary Data" onclick="summary_table()">
-                    <i class="fas fa-table "></i></button>
-
-                <button class="map-icon" id="query_btn" onclick="query_panel1()" title="Query Panel">
-                    <i class="fas fa-window-maximize"></i></button>
-                        
-                <button class="map-icon" title="Get Info"><i class="fas fa-circle-info"></i></button> 
+                <button class="map-icon" id="query_btn" onclick="query_panel1()" title="Query Panel"><i
+                        class="fas fa-window-maximize"></i></button>
+              <!--   <h6 class="h6"> Query </h6>  -->
+			  
+			  <button class="map-icon" id="information-icon" title="Information" onclick="showSelectedRoadsLayer1()"><i
+			            class="fa fa-info"></i></button>
 
                 <button class="map-icon" id="clear-icon" title="Clear" onclick="delete_layers()"><i
-                                class="fa fa-trash"></i></button>
-                        
+                        class="fa fa-trash"></i></button>
+             <!--    <h6 class="h6">Clear</h6>  -->
             </div>
         </div>
         <!-------------------- map section end -------------------->
@@ -385,7 +408,9 @@
                                         onclick="Varanasi_Material_cat('material','CC'); updateNavBarWithFunctionName('Road Material : CC');">CC</a></li>
                                 <li id="Interlocking"><a class="dropdown-item"
                                         onclick="Varanasi_Material_cat('material','Interlocking'); updateNavBarWithFunctionName('Road Material : Interlocking');">Interlocking</a></li>
-                                <li id="Kachcha"><a class="dropdown-item"
+								<li id="Chauka Patthar"><a class="dropdown-item"
+										onclick="Varanasi_Material_cat('material','Chauka Patthar'); updateNavBarWithFunctionName('Road Material : Chauka Patthar');">Chauka Patthar</a></li>
+								<li id="Kachcha"><a class="dropdown-item"
                                         onclick="Varanasi_Material_cat('material','Kachcha'); updateNavBarWithFunctionName('Road Material : Kachcha');">Kachcha</a></li>
                                 <li id="NA"><a class="dropdown-item"
                                             onclick="Varanasi_Material_cat('material','NA'); updateNavBarWithFunctionName('Road Material : Not Define');">NA</a></li>
@@ -446,7 +471,7 @@
                     <ul class="dropdown-menu">
                        <li>
                             <a class="dropdown" id="Ward">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
+                            <ul class="dropdown-menu dropdown-submenu ward-list">
                                 <li id="Ward15"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','15'); updateNavBarWithFunctionName('Ward 15 Road ');"> Ward 15 </a></li>
                                 <li id="Ward36"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','36'); updateNavBarWithFunctionName('Ward 36 Road ');"> Ward 36</a></li>
                                 <li id="Ward60"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','60'); updateNavBarWithFunctionName('Ward 60 Road ');"> Ward 60 </a></li>
@@ -491,20 +516,29 @@
                             <a class="dropdown" id="CivilLine_material"
                                 onclick="Varanasi_Material_cat('zone_no','1'); updateNavBarWithFunctionName('Zone 1 Material wise Road ');">Road
                                 Material &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
-                                <li id="CivilLine_material_bitumen"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('1','material','Bitumen'); updateNavBarWithFunctionName('Zone 1 Road Material : Bitumen');">Bitumen</a></li>
-                                <li id="CivilLine_material_BOE"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('1','material','BOE'); updateNavBarWithFunctionName('Zone 1 Road Material : BOE');">BOE</a></li>
-                                <li id="CivilLine_material_CC"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('1','material','CC'); updateNavBarWithFunctionName('Zone 1 Road Material : CC');">CC</a></li>
-                                <li id="CivilLine_material_interlocking"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('1','material','Interlocking'); updateNavBarWithFunctionName('Zone 1 Road Material : Interlocking');">Interlocking</a></li>
-                                <li id="CivilLine_material_kachcha"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('1','material','Kachcha'); updateNavBarWithFunctionName('Zone 1 Road Material : Kachcha');">Kachcha</a></li>
-                                <li id="CivilLine_material_NA"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('1','material','NA'); updateNavBarWithFunctionName('Zone 1 Road Material : NA');">NA</a></li>
-                            </ul>
+							<ul class="dropdown-menu dropdown-submenu">
+								<li id="CivilLine_material_bitumen"><a class="dropdown-item"
+										onclick="Varanasi_Zone_Material('1','material','Bitumen'); updateNavBarWithFunctionName('Zone 1 Road Material : Bitumen');">Bitumen</a>
+								</li>
+								<li id="CivilLine_material_BOE"><a class="dropdown-item"
+										onclick="Varanasi_Zone_Material('1','material','BOE'); updateNavBarWithFunctionName('Zone 1 Road Material : BOE');">BOE</a>
+								</li>
+								<li id="CivilLine_material_CC"><a class="dropdown-item"
+										onclick="Varanasi_Zone_Material('1','material','CC'); updateNavBarWithFunctionName('Zone 1 Road Material : CC');">CC</a>
+								</li>
+								<li id="CivilLine_material_interlocking"><a class="dropdown-item"
+										onclick="Varanasi_Zone_Material('1','material','Interlocking'); updateNavBarWithFunctionName('Zone 1 Road Material : Interlocking');">Interlocking</a>
+								</li>
+								<li id="Chauka Patthar"><a class="dropdown-item"
+										onclick="Varanasi_Zone_Material('1','material','Chauka Patthar'); updateNavBarWithFunctionName('Zone 1 Road Material : Chauka Patthar');">Chauka
+										Patthar</a></li>
+								<li id="CivilLine_material_kachcha"><a class="dropdown-item"
+										onclick="Varanasi_Zone_Material('1','material','Kachcha'); updateNavBarWithFunctionName('Zone 1 Road Material : Kachcha');">Kachcha</a>
+								</li>
+								<li id="CivilLine_material_NA"><a class="dropdown-item"
+										onclick="Varanasi_Zone_Material('1','material','NA'); updateNavBarWithFunctionName('Zone 1 Road Material : NA');">NA</a>
+								</li>
+							</ul>
                         </li>
                         <li>
                             <a class="dropdown" id="CivilLine_ownership"
@@ -585,17 +619,26 @@
                                 Material &raquo;</a>
                             <ul class="dropdown-menu dropdown-submenu">
                                 <li id="Zone2_material_bitumen"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('2','material','Bitumen'); updateNavBarWithFunctionName('Zone 2 Road Material : Bitumen');">Bitumen</a></li>
+                                        onclick="Varanasi_Zone_Material('2','material','Bitumen'); updateNavBarWithFunctionName('Zone 2 Road Material : Bitumen');">Bitumen</a>
+                                </li>
                                 <li id="Zone2_material_BOE"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('2','material','BOE'); updateNavBarWithFunctionName('Zone 2 Road Material : BOE');">BOE</a></li>
+                                        onclick="Varanasi_Zone_Material('2','material','BOE'); updateNavBarWithFunctionName('Zone 2 Road Material : BOE');">BOE</a>
+                                </li>
                                 <li id="Zone2_material_CC"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('2','material','CC'); updateNavBarWithFunctionName('Zone 2 Road Material : CC');">CC</a></li>
+                                        onclick="Varanasi_Zone_Material('2','material','CC'); updateNavBarWithFunctionName('Zone 2 Road Material : CC');">CC</a>
+                                </li>
                                 <li id="Zone2_material_interlocking"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('2','material','Interlocking'); updateNavBarWithFunctionName('Zone 2 Road Material : Interlocking');">Interlocking</a></li>
+                                        onclick="Varanasi_Zone_Material('2','material','Interlocking'); updateNavBarWithFunctionName('Zone 2 Road Material : Interlocking');">Interlocking</a>
+                                </li>
+                                <li id="Chauka Patthar"><a class="dropdown-item"
+                                        onclick="Varanasi_Zone_Material('2','material','Chauka Patthar'); updateNavBarWithFunctionName('Zone 2 Road Material : Chauka Patthar');">Chauka
+                                        Patthar</a></li>
                                 <li id="Zone2_material_kachcha"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('2','material','Kachcha'); updateNavBarWithFunctionName('Zone 2 Road Material : Kachcha');">Kachcha</a></li>
+                                        onclick="Varanasi_Zone_Material('2','material','Kachcha'); updateNavBarWithFunctionName('Zone 2 Road Material : Kachcha');">Kachcha</a>
+                                </li>
                                 <li id="Zone2_material_kachcha"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('2','material','NA'); updateNavBarWithFunctionName('Zone 2 Road Material : NA');">NA</a></li>
+                                        onclick="Varanasi_Zone_Material('2','material','NA'); updateNavBarWithFunctionName('Zone 2 Road Material : NA');">NA</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -640,7 +683,7 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
+                            <ul class="dropdown-menu dropdown-submenu ward-list">
                                 <li id="Ward22"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','22'); updateNavBarWithFunctionName('Ward 22 Road ');"> Ward 22 </a></li>
                                 <li id="Ward23"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','23'); updateNavBarWithFunctionName('Ward 23 Road ');"> Ward 23 </a></li>
                                 <li id="Ward25"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','25'); updateNavBarWithFunctionName('Ward 25 Road ');"> Ward 25 </a></li>
@@ -694,17 +737,26 @@
                                 onclick="Varanasi_Material_cat('zone_no','3'); updateNavBarWithFunctionName('Zone 3 Material wise Road ');">Road Material &raquo;</a>
                             <ul class="dropdown-menu dropdown-submenu">
                                 <li id="Zone3_material_bitumen"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('3','material','Bitumen'); updateNavBarWithFunctionName('Zone 3 Road Material : Bitumen ');">Bitumen</a></li>
+                                        onclick="Varanasi_Zone_Material('3','material','Bitumen'); updateNavBarWithFunctionName('Zone 3 Road Material : Bitumen ');">Bitumen</a>
+                                </li>
                                 <li id="Zone3_material_BOE"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('3','material','BOE'); updateNavBarWithFunctionName('Zone 3 Road Material : BOE ');">BOE</a></li>
+                                        onclick="Varanasi_Zone_Material('3','material','BOE'); updateNavBarWithFunctionName('Zone 3 Road Material : BOE ');">BOE</a>
+                                </li>
                                 <li id="Zone3_material_CC"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('3','material','CC'); updateNavBarWithFunctionName('Zone 3 Road Material : CC ');">CC</a></li>
+                                        onclick="Varanasi_Zone_Material('3','material','CC'); updateNavBarWithFunctionName('Zone 3 Road Material : CC ');">CC</a>
+                                </li>
                                 <li id="Zone3_material_interlocking"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('3','material','Interlocking'); updateNavBarWithFunctionName('Zone 3 Road Material : Interlocking ');">Interlocking</a></li>
+                                        onclick="Varanasi_Zone_Material('3','material','Interlocking'); updateNavBarWithFunctionName('Zone 3 Road Material : Interlocking ');">Interlocking</a>
+                                </li>
+                                <li id="Chauka Patthar"><a class="dropdown-item"
+                                        onclick="Varanasi_Zone_Material('3','material','Chauka Patthar'); updateNavBarWithFunctionName('Zone 3 Road Material : Chauka Patthar');">Chauka
+                                        Patthar</a></li>
                                 <li id="Zone3_material_kachcha"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('3','material','Kachcha'); updateNavBarWithFunctionName('Zone 3 Road Material : Kachcha ');">Kachcha</a></li>
+                                        onclick="Varanasi_Zone_Material('3','material','Kachcha'); updateNavBarWithFunctionName('Zone 3 Road Material : Kachcha ');">Kachcha</a>
+                                </li>
                                 <li id="Zone3_material_NA"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('3','material','NA'); updateNavBarWithFunctionName('Zone 3 Road Material : NA ');">NA</a></li>
+                                        onclick="Varanasi_Zone_Material('3','material','NA'); updateNavBarWithFunctionName('Zone 3 Road Material : NA ');">NA</a>
+                                </li>
                             </ul>
                         </li> 
                         <li>
@@ -749,7 +801,7 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
+                            <ul class="dropdown-menu dropdown-submenu ward-list">
                                 <li id="Ward2"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','2'); updateNavBarWithFunctionName('Ward 2 Road ');"> Ward 2 </a></li>
                                 <li id="Ward3"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','3'); updateNavBarWithFunctionName('Ward 3 Road ');"> Ward 3 </a></li>
                                 <li id="Ward9"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','9'); updateNavBarWithFunctionName('Ward 9 Road ');"> Ward 9 </a></li>
@@ -800,17 +852,26 @@
                                 onclick="Varanasi_Material_cat('zone_no','4'); updateNavBarWithFunctionName('Zone 4 Material wise Road ');">Road Material &raquo;</a>
                             <ul class="dropdown-menu dropdown-submenu">
                                 <li id="Zone4_material_bitumen"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('4','material','Bitumen'); updateNavBarWithFunctionName('Zone 4 Road Material : Bitumen ');">Bitumen</a></li>
+                                        onclick="Varanasi_Zone_Material('4','material','Bitumen'); updateNavBarWithFunctionName('Zone 4 Road Material : Bitumen ');">Bitumen</a>
+                                </li>
                                 <li id="Zone4_material_BOE"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('4','material','BOE'); updateNavBarWithFunctionName('Zone 4 Road Material : BOE ');">BOE</a></li>
+                                        onclick="Varanasi_Zone_Material('4','material','BOE'); updateNavBarWithFunctionName('Zone 4 Road Material : BOE ');">BOE</a>
+                                </li>
                                 <li id="Zone4_material_CC"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('4','material','CC'); updateNavBarWithFunctionName('Zone 4 Road Material : CC ');">CC</a></li>
+                                        onclick="Varanasi_Zone_Material('4','material','CC'); updateNavBarWithFunctionName('Zone 4 Road Material : CC ');">CC</a>
+                                </li>
                                 <li id="Zone4_material_interlocking"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('4','material','Interlocking'); updateNavBarWithFunctionName('Zone 4 Road Material : Interlocking ');">Interlocking</a></li>
+                                        onclick="Varanasi_Zone_Material('4','material','Interlocking'); updateNavBarWithFunctionName('Zone 4 Road Material : Interlocking ');">Interlocking</a>
+                                </li>
+                                <li id="Chauka Patthar"><a class="dropdown-item"
+                                        onclick="Varanasi_Zone_Material('4','material','Chauka Patthar'); updateNavBarWithFunctionName('Zone 4 Road Material : Chauka Patthar');">Chauka
+                                        Patthar</a></li>
                                 <li id="Zone4_material_kachcha"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('4','material','Kachcha'); updateNavBarWithFunctionName('Zone 4 Road Material : Kachcha ');">Kachcha</a></li>
+                                        onclick="Varanasi_Zone_Material('4','material','Kachcha'); updateNavBarWithFunctionName('Zone 4 Road Material : Kachcha ');">Kachcha</a>
+                                </li>
                                 <li id="Zone4_material_NA"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('4','material','NA'); updateNavBarWithFunctionName('Zone 4 Road Material : NA ');">NA</a></li>
+                                        onclick="Varanasi_Zone_Material('4','material','NA'); updateNavBarWithFunctionName('Zone 4 Road Material : NA ');">NA</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -858,7 +919,7 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
+                            <ul class="dropdown-menu dropdown-submenu ward-list">
                                 <li id="Ward4"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','1'); updateNavBarWithFunctionName('Ward 1 Road ');"> Ward 1 </a></li>
                                 <li id="Ward6"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','4'); updateNavBarWithFunctionName('Ward 4 Road ');"> Ward 4 </a></li>
                                 <li id="Ward19"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','8'); updateNavBarWithFunctionName('Ward 8 Road ');"> Ward 8 </a></li>
@@ -909,17 +970,26 @@
                                 onclick="Varanasi_Material_cat('zone_no','5'); updateNavBarWithFunctionName('Zone 5 Material wise Road');">Road Material &raquo;</a>
                             <ul class="dropdown-menu dropdown-submenu">
                                 <li id="Zone5_material_bitumen"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('5','material','Bitumen'); updateNavBarWithFunctionName('Zone 5 Road Material : Bitumen ');">Bitumen</a></li>
+                                        onclick="Varanasi_Zone_Material('5','material','Bitumen'); updateNavBarWithFunctionName('Zone 5 Road Material : Bitumen ');">Bitumen</a>
+                                </li>
                                 <li id="Zone5_material_BOE"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('5','material','BOE'); updateNavBarWithFunctionName('Zone 5 Road Material : BOE ');">BOE</a></li>
+                                        onclick="Varanasi_Zone_Material('5','material','BOE'); updateNavBarWithFunctionName('Zone 5 Road Material : BOE ');">BOE</a>
+                                </li>
                                 <li id="Zone5_material_CC"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('5','material','CC'); updateNavBarWithFunctionName('Zone 5 Road Material : CC ');">CC</a></li>
+                                        onclick="Varanasi_Zone_Material('5','material','CC'); updateNavBarWithFunctionName('Zone 5 Road Material : CC ');">CC</a>
+                                </li>
                                 <li id="Zone5_material_interlocking"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('5','material','Interlocking'); updateNavBarWithFunctionName('Zone 5 Road Material : Interlocking ');">Interlocking</a></li>
+                                        onclick="Varanasi_Zone_Material('5','material','Interlocking'); updateNavBarWithFunctionName('Zone 5 Road Material : Interlocking ');">Interlocking</a>
+                                </li>
+                                <li id="Chauka Patthar"><a class="dropdown-item"
+                                        onclick="Varanasi_Zone_Material('5','material','Chauka Patthar'); updateNavBarWithFunctionName('Zone 5 Road Material : Chauka Patthar');">Chauka
+                                        Patthar</a></li>
                                 <li id="Zone5_material_kachcha"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('5','material','Kachcha'); updateNavBarWithFunctionName('Zone 5 Road Material : Kachcha ');">Kachcha</a></li>
+                                        onclick="Varanasi_Zone_Material('5','material','Kachcha'); updateNavBarWithFunctionName('Zone 5 Road Material : Kachcha ');">Kachcha</a>
+                                </li>
                                 <li id="Zone5_material_NA"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('5','material','NA'); updateNavBarWithFunctionName('Zone 5 Road Material : NA ');">NA</a></li>
+                                        onclick="Varanasi_Zone_Material('5','material','NA'); updateNavBarWithFunctionName('Zone 5 Road Material : NA ');">NA</a>
+                                </li>
                             </ul>
                         </li>
                         <li> 
@@ -944,7 +1014,7 @@
                         <li>
                             <a class="dropdown" id="CUS"
                                 onclick="Varanasi_CUS_cat('zone_no','5'); updateNavBarWithFunctionName('Zone5 Road CUS');">Road CUS &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
+                            <ul class="dropdown-menu dropdown-submenu ward-list">
                                 <li id="14th Finance"><a class="dropdown-item"
                                         onclick="Varanasi_Zone_CUS('5','cus_class','14th Finance'); updateNavBarWithFunctionName('Zone 5 Road CUS : 14th Finance');">14th Finance</a></li>
                                 <li id="15th_Finance"><a class="dropdown-item"
@@ -968,7 +1038,7 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
+                            <ul class="dropdown-menu dropdown-submenu ward-list">
                                 <li id="Ward5"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','5'); updateNavBarWithFunctionName('Ward 5 Road ');"> Ward 5 </a></li>
                                 <li id="Ward8"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','8'); updateNavBarWithFunctionName('Ward 8 Road ');"> Ward 8 </a></li>
                                 <li id="Ward11"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','11'); updateNavBarWithFunctionName('Ward 11 Road ');"> Ward 11 </a></li>
@@ -985,9 +1055,10 @@
                                 <li id="Ward59"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','59'); updateNavBarWithFunctionName('Ward 59 Road ');"> Ward 59 </a></li>
                             </ul>
                         </li>
-                        <li>
+                         <li>
                             <a class="dropdown" id="AyodhayaDham_type"
-                                onclick="Varanasi_TypeSub_cat('zone_no','6'); updateNavBarWithFunctionName('Zone 6 Category wise Road  ');">Road Category &raquo;</a>
+                                onclick="Varanasi_TypeSub_cat('zone_no','6'); updateNavBarWithFunctionName('Zone 6 Category wise Road  ');">Road
+                                Category &raquo;</a>
                             <ul class="dropdown-menu dropdown-submenu">
                                 <!-- <li id="Zone6_type_major"><a class="dropdown-item"
                                         onclick="Varanasi_Zone_TypeSub('6','category','Local Street'); updateNavBarWithFunctionName('Zone 6 Road Category : Local Street');">Local Street</a></li>
@@ -1020,17 +1091,26 @@
                                 onclick="Varanasi_Material_cat('zone_no','6'); updateNavBarWithFunctionName('Zone 6 Material wise Road ');">Road Material &raquo;</a>
                             <ul class="dropdown-menu dropdown-submenu">
                                 <li id="Zone6_material_bitumen"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('6','material','Bitumen'); updateNavBarWithFunctionName('Zone 6 Road Material : Bitumen ');">Bitumen</a></li>
+                                        onclick="Varanasi_Zone_Material('6','material','Bitumen'); updateNavBarWithFunctionName('Zone 6 Road Material : Bitumen ');">Bitumen</a>
+                                </li>
                                 <li id="Zone6_material_BOE"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('6','material','BOE'); updateNavBarWithFunctionName('Zone 6 Road Material : BOE ');">BOE</a></li>
+                                        onclick="Varanasi_Zone_Material('6','material','BOE'); updateNavBarWithFunctionName('Zone 6 Road Material : BOE ');">BOE</a>
+                                </li>
                                 <li id="Zone6_material_CC"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('6','material','CC'); updateNavBarWithFunctionName('Zone 6 Road Material : CC ');">CC</a></li>
+                                        onclick="Varanasi_Zone_Material('6','material','CC'); updateNavBarWithFunctionName('Zone 6 Road Material : CC ');">CC</a>
+                                </li>
                                 <li id="Zone6_material_interlocking"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('6','material','Interlocking'); updateNavBarWithFunctionName('Zone 6 Road Material : Interlocking ');">Interlocking</a></li>
-                                <li id="Zone6_material_kachcha"><a class="dropdown-item"   
-                                         onclick="Varanasi_Zone_Material('6','material','Kachcha'); updateNavBarWithFunctionName('Zone 6 Road Material : Kachcha ');">Kachcha</a></li>
+                                        onclick="Varanasi_Zone_Material('6','material','Interlocking'); updateNavBarWithFunctionName('Zone 6 Road Material : Interlocking ');">Interlocking</a>
+                                </li>
+                                <li id="Chauka Patthar"><a class="dropdown-item"
+                                        onclick="Varanasi_Zone_Material('6','material','Chauka Patthar'); updateNavBarWithFunctionName('Zone 6 Road Material : Chauka Patthar');">Chauka
+                                        Patthar</a></li>
+                                <li id="Zone6_material_kachcha"><a class="dropdown-item"
+                                        onclick="Varanasi_Zone_Material('6','material','Kachcha'); updateNavBarWithFunctionName('Zone 6 Road Material : Kachcha ');">Kachcha</a>
+                                </li>
                                 <li id="Zone6_material_NA"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('6','material','NA'); updateNavBarWithFunctionName('Zone 6 Road Material : NA ');">NA</a></li>
+                                        onclick="Varanasi_Zone_Material('6','material','NA'); updateNavBarWithFunctionName('Zone 6 Road Material : NA ');">NA</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -1084,7 +1164,7 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
+                            <ul class="dropdown-menu dropdown-submenu ward-list">
                                 <li id="Ward1"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','1'); updateNavBarWithFunctionName('Ward 1 Road ');"> Ward 1 </a></li>
                                 <li id="Ward7"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','7'); updateNavBarWithFunctionName('Ward 7 Road ');"> Ward 7 </a></li>
                                 <li id="Ward10"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','10'); updateNavBarWithFunctionName('Ward 10 Road ');"> Ward 10 </a></li>
@@ -1134,19 +1214,28 @@
                         <li>
                             <a class="dropdown" id="Zone7_material"
                                 onclick="Varanasi_Material_cat('zone_no','7'); updateNavBarWithFunctionName('Zone 7 Material wise Road ');">Road Material &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
+                            <ul class="dropdown-menu dropdown-submenu ward-list">
                                 <li id="Zone7_material_bitumen"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('7','material','Bitumen'); updateNavBarWithFunctionName('Zone 7 Road Material : Bitumen ');">Bitumen</a></li>
+                                        onclick="Varanasi_Zone_Material('7','material','Bitumen'); updateNavBarWithFunctionName('Zone 7 Road Material : Bitumen ');">Bitumen</a>
+                                </li>
                                 <li id="Zone7_material_BOE"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('7','material','BOE'); updateNavBarWithFunctionName('Zone 7 Road Material : BOE ');">BOE</a></li>
+                                        onclick="Varanasi_Zone_Material('7','material','BOE'); updateNavBarWithFunctionName('Zone 7 Road Material : BOE ');">BOE</a>
+                                </li>
                                 <li id="Zone7_material_CC"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('7','material','CC'); updateNavBarWithFunctionName('Zone 7 Road Material : CC ');">CC</a></li>
+                                        onclick="Varanasi_Zone_Material('7','material','CC'); updateNavBarWithFunctionName('Zone 7 Road Material : CC ');">CC</a>
+                                </li>
                                 <li id="Zone7_material_interlocking"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('7','material','Interlocking'); updateNavBarWithFunctionName('Zone 7 Road Material : Interlocking ');">Interlocking</a></li>
+                                        onclick="Varanasi_Zone_Material('7','material','Interlocking'); updateNavBarWithFunctionName('Zone 7 Road Material : Interlocking ');">Interlocking</a>
+                                </li>
+                                <li id="Chauka Patthar"><a class="dropdown-item"
+                                        onclick="Varanasi_Zone_Material('7','material','Chauka Patthar'); updateNavBarWithFunctionName('Zone 7 Road Material : Chauka Patthar');">Chauka
+                                        Patthar</a></li>
                                 <li id="Zone7_material_kachcha"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('7','material','Kachcha'); updateNavBarWithFunctionName('Zone 7 Road Material : Kachcha ');">Kachcha</a></li>
+                                        onclick="Varanasi_Zone_Material('7','material','Kachcha'); updateNavBarWithFunctionName('Zone 7 Road Material : Kachcha ');">Kachcha</a>
+                                </li>
                                 <li id="Zone7_material_NA"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('7','material','NA'); updateNavBarWithFunctionName('Zone 7 Road Material : NA ');">NA</a></li>
+                                        onclick="Varanasi_Zone_Material('7','material','NA'); updateNavBarWithFunctionName('Zone 7 Road Material : NA ');">NA</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -1188,7 +1277,7 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown" onclick="">Wards &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu ward-list">
+                            <ul class="dropdown-menu dropdown-submenu ward-list ward-list">
                                 <li id="Ward40"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','40'); updateNavBarWithFunctionName('Ward 40 Road ');"> Ward 40 </a></li>
                                 <li id="Ward55"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','55'); updateNavBarWithFunctionName('Ward 55 Road ');"> Ward 55 </a></li>
                                 <li id="Ward66"><a class="dropdown-item" onclick="Varanasi_Ward_no('ward_no','66'); updateNavBarWithFunctionName('Ward 66 Road ');"> Ward 66 </a></li>
@@ -1237,19 +1326,28 @@
                         <li>
                             <a class="dropdown" id="Zone8_material"
                                 onclick="Varanasi_Material_cat('zone_no','8'); updateNavBarWithFunctionName('Zone 8 Material wise Road ');">Road Material &raquo;</a>
-                            <ul class="dropdown-menu dropdown-submenu">
+                            <ul class="dropdown-menu dropdown-submenu ward-list">
                                 <li id="Zone8_material_bitumen"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('8','material','Bitumen'); updateNavBarWithFunctionName('Zone 8 Road Material : Bitumen ');">Bitumen</a></li>
+                                        onclick="Varanasi_Zone_Material('8','material','Bitumen'); updateNavBarWithFunctionName('Zone 8 Road Material : Bitumen ');">Bitumen</a>
+                                </li>
                                 <li id="Zone8_material_BOE"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('8','material','BOE'); updateNavBarWithFunctionName('Zone 8 Road Material : BOE ');">BOE</a></li>
+                                        onclick="Varanasi_Zone_Material('8','material','BOE'); updateNavBarWithFunctionName('Zone 8 Road Material : BOE ');">BOE</a>
+                                </li>
                                 <li id="Zone8_material_CC"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('8','material','CC'); updateNavBarWithFunctionName('Zone 8 Road Material : CC ');">CC</a></li>
+                                        onclick="Varanasi_Zone_Material('8','material','CC'); updateNavBarWithFunctionName('Zone 8 Road Material : CC ');">CC</a>
+                                </li>
                                 <li id="Zone8_material_interlocking"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('8','material','Interlocking'); updateNavBarWithFunctionName('Zone 8 Road Material : Interlocking ');">Interlocking</a></li>
+                                        onclick="Varanasi_Zone_Material('8','material','Interlocking'); updateNavBarWithFunctionName('Zone 8 Road Material : Interlocking ');">Interlocking</a>
+                                </li>
+                                <li id="Chauka Patthar"><a class="dropdown-item"
+                                        onclick="Varanasi_Zone_Material('8','material','Chauka Patthar'); updateNavBarWithFunctionName('Zone 8 Road Material : Chauka Patthar');">Chauka
+                                        Patthar</a></li>
                                 <li id="Zone8_material_kachcha"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('8','material','Kachcha'); updateNavBarWithFunctionName('Zone 8 Road Material : Kachcha ');">Kachcha</a></li>
+                                        onclick="Varanasi_Zone_Material('8','material','Kachcha'); updateNavBarWithFunctionName('Zone 8 Road Material : Kachcha ');">Kachcha</a>
+                                </li>
                                 <li id="Zone8_material_NA"><a class="dropdown-item"
-                                        onclick="Varanasi_Zone_Material('8','material','NA'); updateNavBarWithFunctionName('Zone 8 Road Material : NA ');">NA</a></li>
+                                        onclick="Varanasi_Zone_Material('8','material','NA'); updateNavBarWithFunctionName('Zone 8 Road Material : NA ');">NA</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -1339,7 +1437,8 @@
                         <li><span style="background-color: rgb(117, 14, 14); width: 20px; height: 2px; display: inline-block;"></span> Bitumen Road</li>
                         <li><span style="background-color: #1ad7b0; width: 20px; height: 2px; display: inline-block;"></span> CC Road</li>
                         <li><span style="background-color: #2392ed; width: 20px; height: 2px; display: inline-block;"></span> Interlocking Road</li>
-                        <li><span style="background-color: #6036d0; width: 20px; height: 2px; display: inline-block;"></span> Kachcha Road</li>
+					    <li><span style="background-color: #9400ff; width: 20px; height: 2px; display: inline-block;"></span> Chauka Patthar</li>
+						<li><span style="background-color: #6036d0; width: 20px; height: 2px; display: inline-block;"></span> Kachcha Road</li>
                         <li><span style="background-color: #f228ab; width: 20px; height: 2px; display: inline-block;"></span> BOE Road</li>                      
                         <li><span style="background-color: rgb(209, 216, 149); width: 20px; height: 2px; display: inline-block;"></span> NA</li>
                         <!-- Add more legend items as needed -->
@@ -1394,8 +1493,18 @@
                 <a id="featureName" class="feature_name1"
                   ></a>
                 <div style="display: flex; align-items: center; margin-left: auto;">
-                    <i class="fa-solid fa-print" style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
-                    <i class="fas fa-window-minimize" onclick="minimize1()"
+					<div class="download-wrapper">
+										                       <i class="fa-solid fa-print" id="downloadBtn"
+										                           style="margin-right: 10px; color: rgb(0, 0, 0); cursor: pointer;"></i>  
+
+										                       <div id="downloadMenu" class="download-menu hidden">
+										                           <div data-type="excel">📊 Excel</div>
+										                           <div data-type="pdf">📄 PDF</div>
+										                           <div data-type="kml">🌍 KML</div>
+										                           <div data-type="print">🗺️ Print Map</div>
+										                       </div>
+										                   </div>    
+						<i class="fas fa-window-minimize" onclick="minimize1()"
                         style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
                     <i class="fas fa-window-maximize" onclick="maximize1()"
                         style="margin-right: 10px;color: rgb(0, 0, 0);"></i>
@@ -1421,7 +1530,7 @@
                         <th> Carriage Width </th>
                         <th> Material </th>
                         <th> Length (km) </th>
-                        <th> conditon </th>
+                        <th> condition </th>
                         <th> Year Of Construction/Relaying</th>
                         <th> CUS &nbsp;&nbsp;</th>
                     </tr>
@@ -1495,6 +1604,7 @@
                                 <option value="Bitumen">Bitumen</option>
                                 <option value="CC">CC (Concrete)</option>
                                 <option value="Interlocking">Interlocking</option>
+                                <option value="Chauka Patthar">Chauka Patthar</option>
                                 <option value="BOE">BOE</option>
                                 <option value="NA">NA</option>
                             </select>
@@ -1570,7 +1680,7 @@
     </div>
     <!------------------------- footer section end ------------------------------------>
     <script src="../config.js"></script>
-    <script src="../javascript/varanasi.js"></script>
+    <script src="../javascript/varanasi1.js"></script>
 
 </body>
 </html>

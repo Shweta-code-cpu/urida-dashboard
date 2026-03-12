@@ -26,8 +26,7 @@ function showElements(elementIds) {
 function showTables() {
     showElements(['dataTable_summary', 'tableContainer_summary']);
     hideElements([ 'legendBtn',  'Condition_legend','CUS_legend','RoadCategory_legend','Material_legend', 'Ownership_legend',
-        //  'tableContainer_summary',
-         'summary-table',  'tableContainer_summaryfilter', 
+         'summary-table',  'tableContainer_summaryfilter', 'table_data','query_tab','caption'
     ]);
 }
 
@@ -36,12 +35,11 @@ document.getElementById('table_icon').addEventListener('click', showTables2);
 
 function showTables2() {
     showElements(['summary-table']);
-    hideElements([ 'dataTable', 'tableContainer_summary','tableContainer_summaryfilter', 'tableContainer', 
+    hideElements([ 'dataTable', 'tableContainer_summary','tableContainer_summaryfilter', 
          'legendBtn', 'Condition_legend','CUS_legend','RoadCategory_legend',
-        'Material_legend', 'Ownership_legend',
+        'Material_legend', 'Ownership_legend','table_data','query_tab'
     ]);
 }
-
 
 
 $(document)
@@ -71,7 +69,6 @@ var map, geojson, featureOverlay, overlays, style;
 var selected, features, layer_name, layerControl;
 var content;
 var selectedFeature;
-// const london = fromLonLat([-0.12755, 51.507222]);
 
 var view = new ol.View({
     projection: "EPSG:4326",
@@ -80,12 +77,6 @@ var view = new ol.View({
     maxZoom: 18,
     minZoom: 10
 });
-
-// var view_ov = new ol.View({
-//     projection: "EPSG:4326",
-//     center: [28.55, 77.65],
-//     zoom: 9,
-// });
 
 var base_maps = new ol.layer.Group({
     title: "Base maps",
@@ -192,16 +183,7 @@ layerSwitcher = new ol.control.LayerSwitcher({
 });
 map.addControl(layerSwitcher);
 
-layerSwitcher.renderPanel();
-
-// var overview = new ol.control.OverviewMap({
-//   view: view_ov,
-//   collapseLabel: "o",
-//   label: "o",
-//   layers: [OSM],
-// });
-// map.addControl(overview);
-
+//layerSwitcher.renderPanel();
 layerSwitcher.renderPanel();
 var mouse_position = new ol.control.MousePosition({
     coordinateFormat: ol.coordinate.createStringXY(4),
@@ -219,7 +201,6 @@ var scale_line = new ol.control.ScaleLine({
 });
 
 map.addControl(scale_line);
-
 
 var zone_boundary = new ol.layer.Image({
     title: "Meerut Zone Boundary",
@@ -253,8 +234,21 @@ map.addLayer(ward_boundary);
 
 
 //---------------------------------------- charts and data --------------------------------------------//
+// function data_analysis() {
+//     window.open('https://lookerstudio.google.com/reporting/a6be1a2e-7fb8-414d-a2b3-b724766cb501', '_blank'); // Open Google in a new tab
+// }
 function data_analysis() {
-    window.open('https://lookerstudio.google.com/reporting/a6be1a2e-7fb8-414d-a2b3-b724766cb501', '_blank'); // Open Google in a new tab
+    // Hide the map container
+    document.getElementById('map').style.display = 'none';   
+    // Show the iframe container
+    document.getElementById('iframe-container').style.display = 'block';
+}
+
+function closeReport() {
+    // Hide the iframe container
+    document.getElementById('iframe-container').style.display = 'none';
+    // Show the map container
+    document.getElementById('map').style.display = 'block';
 }
 
 // /*----------------------------------------- javascript for sidebar----------------------------------------- */
@@ -265,7 +259,6 @@ document.querySelectorAll('.table-cancel-btn1').forEach(function (element) {
         document.getElementById('tableContainer_summary').style.display = 'none';
         document.getElementById('tableContainer_summaryfilter').style.display = 'none';
      
-
         document.getElementById('summary-table').style.display = 'block';
         document.getElementById('popup').style.display = 'none';
 
@@ -273,7 +266,6 @@ document.querySelectorAll('.table-cancel-btn1').forEach(function (element) {
         Materiallegend.style.display = 'none';
         const Conditionlegend = document.getElementById('Condition_legend');
         Conditionlegend.style.display = 'none';
-
 
         const Ownerlegend = document.getElementById('Ownership_legend');
         Ownerlegend.style.display = 'none';
@@ -303,22 +295,19 @@ cancelIcon.addEventListener("click", () => {
 document.querySelectorAll('.tab-cancel-icon').forEach(function (element) {
     element.addEventListener('click', function () {
         document.getElementById('query_tab').style.display = 'none';
-        document.getElementById('measure-tab').style.display = 'none';
-        document.getElementById('street-tab').style.display = 'none';
+     //   document.getElementById('measure-tab').style.display = 'none';
+      //  document.getElementById('street-tab').style.display = 'none';
     });
 });
 
 // //------------------------------------- query panel --------------------------------------//
 function query_panel1() {
-    var x = document.getElementById("query_tab");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
+	const querypanel = document.getElementById('query_tab');
+	   querypanel.style.display = querypanel.style.display === 'block' ? 'none' : 'block';
+	   document.getElementById('tableContainer_summary').style.display = 'none';
+	   document.getElementById('tableContainer_summaryfilter').style.display = 'none';
+	   
 }
-
-
 
 // //-------------------------- zone wise road filter start----------------------------//
 function road_filter() {
@@ -330,47 +319,16 @@ function road_filter() {
 //     const drainFilter = document.getElementById('drain-filter');
 //     drainFilter.style.display = drainFilter.style.display === 'block' ? 'none' : 'block';
 // }
-
-// //------------------------ Road , Drain filter & Street View Function toggle ------------------------//
-
-let currentFilter = null; // Variable to track the currently visible filter
-
-// Function to toggle road filter visibility
-function road_filter() {
-    toggleFilter('road-filter');
+function re_direct() {
+    alert("Data not available");
 }
 
-// Function to toggle drain filter visibility
-function drain_filter() {
-    toggleFilter('drain-filter');
-}
-
-// Function to handle the visibility of filters and street view
-function toggleFilter(filterId) {
-    const filters = ['road-filter']//, 'drain-filter']; // List of filter IDs
-  //  const streetTab = document.getElementById('street-tab'); // Street view section
-
-    filters.forEach(id => {
-        const filter = document.getElementById(id);
-        if (id === filterId) {
-            // Toggle the clicked filter's visibility
-            if (filter.style.display === 'block') {
-                filter.style.display = 'none';
-                currentFilter = null;
-            } else {
-                filter.style.display = 'block';
-                currentFilter = id;
-            }
-        } else {
-            // Hide other filters
-            filter.style.display = 'none';
-        }
-    });
-}
-
+//-------------------------- Clear all vector layers ----------------------------//
 document.getElementById('clear-icon').onclick = clearAllVectorLayers;
 function clearAllVectorLayers() {
     clearVectorLayers();
+        // ✅ THIS is what actually clears the search
+    resetRoadSearch();
 
     map.getLayers().getArray().forEach(layer => {
         if (layer instanceof ol.layer.Vector) {
@@ -382,8 +340,7 @@ function clearAllVectorLayers() {
         map.removeLayer(currentLayer);
     }
 
-    const elementsToHide = ["road-filter", "query_tab","popup_road","tableContainer_summary", 
-        "tableContainer_summaryfilter", ];
+    const elementsToHide = ["road-filter", "query_tab","popup_road","tableContainer_summary", "search-bar","summary-table","popup","tableContainer_summaryfilter","sidebar","table_data"];
     elementsToHide.forEach(id => {
         const el = document.getElementById(id);
         if (el) {
@@ -409,6 +366,7 @@ function clearAllVectorLayers() {
             }
         }
     });
+    
 }
 
 function zoomToIndia() {
@@ -439,36 +397,39 @@ function updateNavBarWithFunctionName(functionName) {
 }
 
 function minimize1() {
- 
     const topnav = document.getElementById('tableContainer_summary');
 
-    const navElements = document.querySelectorAll('.feature_nav');
-    navElements.forEach(nav => {
-        nav.style.bottom = '3%'; // Reduced width when minimized
-        }); 
-    topnav.style.height = '0%'; // Reduced height when minimized
-    
-    const legendIds = [ 'Condition_legend','Material_legend','Ownership_legend'];
-    
-    // Loop through each legend and hide it
-    legendIds.forEach(function(legendId) {
-        const legendBtn = document.getElementById(legendId);
-        if (legendBtn) {  // Check if the element exists before manipulating it
-            legendBtn.style.display = 'none';
+    document.querySelectorAll('.feature_nav').forEach(nav => {
+        nav.style.bottom = '3%';
+    });
+    topnav.style.height = '0%';
+    const legendIds = ['Priority_legend','Condition_legend','Material_legend', 'Ownership_legend', 'CUS_legend','RoadCategory_legend' ];
+
+    legendIds.forEach(id => {
+        const lg = document.getElementById(id);
+        if (lg) {
+            lg.classList.remove('legend-visible');
+            lg.classList.add('legend-hidden');
+            lg.scrollTop = 0;
         }
     });
-
-
 }
+
 function maximize1() {
     const topnav = document.getElementById('tableContainer_summary');
-    const navElements = document.querySelectorAll('.feature_nav');
-    navElements.forEach(nav => {
-        nav.style.bottom = '29%'; // Reduced width when minimized
+    document.querySelectorAll('.feature_nav').forEach(nav => {
+        nav.style.bottom = '22%';
     });
-    
-    topnav.style.height = '29%'; // Reduced height when minimized
-  
+    topnav.style.height = '19%';
+    const legendIds = ['Priority_legend','Condition_legend', 'Material_legend', 'Ownership_legend', 'CUS_legend', 'RoadCategory_legend' ];
+    legendIds.forEach(id => {
+        const lg = document.getElementById(id);
+        if (lg) {
+            lg.classList.remove('legend-hidden');
+            lg.classList.add('legend-visible');
+            lg.scrollTop = 0;
+        }
+    });
 }
 
 //------------------------------------- MULTILINESTRING feature to the map from WKT format
@@ -566,7 +527,7 @@ function zoomToRoadFeature(wkt) {
 }
 
 function highlightAndScrollToRow(row) {
-    console.log("Highlighting and scrolling to row: ", row);
+  //  console.log("Highlighting and scrolling to row: ", row);
 
     Array.from(dataTableBody_summary.querySelectorAll('tr')).forEach(tr => {
         tr.classList.remove('highlighted');
@@ -613,10 +574,10 @@ selectInteraction.on('select', function (e) {
         console.log("Selected feature: ", selectedFeature);
 
         const featureId = selectedFeature.getId();
-        console.log("Feature ID: ", featureId);
+         // console.log("Feature ID: ", featureId);
 
         const associatedRow = featureToRowMap.get(featureId);
-        console.log("Associated row: ", associatedRow);
+         // console.log("Associated row: ", associatedRow);
 
         if (associatedRow) {
             highlightAndScrollToRow(associatedRow);
@@ -650,13 +611,18 @@ function createVectorLayer(source) {
 }
 
 function amenitiesFeatures(type, iconStyle, vectorSource, layer, elementId) {
-    console.log("The URL is:", `${BASE_URL}/getLocationData?type=${type}`);
+     // console.log("The URL is:", `${BASE_URL}/getLocationData?type=${type}`);
     fetch(`${BASE_URL}/getLocationData?type=${type}`)
         .then(response => response.json())
         .then(data => {
             const features = data.data.map(point => {
-                try {
-                    const coords = point.geom_point.replace('POINT(', '').replace(')', '').split(' ');
+                 try {
+                    let coordsText = point.geom_point
+                        .replace('MULTIPOINT((', '')
+                        .replace('))', '')
+                        .replace('POINT(', '')
+                        .replace(')', '');
+                    const coords = coordsText.trim().split(' ');
                     const lonLat = [parseFloat(coords[0]), parseFloat(coords[1])];
 
                     const feature = new ol.Feature({
@@ -674,7 +640,7 @@ function amenitiesFeatures(type, iconStyle, vectorSource, layer, elementId) {
             }).filter(Boolean);
 
             vectorSource.addFeatures(features);
-            console.log(`${type} features added:`, features);
+             // console.log(`${type} features added:`, features);
 
             document.getElementById(elementId).addEventListener('change', function () {
                 layer.setVisible(this.checked);
@@ -709,7 +675,7 @@ locationTypes.forEach(location => {
     amenitiesFeatures(location.type, iconStyle, vectorSource, vectorLayer, location.id);
 });
 
-//------------------------------------------------park---------------------//
+//----------------------------------------------- park ----------------------------//
 
 function createPolygonStyle() {
     return new ol.style.Style({
@@ -734,7 +700,7 @@ function park_amenityFeature(url, vectorSource, layer, elementId) {
         })
         .then(data => {
             // Log the data to understand its structure
-            console.log('Fetched park data:', data);
+             // console.log('Fetched park data:', data);
 
             if (!data || !Array.isArray(data.data)) {
                 throw new Error('Invalid data format: expected an object with an array in "data" property.');
@@ -742,7 +708,7 @@ function park_amenityFeature(url, vectorSource, layer, elementId) {
 
             var format = new ol.format.WKT();
             var features = data.data.map(function (park) {
-                console.log("WKT Geometry:", park.geom_point);
+                 // console.log("WKT Geometry:", park.geom_point);
 
                 try {
                     var feature = format.readFeature(park.geom_point, {
@@ -760,7 +726,7 @@ function park_amenityFeature(url, vectorSource, layer, elementId) {
             }).filter(Boolean);
 
             vectorSource.addFeatures(features); // Add features to the source
-            console.log('Park features added:', features);
+             // console.log('Park features added:', features);
 
             // Adjust map view to fit the extent of the features
             if (features.length > 0) {
@@ -769,7 +735,6 @@ function park_amenityFeature(url, vectorSource, layer, elementId) {
                     maxZoom: 12
                 });
             }
-
             document.getElementById(elementId).addEventListener('change', function () {
                 layer.setVisible(this.checked);
             });
@@ -817,7 +782,7 @@ ShowRoads.addEventListener('click', function () {
             return response.json();
         })
         .then(responseData => {
-            console.log('Received data:', responseData);
+             // console.log('Received data:', responseData);
             console.log('getting all data');
             // Clear existing table rows
             dataTableBody_summary.innerHTML = '';
@@ -827,22 +792,22 @@ ShowRoads.addEventListener('click', function () {
                     const row = document.createElement('tr');
              row.innerHTML = `
                                <td>${item.gis_id}</td>
+                               <td>${item.road_id}</td>
                                <td>${item.zone_no}</td>
                                <td>${item.zone_name}</td>
                                <td>${item.ward_no}</td>
-                            <td>${item.ward_name}</td>
-                            <td>${item.ownership}</td>
-                           
-                             <td>${item.category}</td>
-                            <td>${item.road_name}</td>
-                         <td>${item.row_meter}</td>
-                            <td>${item.row_apr}</td>
-                            <td>${item.carriage_w}</td>
-                            <td>${item.material}</td>
-                            <td>${item.length_km}</td>
-                               <td>${item.condition}</td>
-                            <td>${item.yoc}</td>
-                            <td>${item.cus}</td>`;
+                                <td>${item.ward_name}</td>
+                                <td>${item.ownership}</td>
+                                <td>${item.category}</td>
+                                <td>${item.road_name}</td>
+                                <td>${item.row_meter}</td>
+                                <td>${item.row_apr}</td>
+                                <td>${item.carriage_w}</td>
+                                <td>${item.material}</td>
+                                <td>${item.length_km ? item.length_km.toFixed(2) : 'N/A'}</td>
+                                <td>${item.condition}</td>
+                                <td>${item.yoc}</td>
+                                <td>${item.cus}</td>`;
                     dataTableBody_summary.appendChild(row);
                     // Check if the item has a geom_wkt property
                     if (item.geom_wkt) {
@@ -885,7 +850,7 @@ function amenitiesRoadAnalysis(endpoint, layerName, featureFunction,elementId) {
         return response.json();
     })
     .then(responseData => {
-        console.log(`Received data for ${layerName}:`, responseData);
+         // console.log(`Received data for ${layerName}:`, responseData);
     
         // Reset UI
         dataTableBody_summary.innerHTML = '';
@@ -897,12 +862,13 @@ function amenitiesRoadAnalysis(endpoint, layerName, featureFunction,elementId) {
             const countEntry = responseData[0];
             const features = responseData.slice(1); // skip first element
     
-            console.log(`Total features in ${layerName}:`, countEntry.count);
+             // console.log(`Total features in ${layerName}:`, countEntry.count);
     
             features.forEach(item => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                                <td>${item.gid}</td>
+                               <td>${item.road_id}</td>
                                <td>${item.zone_no}</td>
                                <td>${item.zone_name}</td>
                                <td>${item.ward_no}</td>
@@ -914,7 +880,7 @@ function amenitiesRoadAnalysis(endpoint, layerName, featureFunction,elementId) {
                             <td>${item.row_apr}</td>
                             <td>${item.carriage_w}</td>
                             <td>${item.material}</td>
-                            <td>${item.length_km}</td>
+                            <td>${item.length_km ? item.length_km.toFixed(2) : 'N/A'}</td>
                                <td>${item.condition}</td>
                             <td>${item.yoc}</td>
                             <td>${item.cus}</td>`;
@@ -929,7 +895,7 @@ function amenitiesRoadAnalysis(endpoint, layerName, featureFunction,elementId) {
                 });
     
                 if (item.geom) {
-                    console.log(`WKT String for ${layerName}:`, item.geom);
+                     // console.log(`WKT String for ${layerName}:`, item.geom);
                     const feature = featureFunction(item.geom);
     
                     if (feature) {
@@ -1067,7 +1033,11 @@ map.on('pointermove', function (event) {
     map.getTargetElement().style.cursor = hit ? 'pointer' : '';
 });
 
-// //------------------------ query panel ---------------------------------/ /
+function street_view() {
+   alert("Data not available");
+}
+
+//------------------------ query panel ---------------------------------/ /
 document.getElementById('load-layer').addEventListener('click', function () {
     const loadLayer = document.getElementById('table_data');
     if (loadLayer.style.display === 'none' || loadLayer.style.display === '') {
@@ -1118,31 +1088,24 @@ $(document).ready(function () {
         dataType: "xml",
         success: function (xml) {
             var select = $("#layer");
+            const targetLayer = "MRT_Summary:meerut_road_net"; // your desired layer
             $(xml)
                 .find("FeatureType")
                 .each(function () {
-                    //var title = $(this).find('ows:Operation').attr('name');
-                    //alert(title);
-                    var name = $(this).find("Name").text();
-                    //select.append("<option/><option class='ddheader' value='"+ name +"'>"+title+"</option>");
-                    $(this)
-                        .find("Name")
-                        .each(function () {
-                            var value = $(this).text();
-                            select.append(
-                                "<option class='ddindent' value='" +
-                                value +
-                                "'>" +
-                                value +
-                                "</option>"
-                            );
-                        });
+                    var name = $(this).find("Name").text().trim();
+                    if (name === targetLayer) {
+                        select.append(
+                            `<option class='ddindent' value='${name}'>${name}</option>`
+                        );
+                    }
                 });
-            //select.children(":first").text("please make a selection").attr("selected",true);
+        },
+        error: function (xhr, status, error) {
+            console.error("GeoServer request failed:", error);
         },
     });
 });
- // attribute dropdown
+// attribute dropdown
 $(function () {
     $("#layer").change(function () {
         var attributes = document.getElementById("attributes");
@@ -1206,53 +1169,27 @@ $(function () {
             value_type == "xsd:short" ||
             value_type == "xsd:int" ||
             value_type == "xsd:double" ||
+             value_type == "xsd:string" ||  
+               value_type.includes("float") ||
+            value_type.includes("decimal")||
             value_type == "xsd:long"
         ) {
             var operator1 = document.getElementById("operator");
             operator1.options[1] = new Option("Greater than", ">");
             operator1.options[2] = new Option("Less than", "<");
+          //   operator1.options[3] = new Option("Like", "ILike");
             operator1.options[3] = new Option("Equal to", "=");
-            //  operator1.options[4] = new Option('Between', 'BETWEEN');
+              operator1.options[4] = new Option('Between', 'BETWEEN');
         } else if (value_type == "xsd:string") {
             var operator1 = document.getElementById("operator");
             operator1.options[1] = new Option("Greater than", ">");
             operator1.options[2] = new Option("Less than", "<");
-            operator1.options[3] = new Option("Like", "ILike");
+         //   operator1.options[3] = new Option("Like", "ILike");
+             operator1.options[3] = new Option("Equal to", "=");
         }
     });
 });
-// // layer dropdown draw query
-$(document).ready(function () {
-    $.ajax({
-        type: "GET",
-        url: `${GEOSERVER_BASE_URL}/wfs?request=getCapabilities`,
-        dataType: "xml",
-        success: function (xml) {
-            var select = $("#layer1");
-            $(xml)
-                .find("FeatureType")
-                .each(function () {
-                    //var title = $(this).find('ows:Operation').attr('name');
-                    //alert(title);
-                    var name = $(this).find("Name").text();
-                    //select.append("<option/><option class='ddheader' value='"+ name +"'>"+title+"</option>");
-                    $(this)
-                        .find("Name")
-                        .each(function () {
-                            var value = $(this).text();
-                            select.append(
-                                "<option class='ddindent' value='" +
-                                value +
-                                "'>" +
-                                value +
-                                "</option>"
-                            );
-                        });
-                });
-            //select.children(":first").text("please make a selection").attr("selected",true);
-        },
-    });
-});
+
 var highlightStyle = new ol.style.Style({
     fill: new ol.style.Fill({
         color: "rgba(255,0,0,0.3)",
@@ -1282,7 +1219,7 @@ function findRowNumber(cn1, v1) {
     }
     return msg;
 }
- // function for loading query
+// function for loading query
 function query() {
     $("#table").empty();
     if (geojson) {
@@ -1307,27 +1244,45 @@ function query() {
     //alert(value_operator);
     var txt = document.getElementById("value");
     var value_txt = txt.value;
-    if (value_operator == "ILike") {
-        value_txt = "'" + value_txt + "%25'";
-        //alert(value_txt);
-        //value_attribute = 'strToLowerCase('+value_attribute+')';
-    } else {
-        value_txt = value_txt;
-        //value_attribute = value_attribute;
+    let cqlFilter = "";
+
+if (value_operator === "BETWEEN") {
+
+    const parts = value_txt.split(",");
+
+    if (parts.length !== 2) {
+        alert("For BETWEEN, enter value as: min,max");
+        return;
     }
+
+    const minVal = parts[0].trim();
+    const maxVal = parts[1].trim();
+
+    cqlFilter = `${value_attribute} BETWEEN ${minVal} AND ${maxVal}`;
+
+} 
+else if (value_operator === "ILike") {
+
+    cqlFilter = `${value_attribute} ILIKE '%${value_txt}%'`;
+
+} 
+else {
+
+    cqlFilter = `${value_attribute} ${value_operator} '${value_txt}'`;
+}
+
+    // if (value_operator == "ILike") {
+    //     value_txt = "'" + value_txt + "%25'";
+    //     //alert(value_txt);
+    //     //value_attribute = 'strToLowerCase('+value_attribute+')';
+    // } else {
+    //     value_txt = value_txt;
+    //     //value_attribute = value_attribute;
+    // }
     //alert(value_txt);
     var url =
-        // `${GEOSERVER_BASE_URL}/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=` +
-        // value_layer +
-        // "&CQL_FILTER=" +
-        // value_attribute +
-        // "%20" +
-        // value_operator +
-        // "%20" +
-        // value_txt +
-        // "%20" +
-        // "&outputFormat=application/json";
-        `${GEOSERVER_BASE_URL}/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=${value_layer}&CQL_FILTER=${value_attribute} ${value_operator} '${encodeURIComponent(value_txt)}'&outputFormat=application/json`;
+       
+        `${GEOSERVER_BASE_URL}/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=${value_layer}&CQL_FILTER=${encodeURIComponent(cqlFilter)}&outputFormat=application/json`;
     //console.log(url);
     style = new ol.style.Style({
         fill: new ol.style.Fill({
@@ -1335,10 +1290,10 @@ function query() {
         }),
         stroke: new ol.style.Stroke({
             color: "#8ECAED",
-            width: 7,
+            width: 5,
         }),
         image: new ol.style.Circle({
-            radius: 7,
+            radius: 5,
             fill: new ol.style.Fill({
                 color: "#8ECAED",
             }),
@@ -1360,7 +1315,7 @@ function query() {
             size: map.getSize(),
         });
     });
-     //overlays.getLayers().push(geojson);
+    //overlays.getLayers().push(geojson);
     map.addLayer(geojson);
     $.getJSON(url, function (data) {
         var col = [];
@@ -1372,182 +1327,198 @@ function query() {
                 }
             }
         }
-        var table = document.createElement("table");
-        table.setAttribute("class", "table table-hover table-striped");
-        table.setAttribute("id", "table");
-        var caption = document.createElement("caption");
-        caption.setAttribute("id", "caption");
-        caption.style.captionSide = "top";
-        caption.style.backgroundColor = "#51929f";
-        caption.style.color = "black";
-        caption.innerHTML =
-            // value_layer +
-            " (Number of Features : " + data.features.length + " )";
-        table.appendChild(caption);
-        // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
-        var tr = table.insertRow(-1); // TABLE ROW.
-        for (var i = 0; i < col.length; i++) {
-            var th = document.createElement("th"); // TABLE HEADER.
-            th.innerHTML = col[i];
-            tr.appendChild(th);
-        }
-        // ADD JSON DATA TO THE TABLE AS ROWS.
-        for (var i = 0; i < data.features.length; i++) {
-            tr = table.insertRow(-1);
-            for (var j = 0; j < col.length; j++) {
-                var tabCell = tr.insertCell(-1);
-                if (j == 0) {
-                    tabCell.innerHTML = data.features[i]["id"];
-                } else {
-                    //alert(data.features[i]['id']);
-                    tabCell.innerHTML = data.features[i].properties[col[j]];
-                    //alert(tabCell.innerHTML);
-                }
-            }
-        }
-        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
-        var divContainer = document.getElementById("table_data");
-        divContainer.innerHTML = "";
-        divContainer.appendChild(table);
-        document.getElementById("map").style.height = "71%";
-        document.getElementById("table_data").style.height = "29%";
-        map.updateSize();
-        addRowHandlers();
-    });
-    map.on("singleclick", highlight);
-}
+		var table = document.createElement("table");
+				table.setAttribute("class", "table table-hover table-striped");
+				table.setAttribute("id", "table");
 
- // highlight the feature on map and table on map click
-function highlight(evt) {
-    if (selectedFeature) {
-        selectedFeature.setStyle();
-        selectedFeature = undefined;
-    }
-    var feature = map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
-        return feature;
-    });
-    if (feature && feature.getId() != undefined) {
-        var geometry = feature.getGeometry();
-        var coord = geometry.getCoordinates();
-        var coordinate = evt.coordinate;
-        //alert(feature.get('gid'));
-        // alert(coordinate);
-        /*var content1 = '<h3>' + feature.get([name]) + '</h3>';
-    content1 += '<h5>' + feature.get('crop')+' '+ value_param +' '+ value_seas+' '+value_level+'</h5>'
-    content1 += '<h5>' + feature.get([value_param]) +' '+ unit +'</h5>';
-    // alert(content1);
-    content.innerHTML = content1;
-    overlay.setPosition(coordinate);*/
-        // console.info(feature.getProperties());
-        $(function () {
-            $("#table td").each(function () {
-                $(this).parent("tr").css("background-color", "white");
-            });
-        });
-        feature.setStyle(highlightStyle);
-        selectedFeature = feature;
-        var table = document.getElementById("table");
-        var cells = table.getElementsByTagName("td");
-        var rows = document.getElementById("table").rows;
-        var heads = table.getElementsByTagName("th");
-        var col_no;
-        for (var i = 0; i < heads.length; i++) {
-            // Take each cell
-            var head = heads[i];
-            //alert(head.innerHTML);
-            if (head.innerHTML == "id") {
-                col_no = i + 1;
-                //alert(col_no);
-            }
-        }
-        var row_no = findRowNumber(col_no, feature.getId());
-        //alert(row_no);
-        var rows = document.querySelectorAll("#table tr");
-        rows[row_no].scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-        });
-        $(document).ready(function () {
-            $("#table td:nth-child(" + col_no + ")").each(function () {
-                if ($(this).text() == feature.getId()) {
-                    $(this).parent("tr").css("background-color", "grey");
-                }
-            });
-        });
-    } else {
-        $(function () {
-            $("#table td").each(function () {
-                $(this).parent("tr").css("background-color", "white");
-            });
-        });
-    }
-    /*$(function() {
-  $("#table td").each(function() {
-  if ($(this).text() == feature.get('gid')) {
-  // $(this).css('color', 'red');
-  $(this).parent("tr").css("background-color", "grey");
-  }
-  });
-  });*/
-}
- // highlight the feature on map and table on row select in table
-function addRowHandlers() {
-    var rows = document.getElementById("table").rows;
-    var heads = table.getElementsByTagName("th");
-    var col_no;
-    for (var i = 0; i < heads.length; i++) {
-        // Take each cell
-        var head = heads[i];
-        //alert(head.innerHTML);
-        if (head.innerHTML == "id") {
-            col_no = i + 1;
-            //alert(col_no);
-        }
-    }
-    for (i = 0; i < rows.length; i++) {
-        rows[i].onclick = (function () {
-            return function () {
+				var caption = document.createElement("caption");
+				caption.setAttribute("id", "caption");
+				caption.style.captionSide = "top";
+				caption.style.backgroundColor = "#51929F";
+				caption.style.color = "black";
+				caption.style.padding = "6px";
+
+				// 🔹 TEXT (Number of Features)
+				var text = document.createElement("b");
+				text.style.fontWeight = "900";
+				text.style.color = "black";
+				text.style.fontSize = "small";
+				text.innerText = "Number of Features : " + data.features.length;
+
+				// 🔹 CANCEL BUTTON
+				var cancelBtn = document.createElement("button");
+				cancelBtn.innerText = "✖";
+				cancelBtn.style.marginLeft = "89%";
+				cancelBtn.style.cursor = "pointer";
+				cancelBtn.style.fontSize = "12px";
+				cancelBtn.style.border = "none";
+				cancelBtn.style.background = "transparent";
+
+				// ❌ click par table remove
+				cancelBtn.onclick = function () {
+				    const tableDiv = document.getElementById("table_data");
+
+				    // table remove
+				    tableDiv.innerHTML = "";
+				    tableDiv.style.height = "0";
+				    tableDiv.style.display = "none";
+
+				    // map full height
+
+				    // OpenLayers ko resize signal
+				    map.updateSize();
+				};
+
+				// caption me add karo
+				caption.appendChild(text);
+				caption.appendChild(cancelBtn);
+				table.appendChild(caption);
+
+				// ---------- TABLE HEADER ----------
+				var tr = table.insertRow(-1);
+				for (var i = 0; i < col.length - 22; i++) {
+				    var th = document.createElement("th");
+				    th.innerHTML = col[i];
+				    tr.appendChild(th);
+				}
+
+				// ---------- TABLE DATA ----------
+				for (var i = 0; i < data.features.length; i++) {
+				    tr = table.insertRow(-1);
+				    for (var j = 0; j < col.length - 22; j++) {
+				        var tabCell = tr.insertCell(-1);
+				        if (j == 0) {
+				            tabCell.innerHTML = data.features[i]["id"];
+				        } else {
+				            tabCell.innerHTML = data.features[i].properties[col[j]];
+				        }
+				    }
+				}
+
+		        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+		          var divContainer = document.getElementById("table_data");
+		        divContainer.innerHTML = "";
+		        divContainer.appendChild(table);
+		        document.getElementById("map").style.height = "100%";
+		        document.getElementById("table_data").style.height = "22%";
+		        map.updateSize();
+		        addRowHandlers();
+		    });
+		    map.on("singleclick", highlight);
+		}
+            // highlight the feature on map and table on map click
+            function highlight(evt) {
                 if (selectedFeature) {
                     selectedFeature.setStyle();
                     selectedFeature = undefined;
                 }
-                $(function () {
-                    $("#table td").each(function () {
-                        $(this).parent("tr").css("background-color", "white");
-                    });
+                var feature = map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+                    return feature;
                 });
-                var cell = this.cells[col_no - 1];
-                var id = cell.innerHTML;
-                $(document).ready(function () {
-                    $("#table td:nth-child(" + col_no + ")").each(function () {
-                        if ($(this).text() == id) {
-                            $(this).parent("tr").css("background-color", "grey");
-                        }
+                if (feature && feature.getId() != undefined) {
+                    var geometry = feature.getGeometry();
+                    var coord = geometry.getCoordinates();
+                    var coordinate = evt.coordinate;
+
+                    $(function () {
+                        $("#table td").each(function () {
+                            $(this).parent("tr").css("background-color", "white");
+                        });
                     });
-                });
-                var features = geojson.getSource().getFeatures();
-                for (i = 0; i < features.length; i++) {
-                    if (features[i].getId() == id) {
-                        //alert(features[i].feature.id);
-                        features[i].setStyle(highlightStyle);
-                        selectedFeature = features[i];
-                        var featureExtent = features[i].getGeometry().getExtent();
-                        if (featureExtent) {
-                            map.getView().fit(featureExtent, {
-                                duration: 1590,
-                                size: map.getSize(),
-                            });
+                    feature.setStyle(highlightStyle);
+                    selectedFeature = feature;
+                    var table = document.getElementById("table");
+                    var cells = table.getElementsByTagName("td");
+                    var rows = document.getElementById("table").rows;
+                    var heads = table.getElementsByTagName("th");
+                    var col_no;
+                    for (var i = 0; i < heads.length; i++) {
+                        // Take each cell
+                        var head = heads[i];
+                        //alert(head.innerHTML);
+                        if (head.innerHTML == "id") {
+                            col_no = i + 1;
+                            //alert(col_no);
                         }
                     }
+                    var row_no = findRowNumber(col_no, feature.getId());
+                    //alert(row_no);
+                    var rows = document.querySelectorAll("#table tr");
+                    rows[row_no].scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                    });
+                    $(document).ready(function () {
+                        $("#table td:nth-child(" + col_no + ")").each(function () {
+                            if ($(this).text() == feature.getId()) {
+                                $(this).parent("tr").css("background-color", "grey");
+                            }
+                        });
+                    });
+                } else {
+                    $(function () {
+                        $("#table td").each(function () {
+                            $(this).parent("tr").css("background-color", "white");
+                        });
+                    });
                 }
-                //alert("id:" + id);
-            };
-        })(rows[i]);
-    }
-}
 
-
-
+            }
+            // highlight the feature on map and table on row select in table
+            function addRowHandlers() {
+                var rows = document.getElementById("table").rows;
+                var heads = table.getElementsByTagName("th");
+                var col_no;
+                for (var i = 0; i < heads.length; i++) {
+                    // Take each cell
+                    var head = heads[i];
+                    //alert(head.innerHTML);
+                    if (head.innerHTML == "id") {
+                        col_no = i + 1;
+                        //alert(col_no);
+                    }
+                }
+                for (i = 0; i < rows.length; i++) {
+                    rows[i].onclick = (function () {
+                        return function () {
+                            if (selectedFeature) {
+                                selectedFeature.setStyle();
+                                selectedFeature = undefined;
+                            }
+                            $(function () {
+                                $("#table td").each(function () {
+                                    $(this).parent("tr").css("background-color", "white");
+                                });
+                            });
+                            var cell = this.cells[col_no - 1];
+                            var id = cell.innerHTML;
+                            $(document).ready(function () {
+                                $("#table td:nth-child(" + col_no + ")").each(function () {
+                                    if ($(this).text() == id) {
+                                        $(this).parent("tr").css("background-color", "grey");
+                                    }
+                                });
+                            });
+                            var features = geojson.getSource().getFeatures();
+                            for (i = 0; i < features.length; i++) {
+                                if (features[i].getId() == id) {
+                                    //alert(features[i].feature.id);
+                                    features[i].setStyle(highlightStyle);
+                                    selectedFeature = features[i];
+                                    var featureExtent = features[i].getGeometry().getExtent();
+                                    if (featureExtent) {
+                                        map.getView().fit(featureExtent, {
+                                            duration: 1590,
+                                            size: map.getSize(),
+                                        });
+                                    }
+                                }
+                            }
+                            //alert("id:" + id);
+                        };
+                    })(rows[i]);
+                }
+            }
 
 
 // //------------- draw function in query panel----------------------//
@@ -2014,102 +1985,6 @@ function createMeasureTooltip() {
     map.addOverlay(measureTooltip);
 }
 
-// //-------------------- street view -----------------------//
-
-// // function street_view() {
-// //     // Remove any existing layer
-// //     removeCurrentLayer();
-
-// //     // Create the new WMS layer
-// //     currentLayer = new ol.layer.Image({
-// //         title: 'ann View points',
-// //         source: new ol.source.ImageWMS({
-// //             url: `${GEOSERVER_BASE_URL}/wms`,
-// //             params: {
-// //                 'LAYERS': 'BRL_Summary:annviewpoints',
-// //             },
-// //             ratio: 1,
-// //             serverType: 'geoserver'
-// //         })
-// //     });
-
-// //     // Add the new layer to the map
-// //     map.addLayer(currentLayer);
-
-// //     // Define the popup container
-// //     var container = document.getElementById('popup');
-
-// //     // Set up click event handler
-// //     map.on('singleclick', function (evt) {
-// //         var viewResolution = map.getView().getResolution();
-// //         var url = currentLayer.getSource().getFeatureInfoUrl(
-// //             evt.coordinate, viewResolution, 'EPSG:4326', {
-// //             'INFO_FORMAT': 'text/html'
-// //         });
-
-// //         console.log('Feature Info URL:', url); // Log the URL for debugging
-
-// //         if (url) {
-// //             $.get(url)
-// //                 .done(function (data) {
-// //                     console.log('Feature Info Response:', data); // Log the response for debugging
-
-// //                     var contentHtml = '<h6>Street View and Road Images</h6>';
-// //                     var parsedData = $(data);
-
-// //                     // Initialize variables to store URLs
-// //                     var streetViewUrl = '';
-// //                     var imageUrl = '';
-
-// //                     // Find the correct <td> elements containing the URLs
-// //                     parsedData.find('td').each(function () {
-// //                         var text = $(this).text().trim();
-// //                         if (text.startsWith('http://maps.google.com') || text.startsWith('https://maps.google.com') || text.startsWith('https://www.google.com')) {
-// //                             streetViewUrl = text;
-// //                         }
-// //                         if (text.startsWith('https://drive.google.com')) {
-// //                             imageUrl = text;
-// //                         }
-// //                     });
-
-// //                     console.log("street_view_url:", streetViewUrl);
-// //                     console.log("image_url:", imageUrl);
-
-// //                     // Build popup content with icons
-// //                     if (streetViewUrl || imageUrl) {
-// //                         contentHtml += '<div class="icons-container">';
-
-// //                         if (streetViewUrl) {
-// //                             contentHtml += '<button class="icon-button" onclick="window.open(\'' + streetViewUrl + '\', \'_blank\')">' +
-// //                                 '<img src="image_path/google-maps.png" alt="Street View" class="icon-img"></button>';
-// //                         }
-// //                         if (imageUrl) {
-// //                             contentHtml += '<button class="icon-button" onclick="window.open(\'' + imageUrl + '\', \'_blank\')">' +
-// //                                 '<img src="image_path/image-files.png" alt="Image" class="icon-img"></button>';
-// //                         }
-
-// //                         contentHtml += '</div>';
-// //                     } else {
-// //                         contentHtml += '<p>No information available for this point.</p>';
-// //                     }
-
-// //                     // Display the popup at the clicked coordinate
-// //                     popup.setPosition(evt.coordinate);
-// //                     popup.getElement().innerHTML = contentHtml; // Set popup content
-// //                     container.style.display = 'block'; // Ensure the popup is visible
-// //                 })
-// //                 .fail(function (jqXHR, textStatus, errorThrown) {
-// //                     console.error('Error fetching feature info:', textStatus, errorThrown);
-// //                     popup.setPosition(evt.coordinate);
-// //                     popup.getElement().innerHTML = '<p>Failed to fetch feature info.</p>'; // Display error message
-// //                     container.style.display = 'block'; // Ensure the popup is visible
-// //                 });
-// //         } else {
-// //             console.error('No URL returned for WMS GetFeatureInfo request.');
-// //         }
-// //     });
-// // }
-
 // //-----------------------------------summary table ---------------------------------//
 
 function navigateTo(tabName) {
@@ -2168,7 +2043,7 @@ function loadZones() {
             return response.json();
         })
         .then(data => {
-            console.log("✅ API Response:", data); // For Debugging
+             // console.log("✅ API Response:", data); // For Debugging
 
             updateSummary(data); // Only call if data structure is valid
         })
@@ -2186,7 +2061,7 @@ function updateSummary(data) {
         return;
     }
     content.innerHTML = '';
-    console.log("✅ Received Data in updateSummary:", data); // For Debugging
+     // console.log("✅ Received Data in updateSummary:", data); // For Debugging
 
     const safeValue = (key) => key in data && data[key] !== null && data[key] !== undefined
         ? data[key]
@@ -2199,53 +2074,51 @@ function updateSummary(data) {
         'Total Ward No.': { value: safeValue('ayo_ward'), onclick: 'Meerut_Ward_NO()' },
         'Road Count by Condition': {
             value: `
-                Good - <a href="javascript:void(0)" onclick="Meerut_Condition_cat('condition','Good'); updateNavBarWithFunctionName('Road Condition Good');" style="color:green;">${safeValue('condition_count_green')}</a><br>
-                Poor - <a href="javascript:void(0)" onclick="Meerut_Condition_cat('condition','Poor'); updateNavBarWithFunctionName('Road Condition Poor');" style="color:red;">${safeValue('condition_count_red')}</a><br>
-                Moderate - <a href="javascript:void(0)" onclick="Meerut_Condition_cat('condition','Moderate'); updateNavBarWithFunctionName('Road Condition Moderate');" style="color:yellow;">${safeValue('condition_count_yellow')}</a><br>
-                NA - <a href="javascript:void(0)" onclick="Meerut_Condition_cat('condition','NA'); updateNavBarWithFunctionName('Road Condition NA');" style="color:pink;">${safeValue('condition_count_na')}</a><br>
+                Good - <a href="javascript:void(0)" onclick="Meerut_Condition_cat('condition','Good'); updateNavBarWithFunctionName('Road Condition : Good');" style="color:green;">${safeValue('condition_count_green')}</a><br>
+                Poor - <a href="javascript:void(0)" onclick="Meerut_Condition_cat('condition','Poor'); updateNavBarWithFunctionName('Road Condition : Poor');" style="color:red;">${safeValue('condition_count_red')}</a><br>
+                Moderate - <a href="javascript:void(0)" onclick="Meerut_Condition_cat('condition','Moderate'); updateNavBarWithFunctionName('Road Condition : Moderate');" style="color:yellow;">${safeValue('condition_count_yellow')}</a><br>
+                NA - <a href="javascript:void(0)" onclick="Meerut_Condition_cat('condition','NA'); updateNavBarWithFunctionName('Road Condition : NA');" style="color:pink;">${safeValue('condition_count_na')}</a><br>
             `
         },
         
         'Road Count by Material': {
             value: `
-                Bitumen - <a href="javascript:void(0)" onclick="Meerut_Material_cat('material','Bitumen'); updateNavBarWithFunctionName('Road Material Bitumen');" style="color:darkred;">${safeValue('count_bitumen')}</a><br>
-                CC - <a href="javascript:void(0)" onclick="Meerut_Material_cat('material','CC'); updateNavBarWithFunctionName('Road Material CC');" style="color:#1ad7b0;">${safeValue('count_cc')}</a><br>
-                Interlocking - <a href="javascript:void(0)" onclick="Meerut_Material_cat('material','Interlocking'); updateNavBarWithFunctionName('Road Material Interlocking');" style="color:#2392ed;">${safeValue('count_interlocking')}</a><br>
-                BOE - <a href="javascript:void(0)" onclick="Meerut_Material_cat('material','BOE'); updateNavBarWithFunctionName('Road Material BOE');" style="color:#f228ab;">${safeValue('count_boe')}</a><br>
-                Kachcha - <a href="javascript:void(0)" onclick="Meerut_Material_cat('material','Kachcha'); updateNavBarWithFunctionName('Road Material Kachcha');" style="color:#6036d0;">${safeValue('count_kachcha')}</a><br>
-                NA - <a href="javascript:void(0)" onclick="Meerut_Material_cat('material','NA'); updateNavBarWithFunctionName('Road Material NA');" style="color:#dfc223;">${safeValue('material_count_na')}</a>
+                Bitumen - <a href="javascript:void(0)" onclick="Meerut_Material_cat('material','Bitumen'); updateNavBarWithFunctionName('Road Material : Bitumen');" style="color:darkred;">${safeValue('count_bitumen')}</a><br>
+                CC - <a href="javascript:void(0)" onclick="Meerut_Material_cat('material','CC'); updateNavBarWithFunctionName('Road Material : CC');" style="color:#1ad7b0;">${safeValue('count_cc')}</a><br>
+                Interlocking - <a href="javascript:void(0)" onclick="Meerut_Material_cat('material','Interlocking'); updateNavBarWithFunctionName('Road Material : Interlocking');" style="color:#2392ed;">${safeValue('count_interlocking')}</a><br>
+                BOE - <a href="javascript:void(0)" onclick="Meerut_Material_cat('material','BOE'); updateNavBarWithFunctionName('Road Material : BOE');" style="color:#f228ab;">${safeValue('count_boe')}</a><br>
+                Kachcha - <a href="javascript:void(0)" onclick="Meerut_Material_cat('material','Kachcha'); updateNavBarWithFunctionName('Road Material : Kachcha');" style="color:#6036d0;">${safeValue('count_kachcha')}</a><br>
+                NA - <a href="javascript:void(0)" onclick="Meerut_Material_cat('material','NA'); updateNavBarWithFunctionName('Road Material : NA');" style="color:#dfc223;">${safeValue('material_na')}</a>
                 `,
             onclick: 'Meerut_Material()'
         },
         'Road Count by Ownership': {
             value: `
-                MNN - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','MNN'); updateNavBarWithFunctionName('Road Ownership meerut Nagar Nigam');" style="color:#5aeee5;">${safeValue('count_mnn')}</a><br>
-                Railway - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','Railway'); updateNavBarWithFunctionName('Road Ownership Railway');" style="color:#69e70f;">${safeValue('count_railway')}</a><br>
-                Development Authority - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','MDA'); updateNavBarWithFunctionName('Road Ownership Development Authority');" style="color:#f16a16;">${safeValue('count_mda')}</a><br>
-                Private Roads - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','Private'); updateNavBarWithFunctionName('Road Ownership Private Road');" style="color:#ed2323;">${safeValue('count_pvt')}</a><br>
-                Defence - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','Defence'); updateNavBarWithFunctionName('Road Ownership Defence');" style="color:#f16a16;">${safeValue('count_defence')}</a><br>
-                C.M Grid - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','C.M Grid'); updateNavBarWithFunctionName('Road Ownership C.M Grid');" style="color:#ed2323;">${safeValue('count_grid')}</a><br>
-                Police Department - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','Police Department'); updateNavBarWithFunctionName('Road Ownership Police Department');" style="color:#f16a16;">${safeValue('count_police')}</a><br>
-                Institutional Road - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','Institutional Road'); updateNavBarWithFunctionName('Road Ownership Institutional Road');" style="color:#ed2323;">${safeValue('count_institute')}</a><br>
-                Government Department - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','Government Department'); updateNavBarWithFunctionName('Road Ownership Government Department');" style="color:#f16a16;">${safeValue('count_govt')}</a><br>
-                Electricity Department - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','Electricity Department'); updateNavBarWithFunctionName('Road Ownership Electricity Department');" style="color:#ed2323;">${safeValue('count_electricity')}</a>
+                MNN - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','MNN'); updateNavBarWithFunctionName('Road Ownership : Meerut Nagar Nigam');" style="color:#5aeee5;">${safeValue('count_mnn')}</a><br>
+                Railway - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','Railway'); updateNavBarWithFunctionName('Road Ownership : Railway');" style="color:#69e70f;">${safeValue('count_railway')}</a><br>
+                Development Authority - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','MDA'); updateNavBarWithFunctionName('Road Ownership : Development Authority');" style="color:#f16a16;">${safeValue('count_mda')}</a><br>
+                Private Roads - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','Private'); updateNavBarWithFunctionName('Road Ownership : Private Road');" style="color:#ed2323;">${safeValue('count_pvt')}</a><br>
+                Defence - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','Defence'); updateNavBarWithFunctionName('Road Ownership : Defence');" style="color:#f16a16;">${safeValue('count_defence')}</a><br>
+                Department Roads - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','Department Roads'); updateNavBarWithFunctionName('Road Ownership : Department Roads');" style="color:#f16a16;">${safeValue('count_depart')}</a><br>
+                Institutional Road - <a href="javascript:void(0)" onclick="Meerut_Ownership_cat('ownership','Institutional Road'); updateNavBarWithFunctionName('Road Ownership : Institutional Road');" style="color:#ed2323;">${safeValue('count_institute')}</a><br>
                 `,
             onclick: 'Meerut_Ownership()'
         },
         'Road Count by CUS': {
             value: `
-                Nagar Nigam Nidhi - <a href="javascript:void(0)" onclick="Meerut_CUS_cat('cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Road CUS Nagar Nigam Nidhi');" style="color: cyan;">${safeValue('count_nnn')}</a><br>
-                NA - <a href="javascript:void(0)" onclick="Meerut_CUS_cat('cus','NA'); updateNavBarWithFunctionName('Road CUS NA');" style="color: #8717e2;">${safeValue('count_cus_na')}</a><br>
+                Nagar Nigam Nidhi - <a href="javascript:void(0)" onclick="Meerut_CUS_cat('cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Road CUS : Nagar Nigam Nidhi');" style="color: cyan;">${safeValue('count_nnn')}</a><br>
+                NA - <a href="javascript:void(0)" onclick="Meerut_CUS_cat('cus','NA'); updateNavBarWithFunctionName('Road CUS : NA');" style="color: #8717e2;">${safeValue('count_cus_na')}</a><br>
                 `
             ,
            // onclick: 'meerut_CUS()'
         },
         'Road Count by Category': {
             value: `
-                Local Street - <a href="javascript:void(0)" onclick="Meerut_Typesub_cat('category','Local Street'); updateNavBarWithFunctionName('Road Category Local Street');" style="color: #14cee3;">${safeValue('count_local_street')}</a><br>
-                Collector - <a href="javascript:void(0)" onclick="Meerut_Typesub_cat('category','Collector'); updateNavBarWithFunctionName('Road Category Collector');" style="color: #e63dee;">${safeValue('count_collector')}</a><br>
-                Arterial - <a href="javascript:void(0)" onclick="Meerut_Typesub_cat('category','Arterial'); updateNavBarWithFunctionName('Road Category Arterial');" style="color: #e1ca4c;">${safeValue('count_arterial')}</a><br>
-                Sub Arterial - <a href="javascript:void(0)" onclick="Meerut_Typesub_cat('category','Sub Arterial'); updateNavBarWithFunctionName('Road Category Sub Arterial');" style="color: #83e45c;">${safeValue('count_subarterial')}</a><br>
+                Local Street - <a href="javascript:void(0)" onclick="Meerut_Typesub_cat('category','Local Street'); updateNavBarWithFunctionName('Road Category : Local Street');" style="color: #14cee3;">${safeValue('count_local_street')}</a><br>
+                Collector - <a href="javascript:void(0)" onclick="Meerut_Typesub_cat('category','Collector'); updateNavBarWithFunctionName('Road Category : Collector');" style="color: #e63dee;">${safeValue('count_collector')}</a><br>
+                Arterial - <a href="javascript:void(0)" onclick="Meerut_Typesub_cat('category','Arterial'); updateNavBarWithFunctionName('Road Category : Arterial');" style="color: #e1ca4c;">${safeValue('count_arterial')}</a><br>
+                Sub Arterial - <a href="javascript:void(0)" onclick="Meerut_Typesub_cat('category','Sub Arterial'); updateNavBarWithFunctionName('Road Category : Sub Arterial');" style="color: #83e45c;">${safeValue('count_subarterial')}</a><br>
+                NA - <a href="javascript:void(0)" onclick="Meerut_Typesub_cat('category','NA'); updateNavBarWithFunctionName('Road Category : NA');" style="color: #83e45c;">${safeValue('count_expressway')}</a><br>
 
                 `, onclick: 'Meerut_Types()'
             
@@ -2272,7 +2145,7 @@ function populateZonesDropdown() {
     fetch(`${BASE_URL}/getZones`)
         .then(response => response.json())
         .then(data => {
-            console.log("✅ Zones API Response:", data); // Debugging: Log the API response
+             // console.log("✅ Zones API Response:", data); // Debugging: Log the API response
 
             // Check if zones data exists and handle accordingly
             if (data && data.status && Array.isArray(data.data)) {
@@ -2347,61 +2220,54 @@ function updateZones(zoneNo, zoneName, data) {
             title: 'Total No. of Roads', 
             value: `<a href="javascript:void(0)" onclick="Meerut_Zone_no('zone_no','${zoneNo}'); updateNavBarWithFunctionName('Zone-${zoneNo} Total Road Count');" style="color:black;">${data.total_no_of_roads}</a>` 
         },
-        // { 
-        //     title: 'Road Type', 
-        //     value: `Major <a href="javascript:void(0)" onclick="meerut_Zone_Type('${zoneNo}','type','Major City Road'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Type Major');" style="color:blue;">- ${data.total_major_sum}</a> <br> 
-        //             Minor <a href="javascript:void(0)" onclick="meerut_Zone_Type('${zoneNo}','type','Minor City Road'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Type Minor');" style="color:yellow;">- ${data.total_minor_sum}</a>`
-        // },
         { 
             title: 'Road Condition', 
             value: `
-                    Good <a href="javascript:void(0)" onclick="Meerut_Zone_Condition('${zoneNo}','condition','Good'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Condition Good');" style="color:green;">- ${data.count_green}</a> <br> 
-                    Moderate <a href="javascript:void(0)" onclick="Meerut_Zone_Condition('${zoneNo}','condition','Moderate'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Condition Moderate');" style="color:yellow;">- ${data.count_yellow}</a> <br> 
-                    Poor <a href="javascript:void(0)" onclick="Meerut_Zone_Condition('${zoneNo}','condition','Poor'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Condition Poor');" style="color:red;">- ${data.count_red}</a><br>
-                    NA <a href="javascript:void(0)" onclick="Meerut_Zone_Condition('${zoneNo}','condition','NA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Condition NA');" style="color:pink;">- ${data.count_na}</a> <br> 
+                    Good <a href="javascript:void(0)" onclick="Meerut_Zone_Condition('${zoneNo}','condition','Good'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Condition : Good');" style="color:green;">- ${data.count_green}</a> <br> 
+                    Moderate <a href="javascript:void(0)" onclick="Meerut_Zone_Condition('${zoneNo}','condition','Moderate'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Condition : Moderate');" style="color:yellow;">- ${data.count_yellow}</a> <br> 
+                    Poor <a href="javascript:void(0)" onclick="Meerut_Zone_Condition('${zoneNo}','condition','Poor'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Condition : Poor');" style="color:red;">- ${data.count_red}</a><br>
+                    NA <a href="javascript:void(0)" onclick="Meerut_Zone_Condition('${zoneNo}','condition','NA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Condition : NA');" style="color:pink;">- ${data.count_na}</a> <br> 
                     `
         },
         { 
             title: 'Materials', 
             value: `
-                    Bitumen <a href="javascript:void(0)" onclick="Meerut_Zone_Material('${zoneNo}','material','Bitumen'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material Bitumen');" style="color:darkred;">- ${data.bitumen}</a> <br>
-                    CC <a href="javascript:void(0)" onclick="Meerut_Zone_Material('${zoneNo}','material','CC'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material CC');" style="color:#1ad7b0;">- ${data.cc}</a> <br>
-                    Interlocking <a href="javascript:void(0)" onclick="Meerut_Zone_Material('${zoneNo}','material','Interlocking'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material Interlocking');" style="color:#2392ed;">- ${data.interlocking}</a> <br>
-                    BOE <a href="javascript:void(0)" onclick="Meerut_Zone_Material('${zoneNo}','material','BOE'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material BOE');" style="color:#f228ab;">- ${data.boe}</a> <br>
-                    Kachcha <a href="javascript:void(0)" onclick="Meerut_Zone_Material('${zoneNo}','material','Kachcha'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material Kachcha');" style="color:#6036d0;">- ${data.kachcha}</a><br>
-                    NA - <a href="javascript:void(0)" onclick="Meerut_Zone_Material('${zoneNo}','material','NA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material NA');" style="color:#dfc223;">${data.material_na}</a>
+                    Bitumen <a href="javascript:void(0)" onclick="Meerut_Zone_Material('${zoneNo}','material','Bitumen'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : Bitumen');" style="color:darkred;">- ${data.bitumen}</a> <br>
+                    CC <a href="javascript:void(0)" onclick="Meerut_Zone_Material('${zoneNo}','material','CC'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : CC');" style="color:#1ad7b0;">- ${data.cc}</a> <br>
+                    Interlocking <a href="javascript:void(0)" onclick="Meerut_Zone_Material('${zoneNo}','material','Interlocking'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : Interlocking');" style="color:#2392ed;">- ${data.interlocking}</a> <br>
+                    BOE <a href="javascript:void(0)" onclick="Meerut_Zone_Material('${zoneNo}','material','BOE'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : BOE');" style="color:#f228ab;">- ${data.boe}</a> <br>
+                    Kachcha <a href="javascript:void(0)" onclick="Meerut_Zone_Material('${zoneNo}','material','Kachcha'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : Kachcha');" style="color:#6036d0;">- ${data.kachcha}</a><br>
+                    NA - <a href="javascript:void(0)" onclick="Meerut_Zone_Material('${zoneNo}','material','NA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Material : NA');" style="color:#dfc223;">${data.material_na}</a>
                     `
         },
         { 
             title: 'Ownership', 
             value: `
-                    MNN <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}','ownership','MNN'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership meerut Nagar Nigam');" style="color:#5aeee5;">- ${data.mnn}</a> <br>
-                    Railway <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}','ownership','Railway'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership Railway');" style="color:#69e70f;">- ${data.railway}</a> <br>
-                    Private Roads <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}','ownership','Private'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership Private Roads');" style="color:#ed2323;">- ${data.pvt}</a><br>
-                    Development Authority - <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}', 'ownership', 'MDA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership meerut Development Authority');" style="color:#f16a16;">${data.mda}</a><br>
-                    Defence - <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}','ownership','Defence'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership Defence');" style="color:#f16a16;">${data.defence}</a><br>
-                    C.M Grid - <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}','ownership','C.M Grid'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership C.M Grid');" style="color:#ed2323;">${data.grid}</a><br>
-                       Police Department - <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}','ownership','Police Department'); updateNavBarWithFunctionName('Road Ownership Police Department');" style="color:#f16a16;">${data.police}</a><br>
-                Institutional Road - <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}','ownership','Institutional Road'); updateNavBarWithFunctionName('Road Ownership Institutional Road');" style="color:#ed2323;">${data.institute}</a><br>
-                Government Department - <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}','ownership','Government Department'); updateNavBarWithFunctionName('Road Ownership Government Department');" style="color:#f16a16;">${data.govt}</a><br>
-                Electricity Department - <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}','ownership','Electricity Department'); updateNavBarWithFunctionName('Road Ownership Electricity Department');" style="color:#ed2323;">${data.electricity}</a>
+                    MNN <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}','ownership','MNN'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : Meerut Nagar Nigam');" style="color:#5aeee5;">- ${data.mnn}</a> <br>
+                    Railway <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}','ownership','Railway'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : Railway');" style="color:#69e70f;">- ${data.railway}</a> <br>
+                    Private Roads <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}','ownership','Private'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : Private Roads');" style="color:#ed2323;">- ${data.pvt}</a><br>
+                    Development Authority - <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}', 'ownership', 'MDA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : Meerut Development Authority');" style="color:#f16a16;">${data.mda}</a><br>
+                    Defence - <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}','ownership','Defence'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Ownership : Defence');" style="color:#f16a16;">${data.defence}</a><br>
+                    Department Roads - <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}','ownership','Department Roads'); updateNavBarWithFunctionName('Road Ownership : Department Roads');" style="color:#f16a16;">${data.depart}</a><br>
+                    Institutional Road - <a href="javascript:void(0)" onclick="Meerut_Zone_Ownership('${zoneNo}','ownership','Institutional Road'); updateNavBarWithFunctionName('Road Ownership : Institutional Road');" style="color:#ed2323;">${data.institute}</a><br>
                   `
                 },
                  {
                     title: 'CUS',
                     value: ` 
-                        Nagar Nigam Nidhi - <a href="javascript:void(0)" onclick="Meerut_Zone_CUS('${zoneNo}','cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS Nagar Nigam Nidhi');" style="color:cyan;">${data.nnn}</a><br>
-                        NA - <a href="javascript:void(0)" onclick="Meerut_Zone_CUS('${zoneNo}','cus','NA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS NA');" style="color: #8717e2;">${data.cus_na}</a><br>
+                        Nagar Nigam Nidhi - <a href="javascript:void(0)" onclick="Meerut_Zone_CUS('${zoneNo}','cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : Nagar Nigam Nidhi');" style="color:cyan;">${data.nnn}</a><br>
+                        NA - <a href="javascript:void(0)" onclick="Meerut_Zone_CUS('${zoneNo}','cus','NA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road CUS : NA');" style="color: #8717e2;">${data.cus_na}</a><br>
                         `  
                     },
                {
                 title: 'Type Sub Category',
                 value: `
-                    Local Street - <a href="javascript:void(0)" onclick="Meerut_Zone_TypeSub('${zoneNo}','category','Local Street'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category Local Street');" style="color: #14cee3;">${data.local_street} </a><br>
-                    Collector - <a href="javascript:void(0)" onclick="Meerut_Zone_TypeSub('${zoneNo}','category','Collector'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category Collector');" style="color: #e63dee;">${data.collector}</a><br>
-                    Arterial - <a href="javascript:void(0)" onclick="Meerut_Zone_TypeSub('${zoneNo}','category','Arterial'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category Arterial');" style="color: #e1ca4c;">${data.arterial}</a><br>
-                    Sub Arterial - <a href="javascript:void(0)" onclick="Meerut_Zone_TypeSub('${zoneNo}','category','Sub Arterial'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category Sub Arterial');" style="color: #83e45c;">${data.subarterial}</a><br>
-                    `
+                    Local Street - <a href="javascript:void(0)" onclick="Meerut_Zone_TypeSub('${zoneNo}','category','Local Street'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category : Local Street');" style="color: #14cee3;">${data.local_street} </a><br>
+                    Collector - <a href="javascript:void(0)" onclick="Meerut_Zone_TypeSub('${zoneNo}','category','Collector'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category : Collector');" style="color: #e63dee;">${data.collector}</a><br>
+                    Arterial - <a href="javascript:void(0)" onclick="Meerut_Zone_TypeSub('${zoneNo}','category','Arterial'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category : Arterial');" style="color: #e1ca4c;">${data.arterial}</a><br>
+                    Sub Arterial - <a href="javascript:void(0)" onclick="Meerut_Zone_TypeSub('${zoneNo}','category','Sub Arterial'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category : Sub Arterial');" style="color: #83e45c;">${data.subarterial}</a><br>
+                    NA - <a href="javascript:void(0)" onclick="Meerut_Zone_TypeSub('${zoneNo}','category','NA'); updateNavBarWithFunctionName('Zone-${zoneNo} Road Category : NA');" style="color: #83e45c;">${data.count_expressway}</a><br>
+                   `
                 },
     ];
 
@@ -2507,7 +2373,7 @@ function populateWardsDropdown(zoneNo) {
     fetch(`${BASE_URL}/getWardsForZone?zone_no=${zoneNo}`)
         .then(response => response.json())
         .then(data => {
-            console.log("✅ Wards API Response:", data);  // Debugging: Log the wards data
+             // console.log("✅ Wards API Response:", data);  // Debugging: Log the wards data
 
             if (data && data.status && Array.isArray(data.data)) {
                 // Loop through the wards and create links
@@ -2543,7 +2409,7 @@ function loadWardData(zoneNo, wardNo, wardName) {
         .then(response => response.json())
         .then(responseData => {
             if (responseData.status) {
-                console.log("Ward Data Fetched:", responseData);
+                 // console.log("Ward Data Fetched:", responseData);
 
                 // Get content container
                 const content = document.getElementById('content');
@@ -2561,11 +2427,6 @@ function loadWardData(zoneNo, wardNo, wardName) {
 
                 // Define dynamic details with colors and onclick functions
                 const details = [
-                    // { 
-                    //     title: 'Road Type', 
-                    //     value: `Major - <a href="javascript:void(0)" onclick="meerut_Ward_Type('${wardNo}', 'type', 'Major City Road'); updateNavBarWithFunctionName('Ward-${wardNo} Road Type Major');" style="color:blue;">${responseData.total_major_sum}</a><br> 
-                    //              Minor - <a href="javascript:void(0)" onclick="meerut_Ward_Type('${wardNo}', 'type', 'Minor City Road'); updateNavBarWithFunctionName('Ward-${wardNo} Road Type Minor');" style="color:orange;">${responseData.total_minor_sum}</a>` 
-                    // },
                     { 
                         title: 'Total Road Length', 
                         value: `<a href="javascript:void(0)" onclick="Meerut_Ward_no('ward_no', '${wardNo}'); updateNavBarWithFunctionName('Ward-${wardNo} Total Road Length');" style="color:black;">${responseData.length_km} km</a>` 
@@ -2577,52 +2438,50 @@ function loadWardData(zoneNo, wardNo, wardName) {
                     { 
                         title: 'Road Condition', 
                         value: `
-                                Good - <a href="javascript:void(0)" onclick="Meerut_Ward_Condition('${wardNo}', 'condition', 'Good'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition Good');" style="color:green;">${responseData.count_green}</a><br> 
-                                Moderate - <a href="javascript:void(0)" onclick="Meerut_Ward_Condition('${wardNo}', 'condition', 'Moderate'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition Moderate');" style="color:yellow;">${responseData.count_yellow}</a><br> 
-                                Poor - <a href="javascript:void(0)" onclick="Meerut_Ward_Condition('${wardNo}', 'condition', 'Poor'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition Poor');" style="color:red;">${responseData.count_red}</a><br>
-                                NA - <a href="javascript:void(0)" onclick="Meerut_Ward_Condition('${wardNo}', 'condition', 'NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition NA');" style="color:pink;">${responseData.count_na}</a>
+                                Good - <a href="javascript:void(0)" onclick="Meerut_Ward_Condition('${wardNo}', 'condition', 'Good'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition : Good');" style="color:green;">${responseData.count_green}</a><br> 
+                                Moderate - <a href="javascript:void(0)" onclick="Meerut_Ward_Condition('${wardNo}', 'condition', 'Moderate'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition : Moderate');" style="color:yellow;">${responseData.count_yellow}</a><br> 
+                                Poor - <a href="javascript:void(0)" onclick="Meerut_Ward_Condition('${wardNo}', 'condition', 'Poor'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition : Poor');" style="color:red;">${responseData.count_red}</a><br>
+                                NA - <a href="javascript:void(0)" onclick="Meerut_Ward_Condition('${wardNo}', 'condition', 'NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road Condition : NA');" style="color:pink;">${responseData.count_na}</a>
                                 ` 
                             },
                     { 
                         title: 'Materials', 
                         value: `
-                                Bitumen - <a href="javascript:void(0)" onclick="meerut_Ward_Material('${wardNo}', 'material', 'Bitumen'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material Bitumen');" style="color:darkred;">${responseData.bitumen}</a><br> 
-                                CC - <a href="javascript:void(0)" onclick="meerut_Ward_Material('${wardNo}', 'material', 'CC'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material CC');" style="color:cyan;">${responseData.cc}</a><br> 
-                                Interlocking - <a href="javascript:void(0)" onclick="meerut_Ward_Material('${wardNo}', 'material', 'Interlocking'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material Interlocking');" style="color:blue;">${responseData.interlocking}</a><br>
-                                BOE - <a href="javascript:void(0)" onclick="meerut_Ward_Material('${wardNo}', 'material', 'BOE'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material BOE');" style="color:pink;">${responseData.boe}</a><br> 
-                                Kachcha - <a href="javascript:void(0)" onclick="meerut_Ward_Material('${wardNo}', 'material', 'Kachcha'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material Kachcha');" style="color:purple;">${responseData.kachcha}</a><br>
-                                NA - <a href="javascript:void(0)" onclick="meerut_Ward_Material('${wardNo}','material','NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material NA');" style="color:#dfc223;">${responseData.material_na}</a>
+                                Bitumen - <a href="javascript:void(0)" onclick="meerut_Ward_Material('${wardNo}', 'material', 'Bitumen'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : Bitumen');" style="color:darkred;">${responseData.bitumen}</a><br> 
+                                CC - <a href="javascript:void(0)" onclick="meerut_Ward_Material('${wardNo}', 'material', 'CC'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : CC');" style="color:cyan;">${responseData.cc}</a><br> 
+                                Interlocking - <a href="javascript:void(0)" onclick="meerut_Ward_Material('${wardNo}', 'material', 'Interlocking'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : Interlocking');" style="color:blue;">${responseData.interlocking}</a><br>
+                                BOE - <a href="javascript:void(0)" onclick="meerut_Ward_Material('${wardNo}', 'material', 'BOE'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : BOE');" style="color:pink;">${responseData.boe}</a><br> 
+                                Kachcha - <a href="javascript:void(0)" onclick="meerut_Ward_Material('${wardNo}', 'material', 'Kachcha'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : Kachcha');" style="color:purple;">${responseData.kachcha}</a><br>
+                                NA - <a href="javascript:void(0)" onclick="meerut_Ward_Material('${wardNo}','material','NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road Material : NA');" style="color:#dfc223;">${responseData.material_na}</a>
                                 ` 
                     },
                     { 
                         title: 'Ownership', 
                         value: `
-                                MNN - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}', 'ownership','MNN'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership meerut Nagar Nigam');" style="color:#5aeee5;">${responseData.mnn}</a><br>
-                                Railway - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}', 'ownership', 'Railway'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership Railway');" style="color:#69e70f;">${responseData.railway}</a><br> 
-                                PVT - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}', 'ownership', 'Private'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership Private Roads');" style="color:#ed2323;">${responseData.pvt}</a><br>
-                                Development Authority - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}', 'ownership', 'MDA'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership meerut Development Authority');" style="color:#f16a16;">${responseData.mda}</a><br>
-                                Defence - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}','ownership','Defence'); updateNavBarWithFunctionName('Zone-${wardNo} Road Ownership Defence');" style="color:#f16a16;">${responseData.defence}</a><br>
-                                C.M Grid - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}','ownership','C.M Grid'); updateNavBarWithFunctionName('Zone-${wardNo} Road Ownership C.M Grid');" style="color:#ed2323;">${responseData.grid}</a><br>
-                                Police Department - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}', 'ownership', 'Police Department'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership Police Department');" style="color:#ed2323;">${responseData.police}</a><br>
-                                Institutional Road - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}', 'ownership', 'Institutional Road'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership meerut Institutional Road');" style="color:#f16a16;">${responseData.institute}</a><br>
-                                Government Department - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}','ownership','Government Department'); updateNavBarWithFunctionName('Zone-${wardNo} Road Ownership Government Department');" style="color:#f16a16;">${responseData.govt}</a><br>
-                                Electricity Department - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}','ownership','Electricity Department'); updateNavBarWithFunctionName('Zone-${wardNo} Road Ownership Electricity Department');" style="color:#ed2323;">${responseData.electricity}</a><br>
+                                MNN - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}', 'ownership','MNN'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership : Meerut Nagar Nigam');" style="color:#5aeee5;">${responseData.mnn}</a><br>
+                                Railway - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}', 'ownership', 'Railway'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership : Railway');" style="color:#69e70f;">${responseData.railway}</a><br> 
+                                PVT - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}', 'ownership', 'Private'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership : Private Roads');" style="color:#ed2323;">${responseData.pvt}</a><br>
+                                Development Authority - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}', 'ownership', 'MDA'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership : Meerut Development Authority');" style="color:#f16a16;">${responseData.mda}</a><br>
+                                Defence - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}','ownership','Defence'); updateNavBarWithFunctionName('Zone-${wardNo} Road Ownership : Defence');" style="color:#f16a16;">${responseData.defence}</a><br>
+                                Department Roads - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}', 'ownership', 'Department Roads'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership : Department Roads');" style="color:#ed2323;">${responseData.depart}</a><br>
+                                Institutional Road - <a href="javascript:void(0)" onclick="Meerut_Ward_Ownership('${wardNo}', 'ownership', 'Institutional Road'); updateNavBarWithFunctionName('Ward-${wardNo} Road Ownership : Meerut Institutional Road');" style="color:#f16a16;">${responseData.institute}</a><br>
                                 `
                             },
                             {
                                 title: 'CUS',
                                 value: `
-                                    Nagar Nigam Nidhi - <a href="javascript:void(0)" onclick="Meerut_Ward_CUS('${wardNo}','cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS Nagar Nigam Nidhi');" style="color:cyan;">${responseData.nnn}</a><br>
-                                    NA - <a href="javascript:void(0)" onclick="Meerut_Ward_CUS('${wardNo}','cus','NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS NA');" style="color: #8717e2;;">${responseData.cus_na}</a><br>
+                                    Nagar Nigam Nidhi - <a href="javascript:void(0)" onclick="Meerut_Ward_CUS('${wardNo}','cus','Nagar Nigam Nidhi'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS : Nagar Nigam Nidhi');" style="color:cyan;">${responseData.nnn}</a><br>
+                                    NA - <a href="javascript:void(0)" onclick="Meerut_Ward_CUS('${wardNo}','cus','NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road CUS : NA');" style="color: #8717e2;;">${responseData.cus_na}</a><br>
                                     `  },
                            {
                             title: 'Type Sub Category',
                             value: `
-                                Local Street - <a href="javascript:void(0)" onclick="Meerut_Ward_TypeSub('${wardNo}','category','Local Street'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category Local Street');" style="color: #14cee3;">${responseData.local_street} </a><br>
-                                Collector - <a href="javascript:void(0)" onclick="Meerut_Ward_TypeSub('${wardNo}','category','Collector'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category Collector');" style="color: #e63dee;">${responseData.collector}</a><br>
-                                Arterial - <a href="javascript:void(0)" onclick="Meerut_Ward_TypeSub('${wardNo}','category','Arterial'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category Arterial');" style="color: #e1ca4c;">${responseData.arterial}</a><br>
-                                Sub Arterial - <a href="javascript:void(0)" onclick="Meerut_Ward_TypeSub('${wardNo}','category','Sub Arterial'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category Sub Arterial');" style="color: #83e45c;">${responseData.subarterial}</a><br>
-                               `},
+                                Local Street - <a href="javascript:void(0)" onclick="Meerut_Ward_TypeSub('${wardNo}','category','Local Street'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category : Local Street');" style="color: #14cee3;">${responseData.local_street} </a><br>
+                                Collector - <a href="javascript:void(0)" onclick="Meerut_Ward_TypeSub('${wardNo}','category','Collector'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category : Collector');" style="color: #e63dee;">${responseData.collector}</a><br>
+                                Arterial - <a href="javascript:void(0)" onclick="Meerut_Ward_TypeSub('${wardNo}','category','Arterial'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category : Arterial');" style="color: #e1ca4c;">${responseData.arterial}</a><br>
+                                Sub Arterial - <a href="javascript:void(0)" onclick="Meerut_Ward_TypeSub('${wardNo}','category','Sub Arterial'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category : Sub Arterial');" style="color: #83e45c;">${responseData.subarterial}</a><br>
+                                NA - <a href="javascript:void(0)" onclick="Meerut_Ward_TypeSub('${wardNo}','category','NA'); updateNavBarWithFunctionName('Ward-${wardNo} Road Category : NA');" style="color: #83e45c;">${responseData.count_expressway}</a><br>
+                                `},
                         ];
 
                 // Create and append vertical detail
@@ -2731,6 +2590,7 @@ function closeNav() {
 }
 
 function summary_table() {
+
 console.log("table-icon clicked");
     const topnav = document.getElementById('topnav');
     const contentWrapper = document.getElementById('content-wrapper');
@@ -2738,7 +2598,6 @@ console.log("table-icon clicked");
     document.getElementById('road-filter').style.display = 'none';
     // document.getElementById('drain-filter').style.display = 'none';
      document.getElementById('query_tab').style.display = 'none';
-
 
     if (topnav.classList.contains('hidden')) {
         topnav.classList.remove('hidden');
@@ -2793,15 +2652,15 @@ map.on('singleclick', function (evt) {
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    console.log('GeoServer Response:', data);
+                     // console.log('GeoServer Response:', data);
                     if (data.features && data.features.length > 0) {
                         let properties = data.features[0].properties;
-                        console.log("WMS Feature Properties:", properties);
+                         // console.log("WMS Feature Properties:", properties);
 
                         let gisId = properties.gis_id;
 
                         if (gisId) {
-                            console.log('Feature ID:', data.features[0].id);
+                             // console.log('Feature ID:', data.features[0].id);
                             highlightTableRowByGISID(gisId);
                             highlightFeatureOnMap(gisId);
                         } else {
@@ -2822,7 +2681,7 @@ map.on('singleclick', function (evt) {
             if (layer === currentLayer) {
                 let props = feature.getProperties();
                 // ✅ INSERT HERE
-                console.log("Feature Properties:", props);
+                 // console.log("Feature Properties:", props);
                 // let gisId = props.gis_id;
                 const gisId = props.gis_id || props.gid || props.GIS_ID || null;
 
@@ -2832,8 +2691,8 @@ map.on('singleclick', function (evt) {
 
 
                 if (gisId) {
-                    console.log("Selected feature: ", feature);
-                    console.log("Feature ID: ", feature.getId());
+                     console.log("Selected feature: ", feature);
+                     // console.log("Feature ID: ", feature.getId());
                     console.log("Associated row: ", gisId);
 
                     highlightTableRowByGISID(gisId);
@@ -2853,7 +2712,7 @@ map.on('singleclick', function (evt) {
     }
 });
 
-// ----------------- Function to Highlight the Corresponding Table Row
+// ----------------- Function to Highlight the Corresponding Table Row ---------------------------------------------------
 function highlightTableRowByGISID(gisId) {
     let tableRows = document.querySelectorAll("#dataTable_summary tbody tr");
     tableRows.forEach(row => {
@@ -2876,19 +2735,19 @@ function Table_Row_and_Layer_highlight(data) {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${item.gis_id}</td>
+                <td>${item.road_id}</td>
                 <td>${item.zone_no}</td>
                 <td>${item.zone_name}</td>
                 <td>${item.ward_no}</td>
                 <td>${item.ward_name}</td>
-                <td>${item.ownership}</td>
-               
-                 <td>${item.category}</td>
+                <td>${item.ownership}</td>              
+                <td>${item.category}</td>
                 <td>${item.road_name}</td>
                 <td>${item.row_meter}</td>
                 <td>${item.row_apr}</td>
                 <td>${item.carriage_w}</td>
                 <td>${item.material}</td>
-                <td>${item.length_km}</td>
+                <td>${item.length_km ? item.length_km.toFixed(2) : 'N/A'}</td>
                 <td>${item.condition}</td>
                 <td>${item.yoc}</td>
                 <td>${item.cus}</td>
@@ -2905,6 +2764,7 @@ function Table_Row_and_Layer_highlight(data) {
         console.error('Expected an array but received:', data);
     }
 }
+
 // :white_check_mark: Function to Highlight the Table Row
 function highlightTableRow(selectedRow) {
     let tableRows = document.querySelectorAll("#dataTable_summary tbody tr");
@@ -2913,17 +2773,18 @@ function highlightTableRow(selectedRow) {
     });
     selectedRow.classList.add("highlight"); // Add highlight to selected row
 }
+
 // :white_check_mark: Function to Highlight Feature on Map Based on GIS ID
 function highlightFeatureOnMap(gisId) {
     let wfsUrl = `${GEOSERVER_BASE_URL}/wfs?service=WFS&version=1.1.0&request=GetFeature
         &typename=MRT_Summary:meerut_road_net
         &outputFormat=application/json
         &CQL_FILTER=gis_id=${gisId}`;
-    console.log('Fetching Feature:', wfsUrl);
+     // console.log('Fetching Feature:', wfsUrl);
     fetch(wfsUrl)
         .then(response => response.json())
         .then(data => {
-            console.log('WFS Response:', data); // :white_check_mark: Debug the response
+             // console.log('WFS Response:', data); // :white_check_mark: Debug the response
             if (data.features && data.features.length > 0) {
                 let feature = new ol.format.GeoJSON().readFeature(data.features[0], {
                     dataProjection: 'EPSG:4326',
@@ -2937,6 +2798,7 @@ function highlightFeatureOnMap(gisId) {
         })
         .catch(error => console.error('Error fetching WFS feature:', error));
 }
+
 // :white_check_mark: Function to Add and Highlight the Selected Feature
 function addFeatureHighlight(feature) {
     map.removeLayer(highlightLayer);
@@ -3031,7 +2893,7 @@ function MNN_Road_popup() {
     document.body.appendChild(popup);
 
     // Add a click event listener
-  map.on('singleclick', function (event) {
+ map.on('singleclick', function (event) {
 
         const viewResolution = map.getView().getResolution();
         const projection = map.getView().getProjection();
@@ -3045,75 +2907,83 @@ function MNN_Road_popup() {
                 projection,
                 { 'INFO_FORMAT': 'application/json' }
             );
+           	if (url) {
+				fetch(url)
+				.then(res => res.json())
+				.then(data => {
+					if (data.features && data.features.length > 0) {
+					const properties = data.features[0].properties;
+					selectedRoadProperties = properties;
+					popup.innerHTML = buildPopupHTML(properties);
+					popup.style.display = 'block';
+				// Attach close button AFTER HTML loads
+					setTimeout(() => {
+					const closeBtn = document.getElementById("popupCloseBtn");
+					if (closeBtn) {
+						closeBtn.onclick = () => popup.style.display = "none";
+							}
+							}, 0);
+						 } else popup.style.display = 'none';
+					 })
+					.catch(() => popup.style.display = 'none');
+						}
+					 return;
+					}
+				// ---------- VECTOR LAYER ----------
+					let found = false;
+					map.forEachFeatureAtPixel(event.pixel, function (feature, layer) {
+						if (layer === currentLayer) {
+							const properties = feature.getProperties();
+							selectedRoadProperties = properties;
+							popup.innerHTML = buildPopupHTML(properties);
+							popup.style.display = 'block';
+						// Attach close button AFTER HTML loads
+							setTimeout(() => {
+								const closeBtn = document.getElementById("popupCloseBtn");
+								if (closeBtn) {
+								    closeBtn.onclick = () => popup.style.display = "none";
+								        }
+								    }, 0);
+								found = true;
+								return true;
+								    }
+								});
+						if (!found)popup.style.display = 'none';
+					});
+			    function buildPopupHTML(properties) {
+			        return `
+					<div style=" position:relative; background: rgb(255 255 255 / 90%); color: rgba(0, 0, 0, 1); padding: 10px 13px; border-radius: 10px;
+							            border-left: 4px solid #3772a7ff; box-shadow: 0 2px 10px rgba(240, 235, 235, 0.5); font-family: 'Segoe UI', Roboto, sans-serif; font-size: 14px;
+							            line-height: 1.5; max-width: 330px; ">
+					<span id="popupCloseBtn" style=" position:absolute; top:6px; right:0px; cursor:pointer;
+					                font-size:20px; color:#ff0000; font-weight:bold; ">&times;</span>
+								<h3 style="margin-top:0; margin-bottom:8px; font-size:21px; color:brown;
+								                  font-weight:900; border-bottom:1px solid #2a6194ff; padding-bottom:4px;">
+								           Road Information
+								       </h3>
+					  <div class="row-line"><strong>Road Id :</strong> ${properties.road_id || 'N/A'}</div>
+					  <div class="row-line"><strong>Zone No :</strong> ${properties.zone_no || 'N/A'}</div>
+					  <div class="row-line"><strong>Zone Name :</strong> ${properties.zone_name || 'N/A'}</div>
+					  <div class="row-line"><strong>Ward No :</strong> ${properties.ward_no || 'N/A'}</div>
+					  <div class="row-line"><strong>Ward Name :</strong> ${properties.ward_name || 'N/A'}</div>
+					  <div class="row-line"><strong>Right of Way :</strong> ${properties.row_meter || 'N/A'}</div>
+					  <div class="row-line"><strong>Carriage Width :</strong> ${properties.carriage_w || 'N/A'}</div>
+					  <div class="row-line"><strong>Category :</strong> ${properties.category || 'N/A'}</div>
+					  <div class="row-line"><strong>Condition :</strong> ${properties.condition || 'N/A'}</div>
+					  <div class="row-line"><strong>Material :</strong> ${properties.material || 'N/A'}</div>
+					  <div class="row-line"><strong>Ownership :</strong> ${properties.ownership || 'N/A'}</div>
+					  <div class="row-line"><strong>Length (Km) :</strong> ${
+					      properties.length_km !== null && properties.length_km !== undefined
+					          ? Number(properties.length_km).toFixed(2)
+					          : 'N/A'
+					  }</div>
 
-            if (url) {
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.features && data.features.length > 0) {
-                            const feature = data.features[0];
-                            const properties = feature.properties;
-                            selectedRoadProperties = properties;
+					  <div class="row-line"><strong>Road Name :</strong> ${properties.road_name || 'N/A'}</div>
+					</div>
+					        `;
+			    }
+			}
 
-                            // Show the popup with feature info
-                            popup.innerHTML = buildPopupHTML(properties);
-                            popup.style.display = 'block';
-                            const mapSize = map.getSize();
-
-                        } else {
-                            popup.style.display = 'none';
-                        }
-                    })
-                    .catch(() => {
-                        popup.style.display = 'none';
-                    });
-            } else {
-                popup.style.display = 'none';
-            }
-        } else {
-            // Assume Vector Layer (WFS GeoJSON)
-            let found = false;
-            map.forEachFeatureAtPixel(event.pixel, function (feature, layer) {
-                if (layer === currentLayer) {
-                    const properties = feature.getProperties();
-                    selectedRoadProperties = properties;
-
-                    popup.innerHTML = buildPopupHTML(properties);
-                    popup.style.display = 'block';
-                    const mapSize = map.getSize();
-
-                    found = true;
-                    return true;
-                }
-            }, { hitTolerance: 5 });
-
-            if (!found) {
-                popup.style.display = 'none';
-            }
-        }
-    });
-
-    function buildPopupHTML(properties) {
-        return `
-            <div style="background-color:white; padding:10px; border-radius:6px;">
-                <table style="background-color:white;">
-                    <tr><td><strong>Field Name</strong></td><td><strong>Value</strong></td></tr>
-                    <tr><td><strong>Zone No.</strong></td><td>${properties.zone_no || 'N/A'}</td></tr>
-                    <tr><td><strong>Zone Name</strong></td><td>${properties.zone_name || 'N/A'}</td></tr>
-                    <tr><td><strong>Ward No.</strong></td><td>${properties.ward_no || 'N/A'}</td></tr>
-                    <tr><td><strong>Ward Name</strong></td><td>${properties.ward_name || 'N/A'}</td></tr>
-                    <tr><td><strong>Right of Way</strong></td><td>${properties.row_meter || 'N/A'}</td></tr>
-                    <tr><td><strong>Carriage Width</strong></td><td>${properties.carriage_w || 'N/A'}</td></tr>
-                    <tr><td><strong>Condition</strong></td><td>${properties.condition || 'N/A'}</td></tr>
-                    <tr><td><strong>Material</strong></td><td>${properties.material || 'N/A'}</td></tr>
-                    <tr><td><strong>Ownership</strong></td><td>${properties.ownership || 'N/A'}</td></tr>
-                    <tr><td><strong>Length(Km)</strong></td><td>${properties.length_km || 'N/A'}</td></tr>
-                    <tr><td><strong>Road Name</strong></td><td>${properties.road_name || 'N/A'}</td></tr>
-                </table>
-            </div>
-        `;
-    }
-}
 
 function Meerut_Road_Length_Count() {
     removeCurrentLayer();
@@ -3140,7 +3010,7 @@ function Meerut_Road_Length_Count() {
 }
 
 
-function meerut_Ownership(cqlFilter) {
+function Meerut_Ownership(cqlFilter) {
     removeCurrentLayer(); clearVectorLayers();
     currentLayer = new ol.layer.Image({
         //   title: 'Ward Boundary',
@@ -3164,12 +3034,10 @@ function meerut_Ownership(cqlFilter) {
     document.getElementById('tableContainer_summaryfilter').style.display = 'block';
 
     MNN_Road_popup();
-    //  fetchMNNTypeData();
-    // updateTableWithFilteredDatamat(cqlFilter);
     updateTable(cqlFilter);
 }
 
-function meerut_Material(cqlFilter) {
+function Meerut_Material(cqlFilter) {
     removeCurrentLayer(); clearVectorLayers();
     currentLayer = new ol.layer.Image({
         //   title: 'Ward Boundary',
@@ -3193,8 +3061,6 @@ function meerut_Material(cqlFilter) {
     document.getElementById('tableContainer_summaryfilter').style.display = 'block';
 
     MNN_Road_popup();
-    //  fetchMNNTypeData();
-    // updateTableWithFilteredDatamat(cqlFilter);
     updateTable(cqlFilter);
 }
 function Meerut_Types(cqlFilter) {
@@ -3221,8 +3087,6 @@ function Meerut_Types(cqlFilter) {
     document.getElementById('tableContainer_summaryfilter').style.display = 'block';
 
     MNN_Road_popup();
-    // fetchMNNTypeData();
-    // updateTableWithFilteredData(cqlFilter);
     updateTable(cqlFilter);
 }
 
@@ -3230,12 +3094,32 @@ function Meerut_Types(cqlFilter) {
 var currentLayer = null;
 
 $(document).ready(function () {
-    // Initialize Select2 on the dropdown
-    $('#roadNamesDropdown').select2({
-        placeholder: "Search by road name",
-        allowClear: true
-    });
-
+   $('#roadNamesDropdown').select2({
+	    placeholder: "Type road name",
+	    allowClear: true,
+	    width: '100%',
+		});
+	
+			$(document).on('keyup', '.select2-search__field', function () {
+			    const typedText = $(this).val();
+			    const selection = $('.select2-selection__rendered');
+			    if (typedText && typedText.trim() !== '') {
+			        selection
+			            .text(typedText)
+			            .attr('title', typedText)
+			            .css({
+			                'font-weight': '700',   // bold
+			                'color': '#000000'      // black
+			            });
+			    } else {
+			        selection
+			            .text('Type road name or number')
+			            .css({
+			                'font-weight': '400',
+			                'color': '#666666'
+			            });
+			    }
+			});
     // Define your WFS parameters
     var wfsParams = {
         service: 'WFS',
@@ -3276,13 +3160,14 @@ $(document).ready(function () {
                 let response = JSON.parse(xhr.responseText);
 
                 // Extract road_name properties from the features, filter out nulls
-                let roadNames = response.features
-                    .map(feature => feature.properties.road_name)
-                    .filter(roadName => roadName !== null && roadName !== '');
-
+               	let roadNames = [...new Set(
+				    response.features
+				        .map(f => f.properties.road_name)
+				        .filter(r => r && r.trim() !== '')
+				)];
                 populateDropdown(roadNames);
                 // Log the road names
-                console.log('Road Names:', roadNames);
+               // console.log('Road Names:', roadNames);
             } else {
                 console.error('Error:', xhr.responseText);
             }
@@ -3293,33 +3178,25 @@ $(document).ready(function () {
     xhr.send();
 
     function populateDropdown(roadNames) {
-        let dropdown = $('#roadNamesDropdown');
-
-        // Clear existing options
-        dropdown.empty();
-
-        // Create a default option
-        let defaultOption = new Option('Search by Road Name', '', true, true);
-        dropdown.append(defaultOption);
-
-        // Populate dropdown with road names
-        roadNames.forEach(roadName => {
-            let option = new Option(roadName, roadName, false, false);
-            dropdown.append(option);
-        });
-
-        // Refresh Select2
-        dropdown.trigger('change');
-    }
-
+	    let dropdown = $('#roadNamesDropdown');
+	    dropdown.empty();
+	    dropdown.append(new Option('', '', false, false));
+	    roadNames.forEach(roadName => {
+	        dropdown.append(new Option(roadName, roadName, false, false));
+	    });
+	    // IMPORTANT: Select2 refresh
+	    dropdown.trigger('change.select2');
+	}
+	$('#roadNamesDropdown').on('select2:open', function () {
+	    document.querySelector('.select2-search__field').focus();
+	});
     // Add an event listener to the dropdown
-    $('#roadNamesDropdown').on('change', function () {
-        let selectedRoadName = $(this).val();
-        if (selectedRoadName) {
+   $('#roadNamesDropdown').on('change', function () {
+      let selectedRoadName = $(this).val();
+      if (selectedRoadName) {
             fetchRoadData(selectedRoadName);
-        }
-    });
-
+       }
+   });
     function fetchRoadData(roadName) {
         let fetchUrl = wfsParams.url + '?service=' + wfsParams.service +
             '&version=' + wfsParams.version +
@@ -3327,12 +3204,10 @@ $(document).ready(function () {
             '&outputFormat=' + wfsParams.outputFormat +
             '&srsname=' + wfsParams.srsName +
             '&CQL_FILTER=road_name=\'' + roadName + '\'';
-
-        console.log(fetchUrl);
-
+      //  console.log(fetchUrl);
+	
         let fetchXhr = new XMLHttpRequest();
         fetchXhr.open('GET', fetchUrl, true);
-
         fetchXhr.onreadystatechange = function () {
             if (fetchXhr.readyState === 4) {
                 if (fetchXhr.status === 200) {
@@ -3341,8 +3216,8 @@ $(document).ready(function () {
                     let features = new ol.format.GeoJSON().readFeatures(response);
                     vectorSource.addFeatures(features);
                     map.getView().fit(vectorSource.getExtent());
-                     currentLayer = vectorLayer;  // ✅ Set the active layer
-                    MNN_Road_popup();
+                     currentLayer = vectorLayer;  // :white_check_mark: Set the active layer
+                     MNN_Road_popup();
                 } else {
                     console.log('Error:', fetchXhr.responseText);
                 }
@@ -3350,7 +3225,6 @@ $(document).ready(function () {
         };
         fetchXhr.send();
     }
-
 });
 
 // //--------------------Search bar code end----------------------------//
@@ -3404,7 +3278,7 @@ function Meerut_Zone_no(column, value) {
    // clearVectorLayers();
     // Define dynamic CQL filter
     let cqlFilter = `(${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
     // Create a single WMS layer with CQL filter
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -3433,7 +3307,7 @@ function Meerut_Ward_no(column, value) {
     // Enhanced CQL Filter to capture ward_no with mixed values
     let cqlFilter = `(${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
     
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debug log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debug log
 
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -3462,7 +3336,7 @@ function Meerut_Condition_cat(column, value) {
   ///  clearVectorLayers();
     // Define dynamic CQL filter
     let cqlFilter = `(${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
     // Create a single WMS layer with CQL filter
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -3493,7 +3367,7 @@ function Meerut_Material_cat(column, value) {
   //  clearVectorLayers();
     // Define dynamic CQL filter
     let cqlFilter = `(${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
     // Create a single WMS layer with CQL filter
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -3512,10 +3386,8 @@ function Meerut_Material_cat(column, value) {
     MNN_Road_popup();
     map.addLayer(currentLayer);
     document.getElementById('Material_legend').style.display = 'block';
-   
     document.getElementById('Ownership_legend').style.display = 'none';
     document.getElementById('Condition_legend').style.display = 'none';
-
     document.getElementById('CUS_legend').style.display = 'none';
     document.getElementById('RoadCategory_legend').style.display = 'none';
     // Fetch corresponding data
@@ -3527,7 +3399,7 @@ function Meerut_Ownership_cat(column, value) {
   //  clearVectorLayers();
     // Define dynamic CQL filter
     let cqlFilter = `(${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
     // Create a single WMS layer with CQL filter
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -3546,10 +3418,8 @@ function Meerut_Ownership_cat(column, value) {
     MNN_Road_popup();
     map.addLayer(currentLayer);
     document.getElementById('Ownership_legend').style.display = 'block';
-   
     document.getElementById('Condition_legend').style.display = 'none';
     document.getElementById('Material_legend').style.display = 'none';
-
     document.getElementById('CUS_legend').style.display = 'none';
     document.getElementById('RoadCategory_legend').style.display = 'none';
     // Fetch corresponding data
@@ -3561,7 +3431,7 @@ function Meerut_CUS_cat(column, value) {
    // clearVectorLayers();
     // Define dynamic CQL filter
     let cqlFilter = `(${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
     // Create a single WMS layer with CQL filter
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -3593,7 +3463,7 @@ function Meerut_Typesub_cat(column, value) {
    // clearVectorLayers();
     // Define dynamic CQL filter
     let cqlFilter = `(${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
     // Create a single WMS layer with CQL filter
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -3629,7 +3499,7 @@ function fetchMNN_ALLFilteredData(column, value) {
     })
         .then(response => response.json())
         .then(responseData => {
-            console.log("Full API Response:", responseData); // :mag: Debugging
+             // console.log("Full API Response:", responseData); // :mag: Debugging
             if (!responseData || !Array.isArray(responseData.data)) {
                 console.error("Invalid API response:", responseData);
                 return; // :rotating_light: Prevent function execution if data is not valid
@@ -3679,7 +3549,7 @@ function Meerut_Zone_Condition(zone_no, column, value) {
     } else {
         cqlFilter = `zone_no='${zone_no}' AND ${column}='${value}'`;
     }
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging
 
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -3720,13 +3590,12 @@ function Meerut_Zone_Material(zone_no, column, value) {
     }
     // Define dynamic CQL filter for Zone + Column + Value
     let cqlFilter = "";
-
     if (["material", "condition", "category", "ownership" ,"cus"].includes(column)) {
         cqlFilter = `zone_no='${zone_no}' AND (${column}='${value}' OR ${column} ILIKE '%/${value}' OR ${column} ILIKE '${value}/%' OR ${column} ILIKE '%/${value}/%' OR ${column} ILIKE '${value}')`;
     } else {
         cqlFilter = `zone_no='${zone_no}' AND ${column}='${value}'`;
     }
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
     // Create a single WMS layer with CQL filter
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -3770,7 +3639,7 @@ function Meerut_Zone_Ownership(zone_no, column, value) {
     } else {
         cqlFilter = `zone_no='${zone_no}' AND ${column}='${value}'`;
     }
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
     // Create a single WMS layer with CQL filter
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -3813,7 +3682,7 @@ function Meerut_Zone_CUS(zone_no, column, value) {
     } else {
         cqlFilter = `zone_no='${zone_no}' AND ${column}='${value}'`;
     }
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
     // Create a single WMS layer with CQL filter
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -3856,7 +3725,7 @@ function Meerut_Zone_TypeSub(zone_no, column, value) {
     } else {
         cqlFilter = `zone_no='${zone_no}' AND ${column}='${value}'`;
     }
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
     // Create a single WMS layer with CQL filter
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -3894,7 +3763,7 @@ function fetchMNNFilteredData(zone_no, column, value) {
             return response.json();
         })
         .then(responseData => {
-            console.log(`Received data for ${zone_no}, ${column}=${value}:`, responseData);
+             // console.log(`Received data for ${zone_no}, ${column}=${value}:`, responseData);
             dataTableBody_summary.innerHTML = ''; // Clear existing table rows
            // appendToSummaryTable(responseData.data);
            Table_Row_and_Layer_highlight(responseData.data);
@@ -3935,7 +3804,7 @@ function Meerut_Ward_Condition(ward_no, column, value) {
     // Define dynamic CQL filter for Zone + Column + Value
     let cqlFilter = `(ward_no='${ward_no}' OR ward_no ILIKE '%/${ward_no}' OR ward_no ILIKE '${ward_no}/%' OR ward_no ILIKE '%/${ward_no}/%' OR ward_no ILIKE '${ward_no}') AND ${column}='${value}'`;
 
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
     // Create a single WMS layer with CQL filter
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -3975,7 +3844,7 @@ function meerut_Ward_Material(ward_no, column, value) {
     // Define dynamic CQL filter for Zone + Column + Value
     let cqlFilter = `(ward_no='${ward_no}' OR ward_no ILIKE '%/${ward_no}' OR ward_no ILIKE '${ward_no}/%' OR ward_no ILIKE '%/${ward_no}/%' OR ward_no ILIKE '${ward_no}') AND ${column}='${value}'`;
 
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
     // Create a single WMS layer with CQL filter
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -4017,7 +3886,7 @@ function Meerut_Ward_Ownership(ward_no, column, value) {
     // Define dynamic CQL filter for Zone + Column + Value
     let cqlFilter = `(ward_no='${ward_no}' OR ward_no ILIKE '%/${ward_no}' OR ward_no ILIKE '${ward_no}/%' OR ward_no ILIKE '%/${ward_no}/%' OR ward_no ILIKE '${ward_no}') AND ${column}='${value}'`;
 
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
     // Create a single WMS layer with CQL filter
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -4060,7 +3929,7 @@ function Meerut_Ward_CUS(ward_no, column, value) {
     // Define dynamic CQL filter for Zone + Column + Value
     let cqlFilter = `(ward_no='${ward_no}' OR ward_no ILIKE '%/${ward_no}' OR ward_no ILIKE '${ward_no}/%' OR ward_no ILIKE '%/${ward_no}/%' OR ward_no ILIKE '${ward_no}') AND ${column}='${value}'`;
 
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
     // Create a single WMS layer with CQL filter
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -4100,7 +3969,7 @@ function Meerut_Ward_TypeSub(ward_no, column, value) {
     }
     // Define dynamic CQL filter for Zone + Column + Value
     let cqlFilter = `(ward_no='${ward_no}' OR ward_no ILIKE '%/${ward_no}' OR ward_no ILIKE '${ward_no}/%' OR ward_no ILIKE '%/${ward_no}/%' OR ward_no ILIKE '${ward_no}') AND ${column}='${value}'`;
-    console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
+     // console.log(`Applying CQL_FILTER: ${cqlFilter}`); // Debugging log
     // Create a single WMS layer with CQL filter
     currentLayer = new ol.layer.Image({
         source: new ol.source.ImageWMS({
@@ -4141,7 +4010,7 @@ function fetchMNNWardFilteredData(ward_no, column, value) {
             return response.json();
         })
         .then(responseData => {
-            console.log(`Received data for ${ward_no}, ${column}=${value}:`, responseData);
+             // console.log(`Received data for ${ward_no}, ${column}=${value}:`, responseData);
             dataTableBody_summary.innerHTML = ''; // Clear existing table rows
           //  appendToSummaryTable(responseData.data);
             Table_Row_and_Layer_highlight(responseData.data);
@@ -4156,25 +4025,28 @@ function fetchMNNWardFilteredData(ward_no, column, value) {
 }
 
 //--------------------------------------------- download map and excel ----------------------------------------------------------------//
-const downloadMapandExcel = document.querySelector(".fa-print");
+// document.querySelectorAll(".fa-print").forEach(printBtn => {
+//     printBtn.addEventListener("click", () => {
+//         // Determine which table this print button belongs to
+//         const container = printBtn.closest('div[id^="tableContainer_summary"]');
+//         const table = container?.querySelector("table");
 
-downloadMapandExcel.addEventListener("click", () => {
-// function downloadTableToExcel() {
-    const table = document.getElementById('dataTable_summary');
+//         if (!table || table.rows.length === 0) {
+//             alert("No data in table. Please apply a filter first.");
+//             return;
+//         }
 
-    if (!table || table.rows.length === 0) {
-        alert("No data in table. Please apply a filter first.");
-        return;
-    }
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.table_to_sheet(table);
-    XLSX.utils.book_append_sheet(wb, ws, "FilteredData");
-    XLSX.writeFile(wb, `Filtered_Table_${Date.now()}.xlsx`);
+//         // Export to Excel
+//         const wb = XLSX.utils.book_new();
+//         const ws = XLSX.utils.table_to_sheet(table);
+//         XLSX.utils.book_append_sheet(wb, ws, "FilteredData");
+//         XLSX.writeFile(wb, `Filtered_Table_${Date.now()}.xlsx`);
 
-  // Print Map Button Functionality
-    // Open print dialog
-    window.print();
-})
+//         // Print Map (optional)
+//         window.print();
+//     });
+// });
+
 
 
 // //---------------------------------------------------------------------- Zone Boundary ------------------------------------------------//
@@ -4360,6 +4232,7 @@ function updateTable(layer, cqlFilter) {
                     tableBody.insertAdjacentHTML('beforeend', `
                         <tr>
                             <td>${properties.gis_id}</td>
+                            <td>${properties.road_id}</td>
                             <td>${properties.zone_no || 'N/A'}</td>
                             <td>${properties.zone_name || 'N/A'}</td>
                             <td>${properties.ward_no || 'N/A'}</td>
@@ -4371,7 +4244,7 @@ function updateTable(layer, cqlFilter) {
                             <td>${properties.row_apr || 'N/A'}</td>
                             <td>${properties.carriage_w || 'N/A'}</td>
                             <td>${properties.material || 'N/A'}</td>
-                            <td>${properties.length_km || 'N/A'}</td>
+                            <td>${properties.length_km ? properties.length_km.toFixed(2) : 'N/A'}</td>
                             <td>${properties.condition || 'N/A'}</td>
                             <td>${properties.yoc || 'N/A'}</td>
                             <td>${properties.cus || 'N/A'}</td>
@@ -4383,3 +4256,78 @@ function updateTable(layer, cqlFilter) {
         })
         .catch(err => console.error('Error fetching WFS data:', err));
 }
+
+function showSelectedRoadsLayer1() {
+    alert("Data not available");
+}
+
+//------------------------------------------------ download map and excel ----------------------------------------------------------------//
+let isPrinting = false;
+let originalCenter = null;
+let originalResolution = null;
+const downloadMapandExcel = document.querySelector(".fa-print");
+
+downloadMapandExcel.addEventListener("click", () => {
+  if (isPrinting) return;
+  isPrinting = true;
+
+  const table = document.getElementById('dataTable_summary');
+  document.body.classList.add("print-mode");
+  if (!table || table.rows.length === 0) {
+    alert("No data in table. Please apply a filter first.");
+    document.body.classList.remove("print-mode");
+    isPrinting = false;
+    return;
+  }
+  // Excel export
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.table_to_sheet(table);
+  XLSX.utils.book_append_sheet(wb, ws, "FilteredData");
+  XLSX.writeFile(wb, `Filtered_Table_${Date.now()}.xlsx`);
+
+  setTimeout(() => {
+    map.updateSize();
+    const view = map.getView();
+
+    // ✅ ALWAYS capture ORIGINAL state first
+    originalCenter = view.getCenter().slice();
+    originalResolution = view.getResolution();
+    // ---- PRINT-ONLY ADJUSTMENT ----
+    const pixelShift = 250;      // tune once
+    const zoomFactor = 1.2;
+    const shiftInMapUnits = pixelShift * originalResolution;
+    view.setCenter([
+      originalCenter[0] + shiftInMapUnits,
+      originalCenter[1]
+    ]);
+
+    view.setResolution(originalResolution * zoomFactor);
+  }, 100);
+
+  setTimeout(() => {
+    window.print();
+  }, 500);
+});
+
+function restoreMap() {
+  if (!isPrinting) return;
+  document.body.classList.remove("print-mode");
+  const view = map.getView();
+  if (originalCenter && originalResolution) {
+    view.setCenter(originalCenter);
+    view.setResolution(originalResolution);
+  }
+  map.updateSize();
+  // reset flags
+  originalCenter = null;
+  originalResolution = null;
+  isPrinting = false;
+}
+
+window.addEventListener("afterprint", restoreMap);
+// fallback (Chrome safety)
+setInterval(() => {
+  if (isPrinting && !document.body.classList.contains("print-mode")) {
+    restoreMap();
+  }
+}, 1000);
